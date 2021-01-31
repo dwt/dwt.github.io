@@ -1,0 +1,159 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../../static/pygments.css">
+    <title>Macros in C</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../../../blog/feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="../../../../../blog/2008/2/macros-in-c/">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="./">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../../">🏠</a>
+
+
+<a class="breadcrumb-item " href="../../../">Blog</a>
+
+
+<a class="breadcrumb-item active" href="./">Macros in C</a>
+
+</nav>
+    </header>
+    <article class="page macros-in-c  container-fluid">
+      
+  
+  <article class="blog-post">
+    <header>
+      <h2>
+        
+        Macros in C
+        
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-02-13">Wednesday, February 13, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>(Zu "Feuer Frei" von Rammstein)</p>
+<p>Makros in C sind ja so eine Sache.</p>
+<p>Zum einen kommt man in C an vielen Stellen gar nicht ohne aus, da sie die einzige Möglichkeit sind Ausdrücke OHNE sie zu evaluieren an mehreren stellen zu verwenden. Zum anderen Sind sie rein Textuell, "unhygienisch" und haben keine Ahnung was in ihnen eigentlich passiert.</p>
+<p>Das macht vor allem in Objective-C mächtig Schwierigkeiten. Das hier zum Beispiel geht nicht.</p>
+<div class="hll"><pre><span></span><span class="cp">#define DO(argument) argument</span>
+
+<span class="n">DO</span><span class="p">([</span><span class="bp">NSString</span> <span class="nl">stringWithFormat</span><span class="p">:</span><span class="s">@&quot;%s&quot;</span><span class="p">,</span> <span class="s">&quot;asdf&quot;</span><span class="p">]);</span>
+</pre></div>
+<p>Der Compiler meckert hier über zu viele Kommas und denkt das ich das Makro mit zwei Argumenten aufrufen will. Gnah.</p>
+<p>Warum beschäftigt mich das eigentlich?</p>
+<p>Ich möchte gerne Macro's haben, die je nach Typ des Arguments etwas anderes machen. Für Unit-Tests z.B. möchte ich sagen:</p>
+<div class="hll"><pre><span></span><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">testOverloadedAssert</span>
+<span class="p">{</span>
+    <span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+    <span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="s">@&quot;barf&quot;</span><span class="p">,</span> <span class="s">@&quot;barf&quot;</span><span class="p">);</span>
+    <span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="s">&quot;bar&quot;</span><span class="p">,</span> <span class="s">&quot;bar&quot;</span><span class="p">);</span>
+
+    <span class="c1">// These should fail in a sensible manner</span>
+    <span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="s">&quot;bar&quot;</span><span class="p">,</span> <span class="s">@&quot;bar&quot;</span><span class="p">);</span>
+    <span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mf">3.3</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+<p>Das ist aber schon ein großes Problem. In C++ könnte man den ersten teil ja noch über überladene Funktionen lösen - das geht in reinem Objective-C aber schon mal nicht. Dazu kommt ja noch der zweite Teil - da kriegt man vielleicht noch Compiler-Fehlermeldungen, wenn der Compiler nicht auto-conversion von Parametern anwirft. :-/</p>
+<p>Dazu kommt, das ich C++ nicht mag und schon gar nicht in alle meine Tests eine zwingende Abhängigkeit auf C++ einfügen will.</p>
+<p>Will man dann aber noch weiter gehen, wird es endgültig schwierig. Hier ein paar Beispiele:</p>
+<div class="hll"><pre><span></span><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">testAdvancedAssert</span>
+<span class="p">{</span>
+    <span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="mf">3.3</span><span class="p">,</span> <span class="mf">3.3</span><span class="p">,</span> <span class="mf">0.1</span> <span class="cm">/* accuracy */</span><span class="p">);</span>
+    <span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="mf">3.3</span><span class="p">,</span> <span class="mf">3.3</span><span class="p">,</span> <span class="s">@&quot;important meta information&quot;</span><span class="p">);</span>
+    <span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s">@&quot;info contains: %@ in %s:%d&quot;</span><span class="p">,</span>
+         <span class="s">@&quot;other info&quot;</span><span class="p">,</span> <span class="n">__PRETTY_FUNCTION__</span><span class="p">,</span> <span class="n">__LINE__</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+<p>In reinem C hätte man hier gar keine Möglichkeiten mehr etwas zu machen.</p>
+<p>Wie weit ich mit einer Lösung dennoch gekommen bin - morgen. :)</p>
+
+    </section>
+    
+  </article>
+
+  <nav>
+    
+  <div class="category-list">
+    Kategorien:
+      
+      <a href="../../../../../categories/code/">Software Development</a>
+      
+    
+  </div>
+
+    
+    <div class="relative-navigation">
+      
+        <div class="prev">Vorheriges Post: <a class="prev" href="../mit-c-makros-etwas-tun-was-mit-ihnen-nicht-mo-glich-ist/">Mit C Makros etwas tun, was mit ihnen nicht möglich ist</a></div>
+      
+      
+        <div class="next">Nächstes Post: <a class="next" href="../geek-humor/">Geek-Humor</a></div>
+      
+    </div>
+    
+  </nav>
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../../../blog/feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

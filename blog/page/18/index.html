@@ -1,0 +1,493 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../static/style.css">
+    <link rel="stylesheet" href="../../../static/pygments.css">
+    <title>Blog</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="./">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="../../../en/blog/page/18/">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../">🏠</a>
+
+
+<a class="breadcrumb-item active" href="./">Blog</a>
+
+</nav>
+    </header>
+    <article class="page blog  container-fluid">
+      
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/9/kryptographie-saugt/">
+        Kryptographie saugt
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-09-01">Montag, 1. September 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Und zwar gewaltig.</p>
+<p>Heute hab ich eine Menge Zeit darauf verbrannt unserem Online-Update-System auf den Zahn zu fühlen. Das arbeitet nämlich ganz hervorragend mit <a href="http://sparkle.andymatuschak.org/">Sparkle</a> um für unsere Applikation via <a href="http://connectedflow.com/appcasting/">Appcast</a> herunter zu laden, wenn eine neue Version ansteht. Und damit das auch schön sicher ist, nutzen wir ein kleines öffentlich/privates Schlüsselpärchen um das abzusichern.</p>
+<p>Nun ja, bis heute mittag - da hat es nämlich auf einmal aufgehört und konnte die heruntergeladenen Dateien nicht mehr validieren.</p>
+<p>Jetzt hatte ich natürlich das Problem, das ich an sich recht wenig von Crypto verstehe und erst recht wie man das von der shell aus einsetzt. Das wiederum hatte zur Folge, dass ich das nicht sofort auf der Shell nachvollziehen konnte und wir schon anfingen zu fürchten das vielleicht unsere Schlüssel abgelaufen sind.</p>
+<p>Gott sei dank war es aber doch was anderes - denn unser Proxy hatte fieser weise einfach eine alte Version des Appcasts gespeichert und stattdessen immer die ausgeliefert - was natürlich nicht funktionierte... Grumpf.</p>
+<p>Note to self: Nächstes mal gleich den ganzen Vorgang von Hand reproduzieren um zu sehen wo es schief läuft - und zwar angefangen von da wo das Programm anfängt. (Auch wenn in diesem Fall die Fehlermeldung wirklich eher auf einen OpenSSL Fehler hindeutete).</p>
+<p>Debuggen ist eben schwieriger als den Code zu schreiben. Ich vermute, weil man ihn dafür <strong><em>wirklich</em></strong> verstehen muss - inklusive aller Fehler die man in seinem eigenen Verständnis hat.</p>
+<p>P.S.: So Signiert und Validiert man ein File mit OpenSSL von der Kommandozeile:</p>
+<div class="hll"><pre><span></span><span class="c1"># base 64 encoding to ease textual transmission</span>
+openssl dgst -dss1 -sign dsa_private_key.pem Important.rtf <span class="p">|</span> openssl enc -base64 &gt; signature.sig
+<span class="c1"># and decode again</span>
+openssl enc -base64 -d &lt; signature.sig &gt; decoded.signature.sig
+<span class="c1"># and verify</span>
+openssl dgst -dss1 -verify dsa_public_key.pem -signature decoded.signature.sig Important.rtf
+</pre></div>
+<p>Einige Fallstricke: -dss1 und -sha1 erzeugen offenbar die gleichen Checksummen (man könnte also meinen das es der gleiche Algorithmus ist) die beiden digest modi werden aber in openssl offenbar unterschiedlich behandelt. Beim Signieren löst das verwenden von -sha1 auch schön eine Fehlermeldung aus - wenn man beim Überprüfen aber -sha1 zu verwenden versucht, dann erhält man nur den Hinweis dass die Verifikation gescheitert ist - an einem falschen public key. Seeehr hilfreich liebe Entwickler.</p>
+<p>Wie man ein Schlüsselpaar erzeugt und vieles mehr <a href="http://www.madboa.com/geek/openssl/">gibts hier</a>.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/9/kryptographie-saugt/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/9/wo-ich-gerade-am-la-stern-bin/">
+        Wo ich gerade am lästern bin
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-09-01">Montag, 1. September 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Apple hat sich da ja einen richtigen Kracher geleistet mit ihrem <a href="http://www.apple.com/iphone/appstore/">App-Store</a>. Vor allem ist das Update-System absolut grandios gelöst.</p>
+<p>Man geht einfach im iPhone auf den App-Store, dort in den Updates-Reiter und.... sieht nichts. Weil, da sind zwar die Updates. Aber eben nicht alle.</p>
+<p>Ein Programm das ich mir gekauft hatte (<a href="http://www.culturedcode.com/things/">Things</a>, weil die UI einfach sehr, sehr gut ist) tauchte dort nämlich nicht auf - obwohl ich es sehnsüchtig erwartete. Und das, obwohl der iTunes Store das Programm schon längst als upgedatet aufgelistet hat.</p>
+<p>Tja, was tun? Letztlich habe ich mich dann dafür entschieden, dass ich für 8 € auch das Programm einfach noch einmal herunterladen kann. Wenigstens kann ich dann die neue Version nutzen. Und kann so mal Probieren ob der App-Store nicht vielleicht einen Bug hat und mir den Preis nur fälschlicherweise anzeigt.</p>
+<p>Gesagt getan - da kommt dann erst eine Warnung dass der Betrag jetzt direkt von meiner Kreditkarte abgezogen wird (gut, Kreditkarte hab ich nicht, aber das ist halt ne Amerikanische Firma) und dann... dann kommt der Dialog der mir erklärt das ich das Produkt ja schon gekauft hätte und das Update daher kostenlos sei.</p>
+<p>Pfffff. Wenn ich ein Update lade, dann will ich vorher wissen ob mich das Geld kostet! Vorher, nicht hinterher. Vielleicht.</p>
+<p>Ganz große Klasse.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/9/wo-ich-gerade-am-la-stern-bin/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/8/kontrollieren-welche-libraries-ein-programm-la-dt/">
+        Kontrollieren welche Libraries ein Programm lädt
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-08-29">Freitag, 29. August 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>ist beim Entwickeln ein echtes Problem.</p>
+<p>Frameworks unter Mac OS X werden schließlich so gelinkt, das jeder Framework den Pfad enthält, an dem er später einmal leben wird - und dieser Pfad wird dann in die Applikation eingetragen die ihn laden möchte.</p>
+<p>Das ist blöd, wenn man Frameworks in <code>/Library/Frameworks/</code> installiert, bei der Entwicklung dann aber mal eine andere Version ausprobieren will oder muss. Auch klassisch ist, dass ein Framework der von Apple kommt zu alt ist und man sicherstellen muss, das ein eigener Framework stattdessen verwendet wird, der Bugfixes enthält.</p>
+<p>Schwierig.</p>
+<p>Nunja, man macht das unter OS X mit dem Äquivalent des Linux Konstrukts <code>LD_LIBRARY_PATH</code>, also diversen Umgebungsvariablen, mit denen man das Verhalten des dynamischen linkers beeinflussen kann. Spaßigerweise hat Apple das verhalten des dynamischen Linkers unter Tiger (10.4) verändert, dass er sich jetzt genauso verhält wie unter Leopard (10.5) - zumindest sagt mein Gedächtnis andere Dinge als die 10.4 manpage von <code>dyld</code>.</p>
+<p>Also sind jetzt eigentlich nur noch zwei Umgebungsvariablen interessant:</p>
+<ul>
+<li><code>DYLD_FRAMEWORK_PATH</code> wenn man etwas laden will, bevor die Pfade verwendet werden die in der Applikation für einen Framework stehen -&gt; also um einen Framework zu überschreiben.</li>
+<li><code>DYLD_FALLBACK_FRAMEWORK_PATH</code> wenn man etwas nachladen will, nachdem es an den vorgegebenen Pfaden nicht gefunden wurde. Die Manpage ist mir da noch nicht 100% klar - es wirkt fast so, als könnte man dyld auch dafür verwenden eine neuere Version anzugeben, die nur genutzt wird, wenn in der alten ein bestimmtes Symbol nicht gefunden wurde - das konnte ich aber noch nicht testen (und kommt mir auch komisch vor).</li>
+</ul>
+<p>Also: kennen sollte man die - das gibt viel flexibilität.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/8/kontrollieren-welche-libraries-ein-programm-la-dt/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/8/obfuscated-objc-oder-wie-macht-man-konstanten/">
+        Obfuscated Objc - oder - wie macht man Konstanten?
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-08-27">Mittwoch, 27. August 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Ist ja eigentlich nicht schwer, man braucht lediglich eine Definition wie diese</p>
+<div class="hll"><pre><span></span><span class="cp">#define kIOHIDVendorIDKey @&quot;VendorID&quot;</span>
+<span class="k">const</span> <span class="bp">NSString</span> <span class="o">*</span><span class="n">windowName</span> <span class="o">=</span> <span class="s">@&quot;Morgens&quot;</span>
+</pre></div>
+<p>Einziges Problem - immer wieder hat man vom System konstante C-Strings, die man aber als Objc-Strings benötigt.</p>
+<p>Interessanterweise hat der Compiler überhaupt kein Problem das hier zu machen:</p>
+<div class="hll"><pre><span></span><span class="cp">#define kIOHIDVendorIDKey &quot;VendorID&quot;</span>
+<span class="c1">// ...</span>
+<span class="p">[</span><span class="n">matchingDict</span> <span class="nl">setValue</span><span class="p">:[</span><span class="bp">NSNumber</span> <span class="nl">numberWithInt</span><span class="p">:</span><span class="n">entry</span><span class="o">-&gt;</span><span class="n">Vendor_ID</span><span class="p">]</span> 
+       <span class="nl">forKey</span><span class="p">:</span> <span class="p">@</span><span class="n">kIOHIDVendorIDKey</span><span class="p">];</span> 
+
+<span class="c1">// same, but more readable than</span>
+<span class="p">[</span><span class="n">matchingDict</span> <span class="nl">setValue</span><span class="p">:[</span><span class="bp">NSNumber</span> <span class="nl">numberWithInt</span><span class="p">:</span><span class="n">entry</span><span class="o">-&gt;</span><span class="n">Vendor_ID</span><span class="p">]</span> 
+       <span class="nl">forKey</span><span class="p">:</span> <span class="p">[</span><span class="bp">NSString</span> <span class="nl">stringWithCString</span><span class="p">:</span><span class="n">kIOHIDVendorIDKey</span><span class="p">]];</span>
+<span class="c1">// Also note that -stringWithCString is deprecated</span>
+</pre></div>
+<p>Oder mit anderen Worten man kann problemlos aus jeder C-String-Konstante eine Objc-String-Konstante machen, indem man einfach ein <strong><em>@</em></strong> davor schreibt.</p>
+<p>Neat.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/8/obfuscated-objc-oder-wie-macht-man-konstanten/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/8/debugging-magic-in-cococa/">
+        Debugging Magic in Cococa
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-08-25">Montag, 25. August 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Erstaunlich aber wahr - viele Programmierer scheinen die Debugging-Möglichkeiten der Plattform ihrer Wahl nicht zu kennen.</p>
+<p>Cocoa zum Beispiel. Viele Programmierer wissen nicht wie man Speicherlöcher effektiv fängt.</p>
+<p>Well, nicht Leaks - da kann man ja mit <a href="http://developer.apple.com/documentation/DeveloperTools/Conceptual/InstrumentsUserGuide/Built-InInstruments/chapter_9_section_8.html">ObjectAlloc</a> draufhauen und dann das Programm fixen.</p>
+<p>Nein, viel problematischer als das sind die doppelten Befreiungen.</p>
+<div class="hll"><pre><span></span><span class="kt">id</span> <span class="n">foo</span> <span class="o">=</span> <span class="p">[[</span><span class="bp">NSString</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithFormat</span><span class="p">:</span><span class="s">@&quot;foo&quot;</span><span class="p">];</span>
+<span class="p">[</span><span class="n">foo</span> <span class="k">release</span><span class="p">];</span>
+<span class="c1">// do something else</span>
+<span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;foo is %d&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">foo</span> <span class="n">length</span><span class="p">]);</span> <span class="c1">// almost certainly bombs</span>
+</pre></div>
+<p>Die krachen nämlich fast immer - und dann sucht man sich tot was genau da eigentlich gekracht hat und woher das genau kommt. Tja.</p>
+<p>Dabei kriegt man aus dem Programm eigentlich alle Informationen heraus die man braucht. Man muss nur jedes malloc mitzählen und aufschreiben wo es passiert ist, dann jedes objekt das freigegeben wird, nicht wirklich freigeben, sondern lediglich markieren und dann bei einem weiteren Zugriff auf so ein Objekt eine Exception werfen.</p>
+<p>Nichts leichter als das. :)</p>
+<p>Man setze diese Environment Variablen (am besten auf einem Duplikat der zu entwanzenden Applikation in Xcode)</p>
+<pre><code>MallocStackLogging YES
+MallocStackLoggingNoCompact YES
+NSZombieEnabled YES
+NSDebugEnabled YES
+</code></pre>
+<p>Hat man dass macht die Runtime alles richtig. Jede allokation wird aufgezeichnet und jedes freigegebene Objekt durch einen Zombie ersetzt. Und der Meldet sich, sobald er für irgend etwas verwendet wird. Nämlich so:</p>
+<pre><code>2008-08-26 00:19:43.524 CrashTest[1663:817] *** -[CFString length]:
+    message sent to deallocated instance 0x105440
+</code></pre>
+<p>Hängt man dann im Debugger, kann man von dort aus direkt diese Information abgreifen.</p>
+<pre><code>(gdb) shell malloc_history 1663 0x105440
+
+Call [2] [arg=16]: thread_a00ddfa0 |start | main | -[NSString initWithFormat:] |
+ -[NSPlaceholderString initWithFormat:locale:arguments:] |
+ _CFStringCreateWithFormatAndArgumentsAux | CFStringCreateCopy |
+ __CFStringCreateImmutableFunnel3 | _CFRuntimeCreateInstance | malloc_zone_malloc
+</code></pre>
+<p>Die Syntax für malloc_history ist dabei <code>malloc_history pid address</code>.</p>
+<p>Jetzt weiß man mit was für einem Objekt man es zu tun hat und man weiß wo es her kommt.</p>
+<p>Nice! (Mehr unter <a href="http://developer.apple.com/technotes/tn2004/tn2124.html#SECMALLOC">Mac OS X Debugging Magic</a>)</p>
+<p>p.s.: Ohne etwas Schelte an Apple geht es aber nicht. Das man sich da von Hand die Umgebungsvariablen einstellen muss - böse. Zumal das noch an einer Custom Executable geschieht. Die sind nämlich nicht im Projektfile gespeichert, sondern in den Dateien die Xcode pro Benutzer anlegt. Das hat zur Folge, dass im Normalfall nicht ein Entwickler diese Dinge raussucht und dann alle anderen im Projekt dass als Tool nutzen können, sondern dass sich das jeder Selber einrichten und warten muss. Ach ja, und natürlich zeichnet malloc_history nur die allocs auf und nicht die frees - das wäre nämlich noch praktischer, dann könnte man nämlich direkt kucken wo es das erste mal freigegeben wurde. Aber nein....</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/8/debugging-magic-in-cococa/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/8/nstoolbaritem-whoes/">
+        NSToolbarItem whoes
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-08-21">Donnerstag, 21. August 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Kleines Detail, dass man wissen sollte.</p>
+<p>NSToolbarItems sind etwas völlig anderes als normale Controls. Sie sind nämlich keine. Sondern sie enthalten höchstens welche - aber nur als View. Das heißt, wenn eine Toolbar z.b. auf "nur Text" geschaltet ist, dann hat das Item überhaupt kein wissen darüber was in dem NSView eigentlich passiert - und daher versucht es auch überhaupt nicht etwas sinniges zu tun.</p>
+<p>Unter Tiger zumindest. Da wird zwar alles schön angezeigt - aber machen tut das dann alles nix mehr. Unter Leopard ist es immerhin so, dass auf einen Klick die Toolbar wieder mit Bild angezeigt wird.</p>
+<p>Tja und Lösen muss man das ganze dann so, dass man verstehen muss, das NSToolbarItems für die nur Text Darstellung ein NSMenuItem verwenden, dass man selbst anpassen muss. Steht nur in der Dokumentation lediglich als mini Absatz ohne Erklärung <strong><em>wieso</em></strong> man das braucht.</p>
+<p>Hrmpf. Naja. Immerhin macht es Sinn wenn man versteht was sie als Design gewählt haben.</p>
+<p>Aber wieso sie sich für dieses Design entschieden haben, verstehe ich absolut nicht. Sie hätten ja auch gleich ein NSControll als content nehmen können - und wenn das ein Target und eine Action hat dann einfach die wiederverwenden...</p>
+<p>Aber neee....</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/8/nstoolbaritem-whoes/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/8/usability-und-programmierer/">
+        Usability und Programmierer
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-08-21">Donnerstag, 21. August 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Ich habe ja schon lange den Verdacht, dass das allgemeine Vorurteil das Programmierer schlechte GUI-Designer sind vielleicht nicht ganz korrekt ist.</p>
+<p>Jetzt habe ich endlich den Beweis: Gutes GUI Design ist wie gutes API-Design - die allermeisten leute können es nicht.</p>
+<p><a href="http://sources.redhat.com/bugzilla/show_bug.cgi?id=3675">Das hier zum Beispiel</a> <a href="http://linux.die.net/man/3/gethostbyname">gethostbyname()</a> ist teil der libc und gibt einem zu einem Hostnamen die Daten aus einem DNS-Lookup zurück.</p>
+<p>Well.</p>
+<p>Nur das wir jetzt eben mal zwei Tage darauf verbrannt haben herauszufinden, dass dieses gethostbyname so dämlich ist, dass es niemals nicht von sich aus checkt ob sich vielleicht seit das Programm gestartet wurde, die Netzwerkeinstellungen irgendwie verändert haben könnten. Egal wie lange das Programm schon läuft...</p>
+<p>Groooßartig.</p>
+<p>Dafür muss man nämlich die Funktion <a href="http://linux.die.net/man/3/res_init">res_init()</a> aufrufen. Ach ja, und wann man das tut rät man einfach. Weil einen Callback gibts dafür natürlich nicht. Ach ja, und in der Manpage von gethostbyname steht natürlich auch nix über res_init.</p>
+<p>Gnah.</p>
+<p>Das ist für mich ein Musterbeispiel für eine verkackte API - eine API deren Benutzerfreundlichkeit gegen null geht.</p>
+<p>Ergo: Programmierer können Benutzeroberflächen machen - aber die meisten eben nicht. Und das müssen wir alle dann wieder an den APIs erleiden die sie designen.</p>
+<p>Hab ich schon mal erwähnt das ich die libc immer weniger mag?</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/8/usability-und-programmierer/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/8/adium-otr/">
+        Adium + OTR
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-08-19">Dienstag, 19. August 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>So I want to be able to chat to my buddies in private. This is still very hard - one has to have all sorts of knowledge about encryption to get it right and even then the process is painful and hard to get right. Well, it's time to do something about it. <a href="http://adiumx.com/">Adium</a> has supported <a href="http://www.cypherpunks.ca/otr/">OTR</a> for some time now, and OTR recently gained the ability to use the <a href="http://en.wikipedia.org/wiki/Socialist_millionaire">Socialist Millionaire Protocol</a> as a means for authenticating chat partners to each other. The problem is, It's just not yet implemented in Adium.</p>
+<p>We'd like to change that.</p>
+<p>(Disclaimer: Imagine in long and fearful words me saying that this is not final and is just part of my thinking process and stuff I  want to get feedback on)
+The obvious first thing to do is to think about the GUI and what I want to achieve there. Adium is quite good, in that it's reasonably easy to set it up so that as much as possible is encrypted, or to start encryption by just a single mouse click. The most pressing problem lies in that it's very hard to verify that a buddy really is who he claims to be. This is because both users have to read and confirm a 20-something digit fingerprint to each other out of the band of im communication (preferably over the phone or in person).</p>
+<p>The <strong><em>Socialist Millionaire Protocol</em></strong> offers an alluring alternative - in theory, authentication is now as simple as you asking your partner a question that only he can answer correctly. If he provides the correct answer, dual-sided, authenticated encryption can be established. However, as shown in a <a href="http://www.cypherpunks.ca/~iang/pubs/otr_userstudy.pdf">usability study on the Pidgin implementation of OTR</a> bad GUI-Design can still ruin this great idea.</p>
+<p>So lets get think about how we can make this work as seamlessly as possible.</p>
+<p>Here's the example user that guides my thinking: Andrea, a history student wants to chat with her buddy Bert. She has no deeper understanding of computer science and cryptography, nor is she especially computer savvy. Even so she should be able to effectively secure her privacy with a few clicks and without any studying of handbooks or confusion on her part.</p>
+<p>Two parts are needed for this to work:
+ 1) Adium needs to inform her of the 'security status' of her connection without any doubt. This includes that it needs to show her in unambigous ways what she has to do next if she wants to get to a secure chat-connection. 
+ 2) Adium needs to allow her to run the <strong><em>Social Millionaire Protocol</em></strong>.</p>
+<p>For 1) I have some nice ideas already. (linked to at the end of the article. For 2) I'm still not very far. The obvious way would be to just open another window - but thats merely ok GUI-Design as it completely disrupts whatever the user wanted to do. Another alternative could be to do it inline in the chat window - but this leads to all sorts of confusion, as the chat window suddenly becomes the interface to something completely different than chatting - something which it wasn't meant to do.</p>
+<p>So, more drawing board needed there.</p>
+<p>On to some mockups. :)</p>
+<p>It's all basically the same idea. There are two ways that I see this working: either by showing the status of the chat inline in the message view - or not.</p>
+<p>Inline has several advantages - for one, it's a lot easier to program. However, it has severe usability disadvantages. It is hard to see for example, because the font is small and who reads those system messages anyway? Also running the <strong><em>Socialist Millionaire Protocol</em></strong> requires an action by the user, so that leaves me with either adding a hyperlink to the message field to start this (which is unexpected by the user) or just explaining him what to do (which is bad, if I have to explain to him, why not just let him do it from right there?)</p>
+<p>So I discarded that idea.</p>
+<p>What I really like is Firefox in this regard. Their way of showing that they just suppressed a popup or a cookie is just a perfect example of the kind of interface I have in mind. Easy to see, enough space to put a button and a nice way to tell the user some status that doesn't disturb his workflow if he doesn't bother / can't do anything about it right now.</p>
+<p>So I have something like this in mind:</p>
+<p><img src="../../2008/8/adium-otr/Encrypted-but-not-verified-1.png" alt="Image"></p>
+<p>This fits my requirements pretty good (more Ideas I toyed with at the end of the article). It clearly states what is happening, and gives the user an immediate means to do something about it. No confusion possible.</p>
+<p>Well, to be frank, wording is still a problem. "Verify his identity" is very long, and will be much longer in german. Same for the first sentence. Some users may also react with a heartfelt: "Now you tell me, when I tried to turn encryption on?". Also what if the user just doesn't care?</p>
+<p>Well, I'l ponder that some more.</p>
+<p>Next stop: Actually doing the <strong><em>Socialist Millionaire Protocol</em></strong>.</p>
+<p>After the user clicks the darned button, there be dragons. As I said above, I briefly toyed with the idea of doing everything inline the message view, however decided against that. My current working thesis is this:</p>
+<p><img src="../../2008/8/adium-otr/Dialog-based-implementation-of-the-Sociallist-Millionaire-Protocoll.png" alt="Image"></p>
+<p>This dialog has some merits: It clearly states what the user is supposed to do. It gives hints on how to do it and what to avoid, and it is mostly text.</p>
+<p>Well.... I'm not very content with it yet. Also I haven't had a good look at how <a href="http://www.cypherpunks.ca/otr/help/authenticate.php?lang=en">Pidgin actually implements this feature</a> (I wanted to build my own ideas unobstructed first).</p>
+<p>Well, onto that later.</p>
+<p>Here's the rest of my WIPs:</p>
+<p><img src="../../2008/8/adium-otr/Encrypted-but-not-verified-2.png" alt="Image"></p>
+<p>Note the lock in the menu-bar that also tells me the status of the conversation is private (to make the easy to miss  lock in the toolbar more prominent.</p>
+<p>I toyed with placing more locks, here's some results:</p>
+<p><img src="../../2008/8/adium-otr/Encrypted-status-display-inline-locks.png" alt="Image">
+<img src="../../2008/8/adium-otr/Encrypted-status-display.png" alt="Image"></p>
+<p>Just repeating something that doesn't work seems, to force it to work seems foolish though, so I thought about more radical approaches, of which I like this the most:</p>
+<p><img src="../../2008/8/adium-otr/Encrypted-status-display-color-change.png" alt="Image"></p>
+<p>The problem is to communicate to the user that he is in a completely different status now, and make it accessible at a glance. Well, why dont just change the background color? Again Firefox is an example here, when surfing to a secure site, the status bar is rendered completely different to give the user good feedback. Why not apply that to Adium?</p>
+<p>Oh and the inline SMP implementation:</p>
+<p><img src="../../2008/8/adium-otr/Inline-GUI-for-the-Sociallist-Millionaire-Protocol.png" alt="Image"></p>
+<p>Well.... It could be made to work... from a technological standpoint. :) Maybe it sparks some new ideas.</p>
+<p>Want to read more?</p>
+<ul>
+<li>[blog:2008/09/02/23.32 Second part of the conceptual work]</li>
+<li><a href="http://trac.adiumx.com/wiki/OTREncryption">Coordination for this feature</a></li>
+</ul>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/8/adium-otr/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/8/bei-vortra-gen-u-ber-das-programmieren/">
+        Bei Vorträgen über das Programmieren...
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-08-18">Montag, 18. August 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>... stellt sich immer wieder die Frage schöne relevante Zitate einzuflechten.</p>
+<p><a href="http://www.juixe.com/techknow/index.php/2008/08/17/favorite-programming-quotes/">Well, diese wunderschöne Sammlung macht mir das beim nächsten mal sicher einfacher.</a></p>
+<p>:)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/8/bei-vortra-gen-u-ber-das-programmieren/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/8/was-steht-eigentlich-in-der-eu-verfassung/">
+        Was steht eigentlich in der EU-Verfassung?
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-08-18">Montag, 18. August 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Ehrlich, wer weiss das?</p>
+<p><a href="http://de.youtube.com/watch?v=qWZbEKjcd1M">Er hier weiss als Kritiker dazu viel.</a></p>
+<p>Persönlich finde ich ihn reichlich unerträglich, inhaltlich ist er aber hochspannend.</p>
+<p>Zum Beispiel wusste ich nicht das man aus der Europäischen Union so ohne weiteres austreten kann. Als einzelnes Land.</p>
+<p>Er, dass ist <a href="http://de.wikipedia.org/wiki/Karl_Albrecht_Schachtschneider">Prof. Dr. Karl Albrecht Schachtschneider</a> der schon einige Verfassungsbeschwerden (davon einige Erfolgreich) hinter sich gebracht hat.</p>
+<p>Also absolut zuhörenswert.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/8/was-steht-eigentlich-in-der-eu-verfassung/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+  
+  
+    
+  <div class="pagination">
+    
+      <a href="../17/">&laquo; Previous</a>
+    
+    | 18 |
+    
+      <a href="../19/">Next &raquo;</a>
+    
+  </div>
+
+  
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

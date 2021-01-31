@@ -1,0 +1,412 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../static/style.css">
+    <link rel="stylesheet" href="../../../static/pygments.css">
+    <title>Blog</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="./">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="../../../en/blog/page/16/">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../">🏠</a>
+
+
+<a class="breadcrumb-item active" href="./">Blog</a>
+
+</nav>
+    </header>
+    <article class="page blog  container-fluid">
+      
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/10/regexe-updated/">
+        Regexe updated
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-10-12">Sonntag, 12. Oktober 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Hab ich mir doch gedacht, nur matching von regexen auf ganzen Strings ist doch langweilig - also hab ich noch <code>containsRegex:</code> hinzugefügt um etwas mehr komfort zu haben.</p>
+<p>Da dachte ich ja zuerst dass ein Regex wie dieser hier eigentlich nicht funktionieren dürfte: <code>.*^a</code> angewandt auf "aaa" - aber interessanterweise funktioniert das ohne Probleme. Muss ich wohl noch etwas an meinen Regex-Verständnis feilen.</p>
+<p>Ah well.</p>
+<p>[source:/open-source/SimpleRegexSupport/trunk/RegexTest.m  Code hier]</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/10/regexe-updated/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/10/wie-kriegt-man-eigentlich-mit-was-sich-im-linux-kernel-so-tut/">
+        Wie kriegt man eigentlich mit was sich im Linux Kernel so tut?
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-10-12">Sonntag, 12. Oktober 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Schließlich gibt es dort nicht so ausgezeichnete release notes wie man sie von <a href="http://archive.eclipse.org/eclipse/downloads/drops/S-3.4M7-200805020100/eclipse-news-M7.html">Eclipse</a>, <a href="http://library.gnome.org/misc/release-notes/2.24/">Gnome</a> oder <a href="https://wiki.ubuntu.com/IntrepidIbex/TechnicalOverview">Ubuntu</a> kennt.</p>
+<p>Die Antwort ist überraschenderweise: <a href="http://www.heise.de/open/Viel-bewegt-Die-Neuerungen-von-Linux-2-6-27--/artikel/116387/0">Heise lesen</a>. Und sogar <a href="http://www.heise-online.co.uk/open/Kernel-Log-Linux-2-6-27-Released--/features/111671">optional auch auf englisch</a>.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/10/wie-kriegt-man-eigentlich-mit-was-sich-im-linux-kernel-so-tut/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/10/cocoa-hat-ja-regex-support/">
+        Cocoa hat ja Regex Support
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-10-09">Donnerstag, 9. Oktober 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Überraschend.</p>
+<p>Das der so vollständig ist, hätte ich nicht erwartet. Aber in der Tat, <a href="http://www.icu-project.org/userguide/regexp.html">ICU-Regexe in ihrer ganzen Pracht</a>. Völlig ohne eine neue externe Dependency.</p>
+<p>Laut der Dokumentation sollte das sogar in 10.4 schon funktionieren - mit dem einen Caveat, dass multiline Support dort wohl von Hand eingeschaltet werden muss (via <code>(?m)</code>)</p>
+<p>Sowas wird da möglich:</p>
+<div class="hll"><pre><span></span><span class="k">if</span> <span class="p">([</span><span class="s">@&quot;aaa&quot;</span> <span class="nl">matchesRegex</span><span class="p">:</span><span class="s">@&quot;a{3}&quot;</span><span class="p">])</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;gotcha&quot;</span><span class="p">);</span>
+
+<span class="c1">// other examples</span>
+<span class="p">[</span><span class="s">@&quot;argh fnord argh&quot;</span> <span class="nl">matchesRegex</span><span class="p">:</span><span class="s">@&quot;.*</span><span class="se">\\</span><span class="s">bfnord</span><span class="se">\\</span><span class="s">b.*&quot;</span><span class="p">];</span>
+<span class="p">[</span><span class="s">@&quot;aaa&quot;</span> <span class="nl">matchesRegex</span><span class="p">:</span><span class="s">@&quot;</span><span class="se">\\</span><span class="s">w{3}&quot;</span><span class="p">];</span>
+</pre></div>
+<p>Und das mit extrem wenig Aufwand:</p>
+<div class="hll"><pre><span></span><span class="k">@interface</span> <span class="bp">NSString</span> <span class="nl">(SimpleRegexMatching)</span>
+<span class="p">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span> <span class="nf">matchesRegex:</span><span class="p">(</span><span class="bp">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">aRegex</span><span class="p">;</span>
+<span class="k">@end</span>
+
+<span class="k">@implementation</span> <span class="bp">NSString</span> <span class="nl">(SimpleRegexMatching)</span>
+<span class="p">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span> <span class="nf">matchesRegex:</span><span class="p">(</span><span class="bp">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">aRegex</span><span class="p">;</span>
+<span class="p">{</span>
+    <span class="kt">id</span> <span class="n">predicate</span> <span class="o">=</span> <span class="p">[</span><span class="bp">NSPredicate</span> <span class="nl">predicateWithFormat</span><span class="p">:</span><span class="s">@&quot;self matches %@&quot;</span><span class="p">,</span> <span class="n">aRegex</span><span class="p">];</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">predicate</span> <span class="nl">evaluateWithObject</span><span class="p">:</span><span class="nb">self</span><span class="p">];</span>
+<span class="p">}</span>
+<span class="k">@end</span>
+</pre></div>
+<p>Ich bin beeindruckt.</p>
+<p>[source:/open-source/SimpleRegexSupport/trunk/RegexTest.m  Code hier]</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/10/cocoa-hat-ja-regex-support/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/10/die-gegenwa-rtige-finanzkrise-ist/">
+        Die gegenwärtige Finanzkrise ist...
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-10-09">Donnerstag, 9. Oktober 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p><a href="http://www.youtube.com/watch?v=_o4IcNbfPMA">... eigentlich einfach zu verstehen.</a></p>
+<p>Zum weglegen. :)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/10/die-gegenwa-rtige-finanzkrise-ist/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/10/darfs-noch-etwas-mehr-atommu-ll-sein/">
+        Darfs noch etwas mehr Atommüll sein?
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-10-07">Dienstag, 7. Oktober 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Gerne auch Freihaus...</p>
+<p><a href="http://www3.ndr.de/ndrtv_pages_video/0,,SPM2362_VID4889718,00.html">Extra 3 hat es mal wieder genagelt.</a></p>
+<p>:-)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/10/darfs-noch-etwas-mehr-atommu-ll-sein/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/10/aus-einem-variablen-namen-einen-string-machen/">
+        Aus einem Variablen-Namen einen String machen
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-10-06">Montag, 6. Oktober 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Braucht man manchmal für Bindings. Gleichzeitig will ich aber nicht überall die namen meiner Variablen als Strings hinterlegen - schon alleine damit ich beim Refactorn auch alle Namen erwische.</p>
+<p>Also den Macro-Prozessor zur Rettung:</p>
+<div class="hll"><pre><span></span><span class="cp">#define NSStringize(aVariableName) @#aVariableName</span>
+</pre></div>
+<h1>::</h1>
+<p>macht aus einer beliebigen expression einen String
+ @::
+  und das @ davor macht aus einem constanten c-string einen ObjC-NSString.</p>
+<p>Und das problem ist gelöst. :)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/10/aus-einem-variablen-namen-einen-string-machen/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/10/history_v2/">
+        _HiStOrY_V2_
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-10-05">Sonntag, 5. Oktober 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Mit ein bisschen Hilfe von meinen Freunden...</p>
+<p>Heute hab ich mal wieder die aktuelle Version von <a href="http://bazaar-vcs.org/">Bazaar (1.7.1)</a> ausprobiert. Soweit ganz schnuckelig. Sogar der SVN Checkout von [svn://svn.adiumx.com/adium/trunk Adium] hat hervorragend geklappt.</p>
+<p>Ich muss sagen, beeindruckend.</p>
+<p>Nur mit dem Plugin <a href="http://bazaar-vcs.org/BzrTools">bzrtools</a> hatte ich Schwierigkeiten, denn die darin enthaltene shell (ein geiles feature) zu benutzen brachte bzr reproduzierbar zum Absturz. :-(</p>
+<p>Stellt sich mit hilfe von #bazaar und nach einigen Detours über den Python Debugger (nice!) und <a href="http://developer.apple.com/documentation/Darwin/Reference/ManPages/man1/dtruss.1m.html">dtruss</a> (nice!) heraus dass es an der libreadline liegt.</p>
+<p>Die hat sich nämlich geändert und erwartet inzwischen am Anfang eines History-Files als allererste Zeile diesen eintrag: <strong><em>_HiStOrY<em>V2</em></em></strong>.</p>
+<p>Na toll. Und ansonsten stürzt das Programm einfach ab. Also wer sich das ausgedacht hat, der gehört aber auch echt erschossen. Wenigstens die Fehlermeldung hätte vernünftig sein können. Grumpf.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/10/history_v2/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/10/ausnahmen-vs-regeln-in-der-usability/">
+        Ausnahmen vs. Regeln in der Usability
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-10-05">Sonntag, 5. Oktober 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Heute hatten wir wieder ein schönes Beispiel für Usability unter Windows. Zuerst das Setting. Eine Bekannte hatte auf einem USB-Stick Fotos mitgebracht und diese sollten auf einem Windows-Vista Notebook dann angeschaut werden.</p>
+<p>Das ganze wäre dann fast daran gescheitert, dass auf dem USB-Stick ein Trojaner drauf war und sich Windows nach Entdeckung und Beseitigung des Virus (durch irgend ein Third-Party-Programm) standhaft geweigert hat den Stick im Explorer anzuzeigen. Je nachdem in welchem der USB-Stecker man den Stick einsteckte erkannte Windows nicht mal das überhaupt ein USB-Stick eingesteckt war. Aber ich lenke ab, denn das Problem konnte ich mit etwas Windows-Shell dann doch lösen.</p>
+<p>Zum Thema: Nachdem der Ordner mit den Bildern im Explorer aufgemacht wurde, ging es nach einem Doppelklick auf das erste Bild los - der Bildbetrachter ging auf und die Slideshow ging los.</p>
+<p>Und das ist das Thema: Unter Windows öffnet der Bildbetrachter Bilder anders als sonst Programme Dateien öffnen - implizit wird dort nämlich der ganze Ordner geöffnet, damit man leicht eine Slideshow mit den Bildern starten kann.</p>
+<p>Und das hat doch immerhin so gut funktioniert, dass die Slideshows doch zusammen kamen.</p>
+<p>Das bringt aber die Abstrakte Frage mit, was passiert wenn solche "Ausnahmen" immer mehr werden. Verstehen die Anwender dann trotzdem noch das allgemeine Prinzip was dahinter liegt? Sind sie in der Lage zu abstrahieren und das Verhalten an anderen Stellen vorherzusagen?</p>
+<p>Ich sehe ein Problem darin, dass Computer für die meisten Menschen "magisch" sind - man lernt nur die magische Formel, die zu einem konkreten Ziel führt. Dass hinter den 30 Formeln die man mit der Zeit lernt ein Prinzip steht geht dann nur allzu oft verloren.</p>
+<p>Zurück zum Beispiel: Am Mac ist es so, dass man, wenn man eine Datei öffnet, dann auch nur diese Datei aufgeht. Und das ist auch so wenn man ein Bild öffnet. Unter Windows ist das anders, denn man öffnet im Bildbetrachter (wehe wenn die Zuordnung verloren geht, weil man ein Bildbearbeitungsprogramm installiert hat) der von sich aus schon die nächsten Bilder kennt und es einem leicht macht eine Slideshow zu starten.</p>
+<p>Was ist Besser? Im Beispiel waren relative Laien in der Lage eine Slideshow zu starten - das ist ein Plus. Hätten sie das auch auf einem Mac geschafft?</p>
+<p>Wann ist es Besser so eine Ausnahme vom regulären Benutzungs-Konzept zu machen und wann nicht? Für mich ist die Grenze völlig unklar - nur dass es irgendwann den Punkt gibt, wo zu viele Ausnahmen selbst zum Problem werden.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/10/ausnahmen-vs-regeln-in-der-usability/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/10/creating-nsnumbers-from-arbitrary-values/">
+        Creating NSNumbers from arbitrary values...
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-10-04">Samstag, 4. Oktober 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>... without needing to care which constructor to use this time to get it right.</p>
+<p>Well, I was offended by this just long enough, so I sat down and wrote a macro that allows this:</p>
+<div class="hll"><pre><span></span><span class="c1">//  Use like this:</span>
+    <span class="kt">id</span> <span class="n">dict</span> <span class="o">=</span> <span class="p">[</span><span class="bp">NSDictionary</span> <span class="n">dictionary</span><span class="p">];</span>
+    <span class="bp">NSNumber</span> <span class="o">*</span><span class="n">ten</span> <span class="o">=</span> <span class="n">NMMakeNumber</span><span class="p">(</span><span class="mf">10.0f</span><span class="p">);</span>
+    <span class="p">[</span><span class="n">dict</span> <span class="nl">setObject</span><span class="p">:</span><span class="n">ten</span> <span class="nl">forKey</span><span class="p">:</span><span class="s">@&quot;numberOfFingers&quot;</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">dict</span> <span class="nl">setObject</span><span class="p">:</span><span class="n">NMMakeNumber</span><span class="p">(</span><span class="mi">23</span><span class="p">)</span> <span class="nl">forKey</span><span class="p">:</span><span class="s">@&quot;fnord&quot;</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">dict</span> <span class="nl">setObject</span><span class="p">:</span><span class="n">NMMakeNumber</span><span class="p">(</span><span class="nb">YES</span><span class="p">)</span> <span class="nl">forKey</span><span class="p">:</span><span class="s">@&quot;wantFries&quot;</span><span class="p">];</span>
+</pre></div>
+<p>I'ts almost the way <a href="http://en.wikipedia.org/wiki/Object_type#Autoboxing">Autoboxing</a> works in <a href="http://java.sun.com/j2se/1.5.0/docs/guide/language/autoboxing.html">Java</a> or C#.</p>
+<p>This quite eases the pain of creating NSNumbers correctly for me, because it means I don't have to repeat the type of what I am working with quite as often.</p>
+<p>Pretty <a href="http://en.wikipedia.org/wiki/DRY">DRY</a>. :)</p>
+<p>[source:/open-source/NSNumberCreator/trunk  Here's the code to a NSNumber category and a makro that makes this happen.]</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/10/creating-nsnumbers-from-arbitrary-values/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/9/wundervolle-werbung/">
+        Wundervolle Werbung...
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-09-29">Montag, 29. September 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p><a href="http://www.picvi.com/2008/07/14/video-social-commercial/">... fürs Anschnallen!</a></p>
+<p>Super. :)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/9/wundervolle-werbung/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+  
+  
+    
+  <div class="pagination">
+    
+      <a href="../15/">&laquo; Previous</a>
+    
+    | 16 |
+    
+      <a href="../17/">Next &raquo;</a>
+    
+  </div>
+
+  
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

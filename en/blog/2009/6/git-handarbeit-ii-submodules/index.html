@@ -1,0 +1,146 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../../static/pygments.css">
+    <title>Git Handarbeit II: Submodules</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../../../blog/feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="../../../../../blog/2009/6/git-handarbeit-ii-submodules/">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="./">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../../">🏠</a>
+
+
+<a class="breadcrumb-item " href="../../../">Blog</a>
+
+
+<a class="breadcrumb-item active" href="./">Git Handarbeit II: Submodules</a>
+
+</nav>
+    </header>
+    <article class="page git-handarbeit-ii-submodules  container-fluid">
+      
+  
+  <article class="blog-post">
+    <header>
+      <h2>
+        
+        Git Handarbeit II: Submodules
+        
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-06-21">Sunday, June 21, 2009</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Noch so eine Stelle an der GIT einem extra viel Handarbeit aufdrückt. Submodules.</p>
+<p>Erst mal die Idee (die eigentlich ganz gut ist): Oft will man Teile der Software (Frameworks, Plugins, ...) eigentlich als eigenes Projekt in einem eigenen Repository entwickeln. Und das ist GUT (TM).</p>
+<p>Daher bieten eigentlich alle etwas fortgeschritteneren Versionskontrollsysteme irgend eine Möglichkeit solche externen Repositories einzubinden, damit man es einfach hat an aktuelle Versionen dieses Codes heranzukommen.</p>
+<p>Dazu gibt es jetzt in der Regel zwei Ansätze:  Entweder man verlinkt einfach auf den HEAD des anderen Repos oder auf eine bestimmte Revision. Letzteres ist im allgemeinen Fall zwingend, denn sonst hat man nie die Chance einen alten Build auch tatsächlich exakt wieder herzustellen - im Speziellen Fall ist ersteres aber sehr Praktisch, wenn man z.B. aus einem globalen Repository einfach Teile an verschiedenen Stellen einblenden möchte, damit sie im Repo nur einmal, im Checkout aber mehrfach oder einfach an einer anderen Stelle erscheinen.</p>
+<p>SVN macht das mit <a href="http://svnbook.red-bean.com/en/1.0/ch07s03.html">svn:external</a> attributen die sowohl auf HEAD als auch auf spezifische Revisionen verlinken können. HG macht das mit <a href="http://www.selenic.com/mercurial/wiki/ForestExtension">forests</a> (<a href="http://www.selenic.com/mercurial/wiki/subrepos">noch eine extension</a>), bzr weiß ich nicht und git macht das mit submodules.</p>
+<p>Bei SVN hat man noch den Nachteil das es, weil es branches und tags nur als Verzeichnisse kennt natürlich auch Handarbeit erfordert, das hießt, dass man beim Taggen von HEAD z.B. nicht automatisch von dem link auf einen anderen HEAD auf einen Link auf eine spezifische Revision umschalten kann. Das gibt dann das Ergebnis, dass man oft im Tag auf den HEAD eines anderen Teils des Repos verweist. Gratulation! Und wiedererzeugbare Builds ade.</p>
+<p>Besonders geärgert haben mich aber die GIT-Submodules. Zuerst: Die sind auch ein Plugin - und in bester GIT manier gibt es natürlich überhaupt keine integration in die anderen Kommandos.</p>
+<p>Das bedeutet schon mal das man nicht ein Repository pullen kann um danach einen Build zu machen - NEIN, man muss erst merken dass man noch die Submodules benötigt und dann <code>git submodule init &amp;&amp; git submodule update</code> eingeben.</p>
+<p>Yeah. Give me useless extra steps!</p>
+<p>Es wird aber noch besser, weil es keine Intgegration gibt, sieht man natürlich mit <code>git status</code> nicht das es in einem submodule Änderungen gab. Ok, das stimmt nicht ganz. Man sieht nicht dass es in einem submodule uncommittete Änderungen gab. Commitet man dann nämlich dort, dann sieht man im parent repository dass sich etwas verändert hat - und dass muss man dann nochmal committen.</p>
+<p>Yeah. Give me useless extra steps!</p>
+<p>Auch schön, wenn man z.B. von GitHub ein Projekt mit Submodules auscheckt, dann zeigt der Origin des Projekts auf GitHub - sinnvoll, weil dahin wird man seine eigenen changes ja schieben wollen, damit Upstream sie mergen kann. Nicht so bei submodules - dort zeigt der origin natürlich auf das ursprüngliche Projekt - auf das man natürlich regelmäßig nicht pushen kann/will. Man muss also einen eigenen branch des submodules auf GitHub anlegen und dann das bei sich von hand als Branch registrieren und dann immer daran denken das im submodule natürlich nicht origin sonder ein anderer name für den parent branch gilt.</p>
+<p>Yeah. Give me useless extra steps!</p>
+<p>Hach, und natürlich sind GIT submodules IMMER auf eine bestimmte Revision gebunden - tollerweise auch gleich ohne mitzubekommen auf welchem Branch diese jetzt liegt. Das heißt dass man sowieso dort drin per default nix committen kann. Man muss also in jedem fall einen eigenen Remote clone des origins anlegen, den als neuen Remote eintragen, dann einen lokalen tracking branch erstellen, auf den wechseln, dort dann commiten und jeweils nicht vergessen diese Commits im Parent Repo dann zu bestätigen (einzeln natürlich, sonst sieht man dort die history nicht). Das geile daran: macht man dann im Parent Repo einmal <code>git submodule update</code> ist man natürlich wieder auf einer disconnected revision.</p>
+<p>Yeeehaw. Give me useless extra steps!</p>
+<p>Umbenennen ist noch so eine Sache, DVCS sind ja so toll beim Mergen, nicht? Aber wehe man benennt ein Submodule um. Dann nämlich kriegt man das nach <code>git pull &amp;&amp; git submodule update</code> NICHT. Nein, viel besser man muss lediglich <code>.git/config</code> von hand bearbeiten um den alten submodule Eintrag zu entfernen und dann ein <code>git submodule init &amp;&amp; git submodule update</code> machen.</p>
+<p>Yeah. Give me useless extra steps!</p>
+<p>Mein Fazit: GIT, das Tool für Leute die gerne mehr Zeit in ihr DVCS als in ihre Software stecken wollen.</p>
+
+    </section>
+    
+  </article>
+
+  <nav>
+    
+  <div class="category-list">
+    Kategorien:
+      
+      <a href="../../../../../categories/fnord/">Fnord</a>
+      , 
+    
+      
+      <a href="../../../../../categories/code/">Software Development</a>
+      
+    
+  </div>
+
+    
+    <div class="relative-navigation">
+      
+        <div class="prev">Vorheriges Post: <a class="prev" href="../../7/programmierer-fun/">Programmierer-Fun</a></div>
+      
+      
+        <div class="next">Nächstes Post: <a class="next" href="../mal-auf-den-punkt-gebracht/">Mal auf den Punkt gebracht</a></div>
+      
+    </div>
+    
+  </nav>
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../../../blog/feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

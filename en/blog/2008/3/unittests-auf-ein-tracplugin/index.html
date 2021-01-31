@@ -1,0 +1,196 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../../static/pygments.css">
+    <title>UnitTests auf ein TracPlugin...</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../../../blog/feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="../../../../../blog/2008/3/unittests-auf-ein-tracplugin/">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="./">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../../">🏠</a>
+
+
+<a class="breadcrumb-item " href="../../../">Blog</a>
+
+
+<a class="breadcrumb-item active" href="./">UnitTests auf ein TracPlugin...</a>
+
+</nav>
+    </header>
+    <article class="page unittests-auf-ein-tracplugin  container-fluid">
+      
+  
+  <article class="blog-post">
+    <header>
+      <h2>
+        
+        UnitTests auf ein TracPlugin...
+        
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-03-14">Friday, March 14, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>... sind eine schöne Sache. Wenn man sie denn hinkriegt.</p>
+<p>Da wäre zuerst der einfache Fall: Was macht man um eine Wiki-Seite zu erzeugen und zu laden?</p>
+<p>Well, hier ist wie es geht:</p>
+<div class="hll"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="kn">import</span> <span class="nn">unittest</span>
+
+<span class="kn">from</span> <span class="nn">trac.wiki.model</span> <span class="kn">import</span> <span class="n">WikiPage</span>
+<span class="kn">from</span> <span class="nn">trac.test</span> <span class="kn">import</span> <span class="n">EnvironmentStub</span>
+
+<span class="k">class</span> <span class="nc">PluginTests</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">test_can_save_and_load_wiki_page</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">env</span> <span class="o">=</span> <span class="n">EnvironmentStub</span><span class="p">()</span>
+        <span class="n">page</span> <span class="o">=</span> <span class="n">WikiPage</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="s2">&quot;Foo&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">page</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;barfoo&quot;</span>
+        <span class="n">page</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;fnord&quot;</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="s2">&quot;localhost&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="s2">&quot;barfoo&quot;</span><span class="p">,</span> <span class="n">WikiPage</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="s2">&quot;Foo&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+<p>Soweit nicht soo schwer. Vor allem sehr schick, das das <code>EnvironmentStub()</code> einem die ganze Arbeit abnimmt um das Trac-Environment UnitTest fähig zu machen. Ein Call und alles ist da - inklusive einer in-memory Sqlite Datenbank.</p>
+<p>Nice.</p>
+<p>Der eigentliche Hammer ist dann aber, wenn man ein Plugin bauen will das von anderen Plugins abhängt. Das ist nämlich deutlich komplizierter.</p>
+<p>Da ergibt sich nämlich das Problem, das man plötzlich das Component-System von Trac verstehen muss, damit man überhaupt auf die Klassen und <code>ExtensionPoints</code> eines anderen Plugins aufbauen kann.</p>
+<p>Für uns um Beispiel das TracTags-Plugin. Dieser Blog basiert auf diesen Tags. Blog-Posts werden durch einen speziellen Tag ("blog") zu einem Blog-Post, Kategorien sind nur Tags und überhaupt funktioniert alles nur über Tags. Tags sind cool.</p>
+<p>Aber, man muss das Plugin erst einmal schwer zur Zusammenarbeit überreden - denn, es benötigt ein Datenbankupgrade damit es überhaupt funktioniert.</p>
+<p>Und überhaupt ist die Datenbank am Anfang total leer. :/</p>
+<p>Um es gleich zu verraten: Die Lösung lag darin, das man dem Environment einerseits sagen muss, das man gerne Standard-Daten hätte und andererseits, welche Plugins es alles aktivieren soll. Nicht schwer. Nur nicht offensichtlich. :(</p>
+<div class="hll"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="kn">import</span> <span class="nn">unittest</span>
+
+<span class="kn">from</span> <span class="nn">trac.wiki.model</span> <span class="kn">import</span> <span class="n">WikiPage</span>
+<span class="kn">from</span> <span class="nn">trac.test</span> <span class="kn">import</span> <span class="n">Mock</span><span class="p">,</span> <span class="n">EnvironmentStub</span><span class="p">,</span> <span class="n">MockPerm</span>
+
+<span class="kn">from</span> <span class="nn">tractags.api</span> <span class="kn">import</span> <span class="n">TagSystem</span>
+
+<span class="kn">from</span> <span class="nn">tractags.model</span> <span class="kn">import</span> <span class="n">TagModelProvider</span>
+
+<span class="k">class</span> <span class="nc">PostFinderTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">env</span> <span class="o">=</span> <span class="n">EnvironmentStub</span><span class="p">(</span><span class="n">default_data</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">enable</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tractags.*&quot;</span><span class="p">,</span> <span class="s1">&#39;trac.*&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">upgrade</span><span class="p">()</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+
+    <span class="k">def</span> <span class="nf">test_can_save_and_load_wiki_page</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">page</span> <span class="o">=</span> <span class="n">WikiPage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">,</span> <span class="s2">&quot;Foo&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">page</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;barfoo&quot;</span>
+        <span class="n">page</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;fnord&quot;</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="s2">&quot;localhost&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="s2">&quot;barfoo&quot;</span><span class="p">,</span> <span class="n">WikiPage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">,</span> <span class="s2">&quot;Foo&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_can_add_tags_and_retrieve_tagged_pages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">trac.web.href</span> <span class="kn">import</span> <span class="n">Href</span>
+        <span class="n">page</span> <span class="o">=</span> <span class="n">WikiPage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">,</span> <span class="s2">&quot;Foo&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">page</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;barfoo&quot;</span>
+        <span class="n">tag_system</span> <span class="o">=</span> <span class="n">TagSystem</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">)</span>
+        <span class="n">req</span> <span class="o">=</span> <span class="n">Mock</span><span class="p">(</span><span class="n">perm</span><span class="o">=</span><span class="n">MockPerm</span><span class="p">(),</span> <span class="n">args</span><span class="o">=</span><span class="p">{},</span> <span class="n">href</span><span class="o">=</span><span class="n">Href</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">))</span>
+        <span class="n">tag_system</span><span class="o">.</span><span class="n">add_tags</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="n">page</span><span class="o">.</span><span class="n">resource</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;blog&quot;</span><span class="p">])</span>
+        <span class="n">page</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;fnord&quot;</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="s2">&quot;localhost&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="s2">&quot;barfoo&quot;</span><span class="p">,</span> <span class="n">WikiPage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">,</span> <span class="s2">&quot;Foo&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+        <span class="n">blog_resources</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tag_system</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="s2">&quot;blog&quot;</span><span class="p">)]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">blog_resources</span><span class="p">))</span>
+</pre></div>
+<p>Mei war das eine Arbeit die ganzen Objekte zusammen zu suchen die man für <code>test_can_add_tags_and_retrieve_tagged_pages()</code> benötigt.</p>
+<p>Well, ein start ist gemacht, aus dem wir jetzt einen Page-Loader refactor-n (-ieren?) werden.</p>
+<p>Yay!</p>
+
+    </section>
+    
+  </article>
+
+  <nav>
+    
+  <div class="category-list">
+    Kategorien:
+      
+      <a href="../../../../../categories/code/">Software Development</a>
+      
+    
+  </div>
+
+    
+    <div class="relative-navigation">
+      
+        <div class="prev">Vorheriges Post: <a class="prev" href="../die-provider-sollen-gefa-lligst-p2p-verhindern/">Die Provider sollen gefälligst P2P verhindern!</a></div>
+      
+      
+        <div class="next">Nächstes Post: <a class="next" href="../heute-blog-ich-nicht/">Heute blog ich nicht</a></div>
+      
+    </div>
+    
+  </nav>
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../../../blog/feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

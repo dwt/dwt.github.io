@@ -1,0 +1,536 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../static/pygments.css">
+    <title>Blog</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../../blog/feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="../../../../blog/page/31/">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="./">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../">🏠</a>
+
+
+<a class="breadcrumb-item active" href="./">Blog</a>
+
+</nav>
+    </header>
+    <article class="page blog  container-fluid">
+      
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/2/cafe-wall-illusion-saver-was-skewed-lines-saver/">
+        Café Wall Illusion Saver (was Skewed Lines Saver)
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-02-19">Tuesday, February 19, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Here it comes, the new version!</p>
+<p>Now with configurable animation speed and block size. (Though I still find the default most pleasing :)</p>
+<p>Oh, and I also fixed the buildscript so it now produces <code>good</code> zip files. Sorry for that on the first try.</p>
+<p>Have fun trying it till your eyes become squared (as my boss uses to say. :)</p>
+<ul>
+<li><a href="http://dwt.schwarz-online.org/software/CafeWallIllusion.zip">download</a></li>
+<li>[source:open-source/skewed-lines-illusion-screensaver browse source]</li>
+</ul>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/2/cafe-wall-illusion-saver-was-skewed-lines-saver/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/2/trac-als-homepage/">
+        Trac als Homepage
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-02-18">Monday, February 18, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>(Zu <a href="http://musicbrainz.org/track/9aeaaebe-2e01-4984-b7aa-6f43a5d77801.html">Amy Amy Amy</a>)</p>
+<p>Trac als Homepage hat sich für mich ja schon bewährt. Ein Wiki, eine Versionsverwaltung, Theoretisch auch noch Bug-Tracking (deaktiviert wg. Spammern) - was will man mehr.</p>
+<p>Naja, einen Blog. Und da fängt das Problem dann auch schon an.</p>
+<p>Traditionell sind Blogs alle in HTML oder mit merkwürdigen Wysiwyg-Editoren die nicht richtig funktionieren oder so beschränkt sind, das man darin gar nicht alles machen kann was man will (z.B. Source-Code highlighten. Noch dazu Objective-C!)</p>
+<p>Ausserdem will ich das mein Blog sauber mit meinem Wiki Verlinkt ist und ich die normale Wiki-Syntax zum Bloggen verwenden kann.</p>
+<p>Das mache ich bisher mit dem <a href="http://trac-hacks.org/wiki/TracBlogPlugin">TracBlogPlugin</a>, nachdem ich früher mal mit dem <a href="http://trac-hacks.org/wiki/SimpleBlogPlugin">SimpleBlogPlugin</a> eher... unzufrieden war.</p>
+<p>Leider aber ist auch das TracBlogPlugin nicht perfekt. Zwar setzt es auf das <a href="http://trac-hacks.org/wiki/TagsPlugin">TracTags</a> Plugin auf, das ganz excelent ist - aber leider bleiben einige schwächen.</p>
+<ul>
+<li>History + Archiv ist mehr oder weniger nicht vorhanden</li>
+<li>Kommentare gehen nicht.<ul>
+<li>Moderation derselben schon gleich gar nicht.</li>
+</ul>
+</li>
+<li>RSS-Feeds sind eher... nun ja, mit einigem Experimentieren kriegt man einiges hin, aber schön ist es nicht.</li>
+<li>WeblogPings und Backlinks werden nicht unterstützt.</li>
+<li>Blogrolls etc... alles von hand.</li>
+<li>XMLRPC... Ah well.</li>
+</ul>
+<p>Weiterentwickelt wurde das Plugin seit fast einem Jahr nicht mehr (ok, in <a href="http://trac-hacks.org/wiki/TracBlogPlugin#RecentChanges">den letzten Tagen</a> passiert wieder etwas, mal schauen wie das weiter geht)</p>
+<p>Jetzt hatte ich mir schon überlegt [vielleicht selber Hand anzulegen], da stellt sich heraus, das schon jemand anderes deutlich entnervt war und das Plugin <a href="http://trac-hacks.org/wiki/FullBlogPlugin">FullBlog</a> entwickelt hat.</p>
+<p>Pro:</p>
+<ul>
+<li>Feeds++</li>
+<li>Kategorien (mit TracTags Unterstützung?)</li>
+<li>Kommentare + Spamfilterung!</li>
+<li>XMLRPC support</li>
+</ul>
+<p>Cons:</p>
+<ul>
+<li>Seiten sind nicht im normalen Wiki-Namespace (Aber man kann wohl hin und her linken)</li>
+<li>Ich kann also nicht alle bestehenden Postings direkt übernehmen</li>
+<li>Der Code malt (da er keine normalen Wiki-Seiten verwendet) direkt in der Datenbank herum. Gnah.</li>
+</ul>
+<p>Mehr hab ich mir noch nicht angesehen. Aber eine vernünftige Blog-Integration für Trac wäre Gold wert. Will schließlich heute jeder haben, einen Blog.
+Ah well.</p>
+<p>Eye in the Sky Projektideen:</p>
+<ul>
+<li>Endlich mehr Blogging Features hier im Trac</li>
+<li>Mehr Release Management Unterstützung<ul>
+<li>Upload von neuen Releases</li>
+<li>App-Cast auto-generieren - mit Wiki-Seite für die Change-Notes</li>
+</ul>
+</li>
+<li>Buildserver wäre ein Traum - geht aber nicht solange ich auf Linux hoste und für den Mac Entwickle.</li>
+</ul>
+<p>Diesen Freitag 17:00 Uhr treff ich mich mit <a href="http://www.felix-schwarz.name/Hauptseite">Felix</a> und <a href="http://user.cs.tu-berlin.de/~felixf/">Felix</a> in der <a href="https://wiki.freitagsrunde.org/">Freitagsrunde</a> und wir werden mal weiter beraten was wir mit Trac weiter machen. Wer Trac Hacken mag oder schon tut und dazukommen mag ist natürlich herzlich eingeladen. :)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/2/trac-als-homepage/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/2/bei-mac-donalds/">
+        Bei Mac Donalds
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-02-17">Sunday, February 17, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Nicht nur das es jede menge kranke <a href="http://www.youtube.com/watch?v=KMUb0aQCaz8">Mc</a> <a href="http://www.youtube.com/watch?v=XrfM0z0Xx_E">Donalds</a> <a href="http://www.youtube.com/watch?v=Jn_IqL6cBkk&amp;NR=1">Werbung</a> gibt.</p>
+<p>Noch viel kranker sind nur <a href="http://www.youtube.com/watch?v=bt1dOXsu1Tg">die Leute die bei McDonalds einkaufen...</a></p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/2/bei-mac-donalds/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/2/logen-von-beliebig-vielen-argumenten/">
+        LOGen von beliebig vielen Argumenten
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-02-16">Saturday, February 16, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Fehlt noch ein letzter Schritt - der erstaunlicherweise ganz einfach war und ausserdem noch ein ganz anderes Problem löste...</p>
+<p>Zuerst die Implementierung:</p>
+<div class="hll"><pre><span></span><span class="cp">#define LOG(what, variableArguments...) \</span>
+<span class="cp">    [[Log sharedLog] logObjcType:@encode(typeof(what)) \</span>
+<span class="cp">        arguments:(void *)what , ##variableArguments]</span>
+
+<span class="p">-</span> <span class="nf">logObjcType:</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="nv">typeString</span> <span class="nf">arguments:</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span> <span class="nv">what</span><span class="p">,</span> <span class="p">...;</span> <span class="p">{</span>
+    <span class="kt">id</span> <span class="n">formatString</span> <span class="o">=</span>  <span class="p">[</span><span class="nb">self</span> <span class="nl">stringFromType</span><span class="p">:</span><span class="n">typeString</span> <span class="nl">inValue</span><span class="p">:</span><span class="n">what</span><span class="p">];</span>
+
+    <span class="kt">va_list</span> <span class="n">variadicArguments</span><span class="p">;</span>
+    <span class="n">va_start</span><span class="p">(</span><span class="n">variadicArguments</span><span class="p">,</span> <span class="n">what</span><span class="p">);</span>
+
+    <span class="kt">id</span> <span class="n">logString</span> <span class="o">=</span> <span class="p">[[[</span><span class="bp">NSString</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithFormat</span><span class="p">:</span><span class="n">formatString</span> 
+                    <span class="nl">arguments</span><span class="p">:</span><span class="n">variadicArguments</span><span class="p">]</span> <span class="n">autorelease</span><span class="p">];</span>
+
+    <span class="n">va_end</span><span class="p">(</span><span class="n">variadicArguments</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="p">[</span><span class="nb">self</span> <span class="nl">log</span><span class="p">:</span><span class="n">logString</span><span class="p">];</span>
+<span class="p">}</span>
+</pre></div>
+<p>Eigentlich hatte ich hier mehr Probleme erwartet.</p>
+<p>Ganz nebenbei löst das auch noch ein Problem von ganz zu Anfang:</p>
+<div class="hll"><pre><span></span><span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;%@&quot;</span><span class="p">,</span> <span class="p">[</span><span class="bp">NSString</span> <span class="nl">stringWithFormat</span><span class="p">:</span><span class="s">@&quot;%s,%s&quot;</span><span class="p">,</span> <span class="s">&quot;fnord&quot;</span><span class="p">,</span> <span class="s">&quot;fnord&quot;</span><span class="p">]);</span>
+</pre></div>
+<p>Das macht jetzt keine Probleme mehr, da die zusätzlichen Komas vom Präprozessor (fälschlicherweise) als zusätzliche Argumente zur dem variadischen Makro aufgefasst werden. Hehe...</p>
+<p>Jetzt fehlt nur noch ein Backend für den Logger und ich bin glücklich. Andererseits... da gibt es natürlich auch <a href="http://log4cocoa.sourceforge.net/">Log4Cocoa</a> das ich einfach erweitern könnte.</p>
+<p>Hm. Mal schauen.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/2/logen-von-beliebig-vielen-argumenten/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/2/c-typen-in-die-laufzeitumgebung-heben/">
+        C-Typen in die Laufzeitumgebung heben
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-02-15">Friday, February 15, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Wendet man <code>@encode()</code> jetzt auf ein paar Deklarationen an, erhält man folgende Ergebnisse:</p>
+<div class="hll"><pre><span></span><span class="cp">#define LOG(what) [[Log sharedLog] logObjcType:@encode(typeof(what)) arguments:(void *)what]</span>
+
+<span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;fnord&quot;</span><span class="p">);</span> <span class="c1">// @</span>
+<span class="n">LOG</span><span class="p">(</span><span class="s">&quot;foo&quot;</span><span class="p">);</span> <span class="c1">// [3c]</span>
+<span class="kt">char</span> <span class="o">*</span><span class="n">string</span> <span class="o">=</span> <span class="s">&quot;fnord&quot;</span><span class="p">;</span>
+<span class="n">LOG</span><span class="p">(</span><span class="n">string</span><span class="p">);</span> <span class="c1">// *</span>
+</pre></div>
+<p>Ich parse das so:</p>
+<div class="hll"><pre><span></span><span class="cp">#define RAISE_UNSUPPORTED_TYPE(encodedType) \</span>
+<span class="cp">    [NSException raise:NSInvalidArgumentException \</span>
+<span class="cp">        format:@&quot; you are trying to log something that is not a string: %s&quot;, encodedType]</span>
+
+<span class="p">-</span> <span class="nf">stringFromType:</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="nv">encodedType</span> <span class="nf">inArray:</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="nv">what</span><span class="p">;</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="sc">&#39;[&#39;</span> <span class="o">!=</span> <span class="o">*</span><span class="n">encodedType</span><span class="p">)</span> <span class="n">RAISE_UNSUPPORTED_TYPE</span><span class="p">(</span><span class="n">encodedType</span><span class="p">);</span>
+
+    <span class="n">encodedType</span><span class="o">++</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="n">length</span> <span class="o">=</span> <span class="n">strtol</span><span class="p">(</span><span class="n">encodedType</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">encodedType</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="sc">&#39;c&#39;</span> <span class="o">!=</span> <span class="o">*</span><span class="n">encodedType</span><span class="p">)</span> <span class="n">RAISE_UNSUPPORTED_TYPE</span><span class="p">(</span><span class="n">encodedType</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="p">[</span><span class="bp">NSString</span> <span class="nl">stringWithCString</span><span class="p">:</span><span class="n">what</span> <span class="nl">length</span><span class="p">:</span><span class="n">length</span><span class="mi">-1</span><span class="p">];</span> <span class="c1">// \0 ignored</span>
+<span class="p">}</span>
+
+<span class="o">-</span> <span class="nl">stringFromType</span><span class="p">:(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">encodedType</span> <span class="nl">inValue</span><span class="p">:(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="n">what</span><span class="p">;</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="sc">&#39;@&#39;</span> <span class="o">==</span> <span class="o">*</span><span class="n">encodedType</span><span class="p">)</span> <span class="k">return</span> <span class="p">[(</span><span class="kt">id</span><span class="p">)</span><span class="n">what</span> <span class="n">description</span><span class="p">];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="sc">&#39;*&#39;</span> <span class="o">==</span> <span class="o">*</span><span class="n">encodedType</span><span class="p">)</span> <span class="k">return</span> <span class="p">[</span><span class="bp">NSString</span> <span class="nl">stringWithCString</span><span class="p">:(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">what</span><span class="p">];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="sc">&#39;[&#39;</span> <span class="o">==</span> <span class="o">*</span><span class="n">encodedType</span><span class="p">)</span> <span class="k">return</span> <span class="p">[</span><span class="nb">self</span> <span class="nl">stringFromType</span><span class="p">:</span><span class="n">encodedType</span> <span class="nl">inArray</span><span class="p">:</span><span class="n">what</span><span class="p">];</span>
+    <span class="n">RAISE_UNSUPPORTED_TYPE</span><span class="p">(</span><span class="n">encodedType</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nb">nil</span><span class="p">;</span> <span class="cm">/* never reached */</span>
+<span class="p">}</span>
+</pre></div>
+<p>(Vorschläge wie man das besser machen kann, bitte gerne an mich! ( z.B. via spamfaenger ät gmx de))</p>
+<p>Fehlt nur noch die Erweiterung auf beliebig viele Argumente. Dazu aber morgen mehr. :)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/2/c-typen-in-die-laufzeitumgebung-heben/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/2/mit-c-makros-etwas-tun-was-mit-ihnen-nicht-mo-glich-ist/">
+        Mit C Makros etwas tun, was mit ihnen nicht möglich ist
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-02-15">Friday, February 15, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Das Problem ist also ein Makro zu schreiben, das typsicher und nach Typen überladen ist, eine variable Anzahl von Argumenten erhält und zudem einfach und verständlich ist.</p>
+<p>Zugegeben, mir ist noch nicht klar wie ich das umsetzen kann.</p>
+<p>Aber, wenn man das Problem nur ein klein wenig vereinfacht, und nur versucht eines oder mehrere Argumente zu unterstützen...</p>
+<p>Also zum Beispiel ein <code>LOG()</code> Macro, dass als erstes Argument irgend etwas erhalten kann (für den Anfang, irgend etwas das sich in einen String umwandeln lässt) dann erhält man etwas das sich so verwenden lässt:</p>
+<div class="hll"><pre><span></span><span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;fnord&quot;</span><span class="p">);</span>
+<span class="n">LOG</span><span class="p">(</span><span class="s">&quot;fnord&quot;</span><span class="p">);</span>
+<span class="kt">char</span> <span class="o">*</span><span class="n">string</span> <span class="o">=</span> <span class="s">&quot;fnord&quot;</span><span class="p">;</span>
+<span class="n">LOG</span><span class="p">(</span><span class="n">string</span><span class="p">);</span>
+<span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;%@&quot;</span><span class="p">,</span> <span class="s">@&quot;fnord&quot;</span><span class="p">);</span>
+<span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;%s&quot;</span><span class="p">,</span> <span class="s">&quot;fnord&quot;</span><span class="p">);</span>
+<span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;%d&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+<span class="n">LOG</span><span class="p">(</span><span class="s">&quot;%s&quot;</span><span class="p">,</span> <span class="s">&quot;fnord&quot;</span><span class="p">);</span>
+<span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;%@&quot;</span><span class="p">,</span> <span class="p">[</span><span class="bp">NSString</span> <span class="nl">stringWithFormat</span><span class="p">:</span><span class="s">@&quot;%s,%s&quot;</span><span class="p">,</span> <span class="s">&quot;fnord&quot;</span><span class="p">,</span> <span class="s">&quot;fnord&quot;</span><span class="p">]);</span>
+</pre></div>
+<p>Die Implementierung ist allerdings etwas tricky.</p>
+<p>Typinvariante Makros wie <code>MAX(x, y)</code> schreibt man üblicherweise so:</p>
+<div class="hll"><pre><span></span><span class="cp">#define MAX(x, y) ({ \</span>
+<span class="cp">    typeof(x) __x = (x); \</span>
+<span class="cp">    typeof(y) __Y = (y); \</span>
+<span class="cp">    (__x &lt; __y) ? __x : __y; \</span>
+<span class="cp">})</span>
+</pre></div>
+<p>Das bedeutet durch die speziellen klammern <code>({ ... })</code> wird das Makro wie eine Funktion behandelt (eine GCC-Extension) und die übergebenen Ausdrücke nur einmal auswertet und in einer Variablen vom korrekten Typ speichert. <code>int m = MAX(i++, ++j);</code> ist damit also kein Problem. Schließlich ist der Wert der letzten Zeile der "Rückgabewert" der Makro-Funktion</p>
+<p>Loggen ist aber schon noch ein Problem, da mit diesem Trick, der Typ noch nicht herauszufinden ist. Mein erster Ansatz mit <a href="http://developer.apple.com/documentation/DeveloperTools/gcc-3.3/gcc/Other-Builtins.html">__builtin_types_compatible_p(typeof(aValue), char *)</a> etc. brachten mich da nicht weiter. Es braucht noch die <a href="http://developer.apple.com/documentation/Cocoa/Conceptual/ObjectiveC/Articles/chapter_13_section_9.html#//apple_ref/doc/uid/TP30001163-CH9-TPXREF165">@encode()</a> Anweisung von Obj-C. Direkt im Makro mit <code>if (@encode(char *) == @encode(typeof(aValue)))</code> war es dann allerdings auch noch nicht obwohl ich gerne mit <a href="http://developer.apple.com/documentation/DeveloperTools/gcc-3.3/gcc/Other-Builtins.html">__builtin_choose_expr( aConstant, expressionOne, expressionTwo )</a> zur Compilezeit alles erledigt hätte.</p>
+<p>Nun ja, dann eben zur Laufzeit mit <code>@encode()</code>.</p>
+<div class="hll"><pre><span></span><span class="cp">#define LOG(aValue) [[Log sharedLog] logObjcType:@encode(typeof(aValue)) value:aValue]</span>
+</pre></div>
+<p>Die erzeugt aus einem Typ nämlich einen C-String - der zur Laufzeit geparst werden kann um daraus herauszulesen wie der void-Pointer auf <code>aValue</code> interpretiert werden muss.</p>
+<p>Wie ich das gemacht hab - morgen. :)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/2/mit-c-makros-etwas-tun-was-mit-ihnen-nicht-mo-glich-ist/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/2/macros-in-c/">
+        Macros in C
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-02-13">Wednesday, February 13, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>(Zu "Feuer Frei" von Rammstein)</p>
+<p>Makros in C sind ja so eine Sache.</p>
+<p>Zum einen kommt man in C an vielen Stellen gar nicht ohne aus, da sie die einzige Möglichkeit sind Ausdrücke OHNE sie zu evaluieren an mehreren stellen zu verwenden. Zum anderen Sind sie rein Textuell, "unhygienisch" und haben keine Ahnung was in ihnen eigentlich passiert.</p>
+<p>Das macht vor allem in Objective-C mächtig Schwierigkeiten. Das hier zum Beispiel geht nicht.</p>
+<div class="hll"><pre><span></span><span class="cp">#define DO(argument) argument</span>
+
+<span class="n">DO</span><span class="p">([</span><span class="bp">NSString</span> <span class="nl">stringWithFormat</span><span class="p">:</span><span class="s">@&quot;%s&quot;</span><span class="p">,</span> <span class="s">&quot;asdf&quot;</span><span class="p">]);</span>
+</pre></div>
+<p>Der Compiler meckert hier über zu viele Kommas und denkt das ich das Makro mit zwei Argumenten aufrufen will. Gnah.</p>
+<p>Warum beschäftigt mich das eigentlich?</p>
+<p>Ich möchte gerne Macro's haben, die je nach Typ des Arguments etwas anderes machen. Für Unit-Tests z.B. möchte ich sagen:</p>
+<div class="hll"><pre><span></span><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">testOverloadedAssert</span>
+<span class="p">{</span>
+    <span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+    <span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="s">@&quot;barf&quot;</span><span class="p">,</span> <span class="s">@&quot;barf&quot;</span><span class="p">);</span>
+    <span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="s">&quot;bar&quot;</span><span class="p">,</span> <span class="s">&quot;bar&quot;</span><span class="p">);</span>
+
+    <span class="c1">// These should fail in a sensible manner</span>
+    <span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="s">&quot;bar&quot;</span><span class="p">,</span> <span class="s">@&quot;bar&quot;</span><span class="p">);</span>
+    <span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mf">3.3</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+<p>Das ist aber schon ein großes Problem. In C++ könnte man den ersten teil ja noch über überladene Funktionen lösen - das geht in reinem Objective-C aber schon mal nicht. Dazu kommt ja noch der zweite Teil - da kriegt man vielleicht noch Compiler-Fehlermeldungen, wenn der Compiler nicht auto-conversion von Parametern anwirft. :-/</p>
+<p>Dazu kommt, das ich C++ nicht mag und schon gar nicht in alle meine Tests eine zwingende Abhängigkeit auf C++ einfügen will.</p>
+<p>Will man dann aber noch weiter gehen, wird es endgültig schwierig. Hier ein paar Beispiele:</p>
+<div class="hll"><pre><span></span><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">testAdvancedAssert</span>
+<span class="p">{</span>
+    <span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="mf">3.3</span><span class="p">,</span> <span class="mf">3.3</span><span class="p">,</span> <span class="mf">0.1</span> <span class="cm">/* accuracy */</span><span class="p">);</span>
+    <span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="mf">3.3</span><span class="p">,</span> <span class="mf">3.3</span><span class="p">,</span> <span class="s">@&quot;important meta information&quot;</span><span class="p">);</span>
+    <span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s">@&quot;info contains: %@ in %s:%d&quot;</span><span class="p">,</span>
+         <span class="s">@&quot;other info&quot;</span><span class="p">,</span> <span class="n">__PRETTY_FUNCTION__</span><span class="p">,</span> <span class="n">__LINE__</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+<p>In reinem C hätte man hier gar keine Möglichkeiten mehr etwas zu machen.</p>
+<p>Wie weit ich mit einer Lösung dennoch gekommen bin - morgen. :)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/2/macros-in-c/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/2/geek-humor/">
+        Geek-Humor
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-02-12">Tuesday, February 12, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Schnell noch aus der Kategorie "Geek-Humor".</p>
+<p>Für alle die die <a href="http://www.prometheus-music.com/roundworm.html">Prometheus Seite</a> noch nicht besucht haben.</p>
+<ul>
+<li><a href="http://www.prometheus-music.com/audio/mineralrights.mp3">Mineral Rights von Lesslie Fish (mp3)</a></li>
+</ul>
+<p>Großartig.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/2/geek-humor/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/2/fone2phone/">
+        Fone2Phone
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-02-11">Monday, February 11, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p><img src="../../2008/2/fone2phone/Fone2Phone_choose.png" alt="Image">
+My first complete piece of work for <a href="http://www.novamedia.de/">Nova Media</a>. I did this after working there for about a month.</p>
+<p><a href="http://www.novamedia.de/e_pages/e_produkte_mac_f2p.html">Fone2Phone</a> allows you to have a one stop solution to transferring everything from your cell phone to your macintosh. From there on you can either put it on your iPhone or iPod (Touch), just use it on your System or sync it to a different cell phone.</p>
+<p>As far as the technology is concerned Fone2Phone is a subset of our more capable application <a href="http://www.novamedia.de/e_pages/e_produkte_mac_fl.html">FoneLink</a> which allows you to do all this and more. Check it out!</p>
+<ul>
+<li><a href="http://www.novamedia.de/e_pages/e_produkte_mac_f2p.html">More informatione</a> (<a href="http://www.novamedia.de/d_pages/d_produkte_mac_f2p.html">auf Deutsch</a>)</li>
+</ul>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/2/fone2phone/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/2/skewed-lines-screen-saver/">
+        Skewed Lines Screen-saver
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-02-10">Sunday, February 10, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p><img src="../../2008/2/skewed-lines-screen-saver/SkewedLines.png" alt="Image">
+Just two days ago I watched the episode <a href="http://www.wdr.de/tv/quarks/sendungsbeitraege/2007/0828/000_taeuschen.jsp">"Wie man sich täuschen kann"</a> of <a href="http://www.wdr.de/tv/quarks/">Quarks und Co.</a> (Which has a very nice <a href="http://www.wdr.de/tv/quarks/vodcast/">Video Podcast</a> - by the way)</p>
+<p>They had this beautiful illusion - but in an animated form, which I have never seen before.</p>
+<p>Well, after two hours, I had a screen-saver running and really like the results.</p>
+<p>So, here you go too. :)</p>
+<ul>
+<li><a href="http://dwt.schwarz-online.org/software/SkewedLines.zip">download</a></li>
+<li>[source:open-source/skewed-lines-illusion-screensaver browse source]</li>
+</ul>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/2/skewed-lines-screen-saver/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+  
+  
+    
+  <div class="pagination">
+    
+      <a href="../30/">&laquo; Previous</a>
+    
+    | 31 |
+    
+      <a href="../32/">Next &raquo;</a>
+    
+  </div>
+
+  
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../../blog/feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

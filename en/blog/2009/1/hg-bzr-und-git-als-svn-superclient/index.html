@@ -1,0 +1,152 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../../static/pygments.css">
+    <title>hg, bzr und git als svn superclient</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../../../blog/feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="../../../../../blog/2009/1/hg-bzr-und-git-als-svn-superclient/">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="./">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../../">🏠</a>
+
+
+<a class="breadcrumb-item " href="../../../">Blog</a>
+
+
+<a class="breadcrumb-item active" href="./">hg, bzr und git als svn superclient</a>
+
+</nav>
+    </header>
+    <article class="page hg-bzr-und-git-als-svn-superclient  container-fluid">
+      
+  
+  <article class="blog-post">
+    <header>
+      <h2>
+        
+        hg, bzr und git als svn superclient
+        
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-01-18">Sunday, January 18, 2009</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Ein langer Traum ist in Erfüllung gegangen - alle Versionskontrollsysteme (<a href="http://www.selenic.com/mercurial/wiki/">hg</a>, <a href="http://bazaar-vcs.org/">bzr</a>, <a href="http://git-scm.com/">git</a> und natürlich <a href="http://subversion.tigris.org/">svn</a>) unterstützen endlich das Reden mit einem Subversion-Server.</p>
+<p>Das bedeutet, man kann jetzt SVN als Lingua Franca mit allen verteilten Versionskontrollsystemen einsetzen um einen gemeinsamen Server zu haben von dem alle pullen und pushen können. Oder kurz gesagt: Wenn man SVN als Server hat, kann jeder benutzen was ihm persönlich am meisten liegt.</p>
+<p>Das funktioniert natürlich noch alles nicht perfekt - aber es fängt an.</p>
+<p>Und daher hab ich mal aus Spaß ein Projekt mit jedem der VCS ausgecheckt und bin etwas überrascht von den Ergebnissen:</p>
+<ul>
+<li>bzr git und svn haben den root des Projekts einfach als große Ordner-Hierarchie ausgecheckt, so wie das in svn eben abgebildet ist.</li>
+<li>hg hat als einziges ohne Zusatz-Optionen erkannt das es trunk, branches und tags gibt und das auf die entsprechenden nativen Konzepte (branches) abgebildet. (Das müsste mit mehr Aufwand aber mit bzr und git auch gehen).</li>
+<li>Der Import hat schon mal recht unterschiedlich lange gedauert:<ul>
+<li>bzr: 20 min</li>
+<li>git: 14 min</li>
+<li>svn: 7 min</li>
+<li>hg: 7 min (sogar drei Sekunden schneller als svn! :)</li>
+</ul>
+</li>
+<li>Logischerweise sind damit die Repositories auch völlig unterschiedlich groß:<ul>
+<li>bzr: 83 MB</li>
+<li>git: 93 MB</li>
+<li>svn: 162 MB (Zweimal die Größe des ganze Source-Codes aller tags und branches, also wie erwartet)</li>
+<li>hg: 5.2 MB (überraschend - angeblich steckt da die ganze History drin - so richtig glauben kann ich das aber noch nicht. Vom Platz her ist das etwa das doppelte den alleine der trunk als checkout braucht)</li>
+</ul>
+</li>
+</ul>
+<p>Hier die Kommandos die ich abgeschickt habe (mit den Laufzeit Ergebnissen)</p>
+<p>bzr clone <a href="http://python-nose.googlecode.com/svn">http://python-nose.googlecode.com/svn</a> nose-bzr::  177,62s user 27,00s system 16% cpu 20:17,34 total
+ git svn clone <a href="http://python-nose.googlecode.com/svn">http://python-nose.googlecode.com/svn</a> nose-git::  57,63s user 130,80s system 22% cpu 14:02,33 total
+ svn co <a href="http://python-nose.googlecode.com/svn">http://python-nose.googlecode.com/svn</a> nose::  9,13s user 19,77s system 6% cpu 6:58,31 total
+ hg svnclone <a href="http://python-nose.googlecode.com/svn">http://python-nose.googlecode.com/svn</a> nose-hg::  27,15s user 12,25s system 9% cpu 6:57,76 total</p>
+<p>So viel kann man daraus natürlich nicht schließen - aber mir gefällt dass man jetzt mit allen VCS an Subversion herankommt und der Weg auf dem hgsubversion ist scheint mir schon mal sehr gut zu sein. :)</p>
+
+    </section>
+    
+  </article>
+
+  <nav>
+    
+  <div class="category-list">
+    Kategorien:
+      
+      <a href="../../../../../categories/code/">Software Development</a>
+      
+    
+  </div>
+
+    
+    <div class="relative-navigation">
+      
+        <div class="prev">Vorheriges Post: <a class="prev" href="../blinde-und-linux/">Blinde und Linux</a></div>
+      
+      
+        <div class="next">Nächstes Post: <a class="next" href="../model-view-controller-endlich-mal-erkla-rt/">Model View Controller - endlich mal erklärt</a></div>
+      
+    </div>
+    
+  </nav>
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../../../blog/feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

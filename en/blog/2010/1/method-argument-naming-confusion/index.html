@@ -1,0 +1,141 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../../static/pygments.css">
+    <title>Method argument naming confusion</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../../../blog/feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="../../../../../blog/2010/1/method-argument-naming-confusion/">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="./">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../../">🏠</a>
+
+
+<a class="breadcrumb-item " href="../../../">Blog</a>
+
+
+<a class="breadcrumb-item active" href="./">Method argument naming confusion</a>
+
+</nav>
+    </header>
+    <article class="page method-argument-naming-confusion  container-fluid">
+      
+  
+  <article class="blog-post">
+    <header>
+      <h2>
+        
+        Method argument naming confusion
+        
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2010-01-08">Friday, January 8, 2010</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Schon seit einigen Wochen bin ich am grübeln, nach welcher Regel ich in Python meine variablen für Methoden-Argumente benennen soll. Das ist erstaunlicherweise gar nicht so klar.</p>
+<p>Hier mal das Problem: In Objective-C ist alles sehr klar und einfach (von Smalltalk kommend). Jede Methoden-Deklaration besteht abwechselnd aus einem Teil Methodennamen und dann einer Variablen. Hier mal ein Beispiel:</p>
+<div class="hll"><pre><span></span><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">setValue:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">aValue</span> <span class="nf">forKey:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">aKey</span>
+</pre></div>
+<p>Das hat den großen Vorteil dass man den Methodennamen benutzen kann um Stück für Stück die Argumente zu dokumentieren. Verwendet wird das so, dass das Stück Methodennamen das vor einem Argument kommt die Rolle beschreibt die das Argument spielen wird, während der Name der Variablen eher generisch ist und sich eher am Typ orientiert. Dazu kommt natürlich das man die Typen auch explizit auszeichnen kann, was die notwendigkeit für die Typ-Annotation im Namen der Variablen im vergleich zu Smalltalk oder Python noch mal vermindert und man kann ihn ganz der Rolle hingeben die die Variable in der Methode spielen wird - versehen mit dem a/an/some/etc. prefix der Argumente (als generische Instanzen von etwas) von den lokalen und instanz-variablen unterscheidet.</p>
+<p>In Python geht das so nicht. Man kann versuchen das auf zwei wegen anzunähern:</p>
+<div class="hll"><pre><span></span><span class="k">def</span> <span class="nf">set_value_for_key</span><span class="p">(</span><span class="n">a_value</span><span class="p">,</span> <span class="n">a_key</span><span class="p">):</span> <span class="k">pass</span>
+<span class="c1"># benutze als: some_dict.set_value_for_key(&#39;value&#39;, &#39;key&#39;)</span>
+</pre></div>
+<p>Das hat den Vorteil das man die Argumente mehr oder weniger benennen kann wie man möchte, aber den Nachteil das die Dokumentation der argumente nicht mit diesen zusammen ist. Das hat schon mal den unangenehmen seiteneffekt das es sehr viel schlechter auf mehrere Argumente skaliert und damit sehr fix mehr extra-dokumentation nötig macht.</p>
+<p>Der andere Weg wäre so:</p>
+<div class="hll"><pre><span></span><span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">for_key</span><span class="p">):</span> <span class="k">pass</span>
+<span class="c1">#benutze als: some_dict.set(value=&#39;value&#39;, for_key=&#39;key&#39;)</span>
+</pre></div>
+<p>Das hat den Vorteil dass der MethodenNamen von der Dokumentationshürde befreit ist - und damit Kurz wird.  Auf der anderen Seite sind die Argument-Namen jetzt effektiv teil des Methoden-Namens und damit kann man sie nicht mehr so gut benutzen um den Typ der Argumente zu dokumentieren.</p>
+<p>:-(</p>
+<p>Das ist der Grund wieso ich die Objective-C / Smalltalk Syntax so gerne mag, weil es darin so einfach ist selbstdokumentierenden Code von hoher qualität zu schreiben.</p>
+
+    </section>
+    
+  </article>
+
+  <nav>
+    
+  <div class="category-list">
+    Kategorien:
+      
+      <a href="../../../../../categories/code/">Software Development</a>
+      
+    
+  </div>
+
+    
+    <div class="relative-navigation">
+      
+        <div class="prev">Vorheriges Post: <a class="prev" href="../here-be-electric-dragons/">Here be electric dragons</a></div>
+      
+      
+        <div class="next">Nächstes Post: <a class="next" href="../../../2009/12/python-saug-punkte/">Python Saug-Punkte</a></div>
+      
+    </div>
+    
+  </nav>
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../../../blog/feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

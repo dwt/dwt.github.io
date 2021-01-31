@@ -1,0 +1,151 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../../static/pygments.css">
+    <title>Cappuccino und jQuery im Vergleich</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../../../blog/feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="../../../../../blog/2009/4/cappuccino-und-jquery-im-vergleich/">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="./">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../../">🏠</a>
+
+
+<a class="breadcrumb-item " href="../../../">Blog</a>
+
+
+<a class="breadcrumb-item active" href="./">Cappuccino und jQuery im Vergleich</a>
+
+</nav>
+    </header>
+    <article class="page cappuccino-und-jquery-im-vergleich  container-fluid">
+      
+  
+  <article class="blog-post">
+    <header>
+      <h2>
+        
+        Cappuccino und jQuery im Vergleich
+        
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-04-30">Thursday, April 30, 2009</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Ich beschäftige mich ja seit einiger Zeit intensiver mit Web-Entwicklung - und da im besondern mit <a href="http://cappuccino.org/">Cappuccino</a> um damit GUIs in WebBrowsern zu bauen.</p>
+<p>Cappuccino ist zwei Sachen - eine dünne Schicht JavaScript die einen Translator implementiert der aus <a href="http://cappuccino.org/learn/tutorials/objective-j-tutorial.php">Objective-J</a> (Quasi <a href="http://de.wikipedia.org/wiki/Objective-C">Objective-C</a> für JavaScript) normales JavaScript macht und eine Bibliothek an Objekten die der [Cocoa Bibliothek] von Apple aus dem Gesicht geschnitten ist.</p>
+<p>Und Cocoa ist immer noch die schönste und knackigste Bibliothek die ich kenne - allerdings kenne ich auch noch nicht so viele.</p>
+<p>Um so spannender fand ich es daher <a href="http://cappuccino.org/learn/demos/FlickrPhotoDemo/">eines der Beispiele des Cappucino Projektes</a> noch einmal <a href="http://www.brokendigits.com/flickrDemo-jQuery/index.html">in jQuery implementiert zu sehen</a> (<a href="http://www.brokendigits.com/2008/09/05/cappucinos-flickrdemo-in-45-lines-of-jquery/">Blog dazu</a>)</p>
+<p><a href="http://jquery.com/">jQuery</a> ist nämlich eine Bibliothek die die Möglichkeiten von JavaScript (Closures!) mal wirklich vollständig ausreizt und  soweit ich das beurteilen kann ein Musterbeispiel von richtig gutem JavaScript Code ist.</p>
+<p>Auf der anderen Seite ist Cappuccino - eine Sprache die von C portiert wurde, und die daher eben keine Closures einsetzt - weder in der Sprache, noch in der Bibliothek.</p>
+<p>Und das rennen fängt gut für jQuery an - jQuery braucht für das gleiche Beispiel nur 45 Zeilen Code, während Cappuccino mit 400 Zeilen dabei ist - und enthält an manchen Stellen sogar noch mehr Bling! (Die Bilder faden schön ein statt einfach nur zu erscheinen)</p>
+<p>Schaut man sich die Beispiele genauer an, stellt man fest, dass bei jQuery zu den 45 Zeilen Javascript noch mal 200 Zeilen CSS kommen und dass der JavaScript Code völlig ohne Leerzeilen auskommt, während bei Cappuccino besonders auf übersichtlichkeit geachtet wurde.</p>
+<p>Korrigiert man das und vergleicht erneut, dann sieht das Ergebnis etwas anders aus: jQuery + CSS ~= 200 Zeilen vs. Cappuccino ~= 200 Zeilen.</p>
+<p>Whoa.</p>
+<p>Also muss der Vergleich inhaltlich stattfinden: Cappuccino isoliert den Applikationsentwickler komplett vom DOM und seinen Schwierigkeiten, während jQuery natürlich komplett damit Arbeitet - und man sich auch selber um die Komplikationen kümmern muss die man mit der Browserkompatibilität hat.</p>
+<p>Dafür ist der Code von jQuery inhaltlich wirklich sehr schön kurz - ich finde man sieht ganz hervorragend was man erreichen kann wenn man benannte Parameter (hier durch JavaScript Objekt-Literale Vertreten) und konsequenten Einsatz von Closures kombiniert.</p>
+<p>Das hier zum Beispiel:</p>
+<div class="hll"><pre><span></span><span class="n">$</span><span class="p">.</span><span class="n">each</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">items</span><span class="p">,</span> <span class="n">function</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">item</span><span class="p">){</span>
+   <span class="n">img</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Image</span><span class="p">();</span>
+   <span class="n">img</span><span class="p">.</span><span class="n">src</span> <span class="o">=</span> <span class="n">item</span><span class="p">.</span><span class="n">media</span><span class="p">.</span><span class="n">m</span><span class="p">;</span>
+   <span class="n">img</span><span class="p">.</span><span class="n">onload</span> <span class="o">=</span> <span class="n">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">$</span><span class="p">(</span><span class="n">this</span><span class="p">).</span><span class="n">animate</span><span class="p">({</span><span class="nl">opacity</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span> <span class="s">&quot;normal&quot;</span><span class="p">);</span>
+   <span class="p">}</span>
+   <span class="n">$</span><span class="p">(</span><span class="n">img</span><span class="p">).</span><span class="n">css</span><span class="p">({</span><span class="nl">opacity</span><span class="p">:</span> <span class="mi">0</span><span class="p">}).</span><span class="n">appendTo</span><span class="p">(</span><span class="s">&quot;#content&quot;</span><span class="p">).</span><span class="n">wrap</span><span class="p">(</span><span class="s">&quot;&lt;div&gt;&lt;/div&gt;&quot;</span><span class="p">);</span>
+   <span class="k">if</span> <span class="p">(</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">20</span> <span class="p">)</span> <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+   <span class="p">});</span>
+</pre></div>
+<p>ist einfach sehr ausdrukstark. Ich freue mich schon darauf wenn Apple Snow-Leopard herausbringt und damit Closures auch in Objective-C einzug halten - weil dann wird auch Cappuccino diese Möglichkeiten endlich nutzen ohne die Kompatibilität mit Cocoa zu verlieren.</p>
+<p>Auf der anderen Seite finde ich den Objective-J Code wie bei Cocoa auch sehr ausdrucksstark - und vielleicht etwas verbose. Dafür dokumentiert sich der Code aber auch ganz excellent.</p>
+<p>Und da er nicht länger ist als der andere, sehe ich da überhaupt kein Problem.</p>
+<p>Alles in allem also ein guter Grund jQuery zu lernen um die Möglichkeiten von JavaScript wirklich mal zu verstehen.</p>
+
+    </section>
+    
+  </article>
+
+  <nav>
+    
+  <div class="category-list">
+    Kategorien:
+      
+      <a href="../../../../../categories/code/">Software Development</a>
+      
+    
+  </div>
+
+    
+    <div class="relative-navigation">
+      
+        <div class="prev">Vorheriges Post: <a class="prev" href="../../5/agil-ist-so-eine-sache/">Agil ist so eine Sache</a></div>
+      
+      
+        <div class="next">Nächstes Post: <a class="next" href="../interview-mit-de-bug/">Interview mit De:Bug</a></div>
+      
+    </div>
+    
+  </nav>
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../../../blog/feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,145 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../../static/pygments.css">
+    <title>Programmieren Lernen - mit Scheme?</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../../../blog/feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="../../../../../blog/2008/4/programmieren-lernen-mit-scheme/">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="./">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../../">🏠</a>
+
+
+<a class="breadcrumb-item " href="../../../">Blog</a>
+
+
+<a class="breadcrumb-item active" href="./">Programmieren Lernen - mit Scheme?</a>
+
+</nav>
+    </header>
+    <article class="page programmieren-lernen-mit-scheme  container-fluid">
+      
+  
+  <article class="blog-post">
+    <header>
+      <h2>
+        
+        Programmieren Lernen - mit Scheme?
+        
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-04-06">Sunday, April 6, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Meine Freunden hat sich mal damit beschäftigt. Und da dachte ich, schauste doch mal was es da so gibt.</p>
+<p>Klaro das große alte <a href="http://mitpress.mit.edu/sicp/full-text/book/book.html">SICP</a>, der Großvater aller großartigen Programmierbücher mit Tiefgang. Gleichzeitig aber natürlich auch ziemlich Tief und für jemanden der sonst von Informatik nicht so viel Ahnung hat vielleicht zu viel.</p>
+<p>Das sehen <a href="http://www.cs.kent.ac.uk/people/staff/dat/miranda/wadler87.pdf">andere</a> <a href="http://citeseer.ist.psu.edu/cache/papers/cs/26833/http:zSzzSzpeople.cs.uchicago.eduzSz~robbyzSzpublicationszSzpaperszSzhtdp-sicp-fdpe2002.pdf/felleisen02structure.pdf">Leute</a> auch so und daher gibt es inzwischen einen Nachfolger: Das <a href="http://www.htdp.org/">HTDP</a>.</p>
+<p>Well, die Haupt Kritik war eigentlich das das Buch zu viele Grundlagen in der Elektrotechnik verlange und zu tief in die Konstruktion von Computern hineingeht, dabei aber gleichzeitig zu wenig darüber erklärt wie man eigentlich ein größeres Programm aufzieht.</p>
+<p>Und genau das wollten sie anders machen.</p>
+<p>Gut fand ich dass Sie sich mühe geben jede ihrer Kapitel mit einem <strong>Rezept</strong> abzuschließen, in dem dann Dinge stehen wie "Mach dir erst Gedanken darüber was aus deinen Funktionen herauskommen muss bevor Du sie implementierst, damit Du Logikfehler besser finden kannst. - Schon mal ein guter Ansatz.</p>
+<p>Dazu kommt durchweg eigentlich ein recht sauberer Programmierstil mit dem ich durchaus leben kann.</p>
+<p>Was mir eher auf den Geist ging: Die ganze Zeit über predigen sie es, dass man zu jeder Funktion einen "Kontrakt" schreibt, der erklärt welche Typen man erhält und welche man zurückgibt.</p>
+<p>Well, das ist ja ganz schön, aber entweder, soll man eine Sprache mit Typechecking nehmen, oder es lassen. Die Dokumentation ist zwar ganz nett - aber dann doch bitte so, dass man die Variablen so eindeutig benennt, das keine Typ-Unsicherheiten auftreten.</p>
+<p>So sind die Kommentare (von denen sie pro Funktion mindestens drei bis fünf Zeilen haben wollen) nach der ersten Änderung einer Funktion nicht mehr aktuell.</p>
+<p>:-(</p>
+<p>Dazu kommt, dass der Klammernwald von Scheme, natürlich gerade für Anfänger schnell mal verwirrend wird und ohne Editor-Unterstützung gar nicht handhabbar ist. Andererseits: da gewöhnt man sich gleich daran kleine Funktionen zu schreiben...</p>
+<p>Was ich auch merkwürdig finde ist, dass den studenten die wirkliche Freude eines <a href="http://en.wikipedia.org/wiki/Metacircular_Interpreter">metazirkulären Interpreters</a> vorenthalten wird. Da hat man sowas mit Scheme schon unter der Haube, und dann geht es irgendwann um den Interpreter und es werden lauter neue Datentypen eingeführt um etwas Scheme-Ähnliches darzustellen, dass dann nicht mal richtig interpretiert werden kann.</p>
+<p>Habt ihr wirklich toll gemacht.</p>
+<p>Generell hat das Buch weniger Tiefgang als das [- vor allem weil es dazu natürlich die ganz hervorragenden <a href="http://www.htdp.org/SICP]">http://swiss.csail.mit.edu/classes/6.001/abelson-sussman-lectures/ Video-Lectures</a> gibt, die einfach nur begeisternd sind.</p>
+<p>Fazit: Irgendwie hat das Buch schon Sinn - aber Begeistern kann es mich nicht. Mal schauen wie es meiner Freundin geht. :)</p>
+<p>p.s.: Zum SICP gibt es noch einen Nachfolger, <a href="http://mitpress.mit.edu/SICM/">SICM - Structure and Interpretion of Classical Mechanics</a>. Das werd ich mir mal demnächst ansehen müssen. :)</p>
+
+    </section>
+    
+  </article>
+
+  <nav>
+    
+  <div class="category-list">
+    Kategorien:
+      
+      <a href="../../../../../categories/code/">Software Development</a>
+      , 
+    
+      
+      <a href="../../../../../categories/miscellaneous/">Sonstiges</a>
+      
+    
+  </div>
+
+    
+    <div class="relative-navigation">
+      
+        <div class="prev">Vorheriges Post: <a class="prev" href="../was-willst-du-in-der-piratenpartei/">Was willst du in der Piratenpartei?</a></div>
+      
+      
+        <div class="next">Nächstes Post: <a class="next" href="../computational-thinking/">Computational Thinking</a></div>
+      
+    </div>
+    
+  </nav>
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../../../blog/feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

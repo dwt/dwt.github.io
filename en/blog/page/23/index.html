@@ -1,0 +1,421 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../static/pygments.css">
+    <title>Blog</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../../blog/feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="../../../../blog/page/23/">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="./">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../">🏠</a>
+
+
+<a class="breadcrumb-item active" href="./">Blog</a>
+
+</nav>
+    </header>
+    <article class="page blog  container-fluid">
+      
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/5/liquid-democracy/">
+        Liquid Democracy
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-05-28">Wednesday, May 28, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Heute hat mich Bernd auf diesen coolen Wikipedia-Artikel hingewiesen: <a href="http://en.wikipedia.org/wiki/Proxy_voting">Proxy Voting</a>. Dort wird das was wir uns bei der Piratenpartei Berlin als Liquid Democracy vorstellen sehr schön beschrieben - insbesondere auch mit vielen Beispielen wo das schon angewendet wird.</p>
+<p>Spannend finde ich auch das ein paar Leute wohl gleich versucht haben das in der Wikipedia einzuführen - erst mal ohne Erfolg.</p>
+<p><a href="http://en.wikipedia.org/wiki/Wikipedia:Delegable_proxy">Aber die Diskussion darum ist sehr lesenswert.</a></p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/5/liquid-democracy/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/5/debugging-unit-tests-in-xcode-3-1/">
+        Debugging Unit Tests in Xcode 3.1
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-05-25">Sunday, May 25, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Since I haven't found this info anywhere in the Blogosphere and had to painfully gather it through a long debugging stare, I'm posting it here:</p>
+<p>If you want do debug Unit Tests in Xcode 3.1 you have to do the usual, that is:</p>
+<ul>
+<li>Make a custom Executable</li>
+<li>Set it's argumet to <code>-SenTest All</code></li>
+<li>Set some Environment Variables<ul>
+<li><code>DYLD_INSERT_LIBRARIES</code> to <code>${DEVELOPER_LIBRARY_DIR}/PrivateFrameworks/DevToolsBundleInjection.framework/DevToolsBundleInjection</code></li>
+<li><code>DYLD_FALLBACK_FRAMEWORK_PATH</code> to <code>$(DEVELOPER_LIBRARY_DIR)/Frameworks</code></li>
+<li><code>XCInjectBundle</code> to <code>$(BUILT_PRODUCTS_DIR)/InvocationBuilder Tests.octest</code> This is of course where you have enter the name of your test bundle</li>
+</ul>
+</li>
+</ul>
+<p>So far nothing new.</p>
+<p>What is new though is that you also set the variable <code>XCInjectBundleInto</code> to point to the executable that is going to load the tests (probably to avoid the 3.0 Bug that would load the tests into the shell that GDB used to start the Application). This should be the same as the <code>$(TEST_HOST)</code> variable that you have to set for the Unit Test bundle. In my case this is <code>$(BUILT_PRODUCTS_DIR)/InvocationBuilder.app/Contents/MacOS/InvocationBuilder</code>.</p>
+<p>This is quite interesting, since it means that <code>otest</code> is not used anymore to start the tests, but instead <code>RunTargetUnitTests</code> executes the tests directly.</p>
+<p>Well, now that I can again debug my tests maybe I'l even get it to work with debugging Unit Tests which use Mock-Objects sometime. :-)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/5/debugging-unit-tests-in-xcode-3-1/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/5/u-ber-fehlermeldungen-aus-alten-tagen/">
+        Über Fehlermeldungen aus alten Tagen
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-05-24">Saturday, May 24, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>.. bin ich mal wieder in <a href="http://c2.com/cgi/wiki?WeirdErrorMessages">Wards Wiki gestolpert</a>.</p>
+<p>Lovely. :-)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/5/u-ber-fehlermeldungen-aus-alten-tagen/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/5/wie-man-u-ber-objektorientierung-nachdenken-kann/">
+        Wie man über Objektorientierung nachdenken kann
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-05-24">Saturday, May 24, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Eines meiner Lieblingszitate über Objektorientierung kommt von <a href="http://c2.com/cgi/wiki?WardCunningham">Ward Cunningham</a>: "Jedes Objekt ist eine kleine Sprache".</p>
+<p>Ich verstehe das so das man mit jedem Objekt das man entwirft eine kleine Sprache schreibt. Eine Sprache die es einfach macht die lösung für ein spezifisches Problem darzustellen.</p>
+<p>Fast noch wichtiger finde ich aber jetzt gerade (wo ich mich <a href="http://novamedia.de/index_d.html">auf Arbeit</a> mit vielen globalen Variablen herumschlage) das jedes Objekt eben auch einen eigenen Namensraum darstellt - der optimaler weise auch verschachtelt werden kann.</p>
+<p>Wunderschön finde ich das zum Beispiel bei Ruby sichtbar: Wenn man in eine Datei direkt Code schreibt, dann ist dieser Code teil eines top-level objekts. Schreibt mann in einer Datei dann weitere Objekte, sind diese Objekte in diesem top-level objekt eingebettet.</p>
+<p>Das Prinzip erweitert sich wunderbar zu paketen und paketen von paketen - öffentlichen und privaten klassen (fals man das braucht) etc.</p>
+<p>Und das alles ohne ein weiteres Konzept einzuführen - nur die Objektabstraktion. (<em>schnief</em> Java?)</p>
+<p>Warum nur machen das so wenige Programmiersprachen so? Objective-C jedenfalls hat noch nix in die Richtung. In C++ hat man sowieso verloren - C hat gar keine Objekte - aber man kann dafür jede Bibliothek als <strong>Objekt</strong> sehen (so man will).</p>
+<p>Stellt sich die Frage: Übersehe ich irgend ein total geiles Feature das man erhält wenn man Pakete als ein eigenes Feature in eine Sprache einbaut?</p>
+<p>Hmpf.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/5/wie-man-u-ber-objektorientierung-nachdenken-kann/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/5/genshi/">
+        Genshi
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-05-23">Friday, May 23, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Heute habe ich mir mit <a href="http://www.felix-schwarz.name/Hauptseite">Felix</a> den Template Teil des Blogs, an dem wir gerade schrauben, angeschaut. Ziel war es eine Blog-Posting Seite zu bauen die möglichst einfach zu warten ist und gleichzeitig möglichst alle Features bietet die auch die <a href="http://www.hosted-projects.com/trac/TracDemo/Demo/wiki/WikiStart?action=edit">Standard Wiki-Editier-Seite</a> von <a href="http://trac.edgewall.org/">Trac</a> bietet.</p>
+<p>Das geht überraschenderweise sogar ganz gut. Denn: Trac ab 0.11 verwendet Genshi als Template-Sprache und Genshi wiederum ist XML mit <a href="http://de.wikipedia.org/wiki/XPath">XPath</a> allüren.</p>
+<p>Will heißen wir konnten uns das Template für die normale Wiki-Eingabe nehmen und dann sagen: Aber die Überschrift oben "Editing XXXXX" soll bitte weg und dafür soll da stehen "Create Blog Entry" - ein Feature das die meisten Template-Engines schon mal nicht bieten.</p>
+<p>Und das ist natürlich geil, weil wir nicht den kompletten Template-Source kopieren müssen um das gleiche look und feel zu kriegen.</p>
+<p>Nur das XPath natürlich wie alles bei XML total kompliziert macht. Das heißt zum Beispiel das man damit nicht sagen kann, nimm dass und ersetze darin das gegen dies. Neeeiiiin. Natürlich ist alles andersherum.</p>
+<p>Man sagt also: Meine Welt ist so definiert, das dies immer wenn es auftritt durch das ersetzt wird und jetzt hole ich mal das original in meine Welt hinein und magisch wird darin alles ersetzt.</p>
+<p>Großartig.</p>
+<p>Klar das geht - aber das hätte man auch einfacher haben können.</p>
+<p>p.s.: Weiß jemand wie man mit XPath aus dieser Struktur</p>
+<div class="hll"><pre><span></span><span class="nt">&lt;fieldset</span> <span class="na">id=</span><span class="s">&quot;changeinfo&quot;</span><span class="nt">&gt;</span>
+ <span class="nt">&lt;legend&gt;</span>Change information<span class="nt">&lt;/legend&gt;</span>
+
+ <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;field&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;tags&quot;</span><span class="nt">&gt;</span>Tag under: (<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;http://xn--hcker-gra.net/cgi-bin/trac.cgi/tags&quot;</span><span class="nt">&gt;</span>
+                            view all tags<span class="nt">&lt;/a&gt;</span>)<span class="nt">&lt;/label&gt;&lt;BR/&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">title=</span><span class="s">&quot;Comma separated list of tags&quot;</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">id=</span><span class="s">&#39;tags&#39;</span> 
+                <span class="na">name=</span><span class="s">&quot;tags&quot;</span> <span class="na">size=</span><span class="s">&quot;30&quot;</span> <span class="na">value=</span><span class="s">&quot;blog&quot;</span><span class="nt">&gt;</span>
+ <span class="nt">&lt;/div&gt;</span>
+ <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;field&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;label&gt;</span>Comment about this change (optional):<span class="nt">&lt;br</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">&quot;comment&quot;</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;comment&quot;</span> <span class="na">size=</span><span class="s">&quot;60&quot;</span> <span class="na">value=</span><span class="s">&quot;&quot;</span> <span class="nt">/&gt;&lt;/label&gt;</span>
+ <span class="nt">&lt;/div&gt;&lt;br</span> <span class="nt">/&gt;</span>
+
+  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;options&quot;</span><span class="nt">&gt;</span>
+   <span class="nt">&lt;label&gt;&lt;input</span> <span class="na">type=</span><span class="s">&quot;checkbox&quot;</span> <span class="na">name=</span><span class="s">&quot;readonly&quot;</span> <span class="na">id=</span><span class="s">&quot;readonly&quot;</span> <span class="nt">/&gt;</span>
+   Page is read-only<span class="nt">&lt;/label&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+
+<span class="nt">&lt;/fieldset&gt;</span>
+</pre></div>
+<p>nur das div mit dem label und input für den Kommentar herausmatchen kann?</p>
+<p>Unsere Versuche sind erst einmal bei diesem XPath query stehen geblieben <code>div[@id='changeinfo1']/div[@class='field']</code>.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/5/genshi/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/5/oh-und-noch-was-zum-tanzen/">
+        Oh und noch was zum Tanzen
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-05-19">Monday, May 19, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p><a href="http://video.google.com/videoplay?docid=3063604376858291792">.. gibts hier zu sehen.</a></p>
+<p>GRANDIOS.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/5/oh-und-noch-was-zum-tanzen/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/5/parteitagsfazit/">
+        Parteitagsfazit
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-05-19">Monday, May 19, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Boah war ich gestresst von der Versammlung - aber zumindest ist das Ergebnis zufrieden stellend - die wichtigsten Änderungen zur Satzung sind durchgekommen: <a href="http://wiki.piratenpartei.de/Neue_Finanzordnung#Bundesfinanzordnung_-_Vorschlag_von_Sebastian_Sch.C3.A4fer">Die neue Finanzordnung</a> und <a href="http://wiki.piratenpartei.de/Bundessatzung/%C3%84nderungsantr%C3%A4ge/Bundesparteitag_2008#.C2.A7_9b_-_Der_.28dezentrale.29_Bundesparteitag">die Regelung zum dezentralen Parteitag</a>.</p>
+<p>Sonst war aber leider nicht viel los - die Tatsache das so viele Piraten auf einem Fleck saßen konnte nicht genutzt werden - ausser um über GO-Anträge zu streiten.</p>
+<p>Der Inhaltlich produktivste Teil der Veranstaltung wohl das gemeinschaftliche Besäufnis am Abend nach dem ersten Tag. Da wurde wenigstens mal überhaupt etwas Inhaltliches getan (Wenn ich mich auch nicht mehr an alles erinnern kann).</p>
+<p>Also ein gemischtes Fazit.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/5/parteitagsfazit/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/5/die-piratenpartei-ist-gross/">
+        Die Piratenpartei ist groß
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-05-18">Sunday, May 18, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>denn sie hat 804 Mitglieder.</p>
+<p>Also im letzten Jahr etwas mehr als ein Mitglied pro Tag.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/5/die-piratenpartei-ist-gross/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/5/parteitagswahnsinn/">
+        Parteitagswahnsinn
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-05-18">Sunday, May 18, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p><a href="http://de.wikipedia.org/wiki/Gesch%C3%A4ftsordnung#Antrag_zur_Gesch.C3.A4ftsordnung">GO Antrag</a> auf:</p>
+<ul>
+<li>Ende der Diskussion und Beschlussfassung -&gt; Angenommen</li>
+<li>Großer Protest des noch-Vorsitzenden</li>
+<li>Daraufhin sein GO Antrag keine weiteren GO-Anträge auf Ende der Diskussion und Beschlussfassung zu stellen -&gt; der wurde Angenommen</li>
+<li>Daraufhin der Verweigerung des Versammlungsleiters die restlichen Diskutanten noch reden zu lassen, weil der Antrag auf Ende der Diskussion vor dem GO Antrag der das verhindern möchte beschlossen wurde</li>
+<li>Daraufhin der GO Antrag die Diskussion wieder zu eröffnen</li>
+<li>Und dann ging die Diskussion weiter</li>
+<li>Viele viele GO Anträge später...</li>
+<li>Und dann gab es GO Anträge die Sitzung auf morgen zu Vertagen</li>
+</ul>
+<p>ARGHHHHHHH</p>
+<p>Interessante Begriffe: <a href="http://de.wikipedia.org/wiki/Filibuster">Filibuster</a></p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/5/parteitagswahnsinn/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/5/piratenpartei-treibt-dollarkurs-in-die-ho-he/">
+        Piratenpartei treibt Dollarkurs in die Höhe
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-05-18">Sunday, May 18, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>"Nur haarscharf ist das amerikanische Volk heute der Dollarkatastrophe vorbeigeschrammt"  so Winfried Engelke.</p>
+<p>Engelke hatte in einem Akt heroischer Selbstaufopferung bei der Versteigerung des letzten und einzigen Dollars in der Piraten Barkasse (nein, nicht <a href="http://de.wikipedia.org/wiki/Barkasse">diese</a>) den Preis auf die Spitze getrieben und ihn für astronomische 20 € erworben.</p>
+<p>"Dies ist der Beginn einer neuen Ära" mit diesen Worten leitete Engelke die Tradition des immer wieder versteigerns dieses Dollars zu jedem Parteitag ein.</p>
+<p>Wir sind begeistert.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/5/piratenpartei-treibt-dollarkurs-in-die-ho-he/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+  
+  
+    
+  <div class="pagination">
+    
+      <a href="../22/">&laquo; Previous</a>
+    
+    | 23 |
+    
+      <a href="../24/">Next &raquo;</a>
+    
+  </div>
+
+  
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../../blog/feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

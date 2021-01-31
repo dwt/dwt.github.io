@@ -1,0 +1,149 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../../static/pygments.css">
+    <title>Ein Tool sie zu finden und alle zu binden...</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../../../blog/feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="../../../../../blog/2008/9/ein-tool-sie-zu-finden-und-alle-zu-binden/">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="./">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../../">🏠</a>
+
+
+<a class="breadcrumb-item " href="../../../">Blog</a>
+
+
+<a class="breadcrumb-item active" href="./">Ein Tool sie zu finden und alle zu binden...</a>
+
+</nav>
+    </header>
+    <article class="page ein-tool-sie-zu-finden-und-alle-zu-binden  container-fluid">
+      
+  
+  <article class="blog-post">
+    <header>
+      <h2>
+        
+        Ein Tool sie zu finden und alle zu binden...
+        
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-09-16">Tuesday, September 16, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>... auf die Shell zu ziehen und ins Highlighting zu ziehen. :) (Sorry, ich muss dringend mal wieder <a href="http://isohunt.com/torrents/?ihq=lord+of+the+rings">Herr der Ringe anschauen</a>)</p>
+<p>Mir geht es um <code>grep</code>, der Urgroßvater aller Projektweiten Suchmöglichkeiten. Das kann viel - aber nicht alles.</p>
+<p>Zum Beispiel ist es nicht besonders einfach in einem Projekt zu suchen dass SVN für die Versionskontrolle einsetzt. Grep besteht nämlich darauf dass es unbedingt bei <strong><em>-r</em></strong> auch in <code>.svn</code> Verzeichnissen suchen will. Und das beste: es gibt zwar eine Option <code>--exclude</code> - die funktioniert aber nur auf File-Basis. Das heißt man kann damit keine Verzeichnisse (wie z.B. <code>.svn</code>) ausschließen.</p>
+<p>Doh.</p>
+<p>Die Entwickler sagen dazu dass man doch lieber <code>find . mumbojumbomagic | grep muster</code> benutzen soll. Tja.</p>
+<p>Enter <a href="http://petdance.com/ack/">Ack</a>. Die Lösung aller Probleme. :)</p>
+<ul>
+<li>Das Tool sucht standardmäßig rekursiv - d.h. man muss nicht ständig <code>-r</code> angeben.</li>
+<li>Es ignoriert standardmäßig .svn .hg .git etc. Verzeichnisse - daher muss man nicht ständig irrelevante Resultate ignorieren.</li>
+<li>Man kann mit switches wie <code>--python</code> oder <code>--objc</code> nur in Dateien dieses Typs suchen.</li>
+<li>Man hat vollständige Unterstützung für Perls Regular Expressions auf der Kommandozeile (das Tool ist in Perl geschrieben)</li>
+<li>Man kann das Tool supereinfach in <code>~/.ackrc</code> konfigurieren.</li>
+</ul>
+<p>Hier meine .ackrc:</p>
+<pre><code>$ cat ~./ackrc
+--type-set=nib=.nib
+--type-add=objc=.mm
+--ignore-dir=build
+</code></pre>
+<p>Schick ne?</p>
+<p><a href="http://petdance.com/ack/">Hier zu finden.</a></p>
+
+    </section>
+    
+  </article>
+
+  <nav>
+    
+  <div class="category-list">
+    Kategorien:
+      
+      <a href="../../../../../categories/code/">Software Development</a>
+      , 
+    
+      
+      <a href="../../../../../categories/miscellaneous/">Sonstiges</a>
+      
+    
+  </div>
+
+    
+    <div class="relative-navigation">
+      
+        <div class="prev">Vorheriges Post: <a class="prev" href="../afro-samurai/">Afro Samurai</a></div>
+      
+      
+        <div class="next">Nächstes Post: <a class="next" href="../2008-09-13-13-40/">2008/09/13/13.40</a></div>
+      
+    </div>
+    
+  </nav>
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../../../blog/feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

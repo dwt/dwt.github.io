@@ -1,0 +1,412 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../static/style.css">
+    <link rel="stylesheet" href="../../static/pygments.css">
+    <title>Blog</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../blog/feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="./" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="../../blog/">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="./">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+<a class="breadcrumb-item " href="../">🏠</a>
+
+
+<a class="breadcrumb-item active" href="./">Blog</a>
+
+</nav>
+    </header>
+    <article class="page blog  container-fluid">
+      
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="2018/7/yeehaw-endlich-wieder-ein-blog/">
+        Yeehaw! Endlich wieder ein Blog!
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2018-07-16">Monday, July 16, 2018</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Lange hat es gedauert - Ahem.</p>
+<p>In den letzten Monaten habe ich mich mit <a href="https://getlektor.com">Lektor</a> auseinandergesetzt. Mit ein Paar Plugins (<a href="https://github.com/humrochagf/lektor-creative-commons">CreativeCommons</a> und <a href="https://github.com/lektor/lektor-markdown-highlighter">Markdown Highlighter</a>) kann man viel Spaß beim Blog-Post schreiben haben.</p>
+<p>Der große Vorteil von Lektor ist, dass man eine komplett statische Seite damit rendert. Man kann die Seite danach also über ein CDN ausliefern - 'Internet Scale' ist also gar kein Problem…</p>
+<p>Solche Systeme gibt es natürlich viele - aber mit Lektor kriegt man zusätzlich noch ein CMS (das Lokal läuft) - oder auch hinter <code>.htaccess</code> geschützt laufen kann, so dass man keine Sorgen haben muss, dass einem über so eine Webseite der Server aufgemacht wird.</p>
+<p>Aber Lektor überzeugt auch mit einer moderat einfachen <a href="https://www.getlektor.com/docs/api/">API</a>, selbst plugins dafür zu schreiben ist einfach und macht Spaß. Fast wie es bei <a href="https://trac.edgewall.org">Track</a> ganz am Anfang auch einmal war. ☺️</p>
+<p>Ich freue mich darüber dass ich jetzt eine voll-responsive Seite haben, die mit HTML und CSS wirklich auskommt - no JS needed. (Ich werde aber vielleicht in der Zukunft für Experimente auch JS in der Seite verwenden). Für jetzt ist es erst mal das Experiment wie lange ich ohne JS auskomme.</p>
+<p>Da wäre zum Beispiel das Menü - das auf Mobil mit Animation schön aufklappt. Hierzu habe ich verschiedene Techniken kombiniert.</p>
+<ol>
+<li><p>Die Verhältnisse der ganzen Abmessungen werden über <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_variables">CSS-Variablen</a> und <a href="https://developer.mozilla.org/de/docs/Web/CSS/calc">CSS-Calc</a> einmal global gesetzt. Das geht zwar noch nicht vollständig, da man CSS Variablen <a href="https://stackoverflow.com/questions/40722882/css-native-variables-not-working-in-media-queries#40723269">nicht in Media Queries einsetzen kann</a>, aber immerhin. Einzig dass man Stylesheets noch nicht 'nested' aufschreiben kann stört.</p>
+</li>
+<li><p>Die Animation beim klick auf das <a href="https://de.wikipedia.org/wiki/Hamburger-Menü-Icon">Hamburger Menü</a> sowie das Öffnen des Menüs kommt komplett ohne JS aus. Damit das geht braucht es ein DOM Element, dass den State 'ein oder ausgeblendet' hält, gleichzeitig via CSS abgefragt werden kann sowie diesen State durch Klick auf ein anderes Element ändert. Well, dafür funktioniert lustiger Weise das <code>&lt;input type=checkbox id=menu-state&gt;</code> Element. Das wechselt den <code>checked</code>-Zustand, was mann dankenswerter Weise in CSS mittels <code>:checked</code> herausfinden kann. Der Clou ist aber, dass man irgendwo anders im Dokument ein <code>&lt;label for=menu-state&gt;</code> haben kann, auf das man Klicken kann um diesen State zu wechseln. Und <code>&lt;label&gt;</code> kann man im Gegensatz zu <code>&lt;input type=checkbox&gt;</code> in allen Browsern vernünftig stylen. Und man kann mittels <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Animations/Using_CSS_animations">CSS-Animationen</a> alles animieren. Fuck yeah!</p>
+</li>
+</ol>
+
+    </section>
+    
+      <footer>
+        <a href="2018/7/yeehaw-endlich-wieder-ein-blog/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="2015/2/lockless-algorithms/">
+        Lockless Algorithms
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2015-02-14">Saturday, February 14, 2015</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Schon lange habe ich keine so passende Visualisierung mehr für etwas gesehen:</p>
+<p><a href="https://en.wikipedia.org/wiki/Non-blocking_algorithm">Lockless Algorithms / Schlosslose Algorithmen</a>:</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ufK2XRGUjuc" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe><p><a href="http://devopsreactions.tumblr.com/post/110529123748/lockess-algorithm">via devopsreactions</a></p>
+
+    </section>
+    
+      <footer>
+        <a href="2015/2/lockless-algorithms/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="2012/7/melderecht-datenweitergabe-jetzt-ohne-zustimmung/">
+        Melderecht Datenweitergabe jetzt ohne Zustimmung
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2012-07-12">Thursday, July 12, 2012</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Das ist doch ein Juwel: Melderechter sollen in Zukunft meine Daten an jedes Industrieunternehmen weitergeben dürfen - wenn die Firma die Daten für ein "update" schon vorhandener Daten anfragt.</p>
+<p>Was pikanterweise die Voraussetzung fast jeder Anfrage ist.</p>
+<p>Dem kann man dann gar nicht mehr widersprechen - de fakto hat man also keine Möglichkeit mehr dieser Geschäftspraktik der Meldeämter wenigstens für sich persönlich Einhalt zu gebieten.</p>
+<p>Compact hält dagegen und hofft auf 200.000 unterstützer in möglichst kurzer Zeit:</p>
+<p><a href="http://www.campact.de/melderecht/sn1/signer">http://www.campact.de/melderecht/sn1/signer</a></p>
+<p>Dafür!</p>
+
+    </section>
+    
+      <footer>
+        <a href="2012/7/melderecht-datenweitergabe-jetzt-ohne-zustimmung/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="2011/11/ssl-certificate-trouble/">
+        SSL Certificate Trouble
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2011-11-18">Friday, November 18, 2011</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>If you should ever stumble upon this bug, consider yourself very lucky that I have found the solution to this already, because it took me <em>AGES</em> to figure this out. No shit.</p>
+<p>So here's the problem: We used a self signed certificate on on of our servers and curl and all tools relying on curl just couldn't connect to this server at all (with certificate validation). Despite the fact that the root certificate that signed the server certificate was happily in my keychain and marked as trusted.</p>
+<p>The solution first: Turns out that the Keychain will eat certificates in many formats, specifically it supports DER and PEM. curl however can't use the DER certificate in the keychain and just reports it as missing. Exporting the certificate, converting it to PEM and then reimporting it (making sure to remove the DER version beforehand) fixed it.</p>
+<p>I converted the file with this command
+<code>openssl x509 -inform DER -in some.ser.ver.der -out some.serv.ver.pem</code></p>
+<p>Here's some of the error messages I got:</p>
+<div class="hll"><pre><span></span><span class="gp">% </span>curl -I https://some.serv.ver -v
+<span class="go">* About to connect() to some.serv.ver port 443 (#0)</span>
+<span class="go">*   Trying some.ip... connected</span>
+<span class="go">* Connected to some.ser.ver (some.ip) port 443 (#0)</span>
+<span class="go">* SSLv3, TLS handshake, Client hello (1):</span>
+<span class="go">* SSLv3, TLS handshake, Server hello (2):</span>
+<span class="go">* SSLv3, TLS handshake, CERT (11):</span>
+<span class="go">* SSLv3, TLS alert, Server hello (2):</span>
+<span class="go">* SSL certificate problem, verify that the CA cert is OK. Details:</span>
+<span class="go">error:14090086:SSL routines:SSL3_GET_SERVER_CERTIFICATE:certificate verify failed</span>
+<span class="go">* Closing connection #0</span>
+<span class="go">curl: (60) SSL certificate problem, verify that the CA cert is OK. Details:</span>
+<span class="go">error:14090086:SSL routines:SSL3_GET_SERVER_CERTIFICATE:certificate verify failed</span>
+<span class="go">More details here: http://curl.haxx.se/docs/sslcerts.html</span>
+
+<span class="go">curl performs SSL certificate verification by default, using a &quot;bundle&quot;</span>
+<span class="go"> of Certificate Authority (CA) public keys (CA certs). If the default</span>
+<span class="go"> bundle file isn&#39;t adequate, you can specify an alternate file</span>
+<span class="go"> using the --cacert option.</span>
+<span class="go">If this HTTPS server uses a certificate signed by a CA represented in</span>
+<span class="go"> the bundle, the certificate verification probably failed due to a</span>
+<span class="go"> problem with the certificate (it might be expired, or the name might</span>
+<span class="go"> not match the domain name in the URL).</span>
+<span class="go">If you&#39;d like to turn off curl&#39;s verification of the certificate, use</span>
+<span class="go"> the -k (or --insecure) option.</span>
+</pre></div>
+<p>If you hit this brick wall - hope this helps you too.</p>
+
+    </section>
+    
+      <footer>
+        <a href="2011/11/ssl-certificate-trouble/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="2011/7/mappei-stu-tzen-und-rechnungsstellung/">
+        Mappei Stützen und Rechnungsstellung
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2011-07-12">Tuesday, July 12, 2011</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Gerade habe ich endlich für mein GTD-System ein super-Zubehör gefunden, <a href="http://classei.de/de/boxen/mappenstuetzen.html">Mappenstützen von Classei</a>. Der große Vorteil davon: Die Mappen stehen in den Boxen auch stabil wenn diese nicht voll sind - damit kann man seine GTD-Ablage viel entspannter aufbauen. :)</p>
+<p>Und noch ein witziges Detail: Classei gewährt 2% Skonto wenn man zügig bezahlt. Das bedeutet natürlich das sie eigentlich 2% mehr verlangen, wenn man nicht zügig bezahlt. Ich wette aber, dass das viele Leute dazu veranlasst schnell zu bezahlen. Und das finde ich einen schönen Trick. :-)</p>
+
+    </section>
+    
+      <footer>
+        <a href="2011/7/mappei-stu-tzen-und-rechnungsstellung/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="2011/4/musik-ist-doch-was-feines/">
+        Musik ist doch was feines
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2011-04-05">Tuesday, April 5, 2011</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Da gibts so viele Möglichkeiten.</p>
+<ul>
+<li><a href="http://www.youtube.com/watch?v=dmoDLyiQYKw">Auf einem Floppy-Drive</a></li>
+<li><a href="http://www.robotlab.de/instru/video.htm">Auf einem Roboterarm</a></li>
+<li><a href="http://www.youtube.com/watch?v=Ht96HJ01SE4">Auf einem Scanner</a></li>
+<li><a href="http://www.youtube.com/watch?v=qEG-1iYpgKU">Tesla Spulen</a></li>
+<li><a href="http://www.youtube.com/watch?v=fp4jQNa_9sY">Festplatten</a> <a href="http://www.youtube.com/watch?v=g8Y1i6_IMwU">und nochmal</a></li>
+<li><a href="http://www.youtube.com/watch?v=OhnK5LdUCiQ">Schleifgeräten</a></li>
+</ul>
+
+    </section>
+    
+      <footer>
+        <a href="2011/4/musik-ist-doch-was-feines/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="2011/3/iranische-ma-nner-weinen-nicht/">
+        Iranische Männer weinen nicht...
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2011-03-21">Monday, March 21, 2011</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>... hat Ihm seine Mutter beigebracht als er ein Fahrad wollte dass sie sich nicht leisten konnte. Und dann weinte er so stark dass er sein Auto nicht mehr weiter fahren konnte und am Straßenrand anhalten musste.</p>
+<p><a href="http://www.thegreenwave-film.com/">http://www.thegreenwave-film.com/</a></p>
+<p>Dieser Film hat mich tief traurig gemacht, weil es Länder wie den Iran gibt, in denen so viele Menschen nicht ihre Freiheit genießen und so sorgenfrei aufwachsen und leben können wie ich das hier konnte und kann.</p>
+<p>Sehr sehenswert.</p>
+
+    </section>
+    
+      <footer>
+        <a href="2011/3/iranische-ma-nner-weinen-nicht/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="2011/1/a-gypten/">
+        Ägypten
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2011-01-30">Sunday, January 30, 2011</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p><a href="http://twitpic.com/3u6gvc">http://twitpic.com/3u6gvc</a></p>
+<p>Dabei läufts mir jedesmal wenn ich das anschaue kalt über den rücken.</p>
+
+    </section>
+    
+      <footer>
+        <a href="2011/1/a-gypten/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="2011/1/umfragen-und-ergebnisse-so-gehts/">
+        Umfragen und Ergebnisse - so gehts!
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2011-01-10">Monday, January 10, 2011</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Viel zu selten kriegt man mal bescheid wenn man an einer Umfrage / Untersuchung teilgenommen hat und dann endlich die Ergebnisse vorlegen.</p>
+<p>Um so schöner wenn das mal funktioniert!</p>
+<p><a href="http://www.philhist.uni-augsburg.de/lehrstuehle/germanistik/sprachwissenschaft/ada/runde_7/">Die Uni Augsburg hat das mal richtig gemacht!</a></p>
+<p>Und dann auch gleich <a href="http://www.philhist.uni-augsburg.de/lehrstuehle/germanistik/sprachwissenschaft/ada/runde_8/">zur nächsten Runde eingeladen</a>. Jawohl!</p>
+
+    </section>
+    
+      <footer>
+        <a href="2011/1/umfragen-und-ergebnisse-so-gehts/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="2011/1/die-meisten-wissenschaftlichen-ergebnisse-sind-falsch/">
+        Die meisten wissenschaftlichen Ergebnisse sind falsch
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2011-01-03">Monday, January 3, 2011</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Geiler Titel eh? Trotzdem das Ergebnis gut replizierbarer wissenschaftlicher Forschung. Hach die Ironie.</p>
+<p><a href="http://www.newyorker.com/reporting/2010/12/13/101213fa_fact_lehrer?currentPage=all">Hier gibt es dazu einen sehr schönen Artikel.</a> (via fefe)</p>
+
+    </section>
+    
+      <footer>
+        <a href="2011/1/die-meisten-wissenschaftlichen-ergebnisse-sind-falsch/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+  
+  
+    
+  <div class="pagination">
+    
+      <span class="disabled">&laquo; Previous</span>
+    
+    | 1 |
+    
+      <a href="page/2/">Next &raquo;</a>
+    
+  </div>
+
+  
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../blog/feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

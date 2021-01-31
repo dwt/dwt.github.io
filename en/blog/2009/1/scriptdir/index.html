@@ -1,0 +1,141 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../../static/pygments.css">
+    <title>Scriptdir</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../../../blog/feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="../../../../../blog/2009/1/scriptdir/">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="./">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../../">🏠</a>
+
+
+<a class="breadcrumb-item " href="../../../">Blog</a>
+
+
+<a class="breadcrumb-item active" href="./">Scriptdir</a>
+
+</nav>
+    </header>
+    <article class="page scriptdir  container-fluid">
+      
+  
+  <article class="blog-post">
+    <header>
+      <h2>
+        
+        Scriptdir
+        
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-01-29">Thursday, January 29, 2009</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Ich habe immer wieder das Problem, dass ich in Shell-Scripten den absoluten Pfad zum eigenen Script, oder zumindest den Ordner in dem das Script liegt benötige.</p>
+<p>Dieses Problem hat viele Lösungen - die allermeisten kommen aber entweder nicht mit Leerzeichen in diesem Pfad klar, oder versagen wenn man das Script über verschiedene Kombinationen von absoluten und relativen Pfaden aufruft.</p>
+<p>Meine gegenwärtige Lösung ist das hier:</p>
+<div class="hll"><pre><span></span><span class="nv">SCRIPTDIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span><span class="nb">cd</span> <span class="s2">&quot;</span><span class="k">$(</span>dirname <span class="s2">&quot;</span><span class="nv">$0</span><span class="s2">&quot;</span><span class="k">)</span><span class="s2">&quot;</span> <span class="o">&amp;&amp;</span> <span class="nb">pwd</span><span class="k">)</span><span class="s2">&quot;</span>
+<span class="nb">echo</span> <span class="nv">$SCRIPTDIR</span>
+</pre></div>
+<p>Damit bin ich zwar auch überhaupt nicht glücklich, aber immerhin scheint es zu funktionieren. :/</p>
+<p>Insbesondere ist das Quoting extra funky. Unter MacOS X scheint es aber zu gehen (d.h. die Bash frisst das korrekt)</p>
+<p>Hat da vielleicht jemand eine bessere Idee?</p>
+<p><strong><em>Update:</em></strong> Florian hatte die großartige Idee doch einfach mal in gut benutzte Shell-Programme wie den Wrapper für OpenOffice zu schauen.  Und siehe da:</p>
+<div class="hll"><pre><span></span><span class="c1"># cat /usr/lib64/openoffice/program/swriter</span>
+<span class="c1">#!/bin/sh</span>
+
+<span class="nv">cmd</span><span class="o">=</span><span class="sb">`</span>dirname <span class="s2">&quot;</span><span class="nv">$0</span><span class="s2">&quot;</span><span class="sb">`</span>/soffice
+<span class="nb">exec</span> <span class="s2">&quot;</span><span class="nv">$cmd</span><span class="s2">&quot;</span> -writer <span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span>
+</pre></div>
+<p>funktioniert großartig. Man kriegt zwar nur den relativen Pfad - aber das reicht ja in aller Regel.</p>
+
+    </section>
+    
+  </article>
+
+  <nav>
+    
+  <div class="category-list">
+    Kategorien:
+      
+      <a href="../../../../../categories/code/">Software Development</a>
+      
+    
+  </div>
+
+    
+    <div class="relative-navigation">
+      
+        <div class="prev">Vorheriges Post: <a class="prev" href="../landing-on-mars-with-squeak/">Landing on Mars (with Squeak)</a></div>
+      
+      
+        <div class="next">Nächstes Post: <a class="next" href="../der-neue-trend-unfactoring/">Der neue Trend: Unfactoring</a></div>
+      
+    </div>
+    
+  </nav>
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../../../blog/feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

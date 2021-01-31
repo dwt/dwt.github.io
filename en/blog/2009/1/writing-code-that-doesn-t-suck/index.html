@@ -1,0 +1,131 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../../static/pygments.css">
+    <title>Writing Code that doesn&#39;t suck</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../../../blog/feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="../../../../../blog/2009/1/writing-code-that-doesn-t-suck/">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="./">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../../">🏠</a>
+
+
+<a class="breadcrumb-item " href="../../../">Blog</a>
+
+
+<a class="breadcrumb-item active" href="./">Writing Code that doesn&#39;t suck</a>
+
+</nav>
+    </header>
+    <article class="page writing-code-that-doesn-t-suck  container-fluid">
+      
+  
+  <article class="blog-post">
+    <header>
+      <h2>
+        
+        Writing Code that doesn&#39;t suck
+        
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-01-30">Friday, January 30, 2009</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p><a href="http://rubyconf2008.confreaks.com/writing-code-that-doesnt-suck.html">Und noch mal von den Confreaks</a>.</p>
+<p>Ausgezeichneter Vortrag von Yehuda Katz darüber was er für gute Tests hält und was nicht. Sein Argument: Am Ende will man Regression-Tests haben, da nur die wirklich nützlich sind beim Refactorieren. Nur die sind nützlich, weil dass die Tests sind die man behalten kann während man den Code neu faktoriert.</p>
+<p>Damit das geht muss der Code aber schon eine gute Faktorierung haben die man (ausschließlich?) über öffentliche Interfaces testen kann.</p>
+<p>Wohlgemerkt in dem Talk geht es nicht darum ob TDD gut oder schlecht ist - der Zweck ist einfach ein anderer. Ihm geht es um API-Stabilität und die Frage wie man Interfaces (nicht Implementierungen) über eine lange Entwicklung stabil hält.</p>
+<p>Spannend. Mir ist dabei eingefallen dass ich damals im ersten Buch über Test Driven Development einen Absatz gelesen habe in dem Stand dass man zuerst seine Tests schreiben soll um dann an diesen seinen Code zu schreiben und zu refaktorisieren. Und dass man danach den Code als Tests für die Tests verwenden kann um wiederum diese zu refaktorisieren.</p>
+<p>Gaudio. Ob das schon das ist was Yehuda meint? Ich vermute noch nicht ganz - aber es hört sich für mich nach etwas an was ich direkt tun kann - ich kann meine Tests betrachten und mir anschauen ob sie tatsächlich das testen was mich interessiert (das interface) und wenn dem nicht so ist, dann kann ich mir das Interface betrachten und die Tests tatsächlich refaktorieren.</p>
+<p>Yay, mehr Arbeit. :)</p>
+
+    </section>
+    
+  </article>
+
+  <nav>
+    
+  <div class="category-list">
+    Kategorien:
+      
+      <a href="../../../../../categories/code/">Software Development</a>
+      
+    
+  </div>
+
+    
+    <div class="relative-navigation">
+      
+        <div class="prev">Vorheriges Post: <a class="prev" href="../code-review-mal-praktisch-erkla-rt/">Code Review mal praktisch erklärt</a></div>
+      
+      
+        <div class="next">Nächstes Post: <a class="next" href="../landing-on-mars-with-squeak/">Landing on Mars (with Squeak)</a></div>
+      
+    </div>
+    
+  </nav>
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../../../blog/feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

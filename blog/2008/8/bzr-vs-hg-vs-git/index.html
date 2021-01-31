@@ -1,0 +1,143 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../static/pygments.css">
+    <title>bzr vs. hg vs. git</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="./">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="../../../../en/blog/2008/8/bzr-vs-hg-vs-git/">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../../">🏠</a>
+
+
+<a class="breadcrumb-item " href="../../../">Blog</a>
+
+
+<a class="breadcrumb-item active" href="./">bzr vs. hg vs. git</a>
+
+</nav>
+    </header>
+    <article class="page bzr-vs-hg-vs-git  container-fluid">
+      
+  
+  <article class="blog-post">
+    <header>
+      <h2>
+        
+        bzr vs. hg vs. git
+        
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-08-02">Samstag, 2. August 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Ich fang ja nur langsam an zu verstehen wie sich die verschiedenen Konstrukte unterscheiden.</p>
+<p>Da wäre zum Beispiel das immer wieder auftretende Problem das man an Sourcen arbeitet, auf die man nicht comiten kann oder will.</p>
+<p>Also zum Beispiel an Bugfixes für ein Projekt, von dem man zwar die Sourcen hat, das aber dooferweise einer Firma gehört die keine comits zulässt. Ah well.</p>
+<p>In <a href="http://git.or.cz/">Git</a> löst man das, indem man das einfach brancht und bei einem neuen Release mit rebase seine Changes auf die neue Plattform hebt. <a href="http://www.selenic.com/mercurial/wiki/">Mercurial</a> und <a href="http://bazaar-vcs.org/">Bazaar</a> lösen das anders, dort gibt es spezielle Plugins <a href="http://www.selenic.com/mercurial/wiki/index.cgi/MqExtension">Mercurial Patch-Queues</a> und <a href="http://bazaar-vcs.org/Documentation/LoomAsSmarterQuilt">Bazaar Looms</a> die ein <a href="http://savannah.nongnu.org/projects/quilt/">Quilt</a> ähnliches Interface bieten um das Problem zu lösen.</p>
+<p>Tja, was macht den Unterschied aus?</p>
+<p>Eine Sache die mir allmählich aufgeht ist das Teilen dieser Änderungen. Macht man einen Branch und rebased dann immer wieder auf die originalen Sourcen. Das ist super, weil es kein neues Konzept braucht und somit relativ simpel. Aber man kann diesen Branch so gut wie nicht mit anderen leuten Teilen - schließlich verändert man ständig die History. Also doof für die Zusammenarbeit an so einem branch.</p>
+<p>Mercurial Patch-Queues sind da besser geeignet - mit dem unterschied das sie extra sind und nicht versioniert werden. Damit kann man sie aber auch nicht teilen.... :) - Das wiederum lässt sich hacken, indem man einfach in dem repository in dem ordner in dem die patch-queue liegt wiederum ein eigenes hg-repository eröffnet. Ein Hack - aber er löst das Problem auf elegante Art und Weise.</p>
+<p>Bazaar scheint das mit dem looms am besten gelöst zu haben - die lassen sich nämlich ganz normal im repository pushen - sind aber eben nicht teil der history und führen daher nicht zu den üblen merge-conflikten die man in git erhält.</p>
+<p>Auf mich wirkt das so, als zeigen sich die verschiedenen Ideologien der Entwicklungsteams in diesen Entscheidungen:
+GIT:: KISS - kein neues Konzept (Quilt) ohne das es absolut sein muss, gleichzeitig aber die Linux-Poweruser Mentalität: Wenn du deine History-Verändern willst, dann mach doch, wirst schon wissen was du willst.
+HG:: Gutes Design, history verändern ist evil - daher musste es was anderes sein. Gleichzeitig ist man aber so stolz auf die Binary- und Wire-Formate, dass man sie nicht verändern darf - daher bleibt die Information aus dem Repository ausgeschlossen.
+BZR:: Hier wird vor allem auf die Qualität der Code-Basis geachtet, Veränderbarkeit, Usability und schöne API sind dort am wichtigsten - daher ist es überhaupt kein Problem, das die looms natürlich im repository und damit push-bar sind.</p>
+<p>Mir ist unklar wie ich das gegeneinander abwägen kann - jede der Mentalitäten hat ihre eigenen Vor- und Nachteile. Zum Beispiel ist mir BZR immer noch zu Langsam um es im täglichen gebrauch einzusetzen - es macht schlicht keinen Spaß.</p>
+<p>Andererseits erinnert es mich stark an das alte Mantra: "First make it work, then make it fast!". Also vielleicht wird es doch noch?</p>
+<p>p.s.: Ich weiß natürlich das es <a href="http://procode.org/stgit/">Stacked-GIT</a> gibt - aber soweit ich das feststellen konnte, ist das nicht der "recommended way of doing things" in der GIT community.</p>
+
+    </section>
+    
+  </article>
+
+  <nav>
+    
+  <div class="category-list">
+    Kategorien:
+      
+      <a href="../../../../categories/code/">Software Development</a>
+      , 
+    
+      
+      <a href="../../../../categories/miscellaneous/">Sonstiges</a>
+      
+    
+  </div>
+
+    
+    <div class="relative-navigation">
+      
+        <div class="prev">Vorheriges Post: <a class="prev" href="../doufu-mapo/">Doufu Mapo...</a></div>
+      
+      
+        <div class="next">Nächstes Post: <a class="next" href="../origami-ist-cool/">Origami ist cool</a></div>
+      
+    </div>
+    
+  </nav>
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

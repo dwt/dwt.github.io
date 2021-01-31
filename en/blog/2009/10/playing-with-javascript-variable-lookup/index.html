@@ -1,0 +1,171 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../../static/pygments.css">
+    <title>Playing with JavaScript variable lookup</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../../../blog/feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="../../../../../blog/2009/10/playing-with-javascript-variable-lookup/">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="./">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../../">🏠</a>
+
+
+<a class="breadcrumb-item " href="../../../">Blog</a>
+
+
+<a class="breadcrumb-item active" href="./">Playing with JavaScript variable lookup</a>
+
+</nav>
+    </header>
+    <article class="page playing-with-javascript-variable-lookup  container-fluid">
+      
+  
+  <article class="blog-post">
+    <header>
+      <h2>
+        
+        Playing with JavaScript variable lookup
+        
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-10-17">Saturday, October 17, 2009</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>I am always amazed at the very nice features of JavaScript on the one hand and the very, very bad features of it on the other side.</p>
+<p>Here's something I learned the other week that I find quite interesting: <code>eval</code> vs. <code>new Function</code>. Here's what I wanted to achieve: I was looking for a way to do some meta-programming with JavaScrip, specifically prevent the problem that any variable you assign to but don't declare ends up as a member of the global object.</p>
+<p>The problem is that name lookup in JavaScript is quite peculiar. First it consults the current function activation for local variables and then it goes straight back to the <code>window</code> object and just prepends all it's contents to the local namespace.</p>
+<p>Doh. This has the very bad consequence that every variable you forget to declare via the <code>var someVariableName</code> syntax becomes part of the global object - and therefore itself global.</p>
+<p>Now you can change this lookup by inserting some of your objects in this lookup chain by using the <a href="http://yuiblog.com/blog/2006/04/11/with-statement-considered-harmful/">somewhat controversial</a> <code>with</code> statement like so:</p>
+<div class="hll"><pre><span></span><span class="kd">var</span> <span class="nx">namespace</span> <span class="o">=</span> <span class="p">{</span><span class="nx">foo</span><span class="o">:</span><span class="s1">&#39;bar&#39;</span><span class="p">};</span>
+<span class="kd">with</span> <span class="p">(</span><span class="nx">namespace</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// this scope now has a local variable foo with the value bar</span>
+<span class="p">}</span>
+</pre></div>
+<p>This is considered a bad feature, as it means that if you assign to <code>foo</code> that will assign a new value to <code>namespace</code> but if you assign to something else or mistype, that will still end up on the global object. Not very nice - and therefore most JavaScript programmers don't use <code>with</code> ever.</p>
+<p>Still with some working and eval it can be used to re-map free functions transparently, so that you can do something like this:</p>
+<div class="hll"><pre><span></span><span class="kd">var</span> <span class="nx">namespace</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">equals</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">actual</span><span class="p">,</span> <span class="nx">expected</span><span class="p">){</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">actual</span> <span class="o">!==</span> <span class="nx">expected</span><span class="p">)</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;actual&#39;</span><span class="p">,</span> <span class="nx">actual</span><span class="p">,</span> <span class="s1">&#39;does not equal expected&#39;</span><span class="p">,</span> <span class="nx">expected</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">test</span><span class="p">(</span><span class="nx">aDescription</span><span class="p">,</span> <span class="nx">aTestFunction</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">useNamespaceForFunction</span><span class="p">(</span><span class="nx">namespace</span> <span class="p">,</span> <span class="nx">aTestFunction</span><span class="p">)();</span>
+<span class="p">}</span>
+
+<span class="nx">test</span><span class="p">(</span><span class="s2">&quot;that I can call equals as a free function&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="nx">equals</span><span class="p">(</span><span class="mf">1</span><span class="p">,</span><span class="mf">1</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+<p>Which would allow you to not pollute the global namespace with all the testing equality functions but still call them in a convenient way (that is without needing to go through an object.</p>
+<p>All in all, quite nice really - even though I haven't really found a use for this yet. :-)</p>
+<p>Implementing the <code>useNamespaceForFunction</code> however isn't quite as straightforward as I had thought - here's my first go at it:</p>
+<div class="hll"><pre><span></span><span class="kd">function</span> <span class="nx">useNamespaceForFunction</span><span class="p">(</span><span class="nx">aNamespace</span><span class="p">,</span> <span class="nx">aFunction</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">with</span> <span class="p">(</span><span class="nx">aNamespace</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span>  <span class="nb">eval</span><span class="p">(</span><span class="s1">&#39;(&#39;</span> <span class="o">+</span> <span class="nx">aFunction</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>I have since learned that actually using <code>new Function</code> to do the eval might be quite a good idea as the whole point of it is that it ignores the namespace around it, so here's my version two:</p>
+<div class="hll"><pre><span></span><span class="kd">function</span> <span class="nx">useNamespaceForFunction</span><span class="p">(</span><span class="nx">aNamespace</span><span class="p">,</span> <span class="nx">aFunction</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">namespacingCode</span> <span class="o">=</span> <span class="s2">&quot;with (aNamespace) { return (&quot;</span> <span class="o">+</span> <span class="nx">aFunction</span> <span class="o">+</span> <span class="s2">&quot;); }&quot;</span><span class="p">;</span>
+    <span class="c1">// using new Function instead of eval to prevent the current namespace leaking into the eval&lt;</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nb">Function</span><span class="p">(</span><span class="s2">&quot;aNamespace&quot;</span><span class="p">,</span> <span class="nx">namespacingCode</span><span class="p">)(</span><span class="nx">aNamespace</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+<p>So, lets see what uses come up for this technique - I've seen some js code that does an Interpreter of sorts with this trick - but thats about it.</p>
+<p>So - I didn't achieve my initial goal - but I did come nearer to it. So I'll call it a success here for now.</p>
+<p>If you find any use for this technique, please let me know!</p>
+<p>[browser:open-source/javascript-hacks/trunk/namespacing-functions.js Get the source!]</p>
+
+    </section>
+    
+  </article>
+
+  <nav>
+    
+  <div class="category-list">
+    Kategorien:
+      
+      <a href="../../../../../categories/code/">Software Development</a>
+      
+    
+  </div>
+
+    
+    <div class="relative-navigation">
+      
+        <div class="prev">Vorheriges Post: <a class="prev" href="../worin-liegt-der-erfolg-von-ruby-on-rails/">Worin liegt der Erfolg von &#34;Ruby on Rails&#34;</a></div>
+      
+      
+        <div class="next">Nächstes Post: <a class="next" href="../simple-super/">Simple super</a></div>
+      
+    </div>
+    
+  </nav>
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../../../blog/feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

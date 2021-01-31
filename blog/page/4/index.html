@@ -1,0 +1,469 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../static/style.css">
+    <link rel="stylesheet" href="../../../static/pygments.css">
+    <title>Blog</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="./">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="../../../en/blog/page/4/">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../">🏠</a>
+
+
+<a class="breadcrumb-item active" href="./">Blog</a>
+
+</nav>
+    </header>
+    <article class="page blog  container-fluid">
+      
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2009/12/python-saug-punkte/">
+        Python Saug-Punkte
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-12-23">Mittwoch, 23. Dezember 2009</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Viele standard-funktionen und module in python haben zu kurze namen.</p>
+<p>Das ist deshalb ein Problem weil, man diese Namen nicht für lokale Variablen verwenden kann bzw. ungewollt eine Standardfunktion überschreibt.</p>
+<p><code>id</code> zum Beispiel. Oder <code>dict</code>, <code>list</code>.</p>
+<p>Module sind dabei aber auch Problemkandidaten - vor allem wenn man sie häufig wie ein Objekt benutzt. Das <code>json</code> Modul macht mir immer wieder probleme, weil ich eine lokale Variable die json enthält nun mal gerne json nennen würde. <code>json_serialization</code> wäre vielleicht ein besserer Name für das Modul.</p>
+<p>Die Standard-Bibliothek ist leider voll von solchen Beispielen und der Include-Mechanismus von Python der die Module quasi als Objekt im namespace des Empfängers verfügbar macht hilft da nicht wirklich weiter. Das ist zwar IMO eine bessere Idee als der C-Präprozessor <code>#include</code> (was Ruby ja zum Beispiel nachbaut) aber gerade bei so kurzen Namen kann das wirklich nerven.</p>
+<p>Wenn man aus einem Modul ein Objekt importiert ist das interessanterweise kein Problem, da Objekte in Python (wenn sie sich an die Namenskonvention halten - leider auch oft nicht der Fall in der Standardbibliothek) immer mit einem Großbuchstaben anfangen und dadurch diese Namenskollision nicht auftritt.</p>
+<p>Für mich ist da das Problem dass die Python Programmierer leider so eine Obsession damit haben alles möglichst kurz machen zu wollen - und dabei aber dem Programmierer der mit der (Standard-) Bibliothek arbeiten möchte gerade wieder Steine in den Weg legen dass kurz zu machen was für Ihn am meisten sinn macht - lokale Variablen.</p>
+<p>Das ist leider Premature Optimisation in Reinstkultur - und es stört mich beim Entwickeln von meiner Software. :-(</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/12/python-saug-punkte/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2009/12/how-to-crash-ie-7-with-javascript/">
+        How to crash IE 7 with javascript
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-12-12">Samstag, 12. Dezember 2009</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Well, it's all too easy apparently. We stumbled upon the problem when suddenly our web application crashed left and right on us in IE 7.</p>
+<p>I've since reduced the code involved and created a plugin to jQuery to make it easier to reproduce this.</p>
+<p>Well, maybe perhaps sometimes somebody even discovers a use for the crashIE7 jQuery plugin. :)</p>
+<p>In any event - it was fun creating this. :)</p>
+<p>See the blog post page for the attached source and how to use this.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/12/how-to-crash-ie-7-with-javascript/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2009/12/python-distributions/">
+        Python distributions
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-12-05">Samstag, 5. Dezember 2009</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Endlich mal hab ich einen überblick gefunden wo die Entwicklung momentan hingeht.</p>
+<p><a href="http://mail.python.org/pipermail/python-dev/2009-October/092754.html">http://mail.python.org/pipermail/python-dev/2009-October/092754.html</a></p>
+<p>Kurz zusammengefasst:</p>
+<ul>
+<li>easy_install, ez_setup und Konsorten wird sterben. <a href="http://packages.python.org/distribute/">distribute</a> ist die Zukunft</li>
+<li>easy_install wird sterben -&gt; <a href="http://pip.openplans.org/">pip</a> ist die Zukunft</li>
+<li>Metadata wird aus dem setup.py script herauswandern und stattdessen in einem ini file zur Verfügung gestellt (Da ist mir noch nicht ganz klar wie das funktionieren soll - aber gut).</li>
+<li>Deinstallieren wird auch mit den distutils gehen - man braucht also nicht mehr pip um das zu machen</li>
+</ul>
+<p>Und noch mehr. Aber das find ich schon mal am wichtigsten. :)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/12/python-distributions/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2009/11/flagge-zeigen/">
+        Flagge zeigen
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-11-29">Sonntag, 29. November 2009</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p><img src="http://wurstball.de/static/ircview/pictures/ba57e733f5f0157a130c99f7e648cb58.jpg" alt="Image"></p>
+<p><a href="http://wurstball.de/25017/">via</a></p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/11/flagge-zeigen/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2009/11/zur-schweinegrippe/">
+        Zur Schweinegrippe
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-11-18">Mittwoch, 18. November 2009</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Meine Mutter hat diesen lesenswerten Text dazu geschrieben - und den möchte ich gerne (mit ihrer Erlaubnis) noch mehr Leuten zugänglich machen. Grund dafür ist diese Email die gerade mit diversen gut klingenden Arzt-Namen als Absender auch durch meine Inbox wandert</p>
+<hr>
+<p>Für alle, die überlegen sich impfen zu lassen :</p>
+<p>Die beiden Impfstoffe gegen die so genannte Schweinegrippe <em>Pandemrix® Und Focetria®,</em> enthalten als Adjuvans (Impfverstärker ) <em>Squalen</em>. Beim Menschen ist Squalen bei den US-Soldaten des ersten Golfkriegs als Impfverstärker eingesetzt worden.</p>
+<p>23-27% (also jeder Vierte, auch solche, die zu Hause blieben) bekamen Die Golfkriegskrankheit, Mit chronischer Müdigkeit, Fibromyalgie (Muskelrheuma), neben Gedächtnis-und Konzentrationsproblemen, persistierenden Kopfschmerzen, Erschöpfung und ausgedehnten Schmerzen charakterisiert. Die Krankheit Kann auch chronische Verdauungsprobleme und Hautausschlag einschließen.</p>
+<p>Die Erkrankung hat sich seit 1991 also seit 18 Jahren nicht gebessert. Bei 95 % der Geimpften mit Golfkriegssyndrom wurden Squalen-Antikörper Gefunden.</p>
+<p>Erst nach mehr als 10 Jahren wurden die Schäden vom US-Verteidigungsministerium anerkannt.</p>
+<p>Wenn die Bundesregierung ihren Willen durchsetzt und 35 Millionen Menschen geimpft werden, ist damit zu rechnen, dass 8-9 Millionen Bundesbürger für die nächsten Jahrzehnte unter chronischer Müdigkeit und Fibromyalgie etc. leiden werden.</p>
+<p>Unterschrieben von:</p>
+<h2>$GUT_KLINGENDER_ARZT_NAME</h2>
+<p>Dazu hat sie diese gute Antwort geschrieben:</p>
+<p>Ja, es stimmt.
+Pandemrix + Focetria enthalten Squalen, das injiziert zum Imunogen wird. Das
+ist seine wirkstoffverstärkende Ebene. Es wird auch in unserer Leber
+produziert, aber liegt natürlicherweise in öliger Form vor. Im Impfstoff
+aber als Emulsion, was einen Unterschied für die Verstoffwechselung im
+Körper macht. Der Verdacht, dass es etwas mit dem Golfkriegsyndrom zu tun
+hat, ist nicht erhärtet. Neuere Studien mit größeren Teilnehmergruppen
+zeigen keinen Zusammenhang zwischen Squalen-Antikörpern und chron.
+Symptomen.- Dennoch wird unabhängig von diesem Aspekt der Debatte um diese
+Impfstoffe ihre Sicherheit als ungenügend geprüft eingeschätzt. Er wird
+schlechter vertragen als ein Spaltimpfstoff ohne Wirkverstärker. Das ist
+sicher. ER wurde noch nicht an Schwangeren und Kindern erprobt und die jetzt
+eingesetzte Wirkstoffverstärkerdosis ist viel höher als in bisher
+eingesetzten Impfungen. Nebenwirkungen wurden noch nicht systematisch
+erfaßt. Auch seine Wirksamkeit ist noch nicht hinreichend erforscht, da eine
+verringerte Dosierung gegenüber der Zulassungsphase jetzt vermarktet wird.</p>
+<p>Da die Grippe gutartig abläuft und kein höheres Risiko darstellt, als die
+bisherigen Herbstgrippen, ist davon bei sonst gesunden Menschen abzuraten,
+ebenso bei Schwangeren und Kindern. Hier herum impfen nur wenige Ärzte und
+auch die Kinderärzte sind sehr zurückhaltend.
+Jürgen hat herausgefunden, dass 1974 dieser Virus schon mal "um die Welt
+lief", so dass alle, die damals schon sich anstecken konnten, wahrscheinlich
+immun sind.</p>
+<p>Mein Rat an alle, die sich schützen wollen und dazu beitragen möchten, das
+sich die Viren nicht ausbreiten:</p>
+<ol>
+<li>Bei ersten Symptomen ca 25 mg Zink einnehmen (gibt es als Tabletten) an zwei aufeinanderfolgenden Tagen. Parallel dazu Vitamin C Stoß mit heißer Zitrone o.ä. 2x täglich.</li>
+<li>Cystus 052 Infektblocker Tabl. lutschen (pflanzlicher Virenblocker).</li>
+<li>Wenn Fieber kommt, dieses auf über 39°C steigen lassen und abwarten. Viren werden durch Temperaturen über 39°C abgetötet. Es ist der effektivste Abwehrmechanismus. Die Nebenwirkungen des Fieberanstiegs ertragen sich am besten im Bett mit viel trinken und schlafen. Sobald die Viren keine Bedrohung mehr darstellen, geht das Fieber wieder runter (bei normalem Verlauf).</li>
+<li>Auch ohne Fieber soll sich jeder im Stadium des Niesen und Hustens von seinen Mitmenschen fernhalten, da er wie eine lebende Viren-Schleuder wirkt.  Am besten freiwillig daheim bleiben und viel Zeit auf Pflege der Gesundheit verwenden (Nasenspülung, Inhalieren, Tee trinken, ausruhen, an die frische Luft gehen wenn möglich, Basenbäder nehmen, bei Bedarf Brustwickel, Atemübungen, viel frisches Obst).</li>
+</ol>
+<hr>
+<p>Ich hoffe dass das auch für viele anderen Leute einiges an Fragen beantwortet und die Pharmaindustrie hoffentlich deutlich einnahmen kostet.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/11/zur-schweinegrippe/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2009/11/das-wikipedia-dilemma-lo-sen/">
+        Das Wikipedia Dilemma Lösen
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-11-14">Samstag, 14. November 2009</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Ich weiß ich bin etwas spät mich dazu auch zu äussern - aber jetzt wo die <a href="https://secure.wikimedia.de/spenden/list.php?datum=2009-11">Wikipedia wieder zu Spenden aufruft</a> möchte ich was dazu sagen wieso ich nicht spende.</p>
+<p>Das ist doch alles Kindergarten was in der Wikipedia gerade läuft.</p>
+<p>Also gut, "embrace your enemy" oder wie es heißt, da können wir etwas tun.</p>
+<p>Lasst uns einen Kindergarten eröffnen. Jeder neue Wikipedia-Artikel ist zuerst im Kindergarten und wenn er Groß und Stark geworden ist kann er irgendwann ins Erwachsenen-Artikel-Leben übertreten.</p>
+<p>Das hätte folgenden Vorteil: Alle Exkludisten und die die nur die beste Qualität haben wollen legen einen Schalter um und sehen diese Einträge erst mal nicht.</p>
+<p>Alle anderen verlieren nicht sofort die Lust an der Mitarbeit wenn einer Ihrer Artikel gelöscht wurde - weil er nicht gelöscht wurde.</p>
+<p>Wenn jemand auf eine Seite kommt die unterhalb seines Qualitätslevels liegt, kann er ja einen Hinweis kriegen dass sie existiert, damit er sie mit einem Klick zu sehen bekommt bzw. er seine Einstellung ändern kann.</p>
+<p>Alle sind Glücklich!</p>
+<ul>
+<li>Jeder Artikel kann jederzeit in den Kindergarten geschickt werden bis er groß wird.</li>
+<li>Jeder Artikel kann jederzeit aus dem Kindergarten "graduieren"</li>
+<li>Wer nur Inhalte von größtmöglicher geprüfter Qualität sehen möchte kann diese ausschließen</li>
+<li>Alle Anderen kriegen einen deutlichen Hinweis dass der Artikel noch im "Kindergarten" ist</li>
+<li>Man könnte Kindergarten Artikel generell anders Rendern damit der Unterschied ganz klar ist</li>
+</ul>
+<p>Ich persönlich würde es vorziehen wenn die Standardeinstellung "Alles anzeigen" ist - aber auch wenn der Standard wäre "nur die geprüften Artikel anzeigen" und man jederzeit sieht wenn man an einer Stelle ist die im Kindergarten noch mehr Inhalt enthällt und man die nach bedarf zeigen kann wäre ich zufrieden.</p>
+<p>Platz ist in der Wikipedia ja kein Problem - nur von Admins und regelmäßigen Mitarbeitern gepflegter Platz ist knapp.</p>
+<p>Was ich will, ist das die User entscheiden können was sie lieber wollen. Mehr Artikel, oder besser geflegte - und nicht die die die meiste Zeit in das Projekt stecken. Das halte ich für absolut wichtig.</p>
+<p>Ach ja, und falls das innerhalb der Wikipedia nicht funktioniert, müsste man so etwas als eigene Applikation davor setzen wikinursery.de / kindergarten.wikipedia.de oder per greasemonkey oder als iPhone App oder eben als "vollständige Wikipedia" irgendwo anders.</p>
+<p>Nur innerhalb der Wikipedia  wäre natürlich am besten - wobei zweifelhaft ist ob die macher des Projekts dafür bereit sind.</p>
+<p>Ja, die Idee wurde schon von ein paar anderen Leuten geäussert - ich wollte sie auch noch einmal aufschreiben weil ich sie so wichtig finde.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/11/das-wikipedia-dilemma-lo-sen/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2009/11/hamam/">
+        Hamam
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-11-08">Sonntag, 8. November 2009</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p><a href="http://www.sultan-hamam.de">Ahhhhhhhhhh</a></p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/11/hamam/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2009/11/wie-viel-kostet-die-finanzkriese/">
+        Wie viel kostet die Finanzkriese?
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-11-05">Donnerstag, 5. November 2009</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Im vergleich zum Irak-Krieg? Oder alle Kinder dieser Welt für 5 Jahre zu ernähren?</p>
+<p><a href="http://www.informationisbeautiful.net/visualizations/the-billion-dollar-gram/">Hier wunderschön visualisiert</a>.</p>
+<p>So viel ist klar - man sieht was wichtig ist im Staat und was nicht. Leider.</p>
+<p><a href="http://blog.fefe.de/?ts=b40c8b76">via</a></p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/11/wie-viel-kostet-die-finanzkriese/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2009/11/wieso-blo-cke-keine-echten-funktionen-sein-sollten/">
+        Wieso Blöcke keine echten Funktionen sein sollten
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-11-04">Mittwoch, 4. November 2009</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Zu <a href="http://www.youtube.com/watch?v=hJRV50_tJ0E">"Ergie" von Rainer von Vielen</a></p>
+<p>In meiner Freizeit beschäftige ich mich gerade viel mit Ruby - sowohl <a href="http://www.amazon.com/Ruby-Way-Second-Techniques-Programming/dp/0672328844">The Ruby Way</a>, als auch <a href="http://oreilly.com/catalog/9780596516178">The Ruby Programming Language</a> sind dafür gute Bücher.</p>
+<p>Und ich muss sagen, das Ruby ist nicht unspannend. Zwar gibt es auch einiges dass ich ganz schön eklig finde (z.B. das Flip-Flop Statement, oder dass so viel mit globalen Variablen gearbeitet wird, oder dass viele Sachen so komplex sind.</p>
+<p>Aber darum gehts hier gar nicht. Mir geht es hier um die Erkenntnis wieso und unter welchen umständen man Blöcke als etwas anderes sehen möchte als anonyme Funktionen.</p>
+<p>Das dauert nämlich bis man das merkt.</p>
+<p>Zuerst einmal die Konfusion: Ruby hat eine Syntax für Methoden</p>
+<div class="hll"><pre><span></span><span class="k">def</span> <span class="nf">method</span><span class="p">(</span><span class="n">positional_argument</span><span class="p">,</span> <span class="o">*</span><span class="n">all_other_arguments</span><span class="p">)</span>
+  <span class="c1"># some body</span>
+<span class="k">end</span>
+</pre></div>
+<p>und eine für Blöcke</p>
+<div class="hll"><pre><span></span><span class="mi">10</span><span class="o">.</span><span class="n">times</span> <span class="k">do</span> <span class="o">|</span><span class="n">positonal_argument</span><span class="p">,</span> <span class="o">*</span><span class="n">all_other_arguments</span><span class="o">|</span>
+  <span class="c1"># some body</span>
+<span class="k">end</span>
+</pre></div>
+<p>Wieso der Unterschied? Wieso macht man Blöcke nicht einfach zu normalen Funktionen die man dann auch gleich mit <code>()</code> aufrufen kann anstatt immer ein <code>a_block.call()</code> verwenden zu müssen?</p>
+<p>Echte Lambdas gibt es ja noch zusätzlich in Ruby.</p>
+<p>Well, den Unterschied in der Syntax verstehe ich immer noch nicht. Aber dahinter steht der Grund dass Blöcke eine andere Aufgabe haben als Methoden - der Punkt ist nämlich dass man sie gerne als Teil der sie lexikalisch umgebenden Methode betrachten möchte damit man sie nutzen kann um mit ihnen Kontrollstrukturen zu implementieren. Hier mal ein Beispiel:</p>
+<div class="hll"><pre><span></span><span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="n">needle</span><span class="p">,</span> <span class="n">haystack</span><span class="p">)</span>
+  <span class="n">haystack</span><span class="o">.</span><span class="n">each</span><span class="o">.</span><span class="n">with_index</span> <span class="k">do</span> <span class="o">|</span><span class="n">index</span><span class="p">,</span> <span class="n">element</span><span class="o">|</span>
+    <span class="k">if</span> <span class="n">element</span> <span class="o">==</span> <span class="n">needle</span>
+      <span class="k">return</span> <span class="n">index</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+  <span class="k">return</span> <span class="kp">nil</span>
+<span class="k">end</span>
+</pre></div>
+<p>(Also als Python Programmierer muss ich ja sagen dass die <code>end</code> statements ganz schön auf die Nerven gehen. Doppelte Zeilenanzahl für null zusätzliche Information oder Nützlichkeit. But I digress.)</p>
+<p>Das spannende daran ist die Zeile <code>return index</code>. Seht ihr was daran besonders ist? Ich Puzzle es mal auseinander als wäre der Block eine funktion, dann wird es klar.</p>
+<p>find ruft einen iterator auf dem haystack auf, d.h. übergibt ihm eine Funktion die das richtige Element findet. Diese Funktion erhällt ein Element aus dem haystack und einen index und gibt diesen index zurück wenn das element das gesuchte ist.</p>
+<p>Und da ist das Problem: Damit <code>find</code> funktioniert muss <code>return index</code> find verlassen und nicht nur die iterator-funktion.</p>
+<p>Das ist der Grund wieso man Blöcke als etwas anderes als Funktionen/Methoden betrachten muss wenn man sie nutzen will um damit Kontrollstrukturen implementieren zu können und ihre volle Nützlichkeit für Abstraktionen verwenden zu können.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/11/wieso-blo-cke-keine-echten-funktionen-sein-sollten/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2009/10/worin-liegt-der-erfolg-von-ruby-on-rails/">
+        Worin liegt der Erfolg von &#34;Ruby on Rails&#34;
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-10-24">Samstag, 24. Oktober 2009</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Liegt es vielleicht wie <a href="http://stackoverflow.com/questions/1099305/why-is-ruby-more-suitable-for-rails-than-python/1099367#1099367">auf Stackoverflow angekündigt</a> an der Sprache?</p>
+<p>Jedenfalls fand ich den ersten Kommentar hervorragend.</p>
+<pre><code>"Python on Pails" just doesn't have the same feel to it... – ephemient
+  @Ephemient: I believe it would be Python on Planes. – Jimmy
+  @Jimmy: Who needs planes? import antigravity ;-) xkcd.com/353 – Vinay Sajip
+  Is there a Java in Jails? – Nosredna
+</code></pre>
+<p><em>lol</em> Eindeutig, die Sprache ist schuld.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/10/worin-liegt-der-erfolg-von-ruby-on-rails/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+  
+  
+    
+  <div class="pagination">
+    
+      <a href="../3/">&laquo; Previous</a>
+    
+    | 4 |
+    
+      <a href="../5/">Next &raquo;</a>
+    
+  </div>
+
+  
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

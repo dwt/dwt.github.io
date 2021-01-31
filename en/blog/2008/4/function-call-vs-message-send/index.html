@@ -1,0 +1,155 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../../static/pygments.css">
+    <title>Function Call vs. Message Send</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../../../blog/feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="../../../../../blog/2008/4/function-call-vs-message-send/">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="./">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../../">🏠</a>
+
+
+<a class="breadcrumb-item " href="../../../">Blog</a>
+
+
+<a class="breadcrumb-item active" href="./">Function Call vs. Message Send</a>
+
+</nav>
+    </header>
+    <article class="page function-call-vs-message-send  container-fluid">
+      
+  
+  <article class="blog-post">
+    <header>
+      <h2>
+        
+        Function Call vs. Message Send
+        
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-04-26">Saturday, April 26, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Oder: Wieso mich die Lisp Syntax so stört.</p>
+<p>In meiner Freizeit beschäftige ich mich gerade mit dem Buch <a href="http://gigamonkeys.com/book/">Practical Common Lisp</a>.</p>
+<p>Das Buch gefällt mir auch ganz gut - vielleicht abgesehen davon das er 'loop etwas zu häufig verwendet - ohne es zu erklären - was den Code gerade am Anfang reichlich magisch macht.</p>
+<p>Aber: Worum es mir eigentlich geht, ist die Syntax von Lips. Nicht die Klammern, nicht die Einrückung, nicht die Art wie man es schreibt, sondern schlicht die Reihenfolge.</p>
+<p>Weil: in Lisp ist erst einmal alles auf Funktionen abgebildet. Und das hat Vorteile aber eben auch einen gravierenden Nachteil: Jede Funktion muss immer als erstes in einem Funktionsaufruf Tupel stehen.</p>
+<div class="hll"><pre><span></span><span class="p">(</span><span class="nv">funktion</span> <span class="nv">argument-eins</span> <span class="nv">argument-zwei</span><span class="p">)</span>
+</pre></div>
+<p>Das ist ein Problem, weil man bei verschachtelten Funktionsaufrufen (auch schon bei nur sehr wenigen Ebenen) sehr schnell den Überblick verliert welcher Funktionsaufruf zu welchem argument gehört.</p>
+<div class="hll"><pre><span></span><span class="p">(</span><span class="nv">funktion</span> <span class="p">(</span><span class="nv">funktion-zwei</span> <span class="nv">argument-eins</span> <span class="p">(</span><span class="nv">funktion-drei</span> <span class="nv">argument-eins</span> <span class="nv">argument-zwei</span><span class="p">))</span> <span class="nv">argument-zwei</span><span class="p">)</span>
+</pre></div>
+<p>Das kann man jetzt natürlich auch als Feature sehen, weil man gezwungen wird seinen Code vernünftig einzurücken und keine zu langen Funktionen zu schreiben</p>
+<div class="hll"><pre><span></span><span class="p">(</span><span class="nv">funktion</span> <span class="p">(</span><span class="nv">funktion-zwei</span> <span class="nv">argument-eins</span>
+                     <span class="p">(</span><span class="nv">funktion-drei</span> <span class="nv">argument-eins</span> <span class="nv">argument-zwei</span><span class="p">))</span> 
+        <span class="nv">argument-zwei</span><span class="p">)</span>
+</pre></div>
+<p>Das hilft, aber eben nur so weit. Vor allem weil man beim Lesen von Code immer eine interne herumdrehung machen muss um den Code korrekt zu lesen.</p>
+<div class="hll"><pre><span></span><span class="p">(</span><span class="nb">defparameter</span> <span class="nv">a-list</span> <span class="p">(</span><span class="nb">list</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="p">(</span><span class="nb">car</span> <span class="p">(</span><span class="nb">cdr</span> <span class="p">(</span><span class="nb">cdr</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">a-list</span><span class="p">))))</span>
+</pre></div>
+<p>Soll (wenn (ich) (mich nicht verschrieben) habe) 5 ergeben.</p>
+<p>Aber man muss es von innen nach aussen lesen, damit man es richtig versteht.</p>
+<p>Und das erfordert jede menge Geistige Kapazität, die besser beim finden von guten Namen für Variablen und Funktionen aufgehoben ist. Viel besser.</p>
+<p>Jetzt zum Message-Passing - das ist zwar fundamental "weniger mächtig" als der Funktionsaufruf, weil man zum Beispiel generische Funktionen nicht oder nicht so gut implementieren kann, ABER: man kann viel besser mit dem resultat eines vorherigen Aufrufes das nächste tun.</p>
+<p>Weil die Reihenfolge in der die Sachen ausgeführt werden die gleiche ist in der die Sachen auf dem Bildschirm stehen.</p>
+<p>Und das ist eine ganze Menge besser les- und versteh-bar als die Funktion es jemals sein kann.</p>
+<p>Das war es was <a href="http://de.wikipedia.org/wiki/Alan_Kay">Alan Kay</a> meinte, als er sagt das das wichtigste an <a href="http://de.wikipedia.org/wiki/Smalltalk_(Programmiersprache">Smalltalk</a>) nicht die Objektorientierung, sondern das <a href="http://c2.com/cgi/wiki?AlanKayOnMessaging">Message Passing</a> gewesen ist.</p>
+
+    </section>
+    
+  </article>
+
+  <nav>
+    
+  <div class="category-list">
+    Kategorien:
+      
+      <a href="../../../../../categories/fnord/">Fnord</a>
+      , 
+    
+      
+      <a href="../../../../../categories/code/">Software Development</a>
+      
+    
+  </div>
+
+    
+    <div class="relative-navigation">
+      
+        <div class="prev">Vorheriges Post: <a class="prev" href="../das-neue-ubuntu-ist-da/">Das neue Ubuntu ist da</a></div>
+      
+      
+        <div class="next">Nächstes Post: <a class="next" href="../yay-wir-sind-im-fernsehen/">Yay, wir sind im Fernsehen!</a></div>
+      
+    </div>
+    
+  </nav>
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../../../blog/feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

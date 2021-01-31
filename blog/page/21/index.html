@@ -1,0 +1,432 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../static/style.css">
+    <link rel="stylesheet" href="../../../static/pygments.css">
+    <title>Blog</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="./">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="../../../en/blog/page/21/">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../">🏠</a>
+
+
+<a class="breadcrumb-item active" href="./">Blog</a>
+
+</nav>
+    </header>
+    <article class="page blog  container-fluid">
+      
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/7/timemachine-auf-beliebigem-nas/">
+        TimeMachine auf beliebigem NAS
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-07-14">Montag, 14. Juli 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Tja, nach anfänglichem [wiki:2008/07/12/22.30 Erfolg mit meinem NAS] muss ich leider doch geschlagen geben.</p>
+<p>Auch wenn alles zum Funktionieren zu bringen war, bricht jeder Backup auf den NAS so nach etwa 1-6 Gigabyte ab und ist nach dem zweiten Restart gar nicht mehr zum starten zu überreden (angeblich weil die Backup-Festplatte Schreibgeschützt ist.</p>
+<p>:-(</p>
+<p>Ich probier es jetzt mal mit einem anderen Hersteller.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/7/timemachine-auf-beliebigem-nas/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/7/xcode-tips-tipp-deine-doch-selber/">
+        Xcode Tips: Tipp deine [ ] doch selber!
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-07-14">Montag, 14. Juli 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Dachte ich mir zum letzten mal.</p>
+<p>Denn das kann XCode ja schließlich auch automatisieren, wenn man ein wenig in die Makros von Xcode reingreift.</p>
+<p>Schritt eins, <code>/Developer/Applications/Xcode.app/Contents/PlugIns/TextMacros.xctxtmacro/Contents/Resources/ObjectiveC.xctxtmacro</code> im Texteditor der Wahl öffnen und das Macro finden das Apple als Hilfe für solche Fälle vorgesehen hat. (Bei mir ist das auf Zeile 68)</p>
+<pre><code>{
+            Identifier = objc.bracket;
+            BasedOn = objc;
+            IsMenuItem = YES;
+            Name = "Bracket Expression";
+            TextString = "[&lt;#!expression!#&gt; ]";
+        },
+</code></pre>
+<p>Das habe ich mir dann durch zwei Macro-Definitionen ersetzt die für mich wesentlich nützlicher sind:</p>
+<pre><code>{
+            Identifier = objc.bracket;
+            BasedOn = objc;
+            IsMenuItem = YES;
+            Name = "Bracket Expression";
+            TextString = "[&lt;#!expression!#&gt;]";
+        },
+
+        {
+            Identifier = objc.bracket.withSemicolon;
+            BasedOn = objc;
+            IsMenuItem = YES;
+            Name = "Bracket Expression with Semicolon";
+            TextString = "[&lt;#!expression!#&gt;];";
+        },
+</code></pre>
+<p>Das war Schritt eins, um dass jetzt noch richtig Nützlich zu machen, habe ich mir diese Befehle (die jetzt beide im Menü auftauchen) noch mit einem Shortcut belegt - also Menü-&gt;Xcode-&gt;Preferences-&gt;Key Bindings, dort eine eigene Konfiguration anlegen und bei den "Menu Key Bindings" die Menü-Eintrag unter Edit-&gt;Insert Text Macro-&gt;Objective C finden.</p>
+<p>Ich hab mir den ersten (ohne Semicolon) auf Command-1 und den zweiten (mit Semicolon) auf Command-2 gelegt.</p>
+<p>Nie wieder Semicolons Tippen. Einfach Text-Auswählen und Command-1, dann hab ich eckige Klammern drumherum.</p>
+<p>Ahhh....</p>
+<p>Lediglich eines hätte ich noch gerne, dass der Cursor danach vor der schließenden eckigen Klammer ist.. aber das finde ich auch noch raus.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/7/xcode-tips-tipp-deine-doch-selber/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/7/timemachine-auf-einem-beliebigen-nas/">
+        TimeMachine auf einem beliebigen NAS
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-07-12">Samstag, 12. Juli 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Backups übers WLAN auf ein NAS zu machen ist schick - aber <a href="http://www.apple.com/macosx/features/timemachine.html">TimeMachine</a> arbeitet ausschließlich mit <a href="http://www.apple.com/de/timecapsule/">Apple TimeCapsule</a></p>
+<p>Jetzt kriegt man aber auch schicke NAS mit anderthalb Terrabyte - nur das Ding zur Zusammenarbeit mit TimeMachine zu überreden ist schon etwas schwieriger - aber möglich.</p>
+<p>Zuerst habe ich TimeMachine so konfiguriert, dass es überhaupt alle Festplatten anzeigt:</p>
+<p><code>defaults write com.apple.systempreferences TMShowUnsupportedNetworkVolumes 1</code></p>
+<p>Danach das Disc-Image. TimeMachine kriegt es nicht gebacken - aber während es sein Glück versucht, kann man sehen wie der name sein sollte (mit <code>ls -al</code>)</p>
+<p>TimeMachine bricht dann zwar ab, aber man kann das Disk-Image problemlos selber mit hdiutil herstellen und dann rüberkopieren. Wichtig: <code>-volname</code> muss passen (das .tmp image rechtzeitig mounten). Der Trick liegt in dem Namen des <code>sparsebundles</code>, der besteht aus a) dem Namen des Rechners ($NAME), dann einem Underscore ("_") und der MAC-Adresse des Rechners ($MAC_ADRESS).</p>
+<pre><code>hdiutil create -library SPUD -size 1t -fs HFS+J -type SPARSEBUNDLE \
+    -volname "Backup of $NAME" $NAME_$MAC_ADRESS.sparsebundle
+</code></pre>
+<p>Ach ja, die Größe kann man natürlich einstellen und später mit resize ändern. Ich hab mich mal für einen Terrabyte entschieden.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/7/timemachine-auf-einem-beliebigen-nas/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/7/matjessalat-mit-roter-beete-und-apfel/">
+        Matjessalat mit Roter Beete und Apfel
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-07-10">Donnerstag, 10. Juli 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Mjam....</p>
+<p><a href="http://www.chefkoch.de/rezepte/836451188454161/Heringssalat.html">etwa so.</a></p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/7/matjessalat-mit-roter-beete-und-apfel/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/7/die-universita-t-der-ort-an-an-dem/">
+        Die Universität, der Ort an an dem..
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-07-06">Sonntag, 6. Juli 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>... der aktuelle Wissensstand auf die Studenten trifft, wie der D-Zug auf den auf dem Gleis liegenden.</p>
+<p>Oder?</p>
+<p>Jedenfalls in einer Hinsicht bemerkenswerterweise überhaupt nicht. Die Lehre.</p>
+<p>Die ist nämlich erstaunlich leer von dem was die Forschung über den Menschen und seine Lernfähigkeit gelernt hat.</p>
+<p>:-(</p>
+<p>Das Buch <a href="http://www.brainrules.net/">Brain Rules von John Medina</a> hat dazu jedenfalls eine Menge zu sagen.</p>
+<p>Davon habe ich an der Uni aber allerhöchstens zufällige Bruchstücke gefunden. Erstaunlich dass wir uns diese Institutionalisierte Rückständigkeit erlauben.</p>
+<p>Für jeden der Lehrt -&gt; Buch Lesen und umsetzen. <a href="http://educationinnovation.typepad.com/my_weblog/2008/06/great-teaching-and-presentation-with-the-brain-rules-lesson-plan-brain-rules-part-6.html">Zum Beispiel den Lehrplan den er selbst auch verwendet.</a></p>
+<p>Ach ja, <a href="http://brainrules.blogspot.com/">bloggen tut er auch.</a> Yeah. :)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/7/die-universita-t-der-ort-an-an-dem/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/7/urlaub/">
+        Urlaub
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-07-04">Freitag, 4. Juli 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Ist schön!</p>
+<p>Barfuß laufen den ganzen Tag, jeden tag zweimal im Meer Schwimmen gehen, in der Sonne liegen und lesen...</p>
+<p><a href="http://www.hiddensee.de/">Hiddensee machts möglich</a>.</p>
+<p>Besonders schön an <a href="http://www.hiddensee.de/inselfuehrer/inseldoerfer.html">Neundorf</a>, es ist eigentlich vor allem nur eine große Wiese, auf die ein paar Häuser gebaut sind. Daher kann man eben auch alles Barfuß erlaufen. :)</p>
+<p>Ach ja, Autos gibts auf der Insel natürlich auch keine (ok, die Müllabfuhr und der Elektriker und noch zwei) was die Insel ganz dem Fahrad gehören lässt.</p>
+<p>Vitte und Kloster sind etwas größer, da hat man dann weniger Ruhe, in Kloster gibts natürlich noch den berühmten Leuchtturm - aber wer will schon da hin wo die Massen hinstreben...</p>
+<p>Natürlich alles ohne Computer, daher auch wenig Posts hier.</p>
+<p>Wird sich aber jetzt wieder ändern. :)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/7/urlaub/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/6/trac-die-webentwicklungsplattform/">
+        Trac, die Webentwicklungsplattform
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-06-21">Samstag, 21. Juni 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Es gibt ja verschiedenste Frameworks die total toll sind um darauf aufbauend Webseiten-Entwicklung zu machen. <a href="http://turbogears.org/">TurboGears</a>, <a href="http://www.djangoproject.com/">Django</a>, <a href="http://www.rubyonrails.org/">Ruby On Rails</a>, etc.</p>
+<p>Und was muss ich feststellen? Ich treibe Webentwicklung in einem Framework, der es selber gar nicht sein will. <a href="http://trac.edgewall.org/">Trac</a>.</p>
+<p>Irgendwie ist das eine Liebe und Hass-Beziehung. Einerseits finde ich das Prinzip gut und mir gefällt wie es umgesetzt ist. Andererseits kotzt mich der Code in Trac zum Teil gewaltig an.</p>
+<p>Sowas von Kompliziert. Bäh.</p>
+<p>Also wieso mache ich mir den Stress?</p>
+<p>Weil ich später auf der Benutzer-Seite nicht so viele verschiedene Tools einsetzen will. Ich will meinen Blog schreiben, im Wiki Arbeiten und meine Software verwalten - alles ohne extra Aufwand zu treiben, damit es sich integriert.</p>
+<p>Dabei ist es logisch betrachtet viel mehr Aufwand das alles in einem Tool zusammenzukriegen, als einfach ein paar gut geeignete Tools zusammenzuwerfen.</p>
+<p>Na mal schaun. Für's erste mach ich mal weiter mit dem Blog - immerhin kann man damit jetzt schon posten und kriegt sogar eine Fehlermeldung wenn man vergisst einen Titel zu vergeben. :-)
+Dauert also nicht mehr lange bis ich das hier fürs Bloggen einsetzen kann / werde.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/6/trac-die-webentwicklungsplattform/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/6/iphones-bei-o2-germany/">
+        iPhones bei O2 Germany?
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-06-19">Donnerstag, 19. Juni 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Gerade hat mich meine "Tarifberaterin" angerufen und mich darauf hingewiesen das ich meinen Vertrag erneuern könne.</p>
+<p>Auf meine Frage wie es denn da mit den iPhones aussieht erhielt ich dann eine überraschende Antwort:</p>
+<p>"Ja klar, das dauert aber noch bis zum 11. bis die auf den Markt kommen, in welchem von diesen drei geschäften möchten sie den Vertrag denn dann abschließen?"</p>
+<p>Doh.</p>
+<p>Also entweder:</p>
+<ul>
+<li>Sie will mich verarschen, damit ich doch einen Tarif über sie Abschließe</li>
+<li>Sie war völlig Dämlich und hat nicht verstanden das O2 keine iPhones hat</li>
+<li>O2 hat einen Deal, den sie jetzt ausgeplaudert hat.</li>
+</ul>
+<p>Letzteres kann ich mir aber nur sehr schwer vorstellen - denn diese Neuigkeit wäre ja der Vollhammer für die Telekom. Bleibt eigentlich nur noch Möglichkeit eins und zwei.</p>
+<p>Ersteres fände ich reichlich geschmacklos - vor allem, was soll dann danach kommen?</p>
+<p>Bleibt eigentlich nur noch Möglichkeit zwei. Dagegen spricht allerdings das sie doch sehr überzeugt und resolut klang und auch offenbar diese eindeutige Liste von drei Geschäften in Berlin hatte wo das gehen wird.</p>
+<p>Hmm....</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/6/iphones-bei-o2-germany/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/6/brainworks-in-presentation/">
+        Brainworks in presentation
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-06-14">Samstag, 14. Juni 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p><a href="http://youtube.com/watch?v=DZ2vtQCESpk">Garr Raynolds spricht mal wieder</a>. <a href="http://www.presentationzen.com/">Seinen Blog</a> verfolge ich ja schon lange - und habe ihn noch nie sprechen hören.</p>
+<p>Daher war ich auch am Anfang etwas enttäuscht, da er (IMO) viel besser Schreibt als er spricht. Aber er kommt rein und hält letztlich eine sehr gute Präsentation - mit dem Thema wie man präsentieren soll (nach ihm).</p>
+<p><a href="http://youtube.com/watch?v=DZ2vtQCESpk">Den Vortrag kann ich daher nur empfehlen.</a></p>
+<p>p.s.: By the way: Durch den Vortrag bin ich auch auf <a href="http://www.brainrules.net/">Brain Rules</a> ein Buch von John Medina gestoßen, der aus der Sicht eines Molekularbiologen beschreibt was wir über das Gehirn wissen und wie wir uns demnach verhalten sollen.</p>
+<p>Good stuff. (Buch gerade bestellt)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/6/brainworks-in-presentation/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/6/hacking-tracblog/">
+        Hacking TracBlog
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-06-14">Samstag, 14. Juni 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Well, wir sind weiter gekommen. Man kann sogar schon posten.</p>
+<p>Vor allem aber, haben wir eine recht vollständige Testsuite. Und dazu gehören auch funktionale Tests <a href="http://twill.idyll.org/">mit Twill</a>.</p>
+<p>Die finde ich vom Ablauf her noch reichlich krude und aufwendig, aber ein Anfang ist gemacht.</p>
+<p><a href="http://xn--hcker-gra.net/cgi-bin/hgweb.cgi">Wer schon mal einen Blick werfen will, darf das gerne tun. :-)</a></p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/6/hacking-tracblog/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+  
+  
+    
+  <div class="pagination">
+    
+      <a href="../20/">&laquo; Previous</a>
+    
+    | 21 |
+    
+      <a href="../22/">Next &raquo;</a>
+    
+  </div>
+
+  
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

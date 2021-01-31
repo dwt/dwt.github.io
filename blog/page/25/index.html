@@ -1,0 +1,435 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../static/style.css">
+    <link rel="stylesheet" href="../../../static/pygments.css">
+    <title>Blog</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="./">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="../../../en/blog/page/25/">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../">🏠</a>
+
+
+<a class="breadcrumb-item active" href="./">Blog</a>
+
+</nav>
+    </header>
+    <article class="page blog  container-fluid">
+      
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/5/warum-jeder-u-berall-das-gleiche-passwort-verwendet/">
+        Warum jeder überall das gleiche Passwort verwendet …
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-05-04">Sonntag, 4. Mai 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>… wo doch jeder weiß wie unsicher das ist?</p>
+<p>Dabei ist dass Problem so klar: Niemand kann sich für jeden Account den man heute im Social Web anlegen muss eine neue Kombination aus Benutzername und Passwort merken.</p>
+<p>Und es gibt mehrere Lösungen:</p>
+<p>Microsoft (aber auch viele Andere) favorisiert Single-Sign-On - ein Server von Microsoft verwaltet die Benutzerdaten für alle Webseiten. Man meldet sich nur noch bei Microsoft an und alle anderen Sprechen nicht mehr mit einem selber, sondern nur noch mit Microsoft um festzustellen ob der der da rein will echt ist.</p>
+<p>Super, nur noch ein Passwort - aber auch ein Punkt an dem alles schief gehen kann. Denn man muss dem Anbieter (Microsoft) vertrauen.</p>
+<p>Apple hat eine Andere Lösung: <a href="http://en.wikipedia.org/wiki/Apple_Keychain">Keychain</a>. Ganz Apple Typisch komplett in das System integriert und nicht nur eine Lösung für Webseite, sondern für jedes Authentifizierungsproblem.</p>
+<p>Super, auch nur noch ein Passwort und keine zentrale Location der man Vertrauen muss (abgesehen von der Implementierung des Dienstes). Aber, wenn man mehrere Computer verwendet oder auch mal aus der Ferne auf eine Webseite zugreifen muss / möchte, hat man erst einmal verloren.</p>
+<p>Und da habe ich heute die perfekte Lösung gefunden: Ein Javascript Bookmarklet das folgendes tut: Es verbindet ein konstantes Geheimnis (Master Password) mit einem Datum das für jede Webseite variiert (die URL oder den Namen der Seite) und jagt das Ergebnis durch eine <a href="http://de.wikipedia.org/wiki/SHA-1">Kryptographische Hash-Funktion</a>.</p>
+<p>Das Ergebnis ist damit ein Passwort das für jede Webseite anders ist - aber das man sich nicht merken muss.</p>
+<p>Das <a href="http://supergenpass.com/">Bookmarklet gibt es hier</a>. <a href="http://www.xs4all.nl/~jlpoutre/BoT/Javascript/PasswordComposer/">Und natürlich gibt es dafür auch eine Greasemonkey verschönerte Version für Firefox Benutzer</a>. (Die Angenehmerweise auch auf dem iPhone funktioniert)</p>
+<p>Ich verwende auf dem iPhone dieses Bookmarklet (<a href="http://www.xs4all.nl/~jlpoutre/BoT/Javascript/PasswordComposer">Als Backup gespeichert</a>)
+<code>javascript:(function(){function%20hex_md5(s){%20return%20binl2hex(core_md5(str2binl(s),%20s.length%20*%208));}function%20core_md5(x,%20len){x[len%20%3E%3E%205]|=%200x80%20%3C%3C%20((len)%20%25%2032);x[(((len%20+%2064)%20%3E%3E%3E%209)%20%3C%3C%204)%20+%2014]%20=%20len;var%20a%20=%20%201732584193;var%20b%20=%20-271733879;var%20c%20=%20-1732584194;var%20d%20=%20%20271733878;for(var%20i%20=%200;i%20%3C%20x.length;i%20+=%2016){var%20olda%20=%20a;var%20oldb%20=%20b;var%20oldc%20=%20c;var%20oldd%20=%20d;a%20=%20md5_ff(a,%20b,%20c,%20d,%20x[i+%200],%207%20,%20-680876936);d%20=%20md5_ff(d,%20a,%20b,%20c,%20x[i+%201],%2012,%20-389564586);c%20=%20md5_ff(c,%20d,%20a,%20b,%20x[i+%202],%2017,%20%20606105819);b%20=%20md5_ff(b,%20c,%20d,%20a,%20x[i+%203],%2022,%20-1044525330);a%20=%20md5_ff(a,%20b,%20c,%20d,%20x[i+%204],%207%20,%20-176418897);d%20=%20md5_ff(d,%20a,%20b,%20c,%20x[i+%205],%2012,%20%201200080426);c%20=%20md5_ff(c,%20d,%20a,%20b,%20x[i+%206],%2017,%20-1473231341);b%20=%20md5_ff(b,%20c,%20d,%20a,%20x[i+%207],%2022,%20-45705983);a%20=%20md5_ff(a,%20b,%20c,%20d,%20x[i+%208],%207%20,%20%201770035416);d%20=%20md5_ff(d,%20a,%20b,%20c,%20x[i+%209],%2012,%20-1958414417);c%20=%20md5_ff(c,%20d,%20a,%20b,%20x[i+10],%2017,%20-42063);b%20=%20md5_ff(b,%20c,%20d,%20a,%20x[i+11],%2022,%20-1990404162);a%20=%20md5_ff(a,%20b,%20c,%20d,%20x[i+12],%207%20,%20%201804603682);d%20=%20md5_ff(d,%20a,%20b,%20c,%20x[i+13],%2012,%20-40341101);c%20=%20md5_ff(c,%20d,%20a,%20b,%20x[i+14],%2017,%20-1502002290);b%20=%20md5_ff(b,%20c,%20d,%20a,%20x[i+15],%2022,%20%201236535329);a%20=%20md5_gg(a,%20b,%20c,%20d,%20x[i+%201],%205%20,%20-165796510);d%20=%20md5_gg(d,%20a,%20b,%20c,%20x[i+%206],%209%20,%20-1069501632);c%20=%20md5_gg(c,%20d,%20a,%20b,%20x[i+11],%2014,%20%20643717713);b%20=%20md5_gg(b,%20c,%20d,%20a,%20x[i+%200],%2020,%20-373897302);a%20=%20md5_gg(a,%20b,%20c,%20d,%20x[i+%205],%205%20,%20-701558691);d%20=%20md5_gg(d,%20a,%20b,%20c,%20x[i+10],%209%20,%20%2038016083);c%20=%20md5_gg(c,%20d,%20a,%20b,%20x[i+15],%2014,%20-660478335);b%20=%20md5_gg(b,%20c,%20d,%20a,%20x[i+%204],%2020,%20-405537848);a%20=%20md5_gg(a,%20b,%20c,%20d,%20x[i+%209],%205%20,%20%20568446438);d%20=%20md5_gg(d,%20a,%20b,%20c,%20x[i+14],%209%20,%20-1019803690);c%20=%20md5_gg(c,%20d,%20a,%20b,%20x[i+%203],%2014,%20-187363961);b%20=%20md5_gg(b,%20c,%20d,%20a,%20x[i+%208],%2020,%20%201163531501);a%20=%20md5_gg(a,%20b,%20c,%20d,%20x[i+13],%205%20,%20-1444681467);d%20=%20md5_gg(d,%20a,%20b,%20c,%20x[i+%202],%209%20,%20-51403784);c%20=%20md5_gg(c,%20d,%20a,%20b,%20x[i+%207],%2014,%20%201735328473);b%20=%20md5_gg(b,%20c,%20d,%20a,%20x[i+12],%2020,%20-1926607734);a%20=%20md5_hh(a,%20b,%20c,%20d,%20x[i+%205],%204%20,%20-378558);d%20=%20md5_hh(d,%20a,%20b,%20c,%20x[i+%208],%2011,%20-2022574463);c%20=%20md5_hh(c,%20d,%20a,%20b,%20x[i+11],%2016,%20%201839030562);b%20=%20md5_hh(b,%20c,%20d,%20a,%20x[i+14],%2023,%20-35309556);a%20=%20md5_hh(a,%20b,%20c,%20d,%20x[i+%201],%204%20,%20-1530992060);d%20=%20md5_hh(d,%20a,%20b,%20c,%20x[i+%204],%2011,%20%201272893353);c%20=%20md5_hh(c,%20d,%20a,%20b,%20x[i+%207],%2016,%20-155497632);b%20=%20md5_hh(b,%20c,%20d,%20a,%20x[i+10],%2023,%20-1094730640);a%20=%20md5_hh(a,%20b,%20c,%20d,%20x[i+13],%204%20,%20%20681279174);d%20=%20md5_hh(d,%20a,%20b,%20c,%20x[i+%200],%2011,%20-358537222);c%20=%20md5_hh(c,%20d,%20a,%20b,%20x[i+%203],%2016,%20-722521979);b%20=%20md5_hh(b,%20c,%20d,%20a,%20x[i+%206],%2023,%20%2076029189);a%20=%20md5_hh(a,%20b,%20c,%20d,%20x[i+%209],%204%20,%20-640364487);d%20=%20md5_hh(d,%20a,%20b,%20c,%20x[i+12],%2011,%20-421815835);c%20=%20md5_hh(c,%20d,%20a,%20b,%20x[i+15],%2016,%20%20530742520);b%20=%20md5_hh(b,%20c,%20d,%20a,%20x[i+%202],%2023,%20-995338651);a%20=%20md5_ii(a,%20b,%20c,%20d,%20x[i+%200],%206%20,%20-198630844);d%20=%20md5_ii(d,%20a,%20b,%20c,%20x[i+%207],%2010,%20%201126891415);c%20=%20md5_ii(c,%20d,%20a,%20b,%20x[i+14],%2015,%20-1416354905);b%20=%20md5_ii(b,%20c,%20d,%20a,%20x[i+%205],%2021,%20-57434055);a%20=%20md5_ii(a,%20b,%20c,%20d,%20x[i+12],%206%20,%20%201700485571);d%20=%20md5_ii(d,%20a,%20b,%20c,%20x[i+%203],%2010,%20-1894986606);c%20=%20md5_ii(c,%20d,%20a,%20b,%20x[i+10],%2015,%20-1051523);b%20=%20md5_ii(b,%20c,%20d,%20a,%20x[i+%201],%2021,%20-2054922799);a%20=%20md5_ii(a,%20b,%20c,%20d,%20x[i+%208],%206%20,%20%201873313359);d%20=%20md5_ii(d,%20a,%20b,%20c,%20x[i+15],%2010,%20-30611744);c%20=%20md5_ii(c,%20d,%20a,%20b,%20x[i+%206],%2015,%20-1560198380);b%20=%20md5_ii(b,%20c,%20d,%20a,%20x[i+13],%2021,%20%201309151649);a%20=%20md5_ii(a,%20b,%20c,%20d,%20x[i+%204],%206%20,%20-145523070);d%20=%20md5_ii(d,%20a,%20b,%20c,%20x[i+11],%2010,%20-1120210379);c%20=%20md5_ii(c,%20d,%20a,%20b,%20x[i+%202],%2015,%20%20718787259);b%20=%20md5_ii(b,%20c,%20d,%20a,%20x[i+%209],%2021,%20-343485551);a%20=%20safe_add(a,%20olda);b%20=%20safe_add(b,%20oldb);c%20=%20safe_add(c,%20oldc);d%20=%20safe_add(d,%20oldd);}return%20Array(a,%20b,%20c,%20d);}function%20md5_cmn(q,%20a,%20b,%20x,%20s,%20t){return%20safe_add(bit_rol(safe_add(safe_add(a,%20q),%20safe_add(x,%20t)),%20s),b);}function%20md5_ff(a,%20b,%20c,%20d,%20x,%20s,%20t){return%20md5_cmn((b%20&amp;%20c)%20|%20((~b)%20&amp;%20d),%20a,%20b,%20x,%20s,%20t);}function%20md5_gg(a,%20b,%20c,%20d,%20x,%20s,%20t){return%20md5_cmn((b%20&amp;%20d)%20|%20(c%20&amp;%20(~d)),%20a,%20b,%20x,%20s,%20t);}function%20md5_hh(a,%20b,%20c,%20d,%20x,%20s,%20t){return%20md5_cmn(b%20^%20c%20^%20d,%20a,%20b,%20x,%20s,%20t);}function%20md5_ii(a,%20b,%20c,%20d,%20x,%20s,%20t){return%20md5_cmn(c%20^%20(b%20|%20(~d)),%20a,%20b,%20x,%20s,%20t);}function%20safe_add(x,%20y){var%20lsw%20=%20(x%20&amp;%200xFFFF)%20+%20(y%20&amp;%200xFFFF);var%20msw%20=%20(x%20%3E%3E%2016)%20+%20(y%20%3E%3E%2016)%20+%20(lsw%20%3E%3E%2016);return%20(msw%20%3C%3C%2016)%20|%20(lsw%20&amp;%200xFFFF);}function%20bit_rol(num,%20cnt){return%20(num%20%3C%3C%20cnt)%20|%20(num%20%3E%3E%3E%20(32%20-%20cnt));}function%20str2binl(str){var%20bin%20=%20Array();var%20mask%20=%20(1%20%3C%3C%208)%20-%201;for(var%20i%20=%200;%20i%20%3C%20str.length%20*%208;%20i%20+=%208)bin[i%3E%3E5]%20|=%20(str.charCodeAt(i%20/%208)%20&amp;%20mask)%20%3C%3C%20(i%20%25%2032);return%20bin;}function%20binl2hex(binarray){var%20hex_tab%20=%20%270123456789abcdef%27;var%20str%20=%20%27%27;for(var%20i%20=%200;%20i%20%3C%20binarray.length%20*%204;%20i++){str%20+=%20hex_tab.charAt((binarray[i%3E%3E2]%20%3E%3E%20((i%254)*8+4))%20&amp;%200xF)%20+%20hex_tab.charAt((binarray[i%3E%3E2]%20%3E%3E%20((i%254)*8))%20&amp;%200xF);}return%20str;}function%20mpwd_doIt(){var%20master=document.getElementById(%27masterpwd%27).value;if%20(master%20!=%20%27%27%20&amp;&amp;%20master%20!=%20null)%20{re%20=%20new%20RegExp(%27https*://([^/]+)%27);host%20=%20document.location.href.match(re)[1];var%20i=0,%20j=0,%20p=hex_md5(master+%27:%27+host).substr(0,8),%20F=document.forms;for(i=0;i%3CF.length;i++){E=F[i].elements;for(j=0;j%3CE.length;j++){D=E[j];if(D.type==%27password%27){D.value=p;D.focus();}if(D.type==%27text%27){if(D.name.toUpperCase().indexOf(%27PASSWORD%27)!=-1||D.name.toUpperCase().indexOf(%27PASSWD%27)!=-1){D.value=p;D.focus();</code>}}document.getElementsByTagName(%27body%27)[0].removeChild(document.getElementById(%27mpwd_panel%27));};function%20getPwdFld()%20{var%20L%20=%20document.getElementsByTagName(%27input%27);for%20(var%20i%20in%20L)%20{var%20nm%20=%20L[i].getAttribute(%22name%22)%20||%20%22%22;var%20tp%20=%20L[i].getAttribute(%22type%22)%20||%20%22%22;if%20((tp%20==%20%22password%22)%20||(tp%20==%20%22text%22%20&amp;&amp;%20nm.toLowerCase().substring(0,5)%20==%20%22passw%22))%20{return%20L[i];}}return%20null;}function%20panel()%20{var%20pwdTop%20=%200;var%20pwdLeft%20=%200;try%20{var%20obj%20=%20getPwdFld();if%20(obj.offsetParent)%20{while%20(obj.offsetParent)%20{pwdTop%20+=%20obj.offsetTop;pwdLeft%20+=%20obj.offsetLeft;obj%20=%20obj.offsetParent;}}}%20catch%20(e)%20{pwdTop%20=%2010;pwdLeft%20=%2010;}var%20div%20=%20document.createElement(%27div%27);div.style.padding=%274px%27;div.style.backgroundColor=%27yellow%27;div.style.border=%272px%20dotted%20red%27;div.style.position=%27absolute%27;div.style.top%20=%20pwdTop%20+%20%27px%27;div.style.left%20=%20pwdLeft%20+%20%27px%27;div.style.opacity=%27.9%27;div.setAttribute(%27id%27,%20%27mpwd_panel%27);div.appendChild(document.createTextNode(%27Master%20password:%20%27));var%20frm%20=%20document.createElement(%27form%27);frm.action=%27javascript:void(0);%27;div.appendChild(frm);var%20pwd%20=%20document.createElement(%27input%27);pwd.setAttribute(%27type%27,%27password%27);pwd.setAttribute(%27id%27,%27masterpwd%27);frm.appendChild(pwd);var%20ok%20=%20document.createElement(%27input%27);ok.setAttribute(%27type%27,%27submit%27);ok.setAttribute(%27value%27,%27OK%27);ok.onclick%20=%20mpwd_doIt;frm.appendChild(ok);document.getElementsByTagName(%27body%27)[0].appendChild(div);setTimeout(%22document.getElementById(%27masterpwd%27).focus();%22,%20333);};panel();})();
+}}}</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/5/warum-jeder-u-berall-das-gleiche-passwort-verwendet/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/4/und-noch-ein-schlag-gegen-die-abmahner/">
+        Und noch ein Schlag gegen die Abmahner
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-04-30">Mittwoch, 30. April 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Zuerst die gute Nachricht:</p>
+<p>Das <a href="http://www.golem.de/0804/59375.html">LG München hat geurteilt</a>, das Rechteinhaber nur aufgrund der IP-Adresse und Zeit kein Recht erhalten die Persönlichen Daten dieses Internet-Nutzers zu bekommen.</p>
+<p>Wie es in den Kommentaren auf <a href="http://www.golem.de/0804/59375.html">Golem</a> jemand sagt: "Das wirkt ja fast so, als ob die Gerichte jetzt auf einmal mit gesundem Menschenverstand entscheiden würden.".</p>
+<p>Dabei hat das Urteil für mich aber noch so ein Geschmäckle - es ist nämlich so, das der Kläger der Inhalteindustrie ein Porno-Vertreiber war.</p>
+<p>Da stellen sich mir mehrere Fragen</p>
+<ul>
+<li>Warum ausgerechnet ein Porno-Anbieter? Trauen sich die Herren Richter nicht an die Musik-/Filmindustrie heran und wollten sich nicht von denen das Leben / die Karriere versauen lassen?</li>
+<li>Hat da vielleicht jemand zu wenig geschmiert?</li>
+<li>Hat der Porno-Anbieter sich vielleicht besonders doof angestellt? Immerhin ist teil der Urteilsbegründung explizit, das der Rechteinhaber offenbar kein Interesse daran habe der Urheberrechtsverletzung nachzugehen, sondern den Betroffenen lediglich abmahnen wollte.</li>
+</ul>
+<p>Unklarheiten über unklarheiten.</p>
+<p>Ich persönlich vermute ja das er sich tatsächlich einfach zu doof angestellt hat und in der Klage direkt geschrieben hat, das er ja schließlich die Leute abmahnen wolle und das Gericht das zum Anlass genommen hat das zu sagen was sie schon lange mal sagen wollten, aber aufgrund geschickterer Formulierung der Klagen seitens der Musikindustrie nie sagen konnten.</p>
+<p>Tja, find ich gut.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/4/und-noch-ein-schlag-gegen-die-abmahner/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/4/vom-populismus/">
+        Vom Populismus
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-04-29">Dienstag, 29. April 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Schon bezeichnend für unsere politische Landschaft das das immer mehr zu einem Schow-Theater verkommt. Inspiriert durch <a href="http://chaosradio.ccc.de/cre081.html">die Analyse von Maha</a> hab ich da nochmal über das Killerspiele Argument nachgedacht.</p>
+<p>Kurz Zusammengefasst: Ein Mensch sieht sich so in die Enge gedrängt das er irgendwann durchdreht und zum Amokläufer wird.</p>
+<p>Darauf dann die typische Reaktion: Dieser Mensch hat Killerspiele gespielt, ergo waren die Schuld, ergo müssen wir Killerspiele verbieten.</p>
+<p>Völlig ungeachtet der Tatsache das Killerspiele für Jugendliche sowieso schon verboten sind und man sich jetzt lediglich darüber unterhält, dass eben auch für Erwachsene zu verbieten.</p>
+<p>Wieder völlig ungeachtet der Tatsache, das natürlich alle diese Spiele übers Internet trivial zu haben sind.</p>
+<p>Einfach schade, das man mit solchen einfachen Strohmännern jede sinnvolle Beschäftigung mit dem Thema komplett verhindert wird.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/4/vom-populismus/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/4/das-internet-an-frau-merkel/">
+        Das Internet an Frau Merkel
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-04-28">Montag, 28. April 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p><a href="http://dl.fefe.de/MerkelBrief2.pdf">Das internet schrieb einen Brief</a></p>
+<p>!!1!!!!(elf)!!!1!!!</p>
+<p>Pavel bringt es einfach auf den Punkt.</p>
+<p>(via <a href="http://blog.fefe.de/?ts=b6eb33f1">fefe</a>, <a href="http://frank.geekheim.de/?p=402">frank</a>)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/4/das-internet-an-frau-merkel/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/4/hg-svn/">
+        hg &lt;-&gt; svn
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-04-28">Montag, 28. April 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Tja... leider nicht so einfach wie ich dachte.</p>
+<p>Meine Versuche mit <a href="http://bazaar-vcs.org/">BZR</a> die verbindung herzustellen, haben leider nicht geklappt. Das <a href="https://launchpad.net/bzr-hg">hg-plugin</a> dort läuft mit der aktuellen Version leider nicht mehr - und hat auch keine Unit-Tests, sonst hätte ich mir ja schon mal etwas Zeit genommen um zu schauen woran es liegt.</p>
+<p>Aber so...</p>
+<p>Egal.</p>
+<p>Was doch geklappt hat, ist mit <a href="http://www.selenic.com/mercurial/wiki/index.cgi/WorkingWithSubversion">hgimportsvn</a> einen svn checkout zu machen. Mit einem lokalen hg clone konnte ich dann Arbeiten und auf den svn-checkout zurückschieben und dann von dort comitten.</p>
+<p>Vorteil:</p>
+<ul>
+<li>Es geht überhaupt</li>
+</ul>
+<p>Nachteil:</p>
+<ul>
+<li>Alle commit Kommentare gehen verloren</li>
+<li>Ich kann lokal so oft comitten wie ich will - im Subversion kommt nur ein commit an. :-/</li>
+</ul>
+<p>Eher unbefriedigend. Aber immerhin kann man überhaupt an einem SVN-Checkout arbeiten.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/4/hg-svn/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/4/bzr-svn/">
+        BZR -&gt; SVN
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-04-27">Sonntag, 27. April 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Puah. Nach viel Gefrickel hab ich es endlich zum laufen gebracht.</p>
+<p>Jetzt kann ich mit bzr von svn auschecken, lokal arbeiten (mit voller historie) und auch wieder comitten.</p>
+<p>Was mich [wiki:2008/04/15/21.02  beim letzten mal] noch aufgehalten hatte war ein Bug, der in der neuesten Version zwar gefixt ist - aber man musste zusätzlich noch die <code>~/.bazaar/subversion.conf</code> wegschmeißen.</p>
+<p>Ach ja, und einen neuen Branch vom Subversion machen, das <a href="http://bazaar-vcs.org/Rebase">rebase</a> Plugin installieren und mit <code>cd $NEW_BRANCH_LOCATION &amp;&amp; bzr replay $OLD_BRANCH_LOCATION -r $REVISIONS_TO_GET</code> die alten Patches holen.</p>
+<p>Eigentlich ganz einfach wenn man es mal raushat. Und dann kann man das auch von dort aus in den SVN comitten.</p>
+<p>Yeah. (Danke an <a href="http://bazaar-vcs.org/JelmerVernooij">Jelmer Vernooij</a> für die Hilfe beim fixen der Probleme)</p>
+<p>Das neue Fazit:
+BZR: gut
+GIT: gut
+HG: kann bisher noch nicht ins SVN comitten - aber immerhin <a href="http://code.google.com/soc/2008/hg/appinfo.html?csaid=2757CDDD2156F1A7">arbeitet da jetzt jemand dran.</a></p>
+<p>Bleibt noch den bzr hg modus auszuprobieren ob ich damit ins subversion comitten kann.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/4/bzr-svn/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/4/das-neue-ubuntu-ist-da/">
+        Das neue Ubuntu ist da
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-04-26">Samstag, 26. April 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Ubuntu: Die Linux distribution die am meisten Wert auf Usability legt!</p>
+<p><img src="../../2008/4/das-neue-ubuntu-ist-da/Installer-error.png" alt="Image"></p>
+<p>Fuck yeah!</p>
+<p><em>rofl</em></p>
+<p><a href="https://bugs.launchpad.net/ubuntu/+bug/222647">Bug Filed</a></p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/4/das-neue-ubuntu-ist-da/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/4/function-call-vs-message-send/">
+        Function Call vs. Message Send
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-04-26">Samstag, 26. April 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Oder: Wieso mich die Lisp Syntax so stört.</p>
+<p>In meiner Freizeit beschäftige ich mich gerade mit dem Buch <a href="http://gigamonkeys.com/book/">Practical Common Lisp</a>.</p>
+<p>Das Buch gefällt mir auch ganz gut - vielleicht abgesehen davon das er 'loop etwas zu häufig verwendet - ohne es zu erklären - was den Code gerade am Anfang reichlich magisch macht.</p>
+<p>Aber: Worum es mir eigentlich geht, ist die Syntax von Lips. Nicht die Klammern, nicht die Einrückung, nicht die Art wie man es schreibt, sondern schlicht die Reihenfolge.</p>
+<p>Weil: in Lisp ist erst einmal alles auf Funktionen abgebildet. Und das hat Vorteile aber eben auch einen gravierenden Nachteil: Jede Funktion muss immer als erstes in einem Funktionsaufruf Tupel stehen.</p>
+<div class="hll"><pre><span></span><span class="p">(</span><span class="nv">funktion</span> <span class="nv">argument-eins</span> <span class="nv">argument-zwei</span><span class="p">)</span>
+</pre></div>
+<p>Das ist ein Problem, weil man bei verschachtelten Funktionsaufrufen (auch schon bei nur sehr wenigen Ebenen) sehr schnell den Überblick verliert welcher Funktionsaufruf zu welchem argument gehört.</p>
+<div class="hll"><pre><span></span><span class="p">(</span><span class="nv">funktion</span> <span class="p">(</span><span class="nv">funktion-zwei</span> <span class="nv">argument-eins</span> <span class="p">(</span><span class="nv">funktion-drei</span> <span class="nv">argument-eins</span> <span class="nv">argument-zwei</span><span class="p">))</span> <span class="nv">argument-zwei</span><span class="p">)</span>
+</pre></div>
+<p>Das kann man jetzt natürlich auch als Feature sehen, weil man gezwungen wird seinen Code vernünftig einzurücken und keine zu langen Funktionen zu schreiben</p>
+<div class="hll"><pre><span></span><span class="p">(</span><span class="nv">funktion</span> <span class="p">(</span><span class="nv">funktion-zwei</span> <span class="nv">argument-eins</span>
+                     <span class="p">(</span><span class="nv">funktion-drei</span> <span class="nv">argument-eins</span> <span class="nv">argument-zwei</span><span class="p">))</span> 
+        <span class="nv">argument-zwei</span><span class="p">)</span>
+</pre></div>
+<p>Das hilft, aber eben nur so weit. Vor allem weil man beim Lesen von Code immer eine interne herumdrehung machen muss um den Code korrekt zu lesen.</p>
+<div class="hll"><pre><span></span><span class="p">(</span><span class="nb">defparameter</span> <span class="nv">a-list</span> <span class="p">(</span><span class="nb">list</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="p">(</span><span class="nb">car</span> <span class="p">(</span><span class="nb">cdr</span> <span class="p">(</span><span class="nb">cdr</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">a-list</span><span class="p">))))</span>
+</pre></div>
+<p>Soll (wenn (ich) (mich nicht verschrieben) habe) 5 ergeben.</p>
+<p>Aber man muss es von innen nach aussen lesen, damit man es richtig versteht.</p>
+<p>Und das erfordert jede menge Geistige Kapazität, die besser beim finden von guten Namen für Variablen und Funktionen aufgehoben ist. Viel besser.</p>
+<p>Jetzt zum Message-Passing - das ist zwar fundamental "weniger mächtig" als der Funktionsaufruf, weil man zum Beispiel generische Funktionen nicht oder nicht so gut implementieren kann, ABER: man kann viel besser mit dem resultat eines vorherigen Aufrufes das nächste tun.</p>
+<p>Weil die Reihenfolge in der die Sachen ausgeführt werden die gleiche ist in der die Sachen auf dem Bildschirm stehen.</p>
+<p>Und das ist eine ganze Menge besser les- und versteh-bar als die Funktion es jemals sein kann.</p>
+<p>Das war es was <a href="http://de.wikipedia.org/wiki/Alan_Kay">Alan Kay</a> meinte, als er sagt das das wichtigste an <a href="http://de.wikipedia.org/wiki/Smalltalk_(Programmiersprache">Smalltalk</a>) nicht die Objektorientierung, sondern das <a href="http://c2.com/cgi/wiki?AlanKayOnMessaging">Message Passing</a> gewesen ist.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/4/function-call-vs-message-send/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/4/yay-wir-sind-im-fernsehen/">
+        Yay, wir sind im Fernsehen!
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-04-25">Freitag, 25. April 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p><a href="http://rka.name/">RKA</a> hat es als <a href="http://wiki.piratenpartei.de/B-Web:Vorstand">Berliner Vorstand</a> <a href="http://podfiles.zdf.de/podcast/3sat_neues/sendung_270408.mp4">ins 3sat geschafft</a>.</p>
+<p>Gleich er erste Beitrag.</p>
+<p>:-) Glückwunsch!</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/4/yay-wir-sind-im-fernsehen/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/4/programme-sind-auch-nur-eine-sprache/">
+        Programme sind auch nur eine Sprache
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-04-24">Donnerstag, 24. April 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Das wissen wir ja alle - sind schließlich Informatiker.</p>
+<p>Und Programme sollte man analysieren, damit man sich darüber im Klaren ist was sie tun.</p>
+<p>Und aus Programm == Sprache folgt damit das man auch Sprache genau analysieren sollte, damit man versteht was sie tut.</p>
+<p>Und das macht <a href="http://chaosradio.ccc.de/cre081.html">MaHa hervorragend im Chaosradio 81</a>.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/4/programme-sind-auch-nur-eine-sprache/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+  
+  
+    
+  <div class="pagination">
+    
+      <a href="../24/">&laquo; Previous</a>
+    
+    | 25 |
+    
+      <a href="../26/">Next &raquo;</a>
+    
+  </div>
+
+  
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

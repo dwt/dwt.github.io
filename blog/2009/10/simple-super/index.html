@@ -1,0 +1,162 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../static/pygments.css">
+    <title>Simple super</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="./">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="../../../../en/blog/2009/10/simple-super/">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../../">🏠</a>
+
+
+<a class="breadcrumb-item " href="../../../">Blog</a>
+
+
+<a class="breadcrumb-item active" href="./">Simple super</a>
+
+</nav>
+    </header>
+    <article class="page simple-super  container-fluid">
+      
+  
+  <article class="blog-post">
+    <header>
+      <h2>
+        
+        Simple super
+        
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-10-14">Mittwoch, 14. Oktober 2009</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Python is a wonderfull language - except when it's not.</p>
+<p>For example calling a super-method is really, really hard. Here's an example:</p>
+<div class="hll"><pre><span></span><span class="k">class</span> <span class="nc">Super</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">method</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">Sub</span><span class="p">(</span><span class="n">Super</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">method</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Sub</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">method</span><span class="p">()</span>
+</pre></div>
+<p>This is bad because of several reasons:</p>
+<p>If your class names become longer this becomes more and more unreadable, consider this Acceptance-Test</p>
+<div class="hll"><pre><span></span><span class="k">class</span> <span class="nc">CanEnterUsernameAndPasswordOnLoginForm</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">CanEnterUsernameAndPasswordOnLoginForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">setUp</span><span class="p">()</span>
+        <span class="c1"># more</span>
+</pre></div>
+<p>You need to repeat the class name in each method that calls super. This is especially bad if you rename your class as you need to repeat the name in so many places - also there might be situations where having the wrong name doesn't bomb but just calls the wrong code. Also if you move methods up and down the class-inheritance-chain this becomes more and more annoying.</p>
+<p>Well, so I looked at what you can do with some meta-programming - and lo and behold there's a lot you can do.</p>
+<p>Here's an example what I ended up with:</p>
+<div class="hll"><pre><span></span><span class="k">class</span> <span class="nc">Super</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="nb">super</span> <span class="o">=</span> <span class="n">SuperProxy</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">method</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">Sub</span><span class="p">(</span><span class="n">Super</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">method</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">super</span><span class="p">()</span>
+</pre></div>
+<p>Yeah! Now that's simpler. to call super you can use several syntaxes:</p>
+<ul>
+<li><code>self.super()</code> just calls the super method of the same name and hands it all arguments that the current method got</li>
+<li><code>self.super('foo')</code> this way you can hand specific methods to the super-class and prevent the automatic gathering of arguments. If you prefer explicit - this is it.</li>
+<li><code>self.super.some_method()</code> self.super is exactly the same as what the super-method returns (so it's the same as <code>super(ThisClass, self)</code>) so you can use it to call any method on the superclass and hand it any arguments you want.</li>
+</ul>
+<p>Well, so I consider this a boon for any bigger python project as it considerably eases the pain of working with class-hierarchies, and best of all you can import it into your project one superclass at a time.</p>
+<p>Oh, and please tell me if you use it and like it. :-)</p>
+<p>So [browser:/open-source/python-simple-super/trunk/simple_super.py here's the code!]</p>
+
+    </section>
+    
+  </article>
+
+  <nav>
+    
+  <div class="category-list">
+    Kategorien:
+      
+      <a href="../../../../categories/code/">Software Development</a>
+      
+    
+  </div>
+
+    
+    <div class="relative-navigation">
+      
+        <div class="prev">Vorheriges Post: <a class="prev" href="../playing-with-javascript-variable-lookup/">Playing with JavaScript variable lookup</a></div>
+      
+      
+        <div class="next">Nächstes Post: <a class="next" href="../demokratie-ohne-parteien/">Demokratie ohne Parteien</a></div>
+      
+    </div>
+    
+  </nav>
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

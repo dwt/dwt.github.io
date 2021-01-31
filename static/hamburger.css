@@ -1,0 +1,81 @@
+nav {
+  /* TODO unify casing */
+  --lineWidth: 5px;
+  --lineLength: 25px;
+  --baseMargin: 8px;
+  --animationDuration: .2s;
+}
+
+/* the checkbox used only internally; don't display it */
+nav #navbar-toggle-checkbox {
+  display:none
+}
+
+/* show the collapse when navbar toggle is checked */
+@media (max-width: 576px) { /* --breakpoint-sm */
+  nav #navbar-toggle-checkbox ~ .collapse {
+    overflow: hidden;
+    display: block;
+    max-height: 0;
+    transform: scaleY(0);
+    transition-duration: var(--animationDuration);
+    transition-delay: var(--animationDuration);
+    transform-origin: top;
+    transition: transform var(--animationDuration) ease, max-height var(--animationDuration) ease;
+  }
+  nav #navbar-toggle-checkbox:checked ~ .collapse {
+    max-height: 20em;
+    transform: scaleY(1);
+  }
+}
+
+/* icon and animation */
+nav .navbar-toggle {
+  display: block;
+  cursor: pointer;
+  height: calc(var(--baseMargin) * 2 + var(--lineWidth));
+  width: var(--lineLength);
+  }
+
+  nav .navbar-toggle span {
+    display: block;
+    top: var(--baseMargin);
+    width: var(--lineLength);
+    height: var(--lineWidth);
+    background-color: #000;
+    position: relative;
+    transition-duration: 0;  
+    transition-delay: var(--animationDuration);
+    }
+    nav .navbar-toggle span:after, 
+    nav .navbar-toggle span:before {
+      display: block;
+      content: '';
+      position: absolute;
+      width: var(--lineLength);
+      height: var(--lineWidth);
+      background-color: #000;
+      transition-duration: var(--animationDuration);
+      transition-delay: var(--animationDuration), 0;
+    }
+    nav .navbar-toggle span:before {
+      margin-top: calc(0px - var(--baseMargin));
+    }
+    nav .navbar-toggle span:after {
+      margin-top: var(--baseMargin);
+    }
+
+nav #navbar-toggle-checkbox:checked ~ .navbar-toggle span {
+    background-color: rgba(0,0,0,0);
+    }
+    nav #navbar-toggle-checkbox:checked ~ .navbar-toggle span:before, 
+    nav #navbar-toggle-checkbox:checked ~ .navbar-toggle span:after {
+      margin-top: 0px;
+      transition-delay: 0, var(--animationDuration);
+    }
+    nav #navbar-toggle-checkbox:checked ~ .navbar-toggle span:before {
+      transform: rotate(45deg);
+    }
+    nav #navbar-toggle-checkbox:checked ~ .navbar-toggle span:after {
+      transform: rotate(-45deg);
+    }

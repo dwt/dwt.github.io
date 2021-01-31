@@ -1,0 +1,164 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../../static/pygments.css">
+    <title>Git - das Werkzeug für Leute die gerne viel von hand machen</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../../../blog/feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="../../../../../blog/2009/5/git-das-werkzeug-fu-r-leute-die-gerne-viel-von-hand-machen/">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="./">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../../">🏠</a>
+
+
+<a class="breadcrumb-item " href="../../../">Blog</a>
+
+
+<a class="breadcrumb-item active" href="./">Git - das Werkzeug für Leute die gerne viel von hand machen</a>
+
+</nav>
+    </header>
+    <article class="page git-das-werkzeug-fu-r-leute-die-gerne-viel-von-hand-machen  container-fluid">
+      
+  
+  <article class="blog-post">
+    <header>
+      <h2>
+        
+        Git - das Werkzeug für Leute die gerne viel von hand machen
+        
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-05-23">Saturday, May 23, 2009</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Puh, ich muss mir mal den Frust von der Seele schreiben den dieses Werkzeug mir bereitet hat.</p>
+<p>Zuerst das Setup: Ich will zu einem Open Source Projekt beitragen dass leider GIT und GITHUB verrwendet.</p>
+<p>Zuerst mal was mich wirklich frustriert hat. ich habe an ein DVCS (und speziell eines dass so sehr hyped wird wie GIT) ein paar ganz spezifische Requirements:</p>
+<ol>
+<li>Ich will dass ich meine Patches sauber getrennt voneinander entwickeln kann, damit man jeweils den ganzen Patch einfach sehen kann.</li>
+<li>Ich will die History dieser Entwicklung erhalten, damit die Code-Reviews die stattgefunden haben und die Gründe für Änderungen sichtbar bleiben</li>
+<li>Ich will einen stabilen Link auf den Head nur dieser Patches, damit der Maintainer es einfach hat diese bei sich zu integrieren und ich den in BugReports angeben kann</li>
+<li>Ich will die Patches als Layer über mein repository legen, damit ich von den Bugfixes die ich bereitstelle schon etwas habe solange sie noch nicht in dem Projekt akzeptiert wurden. Dieses Overlay-Repo stelle ich möglicherweise auch anderen Leuten zur Verfügung - optimalerweise können sie da auch Commiten.</li>
+<li>Ich will wenig Arbeit damit haben, damit ich mich auf die eigentliche Entwicklung konzentrieren kann und nicht ständig mit dem DVCS kämpfen muss.</li>
+</ol>
+<p>Das letzte Requirement ist für mich dabei das wichtigste. Ich will Software und Patches entwickeln - und das DVCS das mich dabei unterstützt MUSS in den Hintergrund treten - sonst ist es schlicht und ergreifend ein schlechtes Tool. Und das ist auch schon der Todesstoß für GIT. So viel kann ich schon mal verraten - eigentlich kann GIT diese Requirements (die ja wohl für ein DVCS selbstverständlich sind) nämlich gar nicht erfüllen.</p>
+<p>Dazu kommt dann natürlich noch [wiki:2009/01/17/22.07 der Ärger den man mit dem Index hat].</p>
+<p>Aber mal zu den Details.</p>
+<p>Getrennte Patch-Entwicklung: Prinzipiell gibt es wohl zwei (oder drei) möglichkeiten. Die erste und die die sowohl im Manual als auch im IRC-Channel empfohlen wird ist das man doch einfach für jeden Patch einen branch macht. Die zweite und dritte Möglichkeit ist ein tool wie <a href="http://www.procode.org/stgit/">StGit</a> oder <a href="http://repo.or.cz/w/topgit.git">TopGit</a> zu verwenden. Beides sind externe Tools, die sich überhaupt nicht in GIT integrieren - und das bereitet eine Menge Probleme. StGit hab ich intensiver getestet - und von TopGit dass sogar in GIT-Kreisen als "kompliziert" gilt werde ich daher tunlichst die Finger lassen. Das Problem ist, dass man die Verwendung der Tools nicht mischen darf. Dazu ein Beispiel: Wenn man mit Mercurial PatchQueues arbeitet (das war letztlich mein Workaround, der wenigstens funktioniert!) dann sind die patchqueue Kommandos einfach weiter Subkommandos von <code>hg</code> - das bedeutet auch dass sie den vollen Repository-Status kennen und ihn in die Fehlermeldungen einbeziehen können. In der Praxis bedeutet dass, das wenn ich ein hg patchqueue Kommando absende und das Repository gerade in einem status ist der dazu nicht passt - dann kriegt man eine Fehlermeldung die einem nicht nur sagt das ein Problem aufgetreten ist, sondern auch was man tun kann um es zu lösen. (Leider sind die nicht immer perfekt, aber das ist wenigstens ein Start). Häuffig passiert das wenn man nach einem update von upstream die patches wieder anwenden will aber vergessen hat vorher den aktuellen status in <code>hg</code> zu commiten. Oder wenn man einen Patch verändert hat und zum nächsten wechseln will ohne das vorher aufzuzeichnen etc. Bei StGit ist das anders. Wenn da der Repository-Status nicht zu dem passt was StGit denkt das er wäre, dann wird das Repository einfach zerstört.</p>
+<p>Yeah!</p>
+<p>Bis man das dann gecheckt hat ist das Repository in einem Zustand, dass es weniger Arbeit ist mit diff und patch die patches wieder herauszufummeln als sich durch die diversen history-rewriting operatoren zu fummeln um doch etwas hinzubekommen was hoffentlich vielleicht doch das ist was man eigentlich hätte gewollt haben sollen. Oder so ähnlich.</p>
+<p>Dazu kommt dass StGit die Patches schlicht als normale GIT-Revisionen speichert und die history-rewriting Möglichkeiten nutzt um das PatchQueue feeling aufkommen zu lassen. Und das ist dann auch der Grund wieso man StGit und Git Kommandos <strong><em>NIE, NIE, NIE</em></strong> mischen darf.</p>
+<p>Bleibt also nur der erste Ansatz: Für jeden Patch einen Branch anlegen. Das wirkt eigentlich auch ganz Vernünftig, denn man kriegt dadurch eine Menge: Die History wird erhalten, man hat stabile Links in jeden Patch (ist ja nur ein Branch) und natürlich getrennte Entwicklung. Leider hört es da aber auf. Man kriegt nämlich keine Hilfe dabei die Patches als Layer übereinander zu legen - und besonders wichtig - wenig Arbeit damit zu haben.</p>
+<p>Wenn von z.B. von upstream den aktuellen stand haben möchte, muss man das einmal für jeden Branch machen - und dann dort die Konflikte lösen. Hat man Abhängigkeiten zwischen den Patches (Bugfixes die aufeinander beruhen z.B.) wird es noch abenteuerlicher. Richtig toll wird es dann wenn man die ganzen Patches als Layer über sein eigenes Repository gelegt betrachten möchte. Unter GIT wird dazu empfohlen sog. "Integration" Branches zu verwenden - also Branches die man periodisch neu anlegt (mit sog. squash-commits) die aus einem anderen Branch nur noch einen einzigen Commit auf dem "integration" Branch machen. Das ist übrigens auch der Weg wie man aus den branches schöne patches macht - im integration branch. Das geile daran: Man muss das immer wieder machen - denn jedes mal wenn man die Patches weiterentwickelt muss man auch den integration branch komplett neu anlegen.</p>
+<p>Ach ja, oder man schreibt natürlich in der History herum - aber dass hat letztlich den gleichen effekt - man hat eine Menge Arbeit und die URLS zu diesen Commits bleiben erst nicht die gleichen.</p>
+<p>Ach genau, und es gibt natürlich noch Leute die Sagen History Rewriting geht und ist cool also mach es doch die ganze Zeit, dann bleiben auch deine Patches sauber. (Also im Prinzip das was StGit tut nur von Hand). Damit bin ich aber wieder meine Stabilen URLs los - und dass ist für mich nicht akzeptabel, weil ich dann wieder nix habe was ich in Bugreports verlinken kann)</p>
+<p>Große Klasse.</p>
+<p>Jetzt nachdem ich den ganzen Ärger durch hatte bin ich dann dabei angekommen dass ich schlicht keine Möglichkeit habe dem Upstream möglichst viel Arbeit abzunehmen und gleichzeitig Commit-URLs zu haben die sich nicht verändern (ach ja, dazu kommt noch das Upstream keine Branches in GITHUB mag - ich vermute mal dass ihnen das auch zu viel Arbeit ist). Na gut, wenn sie schon GIT verwenden müssen, dann dürfen sie auch die Extra-Arbeit machen.</p>
+<p>Darum verzichte ich jetzt darauf saubere Patches bereit zu stellen, sondern Commite einfach in mein Repository und schiebe den 'master' nach GITHUB. Damit ist der Onus eben bei Upstream das sie möglichst häufig Mergen um die Übersicht nicht zu verlieren. Super ist das natürlich nicht - und mit jedem Code-Review von einem Patch den ich bereitstelle wird das dann halt unübersichtlicher.</p>
+<p>Was ich daran nicht verstehe: Es kann nicht sein dass ich der einzige bin der diese Probleme hat. Jeder der Open Source Entwicklung mit GIT macht muss früher oder später darauf stoßen. Also was ist los?</p>
+<p>Rein logisch betrachtet ergeben sich daraus eigentlich nur zwei mögliche Schlüsse:</p>
+<ul>
+<li>Entweder GIT-User sind einfach so geil auf ihr Tool, dass sie gar nicht merken wie viel Extra-Arbeit das Tool ihnen aufzwingt und sie sehen diese Komplexität einfach als notwendig statt als zufällig an.</li>
+<li>Oder aber sie haben, wie ich, einfach aufgegeben saubere History, einfaches merging für Upstream und getrennte Entwicklung von getrennten Patches zu betreiben.</li>
+</ul>
+<p>Ich persönlich vermute letzteres - schon alleine um nicht alle Open Source Entwickler für blöde erklären zu müssen. Damit verstehe ich dann aber die Popularität von GIT gerade in OpenSource Projekten überhaupt nicht. Hier sind doch eigentlich gerade die Leute denen eine saubere und transparente Entwicklung wichtig ist?</p>
+<p>Hier noch ein paar Pointer für diejenigen die aus der Git-Hölle entkommen wollen:</p>
+<ul>
+<li><a href="http://www.selenic.com/mercurial/">Mercurial</a> bietet mit den <a href="http://www.selenic.com/mercurial/wiki/MqExtension">PatchQueues</a> ein mächtiges Werkzeug an um diese Patch-Entwicklung und verfeinerung sauber gretrennt vom Repository vorzunehmen. Das schicke daran: diese Patchqueues sind Versioniert - aber vom Repository getrennt gespeichert. Dadurch lässt sich das auch ganz hervorragend über ein GIT/HG/SVN Repository drüberlegen - und man kann den ganzen Ärger mit GIT vermeiden. Dazu lassen sich diese Queues auch relativ einfach über <a href="http://bitbucket.org">BitBucket</a> teilen, so dass man auch zu mehreren direkt an patches arbeiten kann.</li>
+<li><a href="http://bazaar-vcs.org/">Bazaar</a> hat <a href="https://launchpad.net/bzr-loom/">Looms</a> die in etwa wie <code>hg patchqueues</code> zu benutzen sind, aber dafür den Vorteil haben dass sie ganz regulär mit einem <code>push</code> an ein remote andere Repository übergeben werden können - damit ist Zusammenarbeit auch um ein Vielfaches einfacher. Und natürlich wird auch dort die Historie der Patches erhalten. (Für die Geschwindigkeits-Proleten noch ein Hinweis: Bazaar ist heute so schnell wie Git war als es erschien - wenn Git also damals für Kernel-Size-Trees geeignet war...)</li>
+</ul>
+
+    </section>
+    
+  </article>
+
+  <nav>
+    
+  <div class="category-list">
+    Kategorien:
+      
+      <a href="../../../../../categories/fnord/">Fnord</a>
+      , 
+    
+      
+      <a href="../../../../../categories/code/">Software Development</a>
+      
+    
+  </div>
+
+    
+    <div class="relative-navigation">
+      
+        <div class="prev">Vorheriges Post: <a class="prev" href="../scrum-master/">Scrum Master</a></div>
+      
+      
+        <div class="next">Nächstes Post: <a class="next" href="../what-killed-smalltalk-could-kill-ruby-too/">&#34;What Killed Smalltalk Could Kill Ruby, Too&#34;</a></div>
+      
+    </div>
+    
+  </nav>
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../../../blog/feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

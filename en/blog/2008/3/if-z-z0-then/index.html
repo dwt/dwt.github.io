@@ -1,0 +1,165 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../../static/pygments.css">
+    <title>if [ &#34;z$?&#34; != &#34;z0&#34; ] ; then ...</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../../../blog/feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="../../../../../blog/2008/3/if-z-z0-then/">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="./">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../../">🏠</a>
+
+
+<a class="breadcrumb-item " href="../../../">Blog</a>
+
+
+<a class="breadcrumb-item active" href="./">if [ &#34;z$?&#34; != &#34;z0&#34; ] ; then ...</a>
+
+</nav>
+    </header>
+    <article class="page if-z-z0-then  container-fluid">
+      
+  
+  <article class="blog-post">
+    <header>
+      <h2>
+        
+        if [ &#34;z$?&#34; != &#34;z0&#34; ] ; then ...
+        
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-03-02">Sunday, March 2, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Aus dem Buildscript <a href="http://mokit.cvs.sourceforge.net/mokit/MOKit/imageFromFolder.sh?view=markup">imageFromFolder.sh</a> des MOKit Releases.</p>
+<p>Da ich so etwas schon oft gelesen habe, habe ich mich endlich mal dafür interessiert wieso zum Teufel so viele Programmierer das so machen. Könnte ja sein, hab ich mir gedacht, das es einfach so kranke sh implementierungen gibt, dass man das so machen muss damit das wirklich auf allen Systemen läuft.</p>
+<p>Nun, ein guter Hacker im CCC den ich darauf mal ansprach antwortete darauf mit dem Klassiker: "Die machen das doch nur alle weil sie das Manual nie gelesen haben!" :-) Gut, <a href="http://www.freebsd.org/cgi/man.cgi?query=sh&amp;format=html">les ich mal nach...</a></p>
+<p>Ok, also das Beispiel mal etwas detaillierter betrachtet:</p>
+<div class="hll"><pre><span></span>hdiutil create <span class="c1"># and then a lot of parameters</span>
+
+<span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;z</span><span class="nv">$?</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;z0&quot;</span> <span class="o">]</span> <span class="p">;</span> <span class="k">then</span>
+    <span class="nb">echo</span> <span class="s2">&quot;Error creating image (</span><span class="nv">$?</span><span class="s2">).&quot;</span>
+    <span class="nb">exit</span> <span class="m">1</span>
+<span class="k">fi</span>
+</pre></div>
+<p>Das hätte man doch in jedem fall auch so machen können:</p>
+<div class="hll"><pre><span></span>hdiutil create <span class="c1"># and then a lot of parameters</span>
+
+<span class="k">if</span> <span class="o">[</span> <span class="m">0</span> -ne <span class="nv">$?</span> <span class="o">]</span> <span class="p">;</span> <span class="k">then</span>
+    <span class="nb">echo</span> <span class="s2">&quot;Error creating image (</span><span class="nv">$?</span><span class="s2">).&quot;</span>
+    <span class="nb">exit</span> <span class="m">1</span>
+<span class="k">fi</span>
+</pre></div>
+<p>Und das fängt den Sinn des Tests auch gleich viel besser ein.</p>
+<p>Dann hätte man natürlich auch noch eine der Kurzformen wählen können, sowas wie</p>
+<div class="hll"><pre><span></span>hdiutil create mumble mumble <span class="se">\</span>
+    <span class="o">||</span> <span class="nb">echo</span> <span class="s2">&quot;Error creating image (</span><span class="nv">$?</span><span class="s2">).&quot;</span> <span class="p">;</span> <span class="nb">exit</span> <span class="m">1</span>
+</pre></div>
+<p>Das ich persönlich fast noch etwas klarer finde - erst recht wenn man es in eine Funktion <strong><em>error_exit</em></strong> oder etwas ähnlichem verpackt</p>
+<div class="hll"><pre><span></span>error_exit <span class="o">(</span> <span class="o">)</span>
+<span class="o">{</span>
+    <span class="nb">local</span> <span class="nv">exit_value</span><span class="o">=</span><span class="nv">$?</span>
+    <span class="nb">echo</span> <span class="nv">$1</span> <span class="s2">&quot;(</span><span class="nv">$exit_value</span><span class="s2">)&quot;</span>
+    <span class="nb">exit</span> <span class="nv">$exit_value</span>
+<span class="o">}</span>
+
+hdiutil create mumble mumble <span class="se">\</span>
+    <span class="o">||</span> error_exit <span class="s2">&quot;Error creating image.&quot;</span>
+</pre></div>
+<p>Überraschenderweise ist das nämlich gar kein Problem so etwas in der Shell zu machen. Macht sich nur offenbar kaum jemand die Mühe das "fine" manual mal zu lesen.</p>
+<p>Oder zumindest so scheint es mir im Moment.</p>
+
+    </section>
+    
+  </article>
+
+  <nav>
+    
+  <div class="category-list">
+    Kategorien:
+      
+      <a href="../../../../../categories/fnord/">Fnord</a>
+      , 
+    
+      
+      <a href="../../../../../categories/code/">Software Development</a>
+      
+    
+  </div>
+
+    
+    <div class="relative-navigation">
+      
+        <div class="prev">Vorheriges Post: <a class="prev" href="../das-iteam-die-jungs-mit-der-maus/">Das iTeam: Die Jungs mit der Maus</a></div>
+      
+      
+        <div class="next">Nächstes Post: <a class="next" href="../../2/habermas-nach-aktuell/">Habermas nach Aktuell?</a></div>
+      
+    </div>
+    
+  </nav>
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../../../blog/feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

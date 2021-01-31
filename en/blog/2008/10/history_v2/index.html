@@ -1,0 +1,131 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../../static/pygments.css">
+    <title>_HiStOrY_V2_</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../../../blog/feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="../../../../../blog/2008/10/history_v2/">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="./">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../../">🏠</a>
+
+
+<a class="breadcrumb-item " href="../../../">Blog</a>
+
+
+<a class="breadcrumb-item active" href="./">_HiStOrY_V2_</a>
+
+</nav>
+    </header>
+    <article class="page history_v2  container-fluid">
+      
+  
+  <article class="blog-post">
+    <header>
+      <h2>
+        
+        _HiStOrY_V2_
+        
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-10-05">Sunday, October 5, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Mit ein bisschen Hilfe von meinen Freunden...</p>
+<p>Heute hab ich mal wieder die aktuelle Version von <a href="http://bazaar-vcs.org/">Bazaar (1.7.1)</a> ausprobiert. Soweit ganz schnuckelig. Sogar der SVN Checkout von [svn://svn.adiumx.com/adium/trunk Adium] hat hervorragend geklappt.</p>
+<p>Ich muss sagen, beeindruckend.</p>
+<p>Nur mit dem Plugin <a href="http://bazaar-vcs.org/BzrTools">bzrtools</a> hatte ich Schwierigkeiten, denn die darin enthaltene shell (ein geiles feature) zu benutzen brachte bzr reproduzierbar zum Absturz. :-(</p>
+<p>Stellt sich mit hilfe von #bazaar und nach einigen Detours über den Python Debugger (nice!) und <a href="http://developer.apple.com/documentation/Darwin/Reference/ManPages/man1/dtruss.1m.html">dtruss</a> (nice!) heraus dass es an der libreadline liegt.</p>
+<p>Die hat sich nämlich geändert und erwartet inzwischen am Anfang eines History-Files als allererste Zeile diesen eintrag: <strong><em>_HiStOrY<em>V2</em></em></strong>.</p>
+<p>Na toll. Und ansonsten stürzt das Programm einfach ab. Also wer sich das ausgedacht hat, der gehört aber auch echt erschossen. Wenigstens die Fehlermeldung hätte vernünftig sein können. Grumpf.</p>
+
+    </section>
+    
+  </article>
+
+  <nav>
+    
+  <div class="category-list">
+    Kategorien:
+      
+      <a href="../../../../../categories/fnord/">Fnord</a>
+      
+    
+  </div>
+
+    
+    <div class="relative-navigation">
+      
+        <div class="prev">Vorheriges Post: <a class="prev" href="../aus-einem-variablen-namen-einen-string-machen/">Aus einem Variablen-Namen einen String machen</a></div>
+      
+      
+        <div class="next">Nächstes Post: <a class="next" href="../ausnahmen-vs-regeln-in-der-usability/">Ausnahmen vs. Regeln in der Usability</a></div>
+      
+    </div>
+    
+  </nav>
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../../../blog/feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

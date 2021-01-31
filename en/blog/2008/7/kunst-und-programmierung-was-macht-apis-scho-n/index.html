@@ -1,0 +1,133 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../../static/pygments.css">
+    <title>Kunst und Programmierung: Was macht APIs schön?</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../../../blog/feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="../../../../../blog/2008/7/kunst-und-programmierung-was-macht-apis-scho-n/">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="./">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../../">🏠</a>
+
+
+<a class="breadcrumb-item " href="../../../">Blog</a>
+
+
+<a class="breadcrumb-item active" href="./">Kunst und Programmierung: Was macht APIs schön?</a>
+
+</nav>
+    </header>
+    <article class="page kunst-und-programmierung-was-macht-apis-scho-n  container-fluid">
+      
+  
+  <article class="blog-post">
+    <header>
+      <h2>
+        
+        Kunst und Programmierung: Was macht APIs schön?
+        
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-07-24">Thursday, July 24, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Und wieder mal heißt es: Python/Trac oder Cocoa? Wer wird gewinnen?</p>
+<p>Erkundbarkeit der Frameworks ist mein nächstes Thema: Die Klassen die bestimmte Aufgaben haben sollen leicht zu finden sein.</p>
+<p>Das funktioniert bei Trac in der Regel sehr gut, da man in Python sehr schön über Packages hierarchische Namensräume definieren kann - ähnlich wie bei Java eben auch.</p>
+<p>Nur dass es dort etwas Taktvoller eingesetzt wurde.</p>
+<p>Das heißt es gibt trac.wiki trac.tickets trac.timeline etc. Wenn man den Code zu einem Feature sucht, kann man ihn auch schnell finden.</p>
+<p>Ganz im Gegensatz zur Standard Library von Python - da ist alles Kraut und Rüben - wenn man mal eben versucht alle Klassen die was mit String-Verarbeitung oder mit ein und Ausgabe zu tun haben, dann kann man ganz schön suchen - es gibt nicht einen Namensraum der überschaubar wäre und alles enthält.</p>
+<p>Cocoa ist da auch nicht vorbildlich - da gibt es gar keine Namensräume. Nur eine grobe unterteilung in <strong>Foundation</strong> für alles was keine GUI braucht und <strong>AppKit</strong> für alles was mit einer GUI zusammenhängt.</p>
+<p>Na immerhin etwas. Dazu kommt dass Apple fast alle neuen größeren Features als Framework verpackt die einen Aufgabenbereich verkapseln. CoreAudio für alles was mit Audio zu tun hat. CoreImage für ... Bilder, CoreVideo.... etc. Immerhin. Aber. Da alle Klassen zur Laufzeit dann doch in einem einzelnen Namensraum liegen, heißt dass das dann doch wieder jede Klasse einen Präfix bekommt, damit sie nicht mit Klassen von irgend jemand anderem zusammenstößt. Bäh. Man hat also NSArray statt Array und NSApplication statt Application und NMDeviceDatabaseEntry (NM für <a href="http://novamedia.de/">NovaMedia</a>). Also: Namensräume rocken - und Cocoa kann da deutlich weniger als Python.</p>
+<p>Hierarchische Namensräume sind gut, weil sie Übersicht schaffen - wenn man sie nicht nur zum Spaß einsetzt sondern tatsächlich verschiedene Bereiche getrennt bekommt.</p>
+
+    </section>
+    
+  </article>
+
+  <nav>
+    
+  <div class="category-list">
+    Kategorien:
+      
+      <a href="../../../../../categories/code/">Software Development</a>
+      
+    
+  </div>
+
+    
+    <div class="relative-navigation">
+      
+        <div class="prev">Vorheriges Post: <a class="prev" href="../wunderscho-ne-apis/">Wunderschöne APIs</a></div>
+      
+      
+        <div class="next">Nächstes Post: <a class="next" href="../git-the-basics/">Git the Basics</a></div>
+      
+    </div>
+    
+  </nav>
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../../../blog/feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

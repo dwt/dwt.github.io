@@ -1,0 +1,154 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../../static/pygments.css">
+    <title>Warum kann man…</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../../../blog/feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="../../../../../blog/2008/6/warum-kann-man/">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="./">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../../">🏠</a>
+
+
+<a class="breadcrumb-item " href="../../../">Blog</a>
+
+
+<a class="breadcrumb-item active" href="./">Warum kann man…</a>
+
+</nav>
+    </header>
+    <article class="page warum-kann-man  container-fluid">
+      
+  
+  <article class="blog-post">
+    <header>
+      <h2>
+        
+        Warum kann man…
+        
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-06-03">Tuesday, June 3, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>… eine Wurzel berechnen indem man einen <code>float</code> einfach um ein Bit nach rechts schiftet?</p>
+<div class="hll"><pre><span></span><span class="kt">float</span> <span class="nf">InvSqrt</span><span class="p">(</span><span class="kt">float</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">float</span> <span class="n">xhalf</span> <span class="o">=</span> <span class="mf">0.5f</span><span class="o">*</span><span class="n">x</span><span class="p">;</span> 
+    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">x</span><span class="p">;</span> <span class="c1">// get bits for floating value</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mh">0x5f3759df</span> <span class="o">-</span> <span class="p">(</span><span class="n">i</span><span class="o">&gt;&gt;</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// gives initial guess y0</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">i</span><span class="p">;</span> <span class="c1">// convert bits back to float</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">*</span><span class="p">(</span><span class="mf">1.5f</span><span class="o">-</span><span class="n">xhalf</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">x</span><span class="p">);</span> <span class="c1">// Newton step, repeating increases accuracy</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<p><a href="http://www.lomont.org/Math/Papers/2003/InvSqrt.pdf">Chris Lomont sich das mal angesehen</a> und seine Erklärung hab ich verstanden.</p>
+<p>Was diese Stelle tut:</p>
+<div class="hll"><pre><span></span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">x</span><span class="p">;</span> <span class="c1">// get bits for floating value</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mh">0x5f3759df</span> <span class="o">-</span> <span class="p">(</span><span class="n">i</span><span class="o">&gt;&gt;</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// gives initial guess y0</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">i</span><span class="p">;</span> <span class="c1">// convert bits back to float</span>
+</pre></div>
+<p>Ist total cool. das Bitmuster des <code>floats</code> wird einfach als long interpretiert - was nichts weiter bedeutet, als das die Teile des Floats, Vorzeichen, Mantisse und Exponent jetzt halt nebeneinander in einem Bitfeld liegen. Wenn man dieses Bitfeld jetzt nach rechts schiftet dann hat man das effektiv eben auch mit jedem der Bitfelder gemacht. Wenn man dann dieses Bitmuster noch etwas manipuliert, indem man es mit einer Korrekturkonstante vermurkst die die Fehler durch das hereinschiften von werten aus der Mantisse in den Exponent minimieren, dann hat man eine tolle Annäherung.</p>
+<p>Und diese Annäherung erlaubt es mit nur einem Schritt nach <a href="http://de.wikipedia.org/wiki/Newton-Verfahren">Newton</a> zu einer sehr guten Näherung an die Quadratwurzel zu kommen.</p>
+<p>Rockig.</p>
+<p>Vor allem finde ich es cool, wie die Hacker hinter diesem Algorithmus ihn gefunden haben. Das konnten sie nämlich nur machen, weil sie genau wussten wie ein <code>float</code> tatsächlich implementiert ist - einem Wissen das die meisten Hacker heute nur noch theoretisch haben - aber nicht so genau das sie dieses Format auch mal so ohne weiteres für so einen fiesen Trick missbrauchen können.</p>
+<p>In diesem Sinne: Aus der Geschichte lässt sich viel lernen. :-)</p>
+
+    </section>
+    
+  </article>
+
+  <nav>
+    
+  <div class="category-list">
+    Kategorien:
+      
+      <a href="../../../../../categories/fnord/">Fnord</a>
+      , 
+    
+      
+      <a href="../../../../../categories/code/">Software Development</a>
+      , 
+    
+      
+      <a href="../../../../../categories/miscellaneous/">Sonstiges</a>
+      
+    
+  </div>
+
+    
+    <div class="relative-navigation">
+      
+        <div class="prev">Vorheriges Post: <a class="prev" href="../kommunikationsstrukturen/">Kommunikationsstrukturen</a></div>
+      
+      
+        <div class="next">Nächstes Post: <a class="next" href="../was-macht-dieser-code/">Was macht dieser Code</a></div>
+      
+    </div>
+    
+  </nav>
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../../../blog/feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

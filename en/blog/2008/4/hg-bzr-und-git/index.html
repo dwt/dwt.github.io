@@ -1,0 +1,153 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../../static/pygments.css">
+    <title>HG, BZR und GIT</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../../../blog/feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="../../../../../blog/2008/4/hg-bzr-und-git/">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="./">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../../">🏠</a>
+
+
+<a class="breadcrumb-item " href="../../../">Blog</a>
+
+
+<a class="breadcrumb-item active" href="./">HG, BZR und GIT</a>
+
+</nav>
+    </header>
+    <article class="page hg-bzr-und-git  container-fluid">
+      
+  
+  <article class="blog-post">
+    <header>
+      <h2>
+        
+        HG, BZR und GIT
+        
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-04-15">Tuesday, April 15, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>(zu <a href="http://musicbrainz.org/track/dfad0a06-56d0-4b7b-a3d5-0adc2f9a9113.html">Hotaka</a>)</p>
+<p>Well, am WE hab ich mich mit <a href="http://www.felix-schwarz.name/Hauptseite">Felix</a> gerade über Versionskontrollsysteme und unsere Experimente mit <a href="http://www.selenic.com/mercurial/wiki/">HG</a> unterhalten, als mich jemand 'von der Seite angemacht'  hat, dass doch wohl im Moment alle Welt weg von HG und hin zu <a href="http://git.or.cz/">GIT</a> wechseln würde.</p>
+<p>Well, das konnte ich so nicht glauben, aber ich wollte mir die verschiedenen Tools dann doch mal anschauen - vor allem in Hinsicht auf <a href="http://subversion.tigris.org/">SVN</a> Kompatibilität - denn ich setze SVN sowohl für meine <a href="http://www.novamedia.de/index_d.html">Arbeit</a>, also auch für mich [browser:/ Privat] ein.</p>
+<p>Na, denn ma auf zu dem Vergleich:</p>
+<h3>GIT</h3>
+<p>... hab ich mir als erstes dran genommen, und bin erst mal dran gescheitert, das das perl-script, dass den SVN-Modus macht via Fink natürlich nicht mit meiner Installation zusammenwollte, weil diese alten Perlhacker natürlich alle davon ausgehen, das Perl in <code>/usr/bin/perl</code> liegt. Well, tut es bei mir nicht, bzw, in <code>/usr/bin</code> liegt eine alte version von Perl, die eine bestimmte Library nicht enthält, die aber das Skript benötigt. ARGH! Also erst mal einen Patch zusammengebaut und an den Maintainer geschickt der das auf <code>/usr/bin/env perl</code> ändert. Oh well.</p>
+<p>Danach war aber eigentlich alles dandy, bis auf die Tatsache, das ich trotz längerem nachlesen ums verrecken nicht verstanden habe, welchen Sinn diese komische Staging-Area "Index" haben soll, die man bei GIT immer zuerst mal auffüllen muss, bevor man sie Comitten kann.</p>
+<p>Well, GIT is powerfull - aber für meinen Geschmack zu sehr an den Geschmack von Herrn Torvalds angepasst. Mag ja sein das er nur mit inkonsistenten und komplizierten Kommandozeilenoptionen effizient arbeiten kann. Ich jedenfalls hab was besseres verdient. Ausserdem erzeugt es bei mir Ablehnung wenn Herr Torvalds aus seiner Göttlichen Eingebung sämtliches anderes für Mist erklärt und dann etwas neues macht was deutlich komplizierter ist als die anderen - ohne das klar wird, wieso diese Komplexität der richtige Default ist und man nicht das Einfache zum Default machen kann, um das komplizierte als Option anzubieten.</p>
+<p>Fazit: Funktioniert, push und pull zum SVN server waren kein Problem und das ist schon mal ein starkes Stück. Beindruckendes Tool, dass aber auch viel Ablehnung in mir erzeugt.</p>
+<h3><a href="http://bazaar-vcs.org/">BZR</a></h3>
+<p>... war dann der zweite Kandidat, der nicht mehr viel Langsamer daherkommt als die anderen beiden (allerdings auch nicht zacko schnell). Allerdings, gibt es eine nette Extension die das Kommando <code>shell</code> hinzufügt. Das ist nett, denn dann hat man eine native Shell in bzr und hat superschnelle reaktionen, Tabvervollständigung überall, etc.</p>
+<p>Der Checkout aus SVN hat auch prima geklappt (die Anfangsschwierigkeiten hatte ich vor einem halben Jahr, als ich mir die SVN-Python-Bindings selber bauen musste. ARGH war das ein Kampf.) Jetzt hatte ich sie aber schon und mir auch schon die notwendigen Wrapper-Skripte gebaut die die Library dann halt noch dazuladen.</p>
+<p>Well, was soll ich sagen: pull vom SVN war hervorragend, lokales arbeiten auch, aber das Push.. das stirbt immer mit Fehler 175008 (ernsthaft!) und wirft mir dann noch an den Kopf das irgend eine property nicht angewendet werden konnte. Wenn er wenigstens sagen würde welche Property das Problem ist.. Aber naja.</p>
+<p>Fazit: Sehr poliert. Gerade im Vergleich zu meinem letzten Test ist die Dokumentation viel besser geworden, das ganze Tool wirkt durchdacht. Vor allem der Output der Kommandos hat mir gefallen, schön aufgeräumt und übersichtlich. Dann ist da natürlich die Tatsache das dieses Tool doch immer noch das einzige ist, das tatsächlich Verzeichnisse auch Versionieren kann und mit renames vernünftig umgeht. Ahh.... Endlich ohne scheu refaktorn. :-)</p>
+<h3>HG</h3>
+<p>... will ich eigentlich schon länger mal benutzen, aber es hat mir bisher immer nur zu ein paar kleinen Experimenten gereicht. Allerdings: Felix hat sich schon anstecken lassen und verwendet das jetzt nahezu ausschließlich.</p>
+<p>Well, mein Testcase hat leider gar nicht Funktioniert. Einigen <a href="http://www.selenic.com/pipermail/mercurial/2008-March/018014.html">Anmerkungen</a> hatte ich entnommen das HG jetzt auch auf SVN zurückschreiben kann herausgefunden wie das geht, hab ich aber leider nicht. Oh well.</p>
+<p>Fazit: Schnell, gute Bedienung und Python - aber ungeeignet um damit gegen SVN Repositories zu Arbeiten.</p>
+<h3>Fazit Fazit</h3>
+<p>So, dann bleibt mir also die Wahl: entweder GIT zu akzeptieren um damit gegen SVN zu arbeiten, oder aber den Bug in BZR zu finden um dann damit zu Arbeiten.</p>
+<p>Vom Bauchgefühl her würde ich mich eigentlich lieber an BZR heranmachen. Mögen tue ich HG am liebsten, das hat einfach das einfachste Design und auch noch eine sehr gute Integration in das System - so öffnet es zum Beispiel standardmäßig gleich das System Merge-Tool (opendiff) anstatt CVS like Konflitkmarker in der Datei zu verstreuen.</p>
+<p>So macht man dass.</p>
+<p>BZR ist auf jeden fall mein zweiter Favorit - auch Python (kann ich also Hacken) und schön durchdacht - wenn auch manchmal etwas verbose zu bedienen (pull z.B. macht kein merge, aber er sagt einem dann das man statt pull merge machen müsste. ???)</p>
+<p>GIT wirkt wie eine mächtige Kanone - ja man kann damit auch auf Spatzen schießen - ja danach wären sie tot - aber muss man sich das wirklich antun, das jeder normale Usecase ein wenig Komplizierter zu handhaben ist als mit den anderen Tools, nur damit man im zweifelsfall auch den Linux-Kernel mit dem gleichen Tool Maintainen kann?</p>
+<p>Ich jedenfalls beantworte diese Frage für mich mit einem klaren nein. Und werde mich jetzt erstmal auf bzr und hg werfen.</p>
+
+    </section>
+    
+  </article>
+
+  <nav>
+    
+  <div class="category-list">
+    Kategorien:
+      
+      <a href="../../../../../categories/code/">Software Development</a>
+      , 
+    
+      
+      <a href="../../../../../categories/miscellaneous/">Sonstiges</a>
+      
+    
+  </div>
+
+    
+    <div class="relative-navigation">
+      
+        <div class="prev">Vorheriges Post: <a class="prev" href="../wer-wer-wer-wer-wer-hat-uns-verraten/">Wer, wer, wer, wer, wer hat uns verraten?</a></div>
+      
+      
+        <div class="next">Nächstes Post: <a class="next" href="../eine-schreibmaschine-sort-of/">Eine Schreibmaschine... sort of :-)</a></div>
+      
+    </div>
+    
+  </nav>
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../../../blog/feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

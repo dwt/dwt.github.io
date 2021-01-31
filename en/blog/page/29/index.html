@@ -1,0 +1,483 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../static/pygments.css">
+    <title>Blog</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../../blog/feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="../../../../blog/page/29/">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="./">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../">🏠</a>
+
+
+<a class="breadcrumb-item active" href="./">Blog</a>
+
+</nav>
+    </header>
+    <article class="page blog  container-fluid">
+      
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/3/unittests-auf-ein-tracplugin/">
+        UnitTests auf ein TracPlugin...
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-03-14">Friday, March 14, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>... sind eine schöne Sache. Wenn man sie denn hinkriegt.</p>
+<p>Da wäre zuerst der einfache Fall: Was macht man um eine Wiki-Seite zu erzeugen und zu laden?</p>
+<p>Well, hier ist wie es geht:</p>
+<div class="hll"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="kn">import</span> <span class="nn">unittest</span>
+
+<span class="kn">from</span> <span class="nn">trac.wiki.model</span> <span class="kn">import</span> <span class="n">WikiPage</span>
+<span class="kn">from</span> <span class="nn">trac.test</span> <span class="kn">import</span> <span class="n">EnvironmentStub</span>
+
+<span class="k">class</span> <span class="nc">PluginTests</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">test_can_save_and_load_wiki_page</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">env</span> <span class="o">=</span> <span class="n">EnvironmentStub</span><span class="p">()</span>
+        <span class="n">page</span> <span class="o">=</span> <span class="n">WikiPage</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="s2">&quot;Foo&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">page</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;barfoo&quot;</span>
+        <span class="n">page</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;fnord&quot;</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="s2">&quot;localhost&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="s2">&quot;barfoo&quot;</span><span class="p">,</span> <span class="n">WikiPage</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="s2">&quot;Foo&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+<p>Soweit nicht soo schwer. Vor allem sehr schick, das das <code>EnvironmentStub()</code> einem die ganze Arbeit abnimmt um das Trac-Environment UnitTest fähig zu machen. Ein Call und alles ist da - inklusive einer in-memory Sqlite Datenbank.</p>
+<p>Nice.</p>
+<p>Der eigentliche Hammer ist dann aber, wenn man ein Plugin bauen will das von anderen Plugins abhängt. Das ist nämlich deutlich komplizierter.</p>
+<p>Da ergibt sich nämlich das Problem, das man plötzlich das Component-System von Trac verstehen muss, damit man überhaupt auf die Klassen und <code>ExtensionPoints</code> eines anderen Plugins aufbauen kann.</p>
+<p>Für uns um Beispiel das TracTags-Plugin. Dieser Blog basiert auf diesen Tags. Blog-Posts werden durch einen speziellen Tag ("blog") zu einem Blog-Post, Kategorien sind nur Tags und überhaupt funktioniert alles nur über Tags. Tags sind cool.</p>
+<p>Aber, man muss das Plugin erst einmal schwer zur Zusammenarbeit überreden - denn, es benötigt ein Datenbankupgrade damit es überhaupt funktioniert.</p>
+<p>Und überhaupt ist die Datenbank am Anfang total leer. :/</p>
+<p>Um es gleich zu verraten: Die Lösung lag darin, das man dem Environment einerseits sagen muss, das man gerne Standard-Daten hätte und andererseits, welche Plugins es alles aktivieren soll. Nicht schwer. Nur nicht offensichtlich. :(</p>
+<div class="hll"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="kn">import</span> <span class="nn">unittest</span>
+
+<span class="kn">from</span> <span class="nn">trac.wiki.model</span> <span class="kn">import</span> <span class="n">WikiPage</span>
+<span class="kn">from</span> <span class="nn">trac.test</span> <span class="kn">import</span> <span class="n">Mock</span><span class="p">,</span> <span class="n">EnvironmentStub</span><span class="p">,</span> <span class="n">MockPerm</span>
+
+<span class="kn">from</span> <span class="nn">tractags.api</span> <span class="kn">import</span> <span class="n">TagSystem</span>
+
+<span class="kn">from</span> <span class="nn">tractags.model</span> <span class="kn">import</span> <span class="n">TagModelProvider</span>
+
+<span class="k">class</span> <span class="nc">PostFinderTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">env</span> <span class="o">=</span> <span class="n">EnvironmentStub</span><span class="p">(</span><span class="n">default_data</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">enable</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tractags.*&quot;</span><span class="p">,</span> <span class="s1">&#39;trac.*&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">upgrade</span><span class="p">()</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+
+    <span class="k">def</span> <span class="nf">test_can_save_and_load_wiki_page</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">page</span> <span class="o">=</span> <span class="n">WikiPage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">,</span> <span class="s2">&quot;Foo&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">page</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;barfoo&quot;</span>
+        <span class="n">page</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;fnord&quot;</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="s2">&quot;localhost&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="s2">&quot;barfoo&quot;</span><span class="p">,</span> <span class="n">WikiPage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">,</span> <span class="s2">&quot;Foo&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_can_add_tags_and_retrieve_tagged_pages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">trac.web.href</span> <span class="kn">import</span> <span class="n">Href</span>
+        <span class="n">page</span> <span class="o">=</span> <span class="n">WikiPage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">,</span> <span class="s2">&quot;Foo&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">page</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;barfoo&quot;</span>
+        <span class="n">tag_system</span> <span class="o">=</span> <span class="n">TagSystem</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">)</span>
+        <span class="n">req</span> <span class="o">=</span> <span class="n">Mock</span><span class="p">(</span><span class="n">perm</span><span class="o">=</span><span class="n">MockPerm</span><span class="p">(),</span> <span class="n">args</span><span class="o">=</span><span class="p">{},</span> <span class="n">href</span><span class="o">=</span><span class="n">Href</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">))</span>
+        <span class="n">tag_system</span><span class="o">.</span><span class="n">add_tags</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="n">page</span><span class="o">.</span><span class="n">resource</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;blog&quot;</span><span class="p">])</span>
+        <span class="n">page</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;fnord&quot;</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="s2">&quot;localhost&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="s2">&quot;barfoo&quot;</span><span class="p">,</span> <span class="n">WikiPage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">,</span> <span class="s2">&quot;Foo&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+        <span class="n">blog_resources</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tag_system</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="s2">&quot;blog&quot;</span><span class="p">)]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">blog_resources</span><span class="p">))</span>
+</pre></div>
+<p>Mei war das eine Arbeit die ganzen Objekte zusammen zu suchen die man für <code>test_can_add_tags_and_retrieve_tagged_pages()</code> benötigt.</p>
+<p>Well, ein start ist gemacht, aus dem wir jetzt einen Page-Loader refactor-n (-ieren?) werden.</p>
+<p>Yay!</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/3/unittests-auf-ein-tracplugin/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/3/heute-blog-ich-nicht/">
+        Heute blog ich nicht
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-03-13">Thursday, March 13, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Dafür bin ich nämlich viel zu betrunken.</p>
+<p>Schließlich hat die Friedrich Ebert Stiftung heute den Wein bezahlt, den ich abgegriffen habe, während ich meine Freundin von einer Veranstaltung dort abgeholt habe.</p>
+<p>Das Essen war auch nicht soo toll.</p>
+<p>Naja, immerhin der Rotwein.</p>
+<p>Ach ja, die Veranstaltung hieß: "Außen vor oder mittendrin? Gesellschaftliche Partizipation und Anerkennung erwerbsloser Menschen". An sich spannend, aber die Teilnehmer haben eigentlich alle nur immer die gleichen bekannten Stereotypen von sich gegeben. Wirklich gut fand ich (neben meinem Vater :) dann vor allem <a href="http://www.google.com/search?ie=utf8&amp;oe=utf8&amp;q=Frauke+Hehl">Frauke Hehl</a> die mal wirklich gesagt hat was sache ist: Das alle Arbeit haben ist einfach inzwischen eine Illusion der wir uns nicht mehr hingeben dürfen.</p>
+<p>Recht hat sie.</p>
+<p>So, und jetzt gute Nacht.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/3/heute-blog-ich-nicht/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/3/in-der-piratenpartei/">
+        In der Piratenpartei…
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-03-12">Wednesday, March 12, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Das Spannendste an der Piratenpartei sind die, die dabei mitmachen.</p>
+<p>Zum Beispiel RKA. Mir ist ein Rätsel, wie er die ganzen Dinge, die er tut, in seine Zeit einsortiert.</p>
+<ul>
+<li>Bei der Piratenpartei ist er aktiv - bald sogar im Vorstand.</li>
+<li>Beim AK-Vorrat ist er aktiv - er hat dort z.B. die <strong>Abgabe des Schriftstücks</strong> (120 Ordner) für die Klage gegen die Vorratsdatenspeicherung mit vorbereitet</li>
+<li>Privat gründet er noch diverse Firmen mit</li>
+<li>Studiert nebenbei noch Wirtschaftsrecht</li>
+<li>Weiß von allen Dingen, wo man sie bekommen kann</li>
+<li>Hat einen grandiosen Überblick, wo im Internet welche Startups gerade was machen</li>
+</ul>
+<p>Einfach beeindruckend.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/3/in-der-piratenpartei/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/3/was-ist-das-eigentlich/">
+        Was ist das eigentlich,
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-03-11">Tuesday, March 11, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>dass Betreiber von Geschäften so überwachungsgeil macht?</p>
+<p>Zum Beispiel <a href="http://www.computerwoche.de/knowledge_center/it_security/1857989/">dieser Eigentümer einer Diskothek</a>. Der erstellt über jeden seiner Besucher ein komplettes Persönlichkeitsprofil, inclusive wann sie bei welcher Bedienung wie viel von welchen Getränken gekauft haben. Und natürlich von wann bis wann sie anwesend waren, woher sie kommen, welche Telefonnummer sie haben, etc.</p>
+<p>Das Geilste: die <del>Überwachten</del> Club-Gänger werden dargestellt, als fänden sie das ganz toll. Schließlich müssen sie als Mitglied keinen Eintritt bezahlen und erhalten Zutritt zum Buffet.</p>
+<p>Diese Daten werden ewig aufgezeichnet - die Bilder der Überwachungskamera 'nur' mindestens ein halbes Jahr auf dem Privatrechner des Eigentümers.</p>
+<p>"Die wollen das doch genau so!" hört man den Betreiber quasi schreien.</p>
+<p>Und was wenn er Windows benutzt und jemand bei ihm in das Rechnernetzwerk einbricht und die Daten alle stiehlt?</p>
+<p>p.s.: Haben wir da jetzt nicht <a href="http://www.bundesverfassungsgericht.de/entscheidungen/rs20080227_1bvr037007.html">ein Grundrecht auf Datenintegrität?</a></p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/3/was-ist-das-eigentlich/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/3/connect-the-dots/">
+        Connect the Dots
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-03-10">Monday, March 10, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>"You can only connect the dots looking backwards, never looking forward." -- Steve Jobs</p>
+<p>Sagt er <a href="http://video.google.com/videoplay?docid=-204609026222503944">hier</a>.</p>
+<p>Geiler Vortrag.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/3/connect-the-dots/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/3/piraten-aller-la-nder-vereinigt-euch/">
+        Piraten aller Länder, vereinigt euch!
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-03-09">Sunday, March 9, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Über meinem Schreibtisch hängt schon seit zwei Jahren ein Zettel. Darauf habe ich damals geschrieben:</p>
+<p>Eine Revolution: Computer
+Zwei Ideen: Grundeinkommen, Zinskatastrophe</p>
+<p>Das würde ich heute anders formulieren:
+Zwei Revolutionen, eine Idee</p>
+<ol>
+<li>Die Computerrevolution</li>
+<li>Die Arbeitsrevolution</li>
+</ol>
+<p>Die zweite ist sichtbarer und erzeugt (scheinbar) mehr Probleme, da sie immer mehr Menschen arbeitslos macht. Dabei ist sie mit er der ersten Verknüpft. Immer mehr Tätigkeiten können durch Computer- und Maschineneinsatz dem Menschen abgenommen werden und uns allen steht damit mehr Freizeit zur Verfügung (ok, abgesehen von den Informatikern, die das alles am Laufen halten müssen). Das bedeutet letztlich, das mit fortschreitender Technik immer weniger Arbeit <strong><em>notwendig</em></strong> und immer mehr Arbeit <strong><em>freiwillig</em></strong> wird. Und das muss sich in unserer Gesellschaftsordnung früher oder später wieder spiegeln. Durchdenkt man das, wird natürlich auch schnell klar, das Geld als Druckmittel um Arbeit zu erzwingen damit ein reichlich merkwürdiges Konzept ist, denn tatsächlich ist die Arbeit ja unsinnig oder zumindest unnötig. Lösungsansätze: <a href="http://de.wikipedia.org/wiki/Bedingungsloses_Grundeinkommen">Bedingungsloses Grundeinkommen (Wikipedia)</a>, <a href="http://www.grundeinkommen.info/">Netzwerk Grundeinkommen</a>, <a href="http://www.grundeinkommen.de/">Deutsche Abteilung?</a></p>
+<p>Die erste Revolution ist viel unsichtbarer - Computer durchdringen immer mehr Gebiete unseres Altags und algorithmisieren sie. Das bedeutet, das implizite Regelungen damit Explizit werden und wir uns plötzlich Gedanken über diese Details machen müssen.</p>
+<p>Zum Beispiel: Heute sind Verkehrsregeln eine Konvention an die man sich hält. Sollten Autos irgendwann mit Autopiloten fahren, kann man nicht mehr einen Schwerverletzten auch über Rote Ampeln ins Krankenhaus fahren - ein Automat würde die Verkehrsregeln stur einhalten. Oder Verfahrensregeln in Verwaltungen. Wo heute etwas Charme vielleicht genügt unsinnige Regeln aufzuweichen, kann man sich einem Computer gegenüber noch so anstrengen. Man muss den Regeln doch genügen.</p>
+<p>Das sind aber alles noch harmlose Beispiele. Wo früher die Komplettüberwachung alle Kommunikation völlig ausgeschlossen war, ist es heute Routine das <a href="http://de.wikipedia.org/wiki/Vorratsdatenspeicherung">alle Verkehrsdaten aufgezeichnet werden</a>.</p>
+<p>Daher ist es notwendig, das diejenigen die diese Probleme verstehen (Informatiker?) dieses Wissen und ihre Erfahrung in den politischen Prozess einbringen.</p>
+<p>Das darf auf keinen Fall in den Strukturen einer bestehenden Partei versickern und ist auch überhaupt nicht geeignet in die Farbenlehre der bestehenden Parteien eingeordnet zu werden - denn die Probleme haben (erstmal) überhaupt nichts mit den bisherigen politischen Richtungen zu tun.</p>
+<p>Ich bin daher der Meinung das die Gründung der <a href="http://piratenpartei.de/">Piratenpartei</a> der richtige Schritt war.</p>
+<p>Davon abstrahiert ist es aber Wichtig, das jeder der diese Probleme versteht mit seinen Mitteln an ihrer Lösung beteiligt - ich habe dafür mein Engagement im <a href="http://wiki.piratenpartei.de/Berlin">Berliner Landesverbands</a> gewählt und kann es natürlich nur jedem ans Herz legen. :)</p>
+<Schleichwerbung>Wir treffen uns jeden Mittwoch 18:00 Uhr in der C-Base. (Rungestraße 20, 2. HH - 10179 Berlin)</Schleichwerbung><p>Zur Zinskatastrophe sage ich später mehr.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/3/piraten-aller-la-nder-vereinigt-euch/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/3/darf-s-ein-neuer-lampenschirm-sein/">
+        Darf&#39;s ein neuer Lampenschirm sein?
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-03-08">Saturday, March 8, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Ob Ikea wohl bald pleite geht?</p>
+<p>So jedenfalls <a href="http://www.freitag.de/2008/09/08091801.php">malt Freitag</a> die Zukunft in der jeder Zuhause einen 3D-Drucker stehen hat, der fast beliebige Altagsgegenstände (inklusive Elektronik) herstellen kann.</p>
+<p>Klingt gut nicht?</p>
+<p>Naja, bis man sich klar wird, das die angestrebte <strong>Selbstreproduktion</strong> dieser Geräte natürlich bedeutet das sie ihre Einzelteile selbst herstellen können. Zusammenschrauben muss sie immer noch der Mensch der ehrfürchtig vor dem Gerät sitzt.</p>
+<p>Spannend finde ich das aber schon. Im Dunstkreis des CCC ist schon länger davon zu hören, das die (wieder) immer mehr zunehmenden Hardware-Hacker jetzt auch Rapid-Prototyping Maschinen selber bauen können. Und das für so etwa 200-3000 € - je nach Anspruch und Bastelkenntnis.</p>
+<p>An den Durchbruch der Produktionsmittel Zuhause glaub ich zwar noch nicht - aber wenn man doch mal mit Aliens kommunizieren will, dann ist heute immer noch die Idee, Selbstreproduzierende Satelliten loszuschicken die beste. Die könnten dann nämlich mit möglichst viel lokalem Speicher die Kunde über unsere Kultur quasi in einem gigantischen "Turnschuhnetz" in fremde Sternensysteme bringen - und umgekehrt.</p>
+<p>Da wäre eine erste sich selbst reproduzierende Maschine natürlich schon ein ganz guter Start...</p>
+<p>Spannende Wikipedia-Artikel über die ich beim Schreiben gestolpert bin: <a href="http://en.wikipedia.org/wiki/Alternative_biochemistries">Alternative Biochemien (engl)</a>, <a href="http://en.wikipedia.org/wiki/Exopolitics">Exopolitik (engl)</a>, <a href="http://en.wikipedia.org/wiki/Panspermia">Pansperma (engl)</a></p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/3/darf-s-ein-neuer-lampenschirm-sein/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/3/scho-ne-podiumsdiskussion/">
+        Schöne Podiumsdiskussion
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-03-07">Friday, March 7, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p><a href="http://www.heise.de/extras/streaming/heise_mp.swf?xml=teil_1_vp6_512k&amp;vol=80&amp;SWFHomePath=/extras/streaming/">Gab es bei Heise</a> zum Thema Filesharing.</p>
+<p>Vertreten sind die Gegner und Befürworter von Filesharing.</p>
+<p>Inklusive Jan Huwald - das freut mich natürlich als Pirat.</p>
+<p>:)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/3/scho-ne-podiumsdiskussion/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/3/piraten-aus-mangel-an-auswahl/">
+        Piraten aus &#34;Mangel an Auswahl&#34;
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-03-05">Wednesday, March 5, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p><a href="http://torrentfreak.com/piracy-is-caused-by-poor-choice-080305/">Torrentfreak</a> schrieb heute über <a href="http://www.entertainmentmediaresearch.com/reports/DigitalEntertainmentSurvey2008_FullReport.pdf">eine Studie</a> der <del><a href="http://www.wiggin.co.uk/gaming.asp">Wiggin LLP</a></del> <a href="http://www.wiggin.co.uk/index.asp">Wiggin LLP</a>.</p>
+<p>In der graphisch anspruchsvollen Studie stellt die Firma fest (unklar ist mir noch, wer sie Bezahlt hat) das das eingeschränkte Angebot einer der wichtigsten Gründe ist wieso Leute zu Piraten werden.</p>
+<p>Ahem.</p>
+<p>Na gut, ich finde es ja richtig wenn sich die Entertainement Industrie endlich auf ihren Hosenboden setzt und alle Inhalte (ja, auch die Alten) im Netz verkauft.</p>
+<p>ABER</p>
+<p>Ich vermisse hier ein ganz wesentliches Argument: Filesharing machen zuallererst die Leute die Zeit haben, aber wenig Geld. Diese Leute (Jugendliche &amp; Studenten z.B.) waren und sind aber ein ganz wesentlicher Markt für die Entertainment Branche.</p>
+<p>Davon abgesehen bin ich als Pirat natürlich noch der festen Überzeugung, das unser Land mehr freie Kultur braucht und auch bekommen wird.</p>
+<p>Dazu aber später mehr.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/3/piraten-aus-mangel-an-auswahl/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/3/sauberes-programmieren/">
+        Sauberes Programmieren
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-03-04">Tuesday, March 4, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>(zu <a href="http://musicbrainz.org/track/127f318a-28d3-49be-b5f6-be55f4d596b9.html">Return to Innocence von Enigma</a>)</p>
+<p>Es ist wirklich erstaunlich wie viel schwieriger es ist saubere Programme zu schreiben wenn mehr Leute an der Konstruktion beteiligt sind.</p>
+<p>Nehmen wir zum Beispiel drei Leute. Einer hat vorher viel C++ progirammiert. Ganz selbstverständlich ist für ihn das Paradigma geworden, das man Accessoren <code>-getVar</code> und Mutatoren <code>-setVar:aValue</code> nennt.</p>
+<p>Und schon mischt sich im System der Namens-Salat. Und das ist noch keine große Sache. Von sich aus besteht keinerlei Einheitlichkeit, wie wer seine Variablen und Funktionen nennt. Wie z.B. heißt eine Klassenmethode zum erstellen eines Objekts? <code>-classname:instanceVarName with:anotherInstanceVarname</code> oder <code>-intentionWithNamedThing:aTypeDescription withAnotherNamedThing:aTypeDescription</code></p>
+<p>Wie geht man mit Prefixen um? Was will man mit Instanzvariablen tun? Wann verwendet man (sinnvollerweise Accessoren und wann direkten Zugriff auf Variablen?</p>
+<p>Die Summe dieser kleinen Entscheidungen macht so viel von der (<a href="http://c2.com/xp/CodeSmell.html">olfaktorischen?</a>) Sauberheit eines Programms aus, das man sich (eigentlich) nicht leisten kann sie dem Zufall zu überlassen.</p>
+<p>Aber der Overhead das alles vorher festzulegen oder auch nur zu kommunizieren ist gewaltig. Vor allem wenn man weder Refaktoring-Werkzeuge hat die einem die Änderungen erleichtern, noch Unit-Tests die einem die Änderungen absichern, noch Reviews / Pair-Programming die einen zu der Entscheidung helfen was geändert werden soll.</p>
+<p>Was tun?</p>
+<p>Erleichterung finde ich in der Tatsache, das tatsächlich viele kleinen Entscheidungen kaum oder keine Rolle spielen. Wo die Klammern gesetzt werden, oder wie weit eingerückt wird ist egal. Man überließt diese Unterschiede einfach.</p>
+<p>Dazu kommt die Aussage aus dem <a href="http://www.laputan.org/mud/mud.html">Big Ball of Mud</a> Paper: Ein Dreckball mag besser sein als gar keine Software.</p>
+<p>Ist Sauberkeit also doch überschätzt?</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/3/sauberes-programmieren/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+  
+  
+    
+  <div class="pagination">
+    
+      <a href="../28/">&laquo; Previous</a>
+    
+    | 29 |
+    
+      <a href="../30/">Next &raquo;</a>
+    
+  </div>
+
+  
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../../blog/feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

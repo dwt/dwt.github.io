@@ -1,0 +1,151 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../../static/pygments.css">
+    <title>LOGen von beliebig vielen Argumenten</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../../../blog/feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="../../../../../blog/2008/2/logen-von-beliebig-vielen-argumenten/">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="./">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../../">🏠</a>
+
+
+<a class="breadcrumb-item " href="../../../">Blog</a>
+
+
+<a class="breadcrumb-item active" href="./">LOGen von beliebig vielen Argumenten</a>
+
+</nav>
+    </header>
+    <article class="page logen-von-beliebig-vielen-argumenten  container-fluid">
+      
+  
+  <article class="blog-post">
+    <header>
+      <h2>
+        
+        LOGen von beliebig vielen Argumenten
+        
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-02-16">Saturday, February 16, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Fehlt noch ein letzter Schritt - der erstaunlicherweise ganz einfach war und ausserdem noch ein ganz anderes Problem löste...</p>
+<p>Zuerst die Implementierung:</p>
+<div class="hll"><pre><span></span><span class="cp">#define LOG(what, variableArguments...) \</span>
+<span class="cp">    [[Log sharedLog] logObjcType:@encode(typeof(what)) \</span>
+<span class="cp">        arguments:(void *)what , ##variableArguments]</span>
+
+<span class="p">-</span> <span class="nf">logObjcType:</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="nv">typeString</span> <span class="nf">arguments:</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span> <span class="nv">what</span><span class="p">,</span> <span class="p">...;</span> <span class="p">{</span>
+    <span class="kt">id</span> <span class="n">formatString</span> <span class="o">=</span>  <span class="p">[</span><span class="nb">self</span> <span class="nl">stringFromType</span><span class="p">:</span><span class="n">typeString</span> <span class="nl">inValue</span><span class="p">:</span><span class="n">what</span><span class="p">];</span>
+
+    <span class="kt">va_list</span> <span class="n">variadicArguments</span><span class="p">;</span>
+    <span class="n">va_start</span><span class="p">(</span><span class="n">variadicArguments</span><span class="p">,</span> <span class="n">what</span><span class="p">);</span>
+
+    <span class="kt">id</span> <span class="n">logString</span> <span class="o">=</span> <span class="p">[[[</span><span class="bp">NSString</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithFormat</span><span class="p">:</span><span class="n">formatString</span> 
+                    <span class="nl">arguments</span><span class="p">:</span><span class="n">variadicArguments</span><span class="p">]</span> <span class="n">autorelease</span><span class="p">];</span>
+
+    <span class="n">va_end</span><span class="p">(</span><span class="n">variadicArguments</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="p">[</span><span class="nb">self</span> <span class="nl">log</span><span class="p">:</span><span class="n">logString</span><span class="p">];</span>
+<span class="p">}</span>
+</pre></div>
+<p>Eigentlich hatte ich hier mehr Probleme erwartet.</p>
+<p>Ganz nebenbei löst das auch noch ein Problem von ganz zu Anfang:</p>
+<div class="hll"><pre><span></span><span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;%@&quot;</span><span class="p">,</span> <span class="p">[</span><span class="bp">NSString</span> <span class="nl">stringWithFormat</span><span class="p">:</span><span class="s">@&quot;%s,%s&quot;</span><span class="p">,</span> <span class="s">&quot;fnord&quot;</span><span class="p">,</span> <span class="s">&quot;fnord&quot;</span><span class="p">]);</span>
+</pre></div>
+<p>Das macht jetzt keine Probleme mehr, da die zusätzlichen Komas vom Präprozessor (fälschlicherweise) als zusätzliche Argumente zur dem variadischen Makro aufgefasst werden. Hehe...</p>
+<p>Jetzt fehlt nur noch ein Backend für den Logger und ich bin glücklich. Andererseits... da gibt es natürlich auch <a href="http://log4cocoa.sourceforge.net/">Log4Cocoa</a> das ich einfach erweitern könnte.</p>
+<p>Hm. Mal schauen.</p>
+
+    </section>
+    
+  </article>
+
+  <nav>
+    
+  <div class="category-list">
+    Kategorien:
+      
+      <a href="../../../../../categories/code/">Software Development</a>
+      
+    
+  </div>
+
+    
+    <div class="relative-navigation">
+      
+        <div class="prev">Vorheriges Post: <a class="prev" href="../bei-mac-donalds/">Bei Mac Donalds</a></div>
+      
+      
+        <div class="next">Nächstes Post: <a class="next" href="../c-typen-in-die-laufzeitumgebung-heben/">C-Typen in die Laufzeitumgebung heben</a></div>
+      
+    </div>
+    
+  </nav>
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../../../blog/feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,147 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../static/pygments.css">
+    <title>C-Code für C und C++ verwendbar machen</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="./">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="../../../../en/blog/2008/10/c-code-fu-r-c-und-c-verwendbar-machen/">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../../">🏠</a>
+
+
+<a class="breadcrumb-item " href="../../../">Blog</a>
+
+
+<a class="breadcrumb-item active" href="./">C-Code für C und C++ verwendbar machen</a>
+
+</nav>
+    </header>
+    <article class="page c-code-fu-r-c-und-c-verwendbar-machen  container-fluid">
+      
+  
+  <article class="blog-post">
+    <header>
+      <h2>
+        
+        C-Code für C und C++ verwendbar machen
+        
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-10-21">Dienstag, 21. Oktober 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Ich hab mich schon immer gefragt woher man eigentlich diese Defines nimmt um C-Code deklarationen so zu schützen, dass sie auch in C++ Code gut reingeholt werden können.</p>
+<p>Ja klar, man kann das selber machen, etwas präprozessor bla und los gehts. Aber, das gibts ja vielleicht schon.</p>
+<p>Enter <code>#import &lt;sys/cdefs.h&gt;</code>.</p>
+<p>Und das ist in in Apple-Code praktischerweise immer schon includiert und enthält praktische Kleinigkeiten wie:</p>
+<ul>
+<li><code>__BEGIN_DECLS</code> - jetzt kommen C-Deklarationen</li>
+<li><code>__END_DECLS</code> - fettich</li>
+<li><code>__dead2</code> - diese Funktion kehrt nicht zurück (über das 2 könnte ich mich total amüsieren)</li>
+<li><code>__pure2</code> - diese Funktion hat keine Seiteneffekte</li>
+<li><code>__unused</code></li>
+<li><code>__printflike(formatArg, firstVarArg)</code></li>
+<li><code>__scanflike(formatArg, firstVarArg)</code></li>
+<li><code>__COPYRIGHT(string)</code> - erzeugt eine globale variable</li>
+<li><code>__PROJECT_VERSION(string)</code> - erzeugt eine globale variable</li>
+<li><code>__deprecated</code></li>
+</ul>
+<p>Dann gibts natürlich noch &lt;AvailabilityMacros.h&gt; das auch noch ein paar Kleinigkeiten enthält - neben dem ganzen Zeug um APIs zu versionieren sind da auch noch mal Attribute definiert:</p>
+<ul>
+<li>WEAK_IMPORT_ATTRIBUTE -- funktion ist vielleicht da</li>
+<li>DEPRECATED_ATTRIBUTE -- funktion soll nicht mehr verwendet werden</li>
+<li>UNAVAILABLE_ATTRIBUTE -- funktion ist nicht vorhanden (z.B. weil sie API ist die erst in einer späteren Version des Frameworks unterstützt wird)</li>
+</ul>
+<p>Vor allem <code>__BEGIN_DECLS</code>, <code>__END_DECLS</code> und <code>__deprecated</code> werde ich mit Sicherheit sofort benutzen. Ob ich die anderen auch verwende, weiß ich noch nicht. Mal schaun. :)</p>
+
+    </section>
+    
+  </article>
+
+  <nav>
+    
+  <div class="category-list">
+    Kategorien:
+      
+      <a href="../../../../categories/code/">Software Development</a>
+      
+    
+  </div>
+
+    
+    <div class="relative-navigation">
+      
+        <div class="prev">Vorheriges Post: <a class="prev" href="../kongress-zum-bedingungslosen-grundeinkommen/">Kongress zum bedingungslosen Grundeinkommen</a></div>
+      
+      
+        <div class="next">Nächstes Post: <a class="next" href="../ich-find-user-ideen-grossartig/">Ich find User-Ideen großartig</a></div>
+      
+    </div>
+    
+  </nav>
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

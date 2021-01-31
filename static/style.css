@@ -1,0 +1,58 @@
+@import 'hamburger.css';
+
+/* FIXME these are verbatim also part of bootstrap - why do I need to copy them? */
+:root {
+    /* From https://getbootstrap.com/docs/4.1/getting-started/theming/#css-variables */
+    /* Sadly these can not be used in media queries */
+    --breakpoint-xs: 0;
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
+}
+
+html, body {
+    height: 100%;
+    position: relative;
+}
+
+body {
+    display:flex; 
+    flex-direction:column;
+}
+
+body > footer {
+    margin-top: auto;
+    background: lightgray;
+    border-top: 2px solid lightgray;
+}
+
+.about.page img {
+    max-width:100%;
+}
+
+@media (min-width: 576px) { /* --breakpoint-sm */
+    /* REFACT consider to pull right all images on category pages */
+    .about.page img,
+    .liquid.page img {
+        float: right;
+        max-width: 50%;
+    }
+}
+
+.homepage .blog-post .blog-post-body {
+    height: 10rem;
+    overflow: hidden;
+    position: relative;
+}
+
+.homepage .blog-post .blog-post-body:after {
+    content: '';
+    text-align: right;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 1.2em;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 50%);
+    
+}

@@ -1,0 +1,478 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../static/style.css">
+    <link rel="stylesheet" href="../../../static/pygments.css">
+    <title>Blog</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="./">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="../../../en/blog/page/12/">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../">🏠</a>
+
+
+<a class="breadcrumb-item active" href="./">Blog</a>
+
+</nav>
+    </header>
+    <article class="page blog  container-fluid">
+      
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2009/1/svn-revision-number-in-der-about-box-verfu-gbar-machen/">
+        SVN Revision Number in der About Box verfügbar machen
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-01-24">Samstag, 24. Januar 2009</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Das wollte ich tun, aber <a href="http://www.red-sweater.com/blog/23/automatic-build-sub-versioning-in-xcode">die bestehenden Lösungen</a> fand ich alle nicht so toll.</p>
+<p>Well, also noch mal.</p>
+<p>Immerhin bietet Python ja eine menge mit seinen Batteries Included. Das heißt ich muss nicht aufwendig mit RegExen die plist dateien auseinander nehmen. Schließlich gibt es die <a href="http://docs.python.org/dev/library/plistlib.html">plistlib</a>.</p>
+<p>Hier das Resultat:</p>
+<div class="hll"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1"># Usage:</span>
+<span class="c1"># Either copy into a shell script build phase </span>
+<span class="c1"># (don&#39;t forget to change the interpreter to &quot;/usr/bin/env python&quot;)</span>
+<span class="c1"># Or just put it into a shell script and call it form there.</span>
+<span class="c1">#</span>
+<span class="c1"># Discussion:</span>
+<span class="c1"># There are really two info plist keys that could be used for the source revision:</span>
+<span class="c1"># The CFBundleShortVersionString and CFBundleVersion</span>
+<span class="c1"># Apple recommends to use CFBundleVersion, because it is not shown in the finders info dialog,</span>
+<span class="c1"># but is shown in the standard about dialog of a cocoa application where the CFBundleVersion</span>
+<span class="c1"># is shown in parantheses behind the CFBundleShortVersionString.</span>
+<span class="c1">#</span>
+<span class="c1"># Inspired by Daniel Jalkut at http://www.red-sweater.com/blog/23/automatic-build-sub-versioning-in-xcode</span>
+<span class="c1"># License: Creative-Commons Public Domain http://creativecommons.org/licenses/publicdomain/</span>
+
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">re</span><span class="o">,</span> <span class="nn">plistlib</span>
+
+<span class="c1"># Test if run from xcode</span>
+<span class="n">is_run_from_xcode</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s2">&quot;BUILT_PRODUCTS_DIR&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">is_run_from_xcode</span><span class="p">:</span>
+    <span class="n">exit</span><span class="p">(</span><span class="s2">&quot;Needs to be run from a Xcode shell scribt build phase&quot;</span><span class="p">)</span>
+
+<span class="c1"># We take the one from the built products dir to keep revision numbers out of the repository</span>
+<span class="n">info_plist_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;BUILT_PRODUCTS_DIR&quot;</span><span class="p">],</span> \
+                               <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;INFOPLIST_PATH&quot;</span><span class="p">])</span>
+
+<span class="c1"># get latest svn revision</span>
+<span class="k">def</span> <span class="nf">output_of_command</span><span class="p">(</span><span class="o">*</span><span class="n">command_and_arguments</span><span class="p">):</span>
+    <span class="kn">import</span> <span class="nn">subprocess</span>
+    <span class="k">return</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">command_and_arguments</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">)</span><span class="o">.</span><span class="n">communicate</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PROJECT_DIR&quot;</span><span class="p">])</span>
+<span class="n">version_range</span> <span class="o">=</span> <span class="n">output_of_command</span><span class="p">(</span><span class="s2">&quot;svnversion&quot;</span><span class="p">,</span> <span class="s2">&quot;-nc&quot;</span><span class="p">)</span>
+<span class="n">latest_commited_version</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\d*\w*$&quot;</span><span class="p">,</span> <span class="n">version_range</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># enter into Info.plist</span>
+<span class="n">info</span> <span class="o">=</span> <span class="n">plistlib</span><span class="o">.</span><span class="n">readPlist</span><span class="p">(</span><span class="n">info_plist_path</span><span class="p">)</span>
+<span class="n">info</span><span class="p">[</span><span class="s2">&quot;CFBundleVersion&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">latest_commited_version</span>
+<span class="n">plistlib</span><span class="o">.</span><span class="n">writePlist</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">info_plist_path</span><span class="p">)</span>
+</pre></div>
+<p>Pretty neat. :)</p>
+<p>Die aktuelle Version des Scripts liegt wie immer [source:open-source/utilities/xcode-add-subversion-version-to-built-Info.plist.py im Repository].</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/1/svn-revision-number-in-der-about-box-verfu-gbar-machen/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2009/1/wenn-apple-mail-auf-einmal-keine-passwo-rter-mehr-speichert/">
+        Wenn Apple mail auf einmal keine Passwörter mehr speichert...
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-01-24">Samstag, 24. Januar 2009</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>... im Schlüsselbund, dann möglicherweise deswegen weil man gerade <a href="http://www.macupdate.com/info.php/id/20192/service-scrubber">Services Scrubber</a> verwendet hat um sein Services-Menü aufzäumen.</p>
+<p>Und das funktioniert indem es die Info.plist eines Programms manipuliert.</p>
+<p>Doh. Wenn das nämlich eine signierte Applikation ist (wie alle Apple-Programme) dann stimmt danach natürlich die Signatur nicht mehr. Und das bedeutet dass sie nicht mehr auf den Schlüsselbund zugreifen können.</p>
+<p>Natürlich ohne sich irgendwo in logfiles zu beschweren.</p>
+<p>:-/</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/1/wenn-apple-mail-auf-einmal-keine-passwo-rter-mehr-speichert/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2009/1/die-ursachen-der-finanzkrise-erkla-rt/">
+        Die Ursachen der Finanzkrise erklärt
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-01-22">Donnerstag, 22. Januar 2009</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p><a href="http://www.youtube.com/watch?v=eb_R1-PqRrw">Mit einer sehr schönen Analogie (youtube)</a></p>
+<p>Sehr sehenswert.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/1/die-ursachen-der-finanzkrise-erkla-rt/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2009/1/blinde-und-linux/">
+        Blinde und Linux
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-01-18">Sonntag, 18. Januar 2009</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Heute war ich Brunchen mit Bekannten - insbesondere war da auch ein Blinder dabei, der Linux benutzt und versucht von Windows wegzukommen.</p>
+<p>Das war spannend. Zuerst einmal, dass Computerbenutzung für Blinde ein riesen Problem ist. Die bekommen von irgendwelchen Firmen für irrsinnig viel Geld Windows-Computer verkauft, die dann vielleicht auch funktionieren - für die sie aber 5000 € jährlich bezahlen müssen. (Ob die Zahl jetzt stimmt sei mal dahingestellt - Fakt ist, es ist teuer).</p>
+<p>Und die Krankenkassen sind da nicht so geberfreundlich - denn wer braucht denn schon das Internet? Selbst braille-Zeilen sind wohl ein echter Kampf bis man sie kriegt. (UNGLAUBLICH wenn man sich das überlegt!)</p>
+<p>Dabei geht es ja auch anders: Linux hat die Kommandozeile, die für Blinde schon mal ein großer Vorteil ist - und sie können freie Software selber Hacken bis Sie tut was sie brauchen.</p>
+<p>Was wohl z.B. bei dem <a href="http://projects.gnome.org/orca/">Gnome Screenreader Orca</a> auch einige tun. (Yay! More power to you!)</p>
+<p>Prinzipiell haben Blinde mit freier Software überhaupt eine Chance, denn der Markt gibt viele Hilfen die sie bräuchten einfach nicht her. Spezielle Routenführer für Blinde? Gibt es, aber dort stehen für Berlin nicht mal die U-Bahnen mit drinn. Geschweige denn wo genau der Eingang dazu ist und ob sie aus dem Zug jetzt vorne oder hinten aussteigen sollen, damit sie gleich noch eine Unterführung unter der Straße nutzen können.</p>
+<p>Das fand ich überhaupt das Spannendste, wo denn die Probleme liegen. Also zum Beispiel:</p>
+<ul>
+<li>Open Office funktioniert wohl ganz gut - aber sobald man eine Präsentation im Full-Screen Modus anschaut, rendert OpenOffice offenbar die Folien als Bild - tada, die Screenreader Information fehlt und alles ist still.</li>
+<li>Scannen ist ein riesen Problem. Es gibt einfach keine Software mit vernünftiger Layout- und Tabellen-Erkennung die eine genügend hohe Erkennungsrate hat. Bis vor kurzem war noch nicht mal drinn dass die Orientierung des Textes erkannt wurde...</li>
+<li>PDFs lesen geht nicht. Acrobt Reader soll es wohl können - aber die freie Software noch nicht.</li>
+<li>Browsen mit Firefox funktioniert gut - aber wenn man eine lange Seite schnell ein paar mal scrollt (space oder pagedown) dann dauert es manchmal bis zu einer Minute bis der Screenreader auch so weit gekommen ist.</li>
+</ul>
+<p>Spannend. Das sind nicht ganz die Probleme mit denen ich gerechnet hätte. Vor allem dass GUI-Anwendungen so wichtig sind. An Firefox und OpenOffice kommt kein Blinder vorbei.</p>
+<p>Noch ein eher abschreckendes Beispiel: Er hat an der exzellenten Freien Universität Informatik Studiert. Dabei ist er aber gescheitert, weil z.B. die Aufgabenblätter zwar als PDF kamen - aber darin nur gescannte Aufgabenblätter waren...</p>
+<p>Peinlich.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/1/blinde-und-linux/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2009/1/hg-bzr-und-git-als-svn-superclient/">
+        hg, bzr und git als svn superclient
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-01-18">Sonntag, 18. Januar 2009</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Ein langer Traum ist in Erfüllung gegangen - alle Versionskontrollsysteme (<a href="http://www.selenic.com/mercurial/wiki/">hg</a>, <a href="http://bazaar-vcs.org/">bzr</a>, <a href="http://git-scm.com/">git</a> und natürlich <a href="http://subversion.tigris.org/">svn</a>) unterstützen endlich das Reden mit einem Subversion-Server.</p>
+<p>Das bedeutet, man kann jetzt SVN als Lingua Franca mit allen verteilten Versionskontrollsystemen einsetzen um einen gemeinsamen Server zu haben von dem alle pullen und pushen können. Oder kurz gesagt: Wenn man SVN als Server hat, kann jeder benutzen was ihm persönlich am meisten liegt.</p>
+<p>Das funktioniert natürlich noch alles nicht perfekt - aber es fängt an.</p>
+<p>Und daher hab ich mal aus Spaß ein Projekt mit jedem der VCS ausgecheckt und bin etwas überrascht von den Ergebnissen:</p>
+<ul>
+<li>bzr git und svn haben den root des Projekts einfach als große Ordner-Hierarchie ausgecheckt, so wie das in svn eben abgebildet ist.</li>
+<li>hg hat als einziges ohne Zusatz-Optionen erkannt das es trunk, branches und tags gibt und das auf die entsprechenden nativen Konzepte (branches) abgebildet. (Das müsste mit mehr Aufwand aber mit bzr und git auch gehen).</li>
+<li>Der Import hat schon mal recht unterschiedlich lange gedauert:<ul>
+<li>bzr: 20 min</li>
+<li>git: 14 min</li>
+<li>svn: 7 min</li>
+<li>hg: 7 min (sogar drei Sekunden schneller als svn! :)</li>
+</ul>
+</li>
+<li>Logischerweise sind damit die Repositories auch völlig unterschiedlich groß:<ul>
+<li>bzr: 83 MB</li>
+<li>git: 93 MB</li>
+<li>svn: 162 MB (Zweimal die Größe des ganze Source-Codes aller tags und branches, also wie erwartet)</li>
+<li>hg: 5.2 MB (überraschend - angeblich steckt da die ganze History drin - so richtig glauben kann ich das aber noch nicht. Vom Platz her ist das etwa das doppelte den alleine der trunk als checkout braucht)</li>
+</ul>
+</li>
+</ul>
+<p>Hier die Kommandos die ich abgeschickt habe (mit den Laufzeit Ergebnissen)</p>
+<p>bzr clone <a href="http://python-nose.googlecode.com/svn">http://python-nose.googlecode.com/svn</a> nose-bzr::  177,62s user 27,00s system 16% cpu 20:17,34 total
+ git svn clone <a href="http://python-nose.googlecode.com/svn">http://python-nose.googlecode.com/svn</a> nose-git::  57,63s user 130,80s system 22% cpu 14:02,33 total
+ svn co <a href="http://python-nose.googlecode.com/svn">http://python-nose.googlecode.com/svn</a> nose::  9,13s user 19,77s system 6% cpu 6:58,31 total
+ hg svnclone <a href="http://python-nose.googlecode.com/svn">http://python-nose.googlecode.com/svn</a> nose-hg::  27,15s user 12,25s system 9% cpu 6:57,76 total</p>
+<p>So viel kann man daraus natürlich nicht schließen - aber mir gefällt dass man jetzt mit allen VCS an Subversion herankommt und der Weg auf dem hgsubversion ist scheint mir schon mal sehr gut zu sein. :)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/1/hg-bzr-und-git-als-svn-superclient/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2009/1/model-view-controller-endlich-mal-erkla-rt/">
+        Model View Controller - endlich mal erklärt
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-01-17">Samstag, 17. Januar 2009</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p><a href="http://vimeo.com/user496766/videos/sort:oldest">Per Video</a>.</p>
+<p>Groooßartig. :-D</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/1/model-view-controller-endlich-mal-erkla-rt/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2009/1/the-git-index-considered-harmful/">
+        The Git Index considered harmful
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-01-17">Samstag, 17. Januar 2009</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Endlich hab ich mal eine <a href="http://thread.gmane.org/gmane.comp.version-control.git/32452/focus=32610">ordentliche Quelle gefunden</a> wofür <a href="http://git.or.cz/gitwiki/WhatIsTheIndex">der Index</a> bei <a href="http://git-scm.com/">GIT</a> gut ist.</p>
+<p>Kurz erklärt: Der Index ist eine Vorstufe für jeden Commit. Man comittet zuerst in den index mit <code>git add some_file</code> und comitted dann den index ins repository mit <code>git commit</code>. Es sei denn man sagt <code>git commit some_file</code> in dem fall wird es direkt comitted, oder man wählt eines der anderen kommandos die irgend etwas merkwürdiges mit dem index anstellen, dann weiß man in der Regel gar nicht mehr was Sache ist.</p>
+<p>Das hab ich nie verstanden - denn wieso noch mal eine Stufe mehr, wenn man doch sowieso lokal arbeitet und alles was man verbockt hat wieder verändern kann bevor man es pusht?</p>
+<p>Ah well. Es gibt offenbar drei Hauptgründe:</p>
+<ol>
+<li>Der Index hilft besser mit einer dirty workspace zu leben</li>
+<li>Der Index hilft noch mehr über einen commit nachzudenken und ihn zu verfeinern bevor man ihn macht</li>
+<li>Linux Torvalds hat den Index erfunden und will ihn behalten</li>
+</ol>
+<h3>Zu 1. Eine Dirty Workspace ist manchmal praktisch</h3>
+<p>Die Idee ist dass es Änderungen gibt die jeder in seinem lokalen Checkout hat aber niemand einchecken will. Z.B. die debug-flags, oder der andere Pfad in einem makefile. Es ist viel komfortabler jedes mal zu sagen was man committen will, als jedes mal daran zu denken was man nicht committen will. Ganz davon abgesehen dass man irgendwan nicht daran denkt das man etwas nicht machen wollte. Been there, done that.</p>
+<p>Dieses Problem hab ich auch ab und an. Zum Beispiel dieses komische File dass einen Build-Counter für den Build-Bot enthält. Eigentlich sollte das gar nicht in das repository. Aber dann war es doch drinnen. Und es nervte eigentlich nur, weil jeder lokale compile es erhöht hat. Und wenn es dann doch mal jemand comitted hat, gab es für jeden anderen natürlich einen konflikt. Sehr nervig. Oder der Debug-Flag, den man irgendwo tief in einem Framework einschalten musste. Den will ich natürlich auch nicht in einem Release haben.</p>
+<p>Ich finde allerdings dass der Index überhaupt keine gute Lösung für derartige Probleme ist. Wenn ich lokale changes habe die ich nicht committen will, dann würde ich die viel lieber als "ignore" markieren, als jedes mal alles andere zu committen.</p>
+<p>Ein bekannter formulierte das mal so, dass er oft code hat der den Code Testet den er comittet - und dass er den nicht im Repository haben will. Diese Variante des Arguments finde ich allerdings noch schrecklicher, weil ich in jedem Fall den Testcode auch im Repository haben will. Gerade. Damit ich später regressionstests durchführen kann. Automatisiert natürlich. Alleine der Gedanke dass der Testcode gleich wieder weggeworfen wird... <em>schauder</em></p>
+<h3>Zu 2. Erst noch mal drüber nachdenken ist eine gute Idee</h3>
+<p>Das finde ich ein wesentlich besseres Argument: Man soll sich über einen Commit Gedanken machen bevor man ihn tut. Und damit man das tut soll man genau auswählen was in ihn hinein kommt.</p>
+<p>Commendable.</p>
+<p>Allerdings nur wenn man nicht richtig darüber nachdenkt. Denn <code>git</code> ist ja ein distributed VCS. Das heißt, alle commits sind erst einmal lokal. Und kommandos die den letzten commit einfach rückgängig machen oder noch mal neu gibt es jede menge. Sogar um mehrere History-Schritte zurück zu kommen. (Und die braucht es sowieso, denn selbst mit Index macht man immer wieder Fehler.)</p>
+<p>Oops.</p>
+<p>Also bleibt übrig: der Index ist ein zusätzlicher Abstraktionsschritt der keinen Wert hinzufügt, sondern nur kompliziertere Bedienung erzeugt.</p>
+<p>Hm. Das heißt natürlich frei nach Occam, dass man den Index als überflüssiges Konzept 'über die klinge springen lassen' sollte.</p>
+<h3>Zu 3. Linus hats erfunden und will es behalten</h3>
+<p>Dass scheint mir der eigentliche Grund zu sein. Wie Torvalds es selber schon gesagt hat: <a href="http://lwn.net/Articles/246381/">"I have an ego the size of a small planet"</a>. Und daher wird es den Index auch weiter geben. Auch wenn es eine schlechte Idee ist. Und die git-Benutzer werden sich damit arrangieren, da niemand die Lust hat das wirklich auszufechten.</p>
+<p>Zumindest ist das meine Einschätzung.</p>
+<p>Schade eigentlich.</p>
+<p>Hier mein Vorschlag: Für alle Index-Liebhaber gibt es eine Option in ihrer <code>.gitrc</code> mit der sie den Index und wie er heute ist aktivieren können. Für alle anderen gibt es den vernünftigen default wert, der den Index einfach wie bei allen anderen Versionskontrollsystemen versteckt. Das macht man am besten so, dass bei einem Update, die .gitrc so verändert wird, dass alle die git updaten den index behalten und alle die git neu einrichten den index explizit aktivieren müssen. Dass sollte am wenigsten Geschrei erzeugen.</p>
+<p>Kommentare bitte per mail an spamfaenger ät gmx.de</p>
+<p><strong><em>Update:</em></strong> Es gibt noch viel mehr leute die mit der Git UI probleme haben. :)</p>
+<ul>
+<li><a href="http://www.freedesktop.org/wiki/Infrastructure/git/UIFlaws">Freedesktop - Git UI Flaws</a></li>
+<li><a href="http://blogs.gnome.org/newren/2007/12/08/limbo-why-users-are-more-error-prone-with-git-than-other-vcses/">Why users are more error-prone with git than other VCSes</a></li>
+</ul>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/1/the-git-index-considered-harmful/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2009/1/liquid-democracy-und-politikwissenschaftler/">
+        Liquid Democracy und Politikwissenschaftler
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-01-14">Mittwoch, 14. Januar 2009</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Heute waren zwei Politikwissenschaftler bei der Piratenpartei zu Gast - und sie sind durch <a href="http://wiki.piratenpartei.de/Liquid_Democracy">Liquid Democracy</a> (<a href="http://de.wikipedia.org/wiki/Delegated_Voting">wikipedia</a>) auf uns aufmerksam geworden.</p>
+<p>Yay.</p>
+<p>Auf die Frage was sie an diesem Thema reizt kamen tolle Sätze: "Kein Politikwissenschaftler weiß eigentlich noch was er noch wählen soll.", "Die Linke nicht für die Außenpolitik, die FDP für die Freiheitsrechte, die SPD nicht für die Sozialpolitik...".</p>
+<p>Dem kann ich überhaupt nichts mehr hinzufügen. Keine Partei passt mir am Stück. Keine Partei kann ich mit gutem Gewissen wählen.</p>
+<p>Und das ist auch die Grund-Idee hinter einer flüssigen Demokratie: Die fließband-Produkte die man von Parteien bekommt sind es heute einfach nicht mehr.</p>
+<p>Nur die Alternative ist einfach noch nicht fertig. :-(</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/1/liquid-democracy-und-politikwissenschaftler/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2009/1/no-software-is-free-and-spreading-that-misconception-is-harmful/">
+        No software is free and spreading that misconception is harmful.
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-01-12">Montag, 12. Januar 2009</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Da hat eine Lehrerin in Amerika doch tatsächlich ihren heiligen Eifer entdeckt und muss ihre Schüler davor schützen freie Software zu benutzen. Daraufhin hat sie die Linux-CDs eines Schülers konfisziert und klagte dann per e-mail den Projektleiter des Linux-Projekts an. <a href="http://linuxlock.blogspot.com/2008/12/linux-stop-holding-our-kids-back.html">Weil es Software die Umsonst ist nicht geben kann und darf.</a></p>
+<p>Unglaublich. Peinlich.</p>
+<p>Und das wird immer schlimmer je weiter man ließt. <a href="http://www.gulli.com/news/lehrerin-open-source-schadet-2008-12-11/">via</a></p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/1/no-software-is-free-and-spreading-that-misconception-is-harmful/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2009/1/software-literacy/">
+        Software Literacy
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-01-08">Donnerstag, 8. Januar 2009</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>The ability to “read” a medium means you can access materials and tools created by others. The ability to “write” in a medium means you can generate materials and tools for others. You must have both to be literate. In print writing, the tools you generate are rhetorical; they demonstrate and convince. In computer writing, the tools you generate are processes; they simulate and decide.</p>
+<p>-- Alan Key</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/1/software-literacy/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+  
+  
+    
+  <div class="pagination">
+    
+      <a href="../11/">&laquo; Previous</a>
+    
+    | 12 |
+    
+      <a href="../13/">Next &raquo;</a>
+    
+  </div>
+
+  
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

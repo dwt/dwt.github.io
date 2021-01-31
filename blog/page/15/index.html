@@ -1,0 +1,528 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../static/style.css">
+    <link rel="stylesheet" href="../../../static/pygments.css">
+    <title>Blog</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="./">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="../../../en/blog/page/15/">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../">🏠</a>
+
+
+<a class="breadcrumb-item active" href="./">Blog</a>
+
+</nav>
+    </header>
+    <article class="page blog  container-fluid">
+      
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/11/delegation-sucks/">
+        Delegation sucks
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-11-02">Sonntag, 2. November 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Well, it doesn't really. But if way overused it becomes a pain in the a**.</p>
+<p>This is not so much a problem in on itself, but the code sprouts dependencies that nobody is able to follow from just reading a class but which become crucial to the operation of the application.</p>
+<p>Well, out of frustration I started thinking about the saying that Design-Patterns are just for languages that are not powerful enough to implement something in the language.</p>
+<p>So lets see, what can we do to make this simpler:</p>
+<div class="hll"><pre><span></span><span class="k">if</span> <span class="p">([</span><span class="n">someObject</span> <span class="nl">respondsToSelector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="nl">someDelegateMethod</span><span class="p">:)])</span> <span class="p">{</span>
+    <span class="p">[</span><span class="n">someObject</span> <span class="nl">someDelegateMethod</span><span class="p">:</span><span class="nb">self</span><span class="p">];</span>
+<span class="p">}</span>
+</pre></div>
+<p>The key here is to only call the messagte <code>-someDelegateMethod:</code> if it is actually supported on the target. A perfect application [wiki:2008/10/26/20.59 of my invocation] [wiki:2008/10/25/01.21 catching code].</p>
+<div class="hll"><pre><span></span><span class="p">[[</span><span class="n">NMDelegateCaller</span> <span class="nl">callerForDelegate</span><span class="p">:</span><span class="n">object</span><span class="p">]</span> <span class="nl">someDelegateMethod</span><span class="p">:</span><span class="nb">self</span><span class="p">];</span>
+</pre></div>
+<p>In real life of course you would hide the delegator by just wrapping your delegate in the <code>-setDelegate:</code> method.</p>
+<p>Interestingly implementing this proved rather more tricky than I anticipated. This is because of the way the objc-runtime creates NSInvocations out of c-method calls. The trick is, that really at runtime nothing is known about how arguments have to be scraped out of the stack because in C you have no clue what arguments actually are on the stack.</p>
+<p>So objc takes a detour and stores this information alongside each method in the object that the method belongs to. This however has the unfortunate side effect that it should make just the delegator I wanted to build impossible to build. That is, because the runtime cannot build an NSInvocation out of a method call that the destination does not support - simply because it doesn't know what arguments are on the stack and what to return.</p>
+<p>This is where my little evil hack comes in: I defined a method on NSObject that represents an identity for this situation - that is, it returns nothing and takes no argument - therefore the runtime won't crash anything by using it's description to build an NSInvocation. This is my marker.</p>
+<p>And with this the problem becomes solvable - in <code>-methodSignatureForSelector:</code> I ask the target for a signature if it has one, and return my marker signature and let the runtime build an NSInvocation out of whatever method call was made (what exactly it was doesn't interest me, only that it's not implemented on the delegate). Then in <code>-forwardInvocation:</code> I can test if the signature is that marker and just discard the method if it is.</p>
+<p>Voilá.</p>
+<p>So it is proven - objc is powerful enough to implement this design pattern in itself - no need for all those if statements - and I learned a lot about the internals of NSInvocations.</p>
+<p>Still I'm not sure if I really want to use that code. Yes it's shorter, but it's also a lot more complicated and it makes something very convenient which in essence I don't really want to be so convenient, because if overused it becomes a maintenance nightmare.</p>
+<p>Also it lacks the simple elegance of just stating exactly what you want to achieve and returning good default values (my solution can just return NULL/NO/0 if the method is not implemented).</p>
+<p>Damn. Alles für die Katz.</p>
+<p>Still very interseting though. Maybe I'l find a different application that suits me more.</p>
+<ul>
+<li>[source:open-source/NMInvocationBuilder/trunk Here's the code]</li>
+</ul>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/11/delegation-sucks/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/10/syntax-matters/">
+        Syntax matters
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-10-26">Sonntag, 26. Oktober 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>[wiki:2008/10/25/01.21 Gerade habe ich doch ein Stück Code hochgeladen] mit dem man jeden beliebigen Methodenaufruf in eine Invocation umwandeln kann.</p>
+<p>Nun, das hat mir nicht gereicht. Jetzt hab ich mich noch mal hingesetzt und mich an einer anderen Syntax versucht:</p>
+<div class="hll"><pre><span></span><span class="c1">// anstatt</span>
+<span class="kt">id</span> <span class="n">invocation</span> <span class="o">=</span> <span class="n">NMCatchInvocation</span><span class="p">(</span><span class="s">@&quot;fnord&quot;</span><span class="p">,</span> <span class="nl">stringByAppendingString</span><span class="p">:</span><span class="s">@&quot;42&quot;</span><span class="p">);</span>
+
+<span class="c1">// jetzt</span>
+<span class="kt">id</span> <span class="n">invocation</span> <span class="o">=</span> <span class="p">[</span><span class="n">NMRecordingInvocation</span> <span class="n">invocation</span><span class="p">];</span>
+<span class="p">[</span><span class="n">invocation</span> <span class="nl">recordWithTarget</span><span class="p">:</span><span class="s">@&quot;fnord&quot;</span><span class="p">]</span> <span class="nl">stringByAppendingString</span><span class="p">:</span><span class="s">@&quot;42&quot;</span><span class="p">];</span>
+
+<span class="c1">// oder</span>
+<span class="kt">id</span> <span class="n">invocation</span> <span class="o">=</span> <span class="p">[</span><span class="n">NMRecordingInvocation</span> <span class="nl">invocationWithTarget</span><span class="p">:</span><span class="s">@&quot;fnord&quot;</span><span class="p">];</span>
+<span class="p">[</span><span class="n">invocation</span> <span class="n">record</span><span class="p">]</span> <span class="nl">stringByAppendingString</span><span class="p">:</span><span class="s">@&quot;42&quot;</span><span class="p">];</span>
+</pre></div>
+<p>Und ich  finde das ist von der Syntax her deutlich eleganter als das Makro.</p>
+<p>Allerdings:</p>
+<ul>
+<li>Es ist etwa der doppelte Aufwand dass zu implementieren</li>
+<li>Das Makro erzeugt viel schnelleren Code (viel weniger allokationen)</li>
+</ul>
+<p>Was soll ich davon jetzt halten? Small is beautifull? Keep it simple stupid? Oder ist doch wichtiger dass der zweite Versuch eher dem Objc-Spirit entspricht?</p>
+<p>Mir ist das auch nach einem Tag darüber nachdenken erheblich unklar.</p>
+<ul>
+<li>[source:open-source/NMInvocationBuilder/trunk Hier gehts zum Code]</li>
+</ul>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/10/syntax-matters/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/10/grundeinkommen/">
+        Grundeinkommen
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-10-25">Samstag, 25. Oktober 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Spannend wars heute auf <a href="http://www.grundeinkommen2008.org/">dem Kongress.</a></p>
+<p>Vormittags der Workshop über Simulationsmodelle über die Auswirkungen der Einführung von Grundeinkommen auf ein Modell der österreichischen Volkswirtschaft (in dem sich zeigte dass Gewinnsteuerfinanziertes Grundeinkommen das verwendete Modell stärker destabilisierte als ein durch negative Einkommenssteur finanziertes.</p>
+<p>Well, dafür das der verantwortliche für das Modell nur einen Tag lang simuliert hat...</p>
+<p>Danach ging es noch ein bisschen mit zellulären automaten weiter um damit zu simulieren wie sich das Wissen um Grundeinkommen in der Bevölkerung ausbreiten konnte.</p>
+<p>Beides nicht großartig, aber doch ein interessanter Einblick darin dass auch in der Simulation eben nur mit Wasser gekocht wird. Will sagen: Das hätte ich auch gekonnt.</p>
+<p>Danach gabs dann einen Argumentationsworkshop gegen Stammtischparolen und Killerargumente - das war mal was praktisches und für mich (trotz einer was Argumente angeht eher mageren Ausbeute) damit das Highlight des Tages.</p>
+<p>Schlussendich noch eine (gefühlt endlose) Podiumsdiskussion. Bei der ich wie auf Kohlen saß - mir ist nach wie vor noch nicht klar wieso ich das so extrem nervig fand. Naja.</p>
+<p>Immerhin kam mir dabei noch eine interessante Idee: Viel beschworen ist ja die Angst vor der Arbeitsunwütigkeit der Bevölkerung wenn es ein Grundeinkommen gibt. Dass die dann nicht mehr Arbeiten würden und es sich nur noch gut gehen lassen werden.</p>
+<p>Tja, das kann man doch einfach Testen. Alle Gemeinden &lt; $GRENZWERT dürfen sich für eine Lotterie anmelden. Die Leute die in der Gemeinde leben die Gewinnt (und nur die die zu dem Zeitpunkt dort leben) kriegen dann von da ab bis an ihr Lebensende ein garantiertes und bedingungsloses Grundeinkommen.</p>
+<p>Voila - schon weiß man bald viel mehr darüber wie sich Menschen mit Grundeinkommen verhalten. Und dann kann man bald die Angst dass die dann ja alle nicht mehr Arbeiten würden fundiert wiederlegen. (Ok, kann man IMO jetzt auch schon, aber es wäre halt doch etwas anderes)</p>
+<p>Bonus wäre natürlich wenn man gleich mehrere solcher Versuche macht um verschiedene Rahmenbedingungen zu testen.</p>
+<p>Billiger als ein Bankencrash wäre es allemal - und viel Produktiver.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/10/grundeinkommen/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/10/nsinvocations-zusammenbauen/">
+        NSInvocations zusammenbauen...
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-10-25">Samstag, 25. Oktober 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>...ist deutlich schmerzhaft.</p>
+<p>Man muss eine Menge Aufwand treiben um aus einem objc-call etwas zu machen dass man schön hin und her passen kann.</p>
+<p>Zum Beispiel:</p>
+<div class="hll"><pre><span></span><span class="cp">#import &lt;Foundation/Foundation.h&gt;</span>
+
+<span class="kt">int</span> <span class="nf">main</span> <span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+    <span class="bp">NSAutoreleasePool</span> <span class="o">*</span> <span class="n">pool</span> <span class="o">=</span> <span class="p">[[</span><span class="bp">NSAutoreleasePool</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+
+    <span class="kt">id</span> <span class="n">aString</span> <span class="o">=</span> <span class="s">@&quot;fnord&quot;</span><span class="p">;</span>
+
+    <span class="kt">id</span> <span class="n">signature</span> <span class="o">=</span> <span class="p">[</span><span class="n">aString</span> <span class="nl">methodSignatureForSelector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="nl">stringByAppendingString</span><span class="p">:)];</span>
+    <span class="kt">id</span> <span class="n">invocation</span> <span class="o">=</span> <span class="p">[</span><span class="bp">NSInvocation</span> <span class="nl">invocationWithMethodSignature</span><span class="p">:</span><span class="n">signature</span><span class="p">];</span>
+
+    <span class="p">[</span><span class="n">invocation</span> <span class="nl">setTarget</span><span class="p">:</span><span class="n">aString</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">invocation</span> <span class="nl">setSelector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="nl">stringByAppendingString</span><span class="p">:)];</span>
+    <span class="kt">id</span> <span class="n">appender</span> <span class="o">=</span> <span class="s">@&quot;23&quot;</span><span class="p">;</span>
+    <span class="p">[</span><span class="n">invocation</span> <span class="nl">setArgument</span><span class="p">:</span><span class="o">&amp;</span><span class="n">appender</span> <span class="nl">atIndex</span><span class="p">:</span><span class="mi">2</span><span class="p">];</span>
+
+    <span class="p">[</span><span class="n">invocation</span> <span class="n">invoke</span><span class="p">];</span>
+
+    <span class="kt">id</span> <span class="n">returnValue</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
+    <span class="p">[</span><span class="n">invocation</span> <span class="nl">getReturnValue</span><span class="p">:</span><span class="o">&amp;</span><span class="n">returnValue</span><span class="p">];</span>
+
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;Got: %@&quot;</span><span class="p">,</span> <span class="n">returnValue</span><span class="p">);</span>
+
+    <span class="p">[</span><span class="n">pool</span> <span class="n">drain</span><span class="p">];</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<p>Das nervt sobald man es öfters als einmal machen muss.</p>
+<p>Darum hab ich mir nach langem nachdenken mal etwas zusammengebaut das das erleichtert. Es ist nicht perfekt und ich hab auch eine Menge Ideen wie man es noch schöner machen kann, aber es funktioniert. :)</p>
+<div class="hll"><pre><span></span><span class="cp">#import &lt;Foundation/Foundation.h&gt;</span>
+
+<span class="kt">int</span> <span class="nf">main</span> <span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+    <span class="bp">NSAutoreleasePool</span> <span class="o">*</span> <span class="n">pool</span> <span class="o">=</span> <span class="p">[[</span><span class="bp">NSAutoreleasePool</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+
+    <span class="kt">id</span> <span class="n">invocation</span> <span class="o">=</span> <span class="n">NMCatchInvocation</span><span class="p">(</span><span class="s">@&quot;fnord&quot;</span><span class="p">,</span> <span class="nl">stringByAppendingString</span><span class="p">:</span><span class="s">@&quot;23&quot;</span><span class="p">);</span>
+
+    <span class="p">[</span><span class="n">invocation</span> <span class="n">invoke</span><span class="p">];</span>
+
+    <span class="kt">id</span> <span class="n">returnValue</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
+    <span class="p">[</span><span class="n">invocation</span> <span class="nl">getReturnValue</span><span class="p">:</span><span class="o">&amp;</span><span class="n">returnValue</span><span class="p">];</span>
+
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;Got: %@&quot;</span><span class="p">,</span> <span class="n">returnValue</span><span class="p">);</span>
+
+    <span class="p">[</span><span class="n">pool</span> <span class="n">drain</span><span class="p">];</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<p>Und das sieht schon bedeutend besser aus.</p>
+<ul>
+<li>[source:open-source/NMInvocationBuilder/trunk Hier gehts zum Code]</li>
+</ul>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/10/nsinvocations-zusammenbauen/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/10/captcha-again/">
+        Captcha again
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-10-23">Donnerstag, 23. Oktober 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p><a href="http://www.saschakaupp.com/index.php?option=com_content&amp;task=view&amp;id=41&amp;Itemid=26">So muss man das machen!</a></p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/10/captcha-again/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/10/kongress-zum-bedingungslosen-grundeinkommen/">
+        Kongress zum bedingungslosen Grundeinkommen
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-10-23">Donnerstag, 23. Oktober 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p><a href="http://www.grundeinkommen2008.org/">Dieses Wochenende. Hingehen.</a></p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/10/kongress-zum-bedingungslosen-grundeinkommen/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/10/c-code-fu-r-c-und-c-verwendbar-machen/">
+        C-Code für C und C++ verwendbar machen
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-10-21">Dienstag, 21. Oktober 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Ich hab mich schon immer gefragt woher man eigentlich diese Defines nimmt um C-Code deklarationen so zu schützen, dass sie auch in C++ Code gut reingeholt werden können.</p>
+<p>Ja klar, man kann das selber machen, etwas präprozessor bla und los gehts. Aber, das gibts ja vielleicht schon.</p>
+<p>Enter <code>#import &lt;sys/cdefs.h&gt;</code>.</p>
+<p>Und das ist in in Apple-Code praktischerweise immer schon includiert und enthält praktische Kleinigkeiten wie:</p>
+<ul>
+<li><code>__BEGIN_DECLS</code> - jetzt kommen C-Deklarationen</li>
+<li><code>__END_DECLS</code> - fettich</li>
+<li><code>__dead2</code> - diese Funktion kehrt nicht zurück (über das 2 könnte ich mich total amüsieren)</li>
+<li><code>__pure2</code> - diese Funktion hat keine Seiteneffekte</li>
+<li><code>__unused</code></li>
+<li><code>__printflike(formatArg, firstVarArg)</code></li>
+<li><code>__scanflike(formatArg, firstVarArg)</code></li>
+<li><code>__COPYRIGHT(string)</code> - erzeugt eine globale variable</li>
+<li><code>__PROJECT_VERSION(string)</code> - erzeugt eine globale variable</li>
+<li><code>__deprecated</code></li>
+</ul>
+<p>Dann gibts natürlich noch &lt;AvailabilityMacros.h&gt; das auch noch ein paar Kleinigkeiten enthält - neben dem ganzen Zeug um APIs zu versionieren sind da auch noch mal Attribute definiert:</p>
+<ul>
+<li>WEAK_IMPORT_ATTRIBUTE -- funktion ist vielleicht da</li>
+<li>DEPRECATED_ATTRIBUTE -- funktion soll nicht mehr verwendet werden</li>
+<li>UNAVAILABLE_ATTRIBUTE -- funktion ist nicht vorhanden (z.B. weil sie API ist die erst in einer späteren Version des Frameworks unterstützt wird)</li>
+</ul>
+<p>Vor allem <code>__BEGIN_DECLS</code>, <code>__END_DECLS</code> und <code>__deprecated</code> werde ich mit Sicherheit sofort benutzen. Ob ich die anderen auch verwende, weiß ich noch nicht. Mal schaun. :)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/10/c-code-fu-r-c-und-c-verwendbar-machen/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/10/ich-find-user-ideen-grossartig/">
+        Ich find User-Ideen großartig
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-10-13">Montag, 13. Oktober 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Einfach mal kreativ mit der Techik umgehen. Mal probieren und testen und dann die Erfahrung austauschen.</p>
+<p><img src="http://failblog.files.wordpress.com/2008/09/fail-owned-yahoo-science-mirror-fail1.jpg" alt="Image"> (<a href="http://failblog.org/2008/10/05/science-fail/">via</a>)</p>
+<p>Unglaublich über sowas einfach herzuziehen. <a href="http://video.google.com/videosearch?ie=UTF-8&amp;oe=utf8&amp;q=isight+mirror&amp;um=1&amp;sa=X&amp;oi=video_result_group&amp;resnum=4&amp;ct=title#">Einfach die eingebaute Kamera als Spiegel verwenden.</a> Zum Beispiel <a href="http://www.macupdate.com/info.php/id/18305">damit</a>.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/10/ich-find-user-ideen-grossartig/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/10/if-you-want-to-count-on-it-pirate-it/">
+        If you want to count on it - pirate it
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-10-13">Montag, 13. Oktober 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p><a href="http://xkcd.com/488/">XKCD hats erwischt</a>.</p>
+<p><img src="http://imgs.xkcd.com/comics/steal_this_comic.png" alt="Image"></p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/10/if-you-want-to-count-on-it-pirate-it/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/10/das-gedicht-zum-bankendomino/">
+        Das Gedicht zum Bankendomino
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-10-12">Sonntag, 12. Oktober 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>(via <a href="http://blog.fefe.de/?ts=b60feca3">Fefe</a>, von <a href="http://brokerz.com/1226/gedicht-des-tages-wenn-die-b-rsenkurse-fallen/">Brokerz</a>)</p>
+<pre><code>Wenn die Börsenkurse fallen,
+regt sich Kummer fast bei allen,
+aber manche blühen auf:
+Ihr Rezept heißt Leerverkauf.
+Keck verhökern diese Knaben
+Dinge, die sie gar nicht haben,
+treten selbst den Absturz los,
+den sie brauchen - echt famos!
+
+Leichter noch bei solchen Taten
+tun sie sich mit Derivaten:
+Wenn Papier den Wert frisiert,
+wird die Wirkung potenziert.
+
+Wenn in Folge Banken krachen,
+haben Sparer nichts zu lachen,
+und die Hypothek aufs Haus
+heißt, Bewohner müssen raus.
+
+Trifft's hingegen große Banken,
+kommt die ganze Welt ins Wanken -
+auch die Spekulantenbrut
+zittert jetzt um Hab und Gut!
+
+Soll man das System gefährden?
+Da muss eingeschritten werden:
+Der Gewinn, der bleibt privat,
+die Verluste kauft der Staat.
+
+Dazu braucht der Staat Kredite,
+und das bringt erneut Profite,
+hat man doch in jenem Land
+die Regierung in der Hand.
+
+Für die Zechen dieser Frechen
+hat der Kleine Mann zu blechen
+und - das ist das Feine ja -
+nicht nur in Amerika!
+
+Und wenn Kurse wieder steigen,
+fängt von vorne an der Reigen -
+ist halt Umverteilung pur,
+stets in eine Richtung nur.
+
+Aber sollten sich die Massen
+das mal nimmer bieten lassen,
+ist der Ausweg längst bedacht:
+Dann wird bisschen Krieg gemacht.
+</code></pre>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/10/das-gedicht-zum-bankendomino/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+  
+  
+    
+  <div class="pagination">
+    
+      <a href="../14/">&laquo; Previous</a>
+    
+    | 15 |
+    
+      <a href="../16/">Next &raquo;</a>
+    
+  </div>
+
+  
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

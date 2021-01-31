@@ -1,0 +1,214 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../../static/pygments.css">
+    <title>Vom Sprachdesign: Konstruktoren</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../../../blog/feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="../../../../../blog/2008/4/vom-sprachdesign-konstruktoren/">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="./">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../../">🏠</a>
+
+
+<a class="breadcrumb-item " href="../../../">Blog</a>
+
+
+<a class="breadcrumb-item active" href="./">Vom Sprachdesign: Konstruktoren</a>
+
+</nav>
+    </header>
+    <article class="page vom-sprachdesign-konstruktoren  container-fluid">
+      
+  
+  <article class="blog-post">
+    <header>
+      <h2>
+        
+        Vom Sprachdesign: Konstruktoren
+        
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-04-11">Friday, April 11, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Endlich ist mir wieder so ein Punkt klargeworden, der mich schon lange an Python stört, den ich aber bisher noch nicht so richtig spezifizieren konnte.</p>
+<p>Zusammenfassen lässt es sich als: Konvention ist besser als eine eigene Syntax / Regel.</p>
+<p>Konkret geht es um folgendes: Python besitzt eine eigene Syntax für Konstruktoren. Nämlich diese:</p>
+<div class="hll"><pre><span></span><span class="k">class</span> <span class="nc">Point</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+
+<span class="n">point</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+</pre></div>
+<p>Der Konstruktor eines Objekts heißt immer <code>__init__</code> (das mit den Unterstrichen finde ich sowieso hässlich, aber well, darüber ärgere ich mich wan anderes).</p>
+<p>Das ist gut, weil man so den Konstruktor immer gleich findet.</p>
+<p>ABER: Das ist total scheiße wenn man mehrere Wege braucht um ein Objekt zu initialisieren.</p>
+<p>Denn genau wie in Java auch, kann man anhand den Argumenttypen ja keinen dispatch machen. Doh.</p>
+<p>Also, wenn man das Beispiel erweitern will um auch Polarkoordinaten zu unterstützen, dann geht das nicht, denn bei</p>
+<div class="hll"><pre><span></span><span class="k">class</span> <span class="nc">Point</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="o">...</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="o">...</span>
+
+<span class="n">point</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+</pre></div>
+<p>kann die Runtime nicht mehr auflösen welchen Konstruktor mann denn jetzt genau gemeint hat.</p>
+<p>Doh.</p>
+<p>Jetzt hat man entweder die Wahl so etwas zu machen wie hier im <a href="http://trac.edgewall.org/browser/trunk/trac/wiki/model.py">Trac-Projekt</a></p>
+<div class="hll"><pre><span></span><span class="k">class</span> <span class="nc">WikiPage</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Represents a wiki page (new or existing).&quot;&quot;&quot;</span>
+
+    <span class="n">realm</span> <span class="o">=</span> <span class="s1">&#39;wiki&#39;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">env</span> <span class="o">=</span> <span class="n">env</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">Resource</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resource</span> <span class="o">=</span> <span class="n">name</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">id</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resource</span> <span class="o">=</span> <span class="n">Resource</span><span class="p">(</span><span class="s1">&#39;wiki&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+<span class="c1"># ....</span>
+</pre></div>
+<p>Was aber total ekelig ist, denn jetzt hat der Konstruktor auf einmal einen Parameter <code>name</code> der überhaupt nicht mehr dass ist, was er mit seinem Namen dokumentiert.</p>
+<p>Klasse. Jetzt muss man tatsächlich den Code des Konstruktors lesen um zu verstehen was für Argumente man benötigt um so ein Objekt zu erzeugen. Habt ihr wirklich gut gemacht!!!!11!!</p>
+<p>Oder aber man scheißt auf das Konzept eines Konstruktors und schreibt Factory-Methoden, also im Beispiel etwa so:</p>
+<div class="hll"><pre><span></span><span class="k">class</span> <span class="nc">WikiPage</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Represents a wiki page (new or existing).&quot;&quot;&quot;</span>
+
+    <span class="n">realm</span> <span class="o">=</span> <span class="s1">&#39;wiki&#39;</span>
+
+    <span class="nd">@classmethod</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">create_from_resource</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">page</span> <span class="o">=</span> <span class="n">WikiPage</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">resource</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">resource</span><span class="o">.</span><span class="n">version</span><span class="p">,</span> <span class="n">db</span><span class="p">)</span>
+        <span class="n">page</span><span class="o">.</span><span class="n">resource</span> <span class="o">=</span> <span class="n">resource</span>
+        <span class="k">return</span> <span class="n">page</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">env</span> <span class="o">=</span> <span class="n">env</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resource</span> <span class="o">=</span> <span class="n">Resource</span><span class="p">(</span><span class="s1">&#39;wiki&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+<span class="c1"># ....</span>
+</pre></div>
+<p>Das ist jetzt immerhin klarer - hat aber den Nachteil das der Leser jetzt wissen muss dass man Factory Methoden einsetzt und welche (nichtstandardisierte) Konvention man für diese einsetzt. Na Klasse.</p>
+<p>Ergo: Die Sprachdesigner haben sich gedacht, das es ja eine Tolle Sache wäre, wenn sie eine eigene Syntax einführen würden, damit Konstruktoren etwas besonderes sein können und haben damit erreicht, dass man sich beim tatsächlichen Programmieren jetzt auf einmal ein Bein Brechen muss, damit man ganz alltägliche Probleme auf eine saubere Art und Weise lösen kann.</p>
+<p>Ganz groß.</p>
+<p>Hätte man doch von vornherein anerkannt, das ein Konstruktor auch nur eine Methode ist - mit der Konvention dass der Name mit "init" anfängt - dann existierten auf einmal diese Probleme nicht mehr. Denn dann kann man über den namen der Methode dokumentieren was sie soll.</p>
+<div class="hll"><pre><span></span><span class="k">class</span> <span class="nc">Point</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">init_cartesian</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">init_polar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">):</span>
+        <span class="c1"># ...</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+<span class="n">cartesian</span> <span class="o">=</span> <span class="n">Point</span><span class="p">()</span><span class="o">.</span><span class="n">init_cartesian</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+<span class="n">polar</span> <span class="o">=</span> <span class="n">Point</span><span class="p">()</span><span class="o">.</span><span class="n">init_polar</span><span class="p">(</span><span class="mf">0.23</span><span class="p">,</span> <span class="mf">0.23</span><span class="p">)</span>
+</pre></div>
+<p>Yucheh!</p>
+<p>Dazu kommt, dass man dann auf einmal sinnige Dinge tun kann, wie zum Beispiel, das ein "Konstruktor" nicht immer die gleiche Klasse zurückgeben muss. Man könnte also zum Beispiel eine öffentliche Superklasse haben, die aber tatsächlich in mehreren privaten Subklassen implementiert ist - zum Beispiel ein String, der je nachdem wie er erzeugt wird anders aussieht: Stringkonstanten vielleicht eine Klasse die nicht/anders an der Garbage-Collection teilnimmt und dafür Uniqued (also garantiert nur einmal) existieren (für einen schnelleren Interpreter interessant), Strings aus einer Datei entweder normal, oder falls die Datei eine gewisse Größe überschreitet als Memory-Mapped File, Strings die Pfade repräsentieren so, dass sie mit den Eigenheiten von Dateisystemen besser klarkommen, Strings die keine Unicode enthalten noch mal anders, damit sie effizienter sein können.... etc.</p>
+<p>Und das alles, weil man auf Sprachebene auf ein zusätzliches Konzept verzichtet.</p>
+<p>Aber dass, scheint ja für Sprachdesigner das Schwerste zu sein.</p>
+
+    </section>
+    
+  </article>
+
+  <nav>
+    
+  <div class="category-list">
+    Kategorien:
+      
+      <a href="../../../../../categories/fnord/">Fnord</a>
+      , 
+    
+      
+      <a href="../../../../../categories/code/">Software Development</a>
+      
+    
+  </div>
+
+    
+    <div class="relative-navigation">
+      
+        <div class="prev">Vorheriges Post: <a class="prev" href="../kleine-graphik-schmankerl/">Kleine Graphik-Schmankerl</a></div>
+      
+      
+        <div class="next">Nächstes Post: <a class="next" href="../http-de-wikiversity-org-wiki-hauptseite-wikiversity/">[Wikiversity](http://de.wikiversity.org/wiki/Hauptseite)</a></div>
+      
+    </div>
+    
+  </nav>
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../../../blog/feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

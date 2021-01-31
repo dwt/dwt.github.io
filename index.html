@@ -1,0 +1,178 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="static/pygments.css">
+    <title>🏠</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="blog/feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="./" class="navbar-brand active">🏠<span class="sr-only">(ausgewählt)</span></a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item "><a href="blog/" class="nav-link">Blog</a></li>
+    
+      <li class="nav-item "><a href="categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="./">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="en/">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+<a class="breadcrumb-item active" href="./">🏠</a>
+
+</nav>
+    </header>
+    <article class="page  homepage container-fluid">
+      
+  <h1><a href="about">Martin Häcker's</a> Blog</h1>
+<p>Wilkommen!</p>
+<p>Hier geht es um <a href="categories/code/">Software</a>, <a href="categories/liquid/">Liquid Democracy</a>, <a href="categories/go/">Go / Baduk / Weiqi</a>, <a href="categories/cucina/">Kochen</a> und <a href="categories/">alles andere das mich interessiert</a>. Schau dich um, <a href="projects/">benutze meine Projekte</a> und <a href="blog/feed.xml">abonniere meinen feed</a>!</p>
+
+  
+  <h1 name="first-blogpost">Neueste Einträge:</h1>
+  
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="blog/2018/7/yeehaw-endlich-wieder-ein-blog/">
+        Yeehaw! Endlich wieder ein Blog!
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2018-07-16">Montag, 16. Juli 2018</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Lange hat es gedauert - Ahem.</p>
+<p>In den letzten Monaten habe ich mich mit <a href="https://getlektor.com">Lektor</a> auseinandergesetzt. Mit ein Paar Plugins (<a href="https://github.com/humrochagf/lektor-creative-commons">CreativeCommons</a> und <a href="https://github.com/lektor/lektor-markdown-highlighter">Markdown Highlighter</a>) kann man viel Spaß beim Blog-Post schreiben haben.</p>
+<p>Der große Vorteil von Lektor ist, dass man eine komplett statische Seite damit rendert. Man kann die Seite danach also über ein CDN ausliefern - 'Internet Scale' ist also gar kein Problem…</p>
+<p>Solche Systeme gibt es natürlich viele - aber mit Lektor kriegt man zusätzlich noch ein CMS (das Lokal läuft) - oder auch hinter <code>.htaccess</code> geschützt laufen kann, so dass man keine Sorgen haben muss, dass einem über so eine Webseite der Server aufgemacht wird.</p>
+<p>Aber Lektor überzeugt auch mit einer moderat einfachen <a href="https://www.getlektor.com/docs/api/">API</a>, selbst plugins dafür zu schreiben ist einfach und macht Spaß. Fast wie es bei <a href="https://trac.edgewall.org">Track</a> ganz am Anfang auch einmal war. ☺️</p>
+<p>Ich freue mich darüber dass ich jetzt eine voll-responsive Seite haben, die mit HTML und CSS wirklich auskommt - no JS needed. (Ich werde aber vielleicht in der Zukunft für Experimente auch JS in der Seite verwenden). Für jetzt ist es erst mal das Experiment wie lange ich ohne JS auskomme.</p>
+<p>Da wäre zum Beispiel das Menü - das auf Mobil mit Animation schön aufklappt. Hierzu habe ich verschiedene Techniken kombiniert.</p>
+<ol>
+<li><p>Die Verhältnisse der ganzen Abmessungen werden über <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_variables">CSS-Variablen</a> und <a href="https://developer.mozilla.org/de/docs/Web/CSS/calc">CSS-Calc</a> einmal global gesetzt. Das geht zwar noch nicht vollständig, da man CSS Variablen <a href="https://stackoverflow.com/questions/40722882/css-native-variables-not-working-in-media-queries#40723269">nicht in Media Queries einsetzen kann</a>, aber immerhin. Einzig dass man Stylesheets noch nicht 'nested' aufschreiben kann stört.</p>
+</li>
+<li><p>Die Animation beim klick auf das <a href="https://de.wikipedia.org/wiki/Hamburger-Menü-Icon">Hamburger Menü</a> sowie das Öffnen des Menüs kommt komplett ohne JS aus. Damit das geht braucht es ein DOM Element, dass den State 'ein oder ausgeblendet' hält, gleichzeitig via CSS abgefragt werden kann sowie diesen State durch Klick auf ein anderes Element ändert. Well, dafür funktioniert lustiger Weise das <code>&lt;input type=checkbox id=menu-state&gt;</code> Element. Das wechselt den <code>checked</code>-Zustand, was mann dankenswerter Weise in CSS mittels <code>:checked</code> herausfinden kann. Der Clou ist aber, dass man irgendwo anders im Dokument ein <code>&lt;label for=menu-state&gt;</code> haben kann, auf das man Klicken kann um diesen State zu wechseln. Und <code>&lt;label&gt;</code> kann man im Gegensatz zu <code>&lt;input type=checkbox&gt;</code> in allen Browsern vernünftig stylen. Und man kann mittels <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Animations/Using_CSS_animations">CSS-Animationen</a> alles animieren. Fuck yeah!</p>
+</li>
+</ol>
+
+    </section>
+    
+      <footer>
+        <a href="blog/2018/7/yeehaw-endlich-wieder-ein-blog/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="blog/2015/2/lockless-algorithms/">
+        Lockless Algorithms
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2015-02-14">Samstag, 14. Februar 2015</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Schon lange habe ich keine so passende Visualisierung mehr für etwas gesehen:</p>
+<p><a href="https://en.wikipedia.org/wiki/Non-blocking_algorithm">Lockless Algorithms / Schlosslose Algorithmen</a>:</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ufK2XRGUjuc" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe><p><a href="http://devopsreactions.tumblr.com/post/110529123748/lockess-algorithm">via devopsreactions</a></p>
+
+    </section>
+    
+      <footer>
+        <a href="blog/2015/2/lockless-algorithms/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="blog/2012/7/melderecht-datenweitergabe-jetzt-ohne-zustimmung/">
+        Melderecht Datenweitergabe jetzt ohne Zustimmung
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2012-07-12">Donnerstag, 12. Juli 2012</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Das ist doch ein Juwel: Melderechter sollen in Zukunft meine Daten an jedes Industrieunternehmen weitergeben dürfen - wenn die Firma die Daten für ein "update" schon vorhandener Daten anfragt.</p>
+<p>Was pikanterweise die Voraussetzung fast jeder Anfrage ist.</p>
+<p>Dem kann man dann gar nicht mehr widersprechen - de fakto hat man also keine Möglichkeit mehr dieser Geschäftspraktik der Meldeämter wenigstens für sich persönlich Einhalt zu gebieten.</p>
+<p>Compact hält dagegen und hofft auf 200.000 unterstützer in möglichst kurzer Zeit:</p>
+<p><a href="http://www.campact.de/melderecht/sn1/signer">http://www.campact.de/melderecht/sn1/signer</a></p>
+<p>Dafür!</p>
+
+    </section>
+    
+      <footer>
+        <a href="blog/2012/7/melderecht-datenweitergabe-jetzt-ohne-zustimmung/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+  
+  <a href="blog/">Weitere Beiträge…</a>
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="blog/feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

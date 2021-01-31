@@ -1,0 +1,161 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../../static/pygments.css">
+    <title>SSL Certificate Trouble</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../../../blog/feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="../../../../../blog/2011/11/ssl-certificate-trouble/">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="./">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../../">🏠</a>
+
+
+<a class="breadcrumb-item " href="../../../">Blog</a>
+
+
+<a class="breadcrumb-item active" href="./">SSL Certificate Trouble</a>
+
+</nav>
+    </header>
+    <article class="page ssl-certificate-trouble  container-fluid">
+      
+  
+  <article class="blog-post">
+    <header>
+      <h2>
+        
+        SSL Certificate Trouble
+        
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2011-11-18">Friday, November 18, 2011</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>If you should ever stumble upon this bug, consider yourself very lucky that I have found the solution to this already, because it took me <em>AGES</em> to figure this out. No shit.</p>
+<p>So here's the problem: We used a self signed certificate on on of our servers and curl and all tools relying on curl just couldn't connect to this server at all (with certificate validation). Despite the fact that the root certificate that signed the server certificate was happily in my keychain and marked as trusted.</p>
+<p>The solution first: Turns out that the Keychain will eat certificates in many formats, specifically it supports DER and PEM. curl however can't use the DER certificate in the keychain and just reports it as missing. Exporting the certificate, converting it to PEM and then reimporting it (making sure to remove the DER version beforehand) fixed it.</p>
+<p>I converted the file with this command
+<code>openssl x509 -inform DER -in some.ser.ver.der -out some.serv.ver.pem</code></p>
+<p>Here's some of the error messages I got:</p>
+<div class="hll"><pre><span></span><span class="gp">% </span>curl -I https://some.serv.ver -v
+<span class="go">* About to connect() to some.serv.ver port 443 (#0)</span>
+<span class="go">*   Trying some.ip... connected</span>
+<span class="go">* Connected to some.ser.ver (some.ip) port 443 (#0)</span>
+<span class="go">* SSLv3, TLS handshake, Client hello (1):</span>
+<span class="go">* SSLv3, TLS handshake, Server hello (2):</span>
+<span class="go">* SSLv3, TLS handshake, CERT (11):</span>
+<span class="go">* SSLv3, TLS alert, Server hello (2):</span>
+<span class="go">* SSL certificate problem, verify that the CA cert is OK. Details:</span>
+<span class="go">error:14090086:SSL routines:SSL3_GET_SERVER_CERTIFICATE:certificate verify failed</span>
+<span class="go">* Closing connection #0</span>
+<span class="go">curl: (60) SSL certificate problem, verify that the CA cert is OK. Details:</span>
+<span class="go">error:14090086:SSL routines:SSL3_GET_SERVER_CERTIFICATE:certificate verify failed</span>
+<span class="go">More details here: http://curl.haxx.se/docs/sslcerts.html</span>
+
+<span class="go">curl performs SSL certificate verification by default, using a &quot;bundle&quot;</span>
+<span class="go"> of Certificate Authority (CA) public keys (CA certs). If the default</span>
+<span class="go"> bundle file isn&#39;t adequate, you can specify an alternate file</span>
+<span class="go"> using the --cacert option.</span>
+<span class="go">If this HTTPS server uses a certificate signed by a CA represented in</span>
+<span class="go"> the bundle, the certificate verification probably failed due to a</span>
+<span class="go"> problem with the certificate (it might be expired, or the name might</span>
+<span class="go"> not match the domain name in the URL).</span>
+<span class="go">If you&#39;d like to turn off curl&#39;s verification of the certificate, use</span>
+<span class="go"> the -k (or --insecure) option.</span>
+</pre></div>
+<p>If you hit this brick wall - hope this helps you too.</p>
+
+    </section>
+    
+  </article>
+
+  <nav>
+    
+  <div class="category-list">
+    Kategorien:
+      
+      <a href="../../../../../categories/fnord/">Fnord</a>
+      , 
+    
+      
+      <a href="../../../../../categories/code/">Software Development</a>
+      
+    
+  </div>
+
+    
+    <div class="relative-navigation">
+      
+        <div class="prev">Vorheriges Post: <a class="prev" href="../../../2012/7/melderecht-datenweitergabe-jetzt-ohne-zustimmung/">Melderecht Datenweitergabe jetzt ohne Zustimmung</a></div>
+      
+      
+        <div class="next">Nächstes Post: <a class="next" href="../../7/mappei-stu-tzen-und-rechnungsstellung/">Mappei Stützen und Rechnungsstellung</a></div>
+      
+    </div>
+    
+  </nav>
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../../../blog/feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

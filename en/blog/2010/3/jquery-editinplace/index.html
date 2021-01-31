@@ -1,0 +1,138 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../../static/pygments.css">
+    <title>jQuery editInPlace</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../../../blog/feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="../../../../../blog/2010/3/jquery-editinplace/">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="./">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../../">🏠</a>
+
+
+<a class="breadcrumb-item " href="../../../">Blog</a>
+
+
+<a class="breadcrumb-item active" href="./">jQuery editInPlace</a>
+
+</nav>
+    </header>
+    <article class="page jquery-editinplace  container-fluid">
+      
+  
+  <article class="blog-post">
+    <header>
+      <h2>
+        
+        jQuery editInPlace
+        
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2010-03-26">Friday, March 26, 2010</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Well, I just finished some major reworking of that jQuery plugin, so now it has [browser:/open-source/jquery-edit-in-place/trunk/spec/unit/spec.js a real testsuite] and conforms to the <a href="http://docs.jquery.com/Plugins/Authoring">jQuery Plugin Guidelines</a> and doesn't pollute the core prototypes (of String) anymore.</p>
+<p>There are a few new features, most prominent the ability to define a class to apply for the hover effect (so you can style the hover in css instead of having to hand in the colors directly and more control over the way errors are presented so it is easier to embed into bigger applications.</p>
+<p>So enjoy <a href="http://jquery-in-place-editor.googlecode.com/svn/trunk/demo/index.html">the demo</a>  and <a href="http://code.google.com/p/jquery-in-place-editor/downloads/list">the download</a> while they are hot, and keep a bookmark to <a href="http://code.google.com/p/jquery-in-place-editor/">the project homepage</a>. :)</p>
+<p>Stuff I'd like to note:</p>
+<ul>
+<li><a href="http://visionmedia.github.com/jspec/">JSpec</a> rocks, writing tests with it is a breeze. The DOM Testrunner they have could use some work though to become even more usefull</li>
+<li>Writing the tests with no dom insertion is a <em>great</em> technique to get a fast testsuite where you can almost guarantee that it has no test-ordering issues.</li>
+<li>jQuery allows you to almost completely drive the interaction with the editor as a user would, making it almost like an acceptance test (and with very little dependency on the internal working of the editor.</li>
+<li>Refactoring JavaScript Code is hard if you don't have a testsuite. My Advice: Break it down into smaller bits. I found it incredibly hard to refactor larger pieces of the code, as not having a testsuite means there's no way you know what still works. :/</li>
+</ul>
+
+    </section>
+    
+  </article>
+
+  <nav>
+    
+  <div class="category-list">
+    Kategorien:
+      
+      <a href="../../../../../categories/code/">Software Development</a>
+      , 
+    
+      
+      <a href="../../../../../categories/project/">Projekte</a>
+      
+    
+  </div>
+
+    
+    <div class="relative-navigation">
+      
+        <div class="prev">Vorheriges Post: <a class="prev" href="../../4/klartra-umen/">Klarträumen</a></div>
+      
+      
+        <div class="next">Nächstes Post: <a class="next" href="../../2/wo-findet-innovation-beim-lehren-statt/">Wo findet Innovation beim Lehren statt?</a></div>
+      
+    </div>
+    
+  </nav>
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../../../blog/feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,184 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../static/pygments.css">
+    <title>Funktionen als voll berechtigte Datentypen</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="./">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="../../../../en/blog/2006/2/funktionen-als-voll-berechtigte-datentypen/">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../../">🏠</a>
+
+
+<a class="breadcrumb-item " href="../../../">Blog</a>
+
+
+<a class="breadcrumb-item active" href="./">Funktionen als voll berechtigte Datentypen</a>
+
+</nav>
+    </header>
+    <article class="page funktionen-als-voll-berechtigte-datentypen  container-fluid">
+      
+  
+  <article class="blog-post">
+    <header>
+      <h2>
+        
+        Funktionen als voll berechtigte Datentypen
+        
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2006-02-22">Mittwoch, 22. Februar 2006</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Funktionale Sprachen erhalten ihre Eleganz dadurch, dass sie die Programmierung mit Funktionen als Argumente und Rückgabewerte erlauben. Schön erklärt wird das im <a href="http://mitpress.mit.edu/sicp/full-text/book/book-Z-H-12.html#%25_sec_1.3">SICP</a>. Tatsächlich kann das so weit gehen, dass zum Beispiel in Lisp <a href="http://mitpress.mit.edu/sicp/full-text/book/book-Z-H-14.html#%25_idx_1460">gar kein Unterschied mehr zwischen Funktionen und beliebigen Daten gemacht wird</a>. Aber das ist zugegebenermaßen extrem.</p>
+<p>Für die Kürze nennt man diese Art zu programmieren auch gerne: "Higher-Order-Programmierung" und die entsprechenden Funktionen "Higher-Order-Funktionen".</p>
+<p>In der Imperativen Programmierung werden Funktionen als Argumente oder Rückgabetypen eher selten verwendet. In C gerade noch beim Standard-Algorithmus <strong>Binary-Search</strong></p>
+<div class="hll"><pre><span></span><span class="kt">void</span> <span class="o">*</span>
+<span class="nf">bsearch</span><span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">key</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">base</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">nmemb</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">size</span><span class="p">,</span>
+         <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">compare</span><span class="p">)</span> <span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="p">));</span>
+</pre></div>
+<p>bei dem die <strong>compare</strong>-Funktion genau so eine Higher-Order-Funktion ist. Danach ist es aber erstmal lange zappenduster, was Higher-Order-Programmierung angeht. (Hervorragende Programmierer nutzten dieses Design-Pattern aber schon immer - wenn es auch selten explizit genannt wurde)</p>
+<p>So kam es dann auch, dass manche objektorientierten Sprachen Objekte wie Knöpfe, Textfelder etc. hatten, die man ableiten konnte, um ihr Verhalten zu verändern. Java etwa erlaubt das noch heute:</p>
+<div class="hll"><pre><span></span><span class="c1">// Java</span>
+<span class="kd">class</span> <span class="nc">OKButtonForThatSpecificDialog</span> <span class="kd">extends</span> <span class="n">JButton</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">doClick</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Yay, I was clicked&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>Zwei Probleme ergeben sich aus dieser Art zu programmieren:</p>
+<ul>
+<li>Erstens: jede Menge duplizierter Code, der größtenteils identisch ist. Damit erlebt man einen Alptraum, sobald man auch nur daran denkt, etwas Grundlegenderes an dem Programm zu ändern.</li>
+<li>Zweitens ist der Code, der tatsächlich die Kontrolle über das Programm ausführt, so in viele Dateien oder zumindest Klassen verstreut, also mitnichten an einer Stelle vereint und übersichtlich.</li>
+</ul>
+<p>Beide Probleme kann man mit dem oben beschriebenen Mechanismus der Higher-Order-Funktionen elegant lösen - und tatsächlich wird das auch gemacht. In <a href="http://www.martinfowler.com/bliki/InversionOfControl.html">Inversion of Controll (IOC)</a>-Frameworks etwa. Hier ruft man nicht mehr eine Funktion auf, um ein Ergebnis zu bekommen, sondern konfiguriert den Framework (Knöpfe, Textfelder, etc.) mit eigenen (Higher-Order)-Funktionen, die dieser aufruft, sobald ein Ergebnis oder Ereignis vorliegt.</p>
+<p>Absolut typisch für dieses Muster sind alle mir bekannten aktuell verwendeten GUI-Toolkits, die immer so funktionieren, dass man z.B. einen Knopf erzeugt, um danach mit einer (Higher-Order)-Funktion zu konfigurieren, was denn passieren soll, wenn auf ihn geklickt wird.</p>
+<div class="hll"><pre><span></span><span class="c1">// Java</span>
+<span class="n">JButton</span> <span class="n">button</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JButton</span><span class="p">(</span><span class="s">&quot;Titel&quot;</span><span class="p">);</span>
+<span class="n">button</span><span class="p">.</span><span class="na">addActionListener</span><span class="p">(</span><span class="n">aClickResponder</span><span class="p">);</span>
+</pre></div>
+<div class="hll"><pre><span></span><span class="c1">// Obj-C</span>
+<span class="p">[</span><span class="n">aButton</span> <span class="nl">setTarget</span><span class="p">:</span> <span class="nb">self</span><span class="p">];</span>
+<span class="p">[</span><span class="n">aButton</span> <span class="nl">setAction</span><span class="p">:</span> <span class="k">@selector</span><span class="p">(</span><span class="nl">respondToClick</span><span class="p">:)];</span>
+</pre></div>
+<p>Aber dieses Muster ist noch viel weiter verwendbar - in Objective-C gibt es eine Möglichkeit, auf alle Elemente eines Containers eine Methode <strong>doSomethingWithEachElement:</strong> anzuwenden, die ein Argument - das jeweilige Element - erhält.</p>
+<div class="hll"><pre><span></span><span class="c1">// Obj-C</span>
+<span class="p">[</span><span class="n">aList</span> <span class="nl">makeObjectsPerformSelector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="nl">doSomethingWithEachElement</span><span class="p">:)];</span>
+</pre></div>
+<p>Äquivalent läuft das in den GUI-Toolkits von Java, Cocoa, Gnome, KDE, WxWidgets...</p>
+<p>Fortgeschrittenere Sprachen und Toolkits verwenden dieses Design-Pattern auch noch an vielen weiteren Stellen. Besonders hervorzuheben ist dabei in letzter Zeit Ruby, wo nach diesem Muster nicht nur Iteration, sondern auch das Bearbeiten jeder Zeile in einer Datei, das Senden von Daten über einen Socket, ... verläuft.</p>
+<p>Am extremsten ist aber vielleicht die Sprache Smalltalk, wo es überhaupt keine normalen Kontrollstrukturen im Sinne von C/Java mehr gibt und diese Aufgabe komplett durch Higher-Order-Funktionen erledigt wird. Hier gibt es beispielsweise ein Boolean Objekt, das eine Methode <code>#ifTrue:ifFalse:</code> besitzt. Diese Methode bekommt dann zwei Callbacks übergeben und führt je nachdem, ob es das True- oder das False-Boolean ist, polymorph den jeweils anderen Callback aus. - Analog werden Schleifen, Exception-Handling... einfach alle Kontrollstrukturen definiert.</p>
+<p>Das nette daran: Damit kann man innerhalb der Sprache selber Kontrollstrukturen definieren. Schick, nicht?</p>
+<h2>Umsetzung</h2>
+<p>Um mit Higher-Order-Funktionen in Java / Obj-C zu programmieren, kann man z.B. so vorgehen:</p>
+<div class="hll"><pre><span></span><span class="c1">// Obj-C</span>
+ <span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nl">setAction</span><span class="p">:</span> <span class="p">(</span><span class="kt">SEL</span><span class="p">)</span> <span class="n">aSelector</span> <span class="nl">forTarget</span><span class="p">:</span> <span class="n">aTarget</span> <span class="p">{</span>
+    <span class="n">action</span> <span class="o">=</span> <span class="n">aSelector</span><span class="p">;</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="n">aTarget</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="n">trigger</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">([</span><span class="n">target</span> <span class="nl">respondsToSelector</span><span class="p">:</span> <span class="n">action</span><span class="p">])</span> <span class="p">{</span>
+        <span class="p">[</span><span class="n">target</span> <span class="nl">performSelector</span><span class="p">:</span> <span class="n">action</span><span class="p">];</span>
+    <span class="p">}</span>
+ <span class="p">}</span>
+</pre></div>
+<div class="hll"><pre><span></span><span class="c1">// Java</span>
+ <span class="kt">void</span> <span class="nf">setActionListener</span><span class="p">(</span><span class="n">ActionListener</span> <span class="n">listener</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="na">listener</span> <span class="o">=</span> <span class="n">listener</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="kt">void</span> <span class="nf">trigger</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">listener</span><span class="p">.</span><span class="na">actionPerformed</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+ <span class="p">}</span>
+</pre></div>
+<p>Das wars - so einfach geht das.</p>
+<p>TODO: Auf [<a href="http://libsigc.sourceforge.net/libsigc2/docs/manual/html/ch02.html">http://libsigc.sourceforge.net/libsigc2/docs/manual/html/ch02.html</a>] verweisen und vergleichen wie Callbacks mit sowas und (beste C++ Callback Bibliothek) gehen. Vergleichen wie echte Lambdas das leichter machen können.</p>
+
+    </section>
+    
+  </article>
+
+  <nav>
+    
+  <div class="category-list">
+    Kategorien:
+  </div>
+
+    
+    <div class="relative-navigation">
+      
+        <div class="prev">Vorheriges Post: <a class="prev" href="../../3/aspekt-orientiertes-programmieren/">Aspekt-Orientiertes Programmieren</a></div>
+      
+      
+        <div class="next">Nächstes Post: <a class="next" href="../neue-religionen/">Neue Religionen...</a></div>
+      
+    </div>
+    
+  </nav>
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

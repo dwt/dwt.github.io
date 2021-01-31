@@ -1,0 +1,136 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../../static/pygments.css">
+    <title>Python Saug-Punkte</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../../../blog/feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="../../../../../blog/2009/12/python-saug-punkte/">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="./">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../../">🏠</a>
+
+
+<a class="breadcrumb-item " href="../../../">Blog</a>
+
+
+<a class="breadcrumb-item active" href="./">Python Saug-Punkte</a>
+
+</nav>
+    </header>
+    <article class="page python-saug-punkte  container-fluid">
+      
+  
+  <article class="blog-post">
+    <header>
+      <h2>
+        
+        Python Saug-Punkte
+        
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-12-23">Wednesday, December 23, 2009</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Viele standard-funktionen und module in python haben zu kurze namen.</p>
+<p>Das ist deshalb ein Problem weil, man diese Namen nicht für lokale Variablen verwenden kann bzw. ungewollt eine Standardfunktion überschreibt.</p>
+<p><code>id</code> zum Beispiel. Oder <code>dict</code>, <code>list</code>.</p>
+<p>Module sind dabei aber auch Problemkandidaten - vor allem wenn man sie häufig wie ein Objekt benutzt. Das <code>json</code> Modul macht mir immer wieder probleme, weil ich eine lokale Variable die json enthält nun mal gerne json nennen würde. <code>json_serialization</code> wäre vielleicht ein besserer Name für das Modul.</p>
+<p>Die Standard-Bibliothek ist leider voll von solchen Beispielen und der Include-Mechanismus von Python der die Module quasi als Objekt im namespace des Empfängers verfügbar macht hilft da nicht wirklich weiter. Das ist zwar IMO eine bessere Idee als der C-Präprozessor <code>#include</code> (was Ruby ja zum Beispiel nachbaut) aber gerade bei so kurzen Namen kann das wirklich nerven.</p>
+<p>Wenn man aus einem Modul ein Objekt importiert ist das interessanterweise kein Problem, da Objekte in Python (wenn sie sich an die Namenskonvention halten - leider auch oft nicht der Fall in der Standardbibliothek) immer mit einem Großbuchstaben anfangen und dadurch diese Namenskollision nicht auftritt.</p>
+<p>Für mich ist da das Problem dass die Python Programmierer leider so eine Obsession damit haben alles möglichst kurz machen zu wollen - und dabei aber dem Programmierer der mit der (Standard-) Bibliothek arbeiten möchte gerade wieder Steine in den Weg legen dass kurz zu machen was für Ihn am meisten sinn macht - lokale Variablen.</p>
+<p>Das ist leider Premature Optimisation in Reinstkultur - und es stört mich beim Entwickeln von meiner Software. :-(</p>
+
+    </section>
+    
+  </article>
+
+  <nav>
+    
+  <div class="category-list">
+    Kategorien:
+      
+      <a href="../../../../../categories/fnord/">Fnord</a>
+      , 
+    
+      
+      <a href="../../../../../categories/code/">Software Development</a>
+      
+    
+  </div>
+
+    
+    <div class="relative-navigation">
+      
+        <div class="prev">Vorheriges Post: <a class="prev" href="../../../2010/1/method-argument-naming-confusion/">Method argument naming confusion</a></div>
+      
+      
+        <div class="next">Nächstes Post: <a class="next" href="../how-to-crash-ie-7-with-javascript/">How to crash IE 7 with javascript</a></div>
+      
+    </div>
+    
+  </nav>
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../../../blog/feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

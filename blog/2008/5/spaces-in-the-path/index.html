@@ -1,0 +1,167 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../static/pygments.css">
+    <title>Spaces in the path</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="./">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="../../../../en/blog/2008/5/spaces-in-the-path/">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../../">🏠</a>
+
+
+<a class="breadcrumb-item " href="../../../">Blog</a>
+
+
+<a class="breadcrumb-item active" href="./">Spaces in the path</a>
+
+</nav>
+    </header>
+    <article class="page spaces-in-the-path  container-fluid">
+      
+  
+  <article class="blog-post">
+    <header>
+      <h2>
+        
+        Spaces in the path
+        
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-05-29">Donnerstag, 29. Mai 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>are not allowed on UNIX.</p>
+<p>Damn.</p>
+<p>Um das klarer zu machen: Ich will ein Skript schreiben, bei dem oben im <a href="http://en.wikipedia.org/wiki/Shebang_(Unix">shebang</a>) hartcodiert ein Pfad zum interpreter steht.</p>
+<p>So weit so gut. ABER. Dieser Interpreter liegt in einem Verzeichnis - und dieses Verzeichnis hat ein Leerzeichen im Namen.</p>
+<p>Doh.</p>
+<p>Die Regeln sagen nämlich:</p>
+<pre><code>The initial line of a script file must begin with #! as the
+first two bytes, followed by zero or more spaces, followed by
+interpreter or interpreter argument.  One or more spaces or tabs
+must separate interpreter and argument.  The first line should
+end with either a new-line or null character.
+</code></pre>
+<p>Und da hält sich auch der Mac OS X Kernel genau daran.</p>
+<p><a href="http://www.in-ulm.de/~mascheck/various/shebang/">Ich bin auch nicht der erste der darüber gestolpert ist.</a> Hallo Felix. :-)</p>
+<p>Das Blöde daran: Die Implementierungen erlauben weder ein Escapen, noch ein "In Anführungszeichen Setzen" des Interpreters.</p>
+<p>Hrmpf.</p>
+<p>Nach einigem Nachdenken sind mir letztlich nur zwei Lösungsmöglichkeiten aufgefallen:</p>
+<p>1) Das Programm in zwei Dateien aufsplitten - die erste startet mit /bin/sh im shebang und dann ganz normal im 'body' den normalen Interpreter mit den normalen Mitteln der Shell (die auch quotes und escapen erlauben).</p>
+<p>2) Wenn das Programm ein File bleiben soll / muss, kann ein <a href="http://en.wikipedia.org/wiki/Polyglot_(computing">Polyglot</a>) das Problem lösen.</p>
+<p>Das sah bei mir dann so aus:</p>
+<div class="hll"><pre><span></span><span class="ch">#!/bin/sh</span>
+<span class="c1"># Solves the problem that shebang lines can&#39;t contain spaces </span>
+<span class="c1"># (even escaped or quoted) in the interpreter path via a polyglot</span>
+<span class="s2">&quot;&quot;&quot;false&quot;</span>
+<span class="nb">exec</span> /Users/dwt/Archiv/Code/Aktive<span class="se">\ </span>Projekte/Trac/env-trac-0.11/bin/python <span class="nv">$0</span> <span class="nv">$@</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="s2">import sys</span>
+<span class="s2">print sys.argv</span>
+</pre></div>
+<p>Das funktioniert so:</p>
+<ul>
+<li>wird die Datei gestartet, wird sie mit der Bourne Shell (oder einer der Nachkommen) ausgeführt</li>
+<li>in der Zeile <code>"""false"</code> maskiere ich mit Hilfe des Kommandos "false" den Beginn eines Python Doc-Strings / Kommentars / Multiline-Strings.</li>
+<li>Danach wird mit "exec" die Datei nochmal ausgeführt - diesmal mit dem richtigen Interpreter.</li>
+<li>Der überspringt diesen Teil dann weil für ihn der Start komplett im Kommentar / ... / ... verschwindet.</li>
+</ul>
+<p>Einerseits finde ich es cool das ich diesen Workaround gefunden habe - andererseits ist das natürlich ein totaler Hack. Insofern bin ich eher dagegen.</p>
+<p>Was ich jetzt damit Tue weiß ich jedenfalls noch nicht.</p>
+
+    </section>
+    
+  </article>
+
+  <nav>
+    
+  <div class="category-list">
+    Kategorien:
+      
+      <a href="../../../../categories/fnord/">Fnord</a>
+      , 
+    
+      
+      <a href="../../../../categories/code/">Software Development</a>
+      
+    
+  </div>
+
+    
+    <div class="relative-navigation">
+      
+        <div class="prev">Vorheriges Post: <a class="prev" href="../fonelink-2-0/">FoneLink 2.0</a></div>
+      
+      
+        <div class="next">Nächstes Post: <a class="next" href="../liquid-democracy/">Liquid Democracy</a></div>
+      
+    </div>
+    
+  </nav>
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

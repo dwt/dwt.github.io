@@ -1,0 +1,156 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../../static/pygments.css">
+    <title>Wieso Blöcke keine echten Funktionen sein sollten</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../../../blog/feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="../../../../../blog/2009/11/wieso-blo-cke-keine-echten-funktionen-sein-sollten/">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="./">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../../">🏠</a>
+
+
+<a class="breadcrumb-item " href="../../../">Blog</a>
+
+
+<a class="breadcrumb-item active" href="./">Wieso Blöcke keine echten Funktionen sein sollten</a>
+
+</nav>
+    </header>
+    <article class="page wieso-blo-cke-keine-echten-funktionen-sein-sollten  container-fluid">
+      
+  
+  <article class="blog-post">
+    <header>
+      <h2>
+        
+        Wieso Blöcke keine echten Funktionen sein sollten
+        
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-11-04">Wednesday, November 4, 2009</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Zu <a href="http://www.youtube.com/watch?v=hJRV50_tJ0E">"Ergie" von Rainer von Vielen</a></p>
+<p>In meiner Freizeit beschäftige ich mich gerade viel mit Ruby - sowohl <a href="http://www.amazon.com/Ruby-Way-Second-Techniques-Programming/dp/0672328844">The Ruby Way</a>, als auch <a href="http://oreilly.com/catalog/9780596516178">The Ruby Programming Language</a> sind dafür gute Bücher.</p>
+<p>Und ich muss sagen, das Ruby ist nicht unspannend. Zwar gibt es auch einiges dass ich ganz schön eklig finde (z.B. das Flip-Flop Statement, oder dass so viel mit globalen Variablen gearbeitet wird, oder dass viele Sachen so komplex sind.</p>
+<p>Aber darum gehts hier gar nicht. Mir geht es hier um die Erkenntnis wieso und unter welchen umständen man Blöcke als etwas anderes sehen möchte als anonyme Funktionen.</p>
+<p>Das dauert nämlich bis man das merkt.</p>
+<p>Zuerst einmal die Konfusion: Ruby hat eine Syntax für Methoden</p>
+<div class="hll"><pre><span></span><span class="k">def</span> <span class="nf">method</span><span class="p">(</span><span class="n">positional_argument</span><span class="p">,</span> <span class="o">*</span><span class="n">all_other_arguments</span><span class="p">)</span>
+  <span class="c1"># some body</span>
+<span class="k">end</span>
+</pre></div>
+<p>und eine für Blöcke</p>
+<div class="hll"><pre><span></span><span class="mi">10</span><span class="o">.</span><span class="n">times</span> <span class="k">do</span> <span class="o">|</span><span class="n">positonal_argument</span><span class="p">,</span> <span class="o">*</span><span class="n">all_other_arguments</span><span class="o">|</span>
+  <span class="c1"># some body</span>
+<span class="k">end</span>
+</pre></div>
+<p>Wieso der Unterschied? Wieso macht man Blöcke nicht einfach zu normalen Funktionen die man dann auch gleich mit <code>()</code> aufrufen kann anstatt immer ein <code>a_block.call()</code> verwenden zu müssen?</p>
+<p>Echte Lambdas gibt es ja noch zusätzlich in Ruby.</p>
+<p>Well, den Unterschied in der Syntax verstehe ich immer noch nicht. Aber dahinter steht der Grund dass Blöcke eine andere Aufgabe haben als Methoden - der Punkt ist nämlich dass man sie gerne als Teil der sie lexikalisch umgebenden Methode betrachten möchte damit man sie nutzen kann um mit ihnen Kontrollstrukturen zu implementieren. Hier mal ein Beispiel:</p>
+<div class="hll"><pre><span></span><span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="n">needle</span><span class="p">,</span> <span class="n">haystack</span><span class="p">)</span>
+  <span class="n">haystack</span><span class="o">.</span><span class="n">each</span><span class="o">.</span><span class="n">with_index</span> <span class="k">do</span> <span class="o">|</span><span class="n">index</span><span class="p">,</span> <span class="n">element</span><span class="o">|</span>
+    <span class="k">if</span> <span class="n">element</span> <span class="o">==</span> <span class="n">needle</span>
+      <span class="k">return</span> <span class="n">index</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+  <span class="k">return</span> <span class="kp">nil</span>
+<span class="k">end</span>
+</pre></div>
+<p>(Also als Python Programmierer muss ich ja sagen dass die <code>end</code> statements ganz schön auf die Nerven gehen. Doppelte Zeilenanzahl für null zusätzliche Information oder Nützlichkeit. But I digress.)</p>
+<p>Das spannende daran ist die Zeile <code>return index</code>. Seht ihr was daran besonders ist? Ich Puzzle es mal auseinander als wäre der Block eine funktion, dann wird es klar.</p>
+<p>find ruft einen iterator auf dem haystack auf, d.h. übergibt ihm eine Funktion die das richtige Element findet. Diese Funktion erhällt ein Element aus dem haystack und einen index und gibt diesen index zurück wenn das element das gesuchte ist.</p>
+<p>Und da ist das Problem: Damit <code>find</code> funktioniert muss <code>return index</code> find verlassen und nicht nur die iterator-funktion.</p>
+<p>Das ist der Grund wieso man Blöcke als etwas anderes als Funktionen/Methoden betrachten muss wenn man sie nutzen will um damit Kontrollstrukturen implementieren zu können und ihre volle Nützlichkeit für Abstraktionen verwenden zu können.</p>
+
+    </section>
+    
+  </article>
+
+  <nav>
+    
+  <div class="category-list">
+    Kategorien:
+      
+      <a href="../../../../../categories/code/">Software Development</a>
+      
+    
+  </div>
+
+    
+    <div class="relative-navigation">
+      
+        <div class="prev">Vorheriges Post: <a class="prev" href="../wie-viel-kostet-die-finanzkriese/">Wie viel kostet die Finanzkriese?</a></div>
+      
+      
+        <div class="next">Nächstes Post: <a class="next" href="../../10/worin-liegt-der-erfolg-von-ruby-on-rails/">Worin liegt der Erfolg von &#34;Ruby on Rails&#34;</a></div>
+      
+    </div>
+    
+  </nav>
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../../../blog/feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

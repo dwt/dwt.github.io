@@ -1,0 +1,158 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../static/pygments.css">
+    <title>Debugging Magic in Cococa</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="./">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="../../../../en/blog/2008/8/debugging-magic-in-cococa/">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../../">🏠</a>
+
+
+<a class="breadcrumb-item " href="../../../">Blog</a>
+
+
+<a class="breadcrumb-item active" href="./">Debugging Magic in Cococa</a>
+
+</nav>
+    </header>
+    <article class="page debugging-magic-in-cococa  container-fluid">
+      
+  
+  <article class="blog-post">
+    <header>
+      <h2>
+        
+        Debugging Magic in Cococa
+        
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-08-25">Montag, 25. August 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Erstaunlich aber wahr - viele Programmierer scheinen die Debugging-Möglichkeiten der Plattform ihrer Wahl nicht zu kennen.</p>
+<p>Cocoa zum Beispiel. Viele Programmierer wissen nicht wie man Speicherlöcher effektiv fängt.</p>
+<p>Well, nicht Leaks - da kann man ja mit <a href="http://developer.apple.com/documentation/DeveloperTools/Conceptual/InstrumentsUserGuide/Built-InInstruments/chapter_9_section_8.html">ObjectAlloc</a> draufhauen und dann das Programm fixen.</p>
+<p>Nein, viel problematischer als das sind die doppelten Befreiungen.</p>
+<div class="hll"><pre><span></span><span class="kt">id</span> <span class="n">foo</span> <span class="o">=</span> <span class="p">[[</span><span class="bp">NSString</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithFormat</span><span class="p">:</span><span class="s">@&quot;foo&quot;</span><span class="p">];</span>
+<span class="p">[</span><span class="n">foo</span> <span class="k">release</span><span class="p">];</span>
+<span class="c1">// do something else</span>
+<span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;foo is %d&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">foo</span> <span class="n">length</span><span class="p">]);</span> <span class="c1">// almost certainly bombs</span>
+</pre></div>
+<p>Die krachen nämlich fast immer - und dann sucht man sich tot was genau da eigentlich gekracht hat und woher das genau kommt. Tja.</p>
+<p>Dabei kriegt man aus dem Programm eigentlich alle Informationen heraus die man braucht. Man muss nur jedes malloc mitzählen und aufschreiben wo es passiert ist, dann jedes objekt das freigegeben wird, nicht wirklich freigeben, sondern lediglich markieren und dann bei einem weiteren Zugriff auf so ein Objekt eine Exception werfen.</p>
+<p>Nichts leichter als das. :)</p>
+<p>Man setze diese Environment Variablen (am besten auf einem Duplikat der zu entwanzenden Applikation in Xcode)</p>
+<pre><code>MallocStackLogging YES
+MallocStackLoggingNoCompact YES
+NSZombieEnabled YES
+NSDebugEnabled YES
+</code></pre>
+<p>Hat man dass macht die Runtime alles richtig. Jede allokation wird aufgezeichnet und jedes freigegebene Objekt durch einen Zombie ersetzt. Und der Meldet sich, sobald er für irgend etwas verwendet wird. Nämlich so:</p>
+<pre><code>2008-08-26 00:19:43.524 CrashTest[1663:817] *** -[CFString length]:
+    message sent to deallocated instance 0x105440
+</code></pre>
+<p>Hängt man dann im Debugger, kann man von dort aus direkt diese Information abgreifen.</p>
+<pre><code>(gdb) shell malloc_history 1663 0x105440
+
+Call [2] [arg=16]: thread_a00ddfa0 |start | main | -[NSString initWithFormat:] |
+ -[NSPlaceholderString initWithFormat:locale:arguments:] |
+ _CFStringCreateWithFormatAndArgumentsAux | CFStringCreateCopy |
+ __CFStringCreateImmutableFunnel3 | _CFRuntimeCreateInstance | malloc_zone_malloc
+</code></pre>
+<p>Die Syntax für malloc_history ist dabei <code>malloc_history pid address</code>.</p>
+<p>Jetzt weiß man mit was für einem Objekt man es zu tun hat und man weiß wo es her kommt.</p>
+<p>Nice! (Mehr unter <a href="http://developer.apple.com/technotes/tn2004/tn2124.html#SECMALLOC">Mac OS X Debugging Magic</a>)</p>
+<p>p.s.: Ohne etwas Schelte an Apple geht es aber nicht. Das man sich da von Hand die Umgebungsvariablen einstellen muss - böse. Zumal das noch an einer Custom Executable geschieht. Die sind nämlich nicht im Projektfile gespeichert, sondern in den Dateien die Xcode pro Benutzer anlegt. Das hat zur Folge, dass im Normalfall nicht ein Entwickler diese Dinge raussucht und dann alle anderen im Projekt dass als Tool nutzen können, sondern dass sich das jeder Selber einrichten und warten muss. Ach ja, und natürlich zeichnet malloc_history nur die allocs auf und nicht die frees - das wäre nämlich noch praktischer, dann könnte man nämlich direkt kucken wo es das erste mal freigegeben wurde. Aber nein....</p>
+
+    </section>
+    
+  </article>
+
+  <nav>
+    
+  <div class="category-list">
+    Kategorien:
+      
+      <a href="../../../../categories/code/">Software Development</a>
+      
+    
+  </div>
+
+    
+    <div class="relative-navigation">
+      
+        <div class="prev">Vorheriges Post: <a class="prev" href="../obfuscated-objc-oder-wie-macht-man-konstanten/">Obfuscated Objc - oder - wie macht man Konstanten?</a></div>
+      
+      
+        <div class="next">Nächstes Post: <a class="next" href="../nstoolbaritem-whoes/">NSToolbarItem whoes</a></div>
+      
+    </div>
+    
+  </nav>
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,148 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../../static/pygments.css">
+    <title>Python Saug Punkte contd.</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../../../blog/feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item active"><a href="../../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../../categories/" class="nav-link">Kategorien</a></li>
+    
+      <li class="nav-item "><a href="../../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../../about/" class="nav-link">Über mich</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="../../../../../blog/2010/1/python-saug-punkte-contd/">Deutsch</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="./">Englisch</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../../">🏠</a>
+
+
+<a class="breadcrumb-item " href="../../../">Blog</a>
+
+
+<a class="breadcrumb-item active" href="./">Python Saug Punkte contd.</a>
+
+</nav>
+    </header>
+    <article class="page python-saug-punkte-contd  container-fluid">
+      
+  
+  <article class="blog-post">
+    <header>
+      <h2>
+        
+        Python Saug Punkte contd.
+        
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2010-01-11">Monday, January 11, 2010</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Eine Sache die mich bei Python immer wieder ärgert ist die Tatsache dass Standardwerte für Methodenargumente zur Parsezeit festgelegt werden anstatt zur Aufrufzeit.</p>
+<p>Das ist total doof, denn dadurch teilen sich alle aufrufe der Funktion den gleichen default-wert - was zwar schön schnell sein mag, aber trotzdem in fast allen Fällen nur bei nicht veränderbaren Objekten (so wie Integer und Strings) Sinn ergibt.</p>
+<p>So führt das dazu dass man in Python eine ganze Menge Workarounds braucht um mit default-argumenten zu arbeiten.</p>
+<p>Das wichtigste dabei ist der default typ None. Das ist der workaround für alle mutable-objekte, da man die in fast keinem Fall zwischen verschiedenen Methodenaufrufen teilen möchte. So sieht das aus:</p>
+<div class="hll"><pre><span></span><span class="k">def</span> <span class="nf">end_poll</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">end_time</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">end_time</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">end_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
+    <span class="c1"># work with end_time...</span>
+</pre></div>
+<p>Der Punkt hier ist dass man datetime.utcnow() nicht in das standard Argument hineinschreiben kann, da man sonst bei jedem Aufruf der Methode den gleichen Wert hätte: Die Parsezeit. Nicht sonderlich nützlich.</p>
+<p>Das hat zur Folge dass man:</p>
+<ul>
+<li>aus der Signatur nicht sehen was das Standardargument ist (utc/gmt oder vielleicht ewas ganz anderes?). Immerhin gibt es inzwischen immer mehr IDEs die diese Signatur beim aufrufen für autocompletion nutzen oder sie wenigstens anzeigen können.</li>
+<li>Man beim verwenden von Standardargumenten immer überlegen muss ob man dieses Argument jetzt in die Methodendefinition oder in den Body aufnehmen muss.</li>
+<li>für jedes Standardargument noch mal zwei extra Zeilen braucht. Das nervt vor allem deswegen weil man sich mit den standard Argumenten ja Zeilen sparen möchte. Das heißt die Kosten für Standard-Argumente steigen und man benutzt sie seltener.</li>
+<li>die default argumente noch mal separat dokumentieren muss, da ein dokumentations-extraktions-Werkzeug ja den Code nicht sieht, der das tatsächliche Standardargument setzt. Und natürlich hat man dann noch mal DRY verletzt da die Information jetzt zwei mal da steht.</li>
+<li>richtig fiese Bugs kriegt, weil viele Leute diese Probleme nicht kennen oder sie ab und an vergessen und mal ein <code>list()</code>, <code>dict()</code> oder <code>set()</code> als Standardwert nehmen was dan für viel Freude beim Debuggen sorgt.</li>
+</ul>
+<p>Also, know your Python und vorsicht mit Standardargumenten!</p>
+<p>Vielleicht kriegen wir ja irgendwann von unserem BDFL ein <code>from __future__ import runtime_standard_argument_evaluation</code>.</p>
+
+    </section>
+    
+  </article>
+
+  <nav>
+    
+  <div class="category-list">
+    Kategorien:
+      
+      <a href="../../../../../categories/fnord/">Fnord</a>
+      , 
+    
+      
+      <a href="../../../../../categories/code/">Software Development</a>
+      
+    
+  </div>
+
+    
+    <div class="relative-navigation">
+      
+        <div class="prev">Vorheriges Post: <a class="prev" href="../python-saugpunkte-klassenobjekte/">Python Saugpunkte: Klassenobjekte</a></div>
+      
+      
+        <div class="next">Nächstes Post: <a class="next" href="../solid-object-oriented-design/">SOLID object oriented design</a></div>
+      
+    </div>
+    
+  </nav>
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 Martin Häcker</span>
+  </li>
+  <li class="nav-item imprint"><a class="nav-link" href="../../../../../about#imprint">Impressum</a></li>
+  <li class="nav-item privacy-policy"><a class="nav-link" href="../../../../../about#privacy-policy">Datenschutzerklärung</a></li>
+  <li class="nav-item colophon"><a class="nav-link" href="../../../../../about#colophon">Colophon</a></li>
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../../../blog/feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

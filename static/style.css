@@ -27,13 +27,13 @@ body > footer {
     border-top: 2px solid lightgray;
 }
 
-.about.page img {
+.work.page img {
     max-width:100%;
 }
 
 @media (min-width: 576px) { /* --breakpoint-sm */
     /* REFACT consider to pull right all images on category pages */
-    .about.page img,
+    .work.page img,
     .liquid.page img {
         float: right;
         max-width: 50%;

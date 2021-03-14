@@ -57,6 +57,40 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2010/3/jquery-editinplace/">
+        jQuery editInPlace
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2010-03-26">Freitag, 26. März 2010</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Well, I just finished some major reworking of that jQuery plugin, so now it has [browser:/open-source/jquery-edit-in-place/trunk/spec/unit/spec.js a real testsuite] and conforms to the <a href="http://docs.jquery.com/Plugins/Authoring">jQuery Plugin Guidelines</a> and doesn't pollute the core prototypes (of String) anymore.</p>
+<p>There are a few new features, most prominent the ability to define a class to apply for the hover effect (so you can style the hover in css instead of having to hand in the colors directly and more control over the way errors are presented so it is easier to embed into bigger applications.</p>
+<p>So enjoy <a href="http://jquery-in-place-editor.googlecode.com/svn/trunk/demo/index.html">the demo</a>  and <a href="http://code.google.com/p/jquery-in-place-editor/downloads/list">the download</a> while they are hot, and keep a bookmark to <a href="http://code.google.com/p/jquery-in-place-editor/">the project homepage</a>. :)</p>
+<p>Stuff I'd like to note:</p>
+<ul>
+<li><a href="http://visionmedia.github.com/jspec/">JSpec</a> rocks, writing tests with it is a breeze. The DOM Testrunner they have could use some work though to become even more usefull</li>
+<li>Writing the tests with no dom insertion is a <em>great</em> technique to get a fast testsuite where you can almost guarantee that it has no test-ordering issues.</li>
+<li>jQuery allows you to almost completely drive the interaction with the editor as a user would, making it almost like an acceptance test (and with very little dependency on the internal working of the editor.</li>
+<li>Refactoring JavaScript Code is hard if you don't have a testsuite. My Advice: Break it down into smaller bits. I found it incredibly hard to refactor larger pieces of the code, as not having a testsuite means there's no way you know what still works. :/</li>
+</ul>
+
+    </section>
+    
+      <footer>
+        <a href="../../2010/3/jquery-editinplace/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2010/2/wo-findet-innovation-beim-lehren-statt/">
         Wo findet Innovation beim Lehren statt?
         </a>
@@ -365,34 +399,6 @@
   </article>
 
   
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2010/1/here-be-electric-dragons/">
-        Here be electric dragons
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2010-01-08">Freitag, 8. Januar 2010</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Ich vertrete ja schon länger den Punkt dass ein Grundeinkommen eine Notwendigkeit sein wird in einer Gesellschaft in der Maschinen uns alle physischen Arbeiten abnehmen können.</p>
-<p>Well, jetzt habe ich endlich jemanden gefunden der dieses Argument auch vertritt.</p>
-<p>Auf dem 26C3 im Vortrag <a href="http://events.ccc.de/congress/2009/Fahrplan/events/3452.en.html">Here be electric dragons</a></p>
-<p>Sehr sehenswert!</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2010/1/here-be-electric-dragons/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
   
   
     
@@ -442,7 +448,7 @@
   <li class="nav-item license">
     
       <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
-        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="../../../static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
       </a>
     
   </li>

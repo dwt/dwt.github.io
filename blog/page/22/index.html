@@ -57,6 +57,35 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/6/brainworks-in-presentation/">
+        Brainworks in presentation
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-06-14">Samstag, 14. Juni 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p><a href="http://youtube.com/watch?v=DZ2vtQCESpk">Garr Raynolds spricht mal wieder</a>. <a href="http://www.presentationzen.com/">Seinen Blog</a> verfolge ich ja schon lange - und habe ihn noch nie sprechen hören.</p>
+<p>Daher war ich auch am Anfang etwas enttäuscht, da er (IMO) viel besser Schreibt als er spricht. Aber er kommt rein und hält letztlich eine sehr gute Präsentation - mit dem Thema wie man präsentieren soll (nach ihm).</p>
+<p><a href="http://youtube.com/watch?v=DZ2vtQCESpk">Den Vortrag kann ich daher nur empfehlen.</a></p>
+<p>p.s.: By the way: Durch den Vortrag bin ich auch auf <a href="http://www.brainrules.net/">Brain Rules</a> ein Buch von John Medina gestoßen, der aus der Sicht eines Molekularbiologen beschreibt was wir über das Gehirn wissen und wie wir uns demnach verhalten sollen.</p>
+<p>Good stuff. (Buch gerade bestellt)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/6/brainworks-in-presentation/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/6/hacking-tracblog/">
         Hacking TracBlog
         </a>
@@ -359,47 +388,6 @@
   </article>
 
   
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/5/fonelink-2-0/">
-        FoneLink 2.0
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-05-30">Freitag, 30. Mai 2008</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Yay!</p>
-<p>Nachdem wir das Innenleben der Software fast komplett ausgetauscht haben ist <a href="http://www.novamedia.de/d_pages/d_produkte_mac_fl.html">endlich die Version 2.0</a> fertig geworden.</p>
-<p>Was ein Akt.</p>
-<p>Von dem was die Software ausmacht, ist wirklich kein Stein mehr so gelassen worden wie er war.</p>
-<p>Jede operation wurde Asyncron gemacht, alles in ein Konzept von Aktionen gepresst (und das war manchmal nicht einfach) die gescheduled werden und (wenn es das Telefon erlaubt) sogar parallel ausgeführt werden können.</p>
-<p>Mein Hauptteil daran war das Datenmodell das den synchronen Zugriff auf das Dateisystem des Handies erlaubt - intern aber alle Operationen Asynchron abarbeitet.</p>
-<p>Was gar nicht so einfach zu verkapseln war. (Dementsprechend sind die Unit Tests auch fast die noch mal halb so viel Code wie der eigentliche Code).</p>
-<p>Das Design für das ich mich letztendlich entschieden habe ist recht simpel: Jeder Dateisystem-Knoten kann einen von mehreren Zuständen haben:</p>
-<ol>
-<li><strong>Out Of Date</strong> -&gt; Der Zustand muss mit dem Handy abgeglichen werden</li>
-<li>"Up To Date" -&gt; nichts zu tun, die aktuellen Daten sind da</li>
-<li><strong>Update In Progress</strong>-&gt; Die Daten werden gerade Aktualisiert oder ein anderer Job (Meist mit Progress-Anzeige) läuft mit Bezug auf diesen Knoten.</li>
-</ol>
-<p>Jobs können zum Beispiel das Kopieren auf oder von dem Handy sein.</p>
-<p>Dazu kommt dann natürlich noch etwas Intelligenz die diese Jobs automatisch anwirft wenn es Sinn macht (Verzeichnisse Aktualisieren wenn die GUI sie anzeigt) und unnötiges Kopieren vermeidet (Es gibt einen Cache auf der Festplatte - wird eine Datei einmal vom Handy Kopiert und dann nicht mehr Verändert wird die Kopierte ab da für Operationen verwendet.) Und nicht zu vergessen: Versionierte Backup und Restores gibt es natürlich auch noch.</p>
-<p>Ach ja und Rasend Schnell sollte das natürlich auch sein.</p>
-<p>War nicht leicht - aber jetzt läuft es rock-solid. Und über die Implementierung erzähle ich später mal mehr.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/5/fonelink-2-0/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
   
   
     
@@ -449,7 +437,7 @@
   <li class="nav-item license">
     
       <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
-        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="../../../static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
       </a>
     
   </li>

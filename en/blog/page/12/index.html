@@ -57,6 +57,47 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2009/1/scriptdir/">
+        Scriptdir
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-01-29">Thursday, January 29, 2009</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Ich habe immer wieder das Problem, dass ich in Shell-Scripten den absoluten Pfad zum eigenen Script, oder zumindest den Ordner in dem das Script liegt benötige.</p>
+<p>Dieses Problem hat viele Lösungen - die allermeisten kommen aber entweder nicht mit Leerzeichen in diesem Pfad klar, oder versagen wenn man das Script über verschiedene Kombinationen von absoluten und relativen Pfaden aufruft.</p>
+<p>Meine gegenwärtige Lösung ist das hier:</p>
+<div class="hll"><pre><span></span><span class="nv">SCRIPTDIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span><span class="nb">cd</span> <span class="s2">&quot;</span><span class="k">$(</span>dirname <span class="s2">&quot;</span><span class="nv">$0</span><span class="s2">&quot;</span><span class="k">)</span><span class="s2">&quot;</span> <span class="o">&amp;&amp;</span> <span class="nb">pwd</span><span class="k">)</span><span class="s2">&quot;</span>
+<span class="nb">echo</span> <span class="nv">$SCRIPTDIR</span>
+</pre></div>
+<p>Damit bin ich zwar auch überhaupt nicht glücklich, aber immerhin scheint es zu funktionieren. :/</p>
+<p>Insbesondere ist das Quoting extra funky. Unter MacOS X scheint es aber zu gehen (d.h. die Bash frisst das korrekt)</p>
+<p>Hat da vielleicht jemand eine bessere Idee?</p>
+<p><strong><em>Update:</em></strong> Florian hatte die großartige Idee doch einfach mal in gut benutzte Shell-Programme wie den Wrapper für OpenOffice zu schauen.  Und siehe da:</p>
+<div class="hll"><pre><span></span><span class="c1"># cat /usr/lib64/openoffice/program/swriter</span>
+<span class="c1">#!/bin/sh</span>
+
+<span class="nv">cmd</span><span class="o">=</span><span class="sb">`</span>dirname <span class="s2">&quot;</span><span class="nv">$0</span><span class="s2">&quot;</span><span class="sb">`</span>/soffice
+<span class="nb">exec</span> <span class="s2">&quot;</span><span class="nv">$cmd</span><span class="s2">&quot;</span> -writer <span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span>
+</pre></div>
+<p>funktioniert großartig. Man kriegt zwar nur den relativen Pfad - aber das reicht ja in aller Regel.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/1/scriptdir/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2009/1/der-neue-trend-unfactoring/">
         Der neue Trend: Unfactoring
         </a>
@@ -411,33 +452,6 @@
   </article>
 
   
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2009/1/no-software-is-free-and-spreading-that-misconception-is-harmful/">
-        No software is free and spreading that misconception is harmful.
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2009-01-12">Monday, January 12, 2009</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Da hat eine Lehrerin in Amerika doch tatsächlich ihren heiligen Eifer entdeckt und muss ihre Schüler davor schützen freie Software zu benutzen. Daraufhin hat sie die Linux-CDs eines Schülers konfisziert und klagte dann per e-mail den Projektleiter des Linux-Projekts an. <a href="http://linuxlock.blogspot.com/2008/12/linux-stop-holding-our-kids-back.html">Weil es Software die Umsonst ist nicht geben kann und darf.</a></p>
-<p>Unglaublich. Peinlich.</p>
-<p>Und das wird immer schlimmer je weiter man ließt. <a href="http://www.gulli.com/news/lehrerin-open-source-schadet-2008-12-11/">via</a></p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2009/1/no-software-is-free-and-spreading-that-misconception-is-harmful/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
   
   
     
@@ -487,7 +501,7 @@
   <li class="nav-item license">
     
       <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
-        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="../../../../static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
       </a>
     
   </li>

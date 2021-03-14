@@ -31,6 +31,12 @@ body > footer {
     max-width:100%;
 }
 
+blockquote {
+    font-family: italic;
+    font-size: 1.3rem;
+    text-align: center;
+}
+
 @media (min-width: 576px) { /* --breakpoint-sm */
     /* REFACT consider to pull right all images on category pages */
     .work.page img,

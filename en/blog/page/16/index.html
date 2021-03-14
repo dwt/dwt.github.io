@@ -57,6 +57,32 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/10/if-you-want-to-count-on-it-pirate-it/">
+        If you want to count on it - pirate it
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-10-13">Monday, October 13, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p><a href="http://xkcd.com/488/">XKCD hats erwischt</a>.</p>
+<p><img src="http://imgs.xkcd.com/comics/steal_this_comic.png" alt="Image"></p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/10/if-you-want-to-count-on-it-pirate-it/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/10/das-gedicht-zum-bankendomino/">
         Das Gedicht zum Bankendomino
         </a>
@@ -382,43 +408,6 @@ Dann wird bisschen Krieg gemacht.
   </article>
 
   
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/10/creating-nsnumbers-from-arbitrary-values/">
-        Creating NSNumbers from arbitrary values...
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-10-04">Saturday, October 4, 2008</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>... without needing to care which constructor to use this time to get it right.</p>
-<p>Well, I was offended by this just long enough, so I sat down and wrote a macro that allows this:</p>
-<div class="hll"><pre><span></span><span class="c1">//  Use like this:</span>
-    <span class="kt">id</span> <span class="n">dict</span> <span class="o">=</span> <span class="p">[</span><span class="bp">NSDictionary</span> <span class="n">dictionary</span><span class="p">];</span>
-    <span class="bp">NSNumber</span> <span class="o">*</span><span class="n">ten</span> <span class="o">=</span> <span class="n">NMMakeNumber</span><span class="p">(</span><span class="mf">10.0f</span><span class="p">);</span>
-    <span class="p">[</span><span class="n">dict</span> <span class="nl">setObject</span><span class="p">:</span><span class="n">ten</span> <span class="nl">forKey</span><span class="p">:</span><span class="s">@&quot;numberOfFingers&quot;</span><span class="p">];</span>
-    <span class="p">[</span><span class="n">dict</span> <span class="nl">setObject</span><span class="p">:</span><span class="n">NMMakeNumber</span><span class="p">(</span><span class="mi">23</span><span class="p">)</span> <span class="nl">forKey</span><span class="p">:</span><span class="s">@&quot;fnord&quot;</span><span class="p">];</span>
-    <span class="p">[</span><span class="n">dict</span> <span class="nl">setObject</span><span class="p">:</span><span class="n">NMMakeNumber</span><span class="p">(</span><span class="nb">YES</span><span class="p">)</span> <span class="nl">forKey</span><span class="p">:</span><span class="s">@&quot;wantFries&quot;</span><span class="p">];</span>
-</pre></div>
-<p>I'ts almost the way <a href="http://en.wikipedia.org/wiki/Object_type#Autoboxing">Autoboxing</a> works in <a href="http://java.sun.com/j2se/1.5.0/docs/guide/language/autoboxing.html">Java</a> or C#.</p>
-<p>This quite eases the pain of creating NSNumbers correctly for me, because it means I don't have to repeat the type of what I am working with quite as often.</p>
-<p>Pretty <a href="http://en.wikipedia.org/wiki/DRY">DRY</a>. :)</p>
-<p>[source:/open-source/NSNumberCreator/trunk  Here's the code to a NSNumber category and a makro that makes this happen.]</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/10/creating-nsnumbers-from-arbitrary-values/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
   
   
     
@@ -468,7 +457,7 @@ Dann wird bisschen Krieg gemacht.
   <li class="nav-item license">
     
       <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
-        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="../../../../static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
       </a>
     
   </li>

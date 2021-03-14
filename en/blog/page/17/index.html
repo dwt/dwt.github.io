@@ -57,6 +57,43 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/10/creating-nsnumbers-from-arbitrary-values/">
+        Creating NSNumbers from arbitrary values...
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-10-04">Saturday, October 4, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>... without needing to care which constructor to use this time to get it right.</p>
+<p>Well, I was offended by this just long enough, so I sat down and wrote a macro that allows this:</p>
+<div class="hll"><pre><span></span><span class="c1">//  Use like this:</span>
+    <span class="kt">id</span> <span class="n">dict</span> <span class="o">=</span> <span class="p">[</span><span class="bp">NSDictionary</span> <span class="n">dictionary</span><span class="p">];</span>
+    <span class="bp">NSNumber</span> <span class="o">*</span><span class="n">ten</span> <span class="o">=</span> <span class="n">NMMakeNumber</span><span class="p">(</span><span class="mf">10.0f</span><span class="p">);</span>
+    <span class="p">[</span><span class="n">dict</span> <span class="nl">setObject</span><span class="p">:</span><span class="n">ten</span> <span class="nl">forKey</span><span class="p">:</span><span class="s">@&quot;numberOfFingers&quot;</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">dict</span> <span class="nl">setObject</span><span class="p">:</span><span class="n">NMMakeNumber</span><span class="p">(</span><span class="mi">23</span><span class="p">)</span> <span class="nl">forKey</span><span class="p">:</span><span class="s">@&quot;fnord&quot;</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">dict</span> <span class="nl">setObject</span><span class="p">:</span><span class="n">NMMakeNumber</span><span class="p">(</span><span class="nb">YES</span><span class="p">)</span> <span class="nl">forKey</span><span class="p">:</span><span class="s">@&quot;wantFries&quot;</span><span class="p">];</span>
+</pre></div>
+<p>I'ts almost the way <a href="http://en.wikipedia.org/wiki/Object_type#Autoboxing">Autoboxing</a> works in <a href="http://java.sun.com/j2se/1.5.0/docs/guide/language/autoboxing.html">Java</a> or C#.</p>
+<p>This quite eases the pain of creating NSNumbers correctly for me, because it means I don't have to repeat the type of what I am working with quite as often.</p>
+<p>Pretty <a href="http://en.wikipedia.org/wiki/DRY">DRY</a>. :)</p>
+<p>[source:/open-source/NSNumberCreator/trunk  Here's the code to a NSNumber category and a makro that makes this happen.]</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/10/creating-nsnumbers-from-arbitrary-values/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/9/wundervolle-werbung/">
         Wundervolle Werbung...
         </a>
@@ -390,71 +427,6 @@
   </article>
 
   
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/9/authenticating-an-otr-user-in-adium/">
-        Authenticating an OTR user in Adium
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-09-03">Wednesday, September 3, 2008</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>(With many thanks to Dan Levin for his help)</p>
-<p>This is what I arrived at [blog:2008/08/19/19.49 last week] as an authentication GUI:</p>
-<p><img src="../../2008/9/authenticating-an-otr-user-in-adium/Dialog-based-implementation-of-the-Sociallist-Millionaire-Protocoll.png" alt="Image"></p>
-<p>This GUI Design has several good and bad points - first the good ones:</p>
-<ul>
-<li>It tells the user exactly what he should do</li>
-<li>It gives help in how to achieve that</li>
-<li>It provides additional help on how to achieve this</li>
-</ul>
-<p>The bad ones though weigh very heavy:</p>
-<ul>
-<li>Its a dialog. </li>
-<li>Its super text heavy</li>
-<li>it looks ugly (well not because of the design, but because it has so much text in it.)</li>
-</ul>
-<p>The most pressing problem however is in the library support from OTR. It simply does not know what a question is.</p>
-<p>This is a problem, because it makes it almost impossible to have the Question as a special entitiy in the GUI - and also that none of the synchronisation problems that this brings are adressed in the GUI. So what to do if both users start typing their own question? The other User wouldn't know - then how does the programm tell the user that his question was just overruled be the other persons and that he should provide the answer to that as the secret word?</p>
-<p>There is more of course - but this is what I consider the most important.</p>
-<p>Well, this is our current approach at solving these problems:</p>
-<p><img src="../../2008/9/authenticating-an-otr-user-in-adium/Status-Bar-Social-Millionaire-Protocol.png" alt="Image"></p>
-<p>This is what I like about this:</p>
-<ul>
-<li>No more dialog, it's all happening inline</li>
-<li>It clearly states what goes where in clear statements</li>
-<li>It tells the user in clear terms what he needs to do and how to do it</li>
-<li>Only as much text as is absolutely needed</li>
-<li>Provides more help should the user request it.</li>
-</ul>
-<p>Especially this is the most simple GUI of all the approaches that I tried.</p>
-<p>I don't have finished mockups of the other aproaches (most is pen'n'paper work) but I did try having the question and answer thing inline like so:</p>
-<p><img src="../../2008/9/authenticating-an-otr-user-in-adium/Status-Bar-SMP-Question-and-answer.png" alt="Image"></p>
-<p>I especially like the fact that this gives lots of practical information to the user - even if it is still very wordy and does not solve the race condition of who will actually ask the question.</p>
-<p>Therefore we decided to go with the first aproach pictured above.</p>
-<p>There is of course more to this GUI than just the pretty pictures shown above. A few more things come to mind, that we think are very important:</p>
-<ul>
-<li>The normal chat window can and should be used as a feedback and instruction window. (With help messages clearly marked as such of course.) We want to use this to show some initial help when the "Verify" button is clicked and the authentication process is started and also at least when the authentication process fails multiple times, to provide additional help and tips as to how to overcome this situation.</li>
-<li>Whenever the user types the secret word in the normal chat we want to either clearly notify the user that he has just compromised his password exchange and needs to choose a new question and answer (also if it is in the recent history) or we'd like to prevent the sending of the message (perhaps with a dialog box that also allows to proceed if that is really wanted).</li>
-</ul>
-<p>One unsolved problem is, that when the authentication fails multiple times, we need to find a good compromise between teaching the user about ways to prevent errors and making him aware of the possibility that there may be a man in the middle attack taking place.</p>
-<p>Of course, just as the last time: Feedback welcome.</p>
-<p><a href="http://trac.adiumx.com/wiki/OTREncryption">Here's the rest of the work</a></p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/9/authenticating-an-otr-user-in-adium/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
   
   
     
@@ -504,7 +476,7 @@
   <li class="nav-item license">
     
       <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
-        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="../../../../static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
       </a>
     
   </li>

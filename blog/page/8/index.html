@@ -57,6 +57,57 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2009/4/cappuccino-und-jquery-im-vergleich/">
+        Cappuccino und jQuery im Vergleich
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-04-30">Donnerstag, 30. April 2009</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Ich beschäftige mich ja seit einiger Zeit intensiver mit Web-Entwicklung - und da im besondern mit <a href="http://cappuccino.org/">Cappuccino</a> um damit GUIs in WebBrowsern zu bauen.</p>
+<p>Cappuccino ist zwei Sachen - eine dünne Schicht JavaScript die einen Translator implementiert der aus <a href="http://cappuccino.org/learn/tutorials/objective-j-tutorial.php">Objective-J</a> (Quasi <a href="http://de.wikipedia.org/wiki/Objective-C">Objective-C</a> für JavaScript) normales JavaScript macht und eine Bibliothek an Objekten die der [Cocoa Bibliothek] von Apple aus dem Gesicht geschnitten ist.</p>
+<p>Und Cocoa ist immer noch die schönste und knackigste Bibliothek die ich kenne - allerdings kenne ich auch noch nicht so viele.</p>
+<p>Um so spannender fand ich es daher <a href="http://cappuccino.org/learn/demos/FlickrPhotoDemo/">eines der Beispiele des Cappucino Projektes</a> noch einmal <a href="http://www.brokendigits.com/flickrDemo-jQuery/index.html">in jQuery implementiert zu sehen</a> (<a href="http://www.brokendigits.com/2008/09/05/cappucinos-flickrdemo-in-45-lines-of-jquery/">Blog dazu</a>)</p>
+<p><a href="http://jquery.com/">jQuery</a> ist nämlich eine Bibliothek die die Möglichkeiten von JavaScript (Closures!) mal wirklich vollständig ausreizt und  soweit ich das beurteilen kann ein Musterbeispiel von richtig gutem JavaScript Code ist.</p>
+<p>Auf der anderen Seite ist Cappuccino - eine Sprache die von C portiert wurde, und die daher eben keine Closures einsetzt - weder in der Sprache, noch in der Bibliothek.</p>
+<p>Und das rennen fängt gut für jQuery an - jQuery braucht für das gleiche Beispiel nur 45 Zeilen Code, während Cappuccino mit 400 Zeilen dabei ist - und enthält an manchen Stellen sogar noch mehr Bling! (Die Bilder faden schön ein statt einfach nur zu erscheinen)</p>
+<p>Schaut man sich die Beispiele genauer an, stellt man fest, dass bei jQuery zu den 45 Zeilen Javascript noch mal 200 Zeilen CSS kommen und dass der JavaScript Code völlig ohne Leerzeilen auskommt, während bei Cappuccino besonders auf übersichtlichkeit geachtet wurde.</p>
+<p>Korrigiert man das und vergleicht erneut, dann sieht das Ergebnis etwas anders aus: jQuery + CSS ~= 200 Zeilen vs. Cappuccino ~= 200 Zeilen.</p>
+<p>Whoa.</p>
+<p>Also muss der Vergleich inhaltlich stattfinden: Cappuccino isoliert den Applikationsentwickler komplett vom DOM und seinen Schwierigkeiten, während jQuery natürlich komplett damit Arbeitet - und man sich auch selber um die Komplikationen kümmern muss die man mit der Browserkompatibilität hat.</p>
+<p>Dafür ist der Code von jQuery inhaltlich wirklich sehr schön kurz - ich finde man sieht ganz hervorragend was man erreichen kann wenn man benannte Parameter (hier durch JavaScript Objekt-Literale Vertreten) und konsequenten Einsatz von Closures kombiniert.</p>
+<p>Das hier zum Beispiel:</p>
+<div class="hll"><pre><span></span><span class="n">$</span><span class="p">.</span><span class="n">each</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">items</span><span class="p">,</span> <span class="n">function</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">item</span><span class="p">){</span>
+   <span class="n">img</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Image</span><span class="p">();</span>
+   <span class="n">img</span><span class="p">.</span><span class="n">src</span> <span class="o">=</span> <span class="n">item</span><span class="p">.</span><span class="n">media</span><span class="p">.</span><span class="n">m</span><span class="p">;</span>
+   <span class="n">img</span><span class="p">.</span><span class="n">onload</span> <span class="o">=</span> <span class="n">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">$</span><span class="p">(</span><span class="n">this</span><span class="p">).</span><span class="n">animate</span><span class="p">({</span><span class="nl">opacity</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span> <span class="s">&quot;normal&quot;</span><span class="p">);</span>
+   <span class="p">}</span>
+   <span class="n">$</span><span class="p">(</span><span class="n">img</span><span class="p">).</span><span class="n">css</span><span class="p">({</span><span class="nl">opacity</span><span class="p">:</span> <span class="mi">0</span><span class="p">}).</span><span class="n">appendTo</span><span class="p">(</span><span class="s">&quot;#content&quot;</span><span class="p">).</span><span class="n">wrap</span><span class="p">(</span><span class="s">&quot;&lt;div&gt;&lt;/div&gt;&quot;</span><span class="p">);</span>
+   <span class="k">if</span> <span class="p">(</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">20</span> <span class="p">)</span> <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+   <span class="p">});</span>
+</pre></div>
+<p>ist einfach sehr ausdrukstark. Ich freue mich schon darauf wenn Apple Snow-Leopard herausbringt und damit Closures auch in Objective-C einzug halten - weil dann wird auch Cappuccino diese Möglichkeiten endlich nutzen ohne die Kompatibilität mit Cocoa zu verlieren.</p>
+<p>Auf der anderen Seite finde ich den Objective-J Code wie bei Cocoa auch sehr ausdrucksstark - und vielleicht etwas verbose. Dafür dokumentiert sich der Code aber auch ganz excellent.</p>
+<p>Und da er nicht länger ist als der andere, sehe ich da überhaupt kein Problem.</p>
+<p>Alles in allem also ein guter Grund jQuery zu lernen um die Möglichkeiten von JavaScript wirklich mal zu verstehen.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/4/cappuccino-und-jquery-im-vergleich/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2009/4/interview-mit-de-bug/">
         Interview mit De:Bug
         </a>
@@ -361,40 +412,6 @@ Nach dem Mittagessen war dann noch etwas Vortrag über das Mindset eines Großgr
     
       <footer>
         <a href="../../2009/3/grossgruppen-moderationstraining-ii/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2009/3/grossgruppen-moderationstraining-i/">
-        Großgruppen-Moderationstraining I
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2009-03-27">Freitag, 27. März 2009</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Whew.... Das war jetzt schon etwas anstrengend - aber gleichzeitig auch spannend.</p>
-<p>Kurz zum Kontext - heute war der erste Tag des <a href="http://www.rosalux.de/cms/index.php?id=16602">Großgruppen-Moderationstrainings</a>.</p>
-<p>Und es hat Spaß gemacht.</p>
-<p><img src="../../2009/3/grossgruppen-moderationstraining-i/FILE0012.jpg" alt="Image"></p>
-<p>Programm heute war recht Kurz und Bündig - Erst ein sehr Kurzer Einführungsvortrag (~10 Minuten) mit den wichtigsten Regeln, dann ein <a href="http://de.wikipedia.org/wiki/Knowledge-Caf%C3%A9">World-Café</a> (<a href="http://theworldcafe.com/">auch hier</a>), anschließend eine tiefergehende Einführung in die nächsten zwei Tage und am Schluss eine Stern-Abfrage für den Abschluss.</p>
-<p>Das Welt-Café war in diesem Zusammenhang eine schöne Methode um für eine große Gruppe von Menschen (60 Leute) recht schnell einen gewissen Überblick zu erhalten wie die anderen Leute Ticken und was sie so können. Ich habe zum Beispiel herausgefunden dass ich beileibe nicht der einzige war der an Politik und Moderation interessiert war - und dass jede Menge professionelle Moderatoren zu ihrer eigenen Fortbildung anwesend waren. (Das find ich natürlich ein gutes Zeichen!). Kurz zum Café - es waren kleine Café-Tische aufgestellt - so viele dass pro Tisch etwa vier Leute Platz hatten. Von den drei Runden waren die ersten Beiden für den Hintergrund und was einen zu dem Training bringt reserviert, während es in der dritten um die Wünsche an das Training ging. Das Nette bei dieser Methode: Dadurch dass man jederzeit auf die Tischdecke schreiben und Malen konnte und sollte waren am Schluss alle Tischdecken ein Stück Dokumentation was besprochen wurde. Sehr schön. Etwas anstrengend war es die ganze Zeit zu stehen - aber hey, das war es wert. Nach dem Vortrag der Veranstalter gab es dann noch eine konventionelle Kartenabfrage und eine Themensammlung (aus der dritten Runde des World-Cafés) - die aber größtenteils von den Moderatoren vorgegeben wurde.</p>
-<p>Schön fand ich dabei dass die grenzen von ungenügenden Moderations-methoden hier sehr schön und interaktiv gezeigt wurden (ich bin mir immer noch nicht ganz sicher ob das Absicht war). So war die Schrift auf den Moderationskarten und diese selbst zu klein, die Fragen aus dem Publikum konnte nicht jeder Hören, die Mikrofonverstärkten Stimmen so laut dass es keinen Spaß machte, aber ohne Mikro wiederum so leise dass es auch keinen Spaß machte...</p>
-<p><img src="../../2009/3/grossgruppen-moderationstraining-i/FILE0022.jpg" alt="Image">
-Am Schluss war noch eine schöne Technik, deren Name ich aber leider nicht verstanden hatte (naja, soll ja noch eine ausführliche Dokumentation geben). Stern- oder Mandala-Abfrage hatte ich verstanden - dazu spuckt Google aber nichts aus. Ah well. Funktionieren tut es so dass sich alle im Kreis aufstellen und jeder der etwas Sagen will (nacheinander!) in die Mitte geht und es sagt. Dann kann jeder, der will, so weit auf den Menschen in der Mitte zugehen wie er ihm Zustimmt. Dass erfordert Mut - macht aber auch Spaß und sorgt angeblich dafür dass nur wichtige Sachen angesprochen werden. Jeder der Möchte kommt zu Wort, niemand muss sagen "find ich auch" oder "ist schon alles gesagt worden". Ach ja, und sobald die Gruppe genug hat, sagt sie dass auch sehr deutlich - eine schöne und schnelle Art Schluss zu machen und das wichtigste Feedback aufzugreifen.</p>
-<p><a href="http://de.wikipedia.org/wiki/Gro%C3%9Fgruppenmoderation">Großgruppenmoderation (Wikipedia)</a></p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2009/3/grossgruppen-moderationstraining-i/">weiterlesen…</a>
       </footer>
     
   </article>

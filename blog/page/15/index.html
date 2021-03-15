@@ -57,6 +57,333 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/11/iphone-applicaton-development/">
+        iPhone Applicaton Development
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-11-10">Montag, 10. November 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Hier einige Notizen zu der iPhone API die ich spannend finde:</p>
+<h2>iPhone Development Facts</h2>
+<ul>
+<li>iPhones in 70 Ländern mit 70+ millionen iPhones (plus unbekannt viele Touches)</li>
+<li>5500 Apps gibts im App Store</li>
+<li>200 Millionen Apps wurden in 121 Tagen vergekauft</li>
+<li>Wie Funktionieren iPhone Applikationen:<ul>
+<li>Bedienung mit dem Finger und Gesten: Pinch, Flick</li>
+<li>So wenig Input wie möglich machen (Weil Input anstrengend ist)</li>
+<li>Wenig Platz auf dem Bildschirm: Jede Applikation macht eine Sache und nur die</li>
+<li>GPS, Accelerometer werden benutzen</li>
+<li>Wenn die Applikation beendet wird wird der Zustand gesichert</li>
+</ul>
+</li>
+<li>Kriterien für Erfolgreiche Apps:<ul>
+<li>Delightfull (Spaß, Intuitiv)</li>
+<li>Innovative (Revolutionär, Innovativ, anspruchsvolle Technik)</li>
+<li>Designed <ul>
+<li>Great Design -&gt; kleine Teams damit gute Ideen auch eine Chance haben</li>
+<li>viele Iterationen</li>
+<li>ständiger Fokus auf Design [40% der Zeit! Nicht wie sonst]</li>
+<li>Attention To Detail</li>
+<li>"Sollutions Not Features"</li>
+<li>"Saying no to 1000 things"</li>
+<li>"Chose top 5 Features and amplify them"</li>
+<li>"Flatten data, to make it easily digestible"</li>
+<li>30 Second usage Scenario: Man soll nach 30 Sekunden mit der Applikation schon wieder fertig sein.</li>
+</ul>
+</li>
+<li>Integratied (Use all available technology - don't reinvent)</li>
+<li>Optimized (Performance, Stability, Battery Life is important), no PORT -&gt; neu und spezifisch fürs iPhone bauen</li>
+<li>Connected: Integrate data as much as possible, Connect to a Mac-Application</li>
+<li>Localized (40% des Maktes sind nicht-Englisch) Applikation UND Store lokalisieren! (Sonst weiß kein User dass die Applikation lokalisiert ist)</li>
+<li>Diese Checkliste immer wieder abarbeiten. :)</li>
+</ul>
+</li>
+</ul>
+<h2>Dev Tools Overview</h2>
+<ul>
+<li>Platz sparen ist das wichtigste, da sonst der watchdog das Programm killt</li>
+<li>Ein iPhone Programm sollte nur etwa 20-25 MB Ram benutzen (Insbesondere nicht so viel wie direkt nach dem Start des iPhones frei ist!)</li>
+<li>Code: Alles statisch gelinkt -&gt; Code wird man nicht los</li>
+<li>Bilder: png! (evtl. nochmal speziell komprimieren)</li>
+<li>Named-Images: Die sind immer im Speicher da gecached -&gt; Durch Filename laden (wird dann nicht gecached)</li>
+<li>Audio: Dolby Surround ist schlecht -&gt; mp3, mp4 </li>
+<li>Caching darf man gerne selber implementieren - Flasch kann man so viel nutzen wie man will</li>
+<li>Applikationen im App-Store können maximal 2 Gig groß sein.</li>
+</ul>
+<h2>User Interface Design</h2>
+<p>Eine Applikation zu erstellen kann man grob in 4 Phasen einteilen</p>
+<ul>
+<li>Familiarize:<ul>
+<li>iPhone verstehen</li>
+<li>HIG lesen</li>
+<li>Je schnell man mit einer Applikation fertig ist, desto besser: Starbucks, während jemand vor einem was ordert! (&lt;30 sek)</li>
+<li>Schnell starten / laden, schnell etwas rausfinden, schnell wieder beenden</li>
+<li>Andere Input-Art: Finger. Weniger Input ist mehr!<ul>
+<li>Nach Möglichkeiten suchen Tippen zu vermeiden - weil schwer</li>
+<li>Tippfehler akzeptieren / korrigieren</li>
+</ul>
+</li>
+<li>Weniger Platz am Bildschirm: Das wichtigste aussuchen, das Verstärken<ul>
+<li>"Reduce and Amplify!"</li>
+<li>"You want to strip this app to the bone!"</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Conceptualize<ul>
+<li>Fokus auf Lösungen!</li>
+<li>"Refine, Refine, Refine"</li>
+<li>Das Mentale Modell der User ergründen<ul>
+<li>Eine Frau die Kinder, Hund, Mann pflegt</li>
+<li>Sie schaut auf ihre Einkaufsliste, wie viel sie auf dem Konto hat</li>
+</ul>
+</li>
+<li>Benutzer entscheiden in 20 Sekunden ob sie eine Applikation behalten. Wenn sie 15 davon zum Starten benötigt...<ul>
+<li>Nur Spiele die man eh länger (10-30 Minuten) spielt dürfen länger brauchen (manche Utilities auch)</li>
+</ul>
+</li>
+<li>Immer mit einer Idee anfangen:<ul>
+<li>"Vielleicht inneneinrichtung machen?" -&gt; Was könnte man machen? Viel.</li>
+<li>"Vielleicht <a href="http://www.novamedia.de/d_pages/d_produkte_mac_fl.html">FoneLink</a> auf das iPhone bringen?" -&gt; Macht schweine viel....</li>
+<li>Was ist die Lösung die man anbietet?</li>
+</ul>
+</li>
+<li>Define your solution:<ul>
+<li>Application Definition statement: Worum geht's wirklich? Was und für Wen ("iPhoto ist ein Programm zum sortieren, betrachten und teilen von Photos für Home-User und Amateure.")</li>
+<li>Das ist das Sieb mit dem man Features aussiebt</li>
+</ul>
+</li>
+<li>Refine Features<ul>
+<li>Was ist das wenigste mit dem man durchkommt?<ul>
+<li>Wegschmeißen! Selber belohnen wenn man etwas rauslässt! :)</li>
+<li>Sieben mit dem "Application Definition Statement"</li>
+</ul>
+</li>
+<li>Was ist Neu, Am häufigsten Benutzt, Von den meisten usern (80%), Passt für unterwegs Benutzung</li>
+<li>Was passiert wenn man sich ver"klickt"?</li>
+<li>Was wenn die Beleuchtung schlecht ist?</li>
+<li>Weniger Information zu jedem Zeitpunkt anzeigen, dafür "drill down"</li>
+</ul>
+</li>
+<li>Welches Mentale Modell haben die Benutzer? Wie sieht er die Applikation?<ul>
+<li>Identify: Objects, Tasks, Roles, Relationships</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Realize<ul>
+<li>Welche Art Programm baut man? (Welcher Typ?)</li>
+<li>Produktivität: Lang benutzung (Mail), Wenig Graphik, Viele daten (Drilldown)</li>
+<li>Utility: Ein Blick auf etwas, dann fertig</li>
+<li>Immersive: Games, eigene Oberfläche, viel Graphik</li>
+<li>Das kann man plotten: Von oben (Serious) nach unten (Fun), von links (Entertainment) nach rechts (Tool)<ul>
+<li>Oben Rechts (Serious Tool) Mail: Viel Text, Hierarchien, wenig Graphik</li>
+<li>Unten Rechts: (Fun Tool) Social, Twitterific: Graphisch, wenig Text, Flache Hierarchien</li>
+<li>Unten Links: (Fun Entertainment) Games: Graphisch, alles eigenes Interface</li>
+<li>Oben Links: (Serious Entertainment) News: Text, wenig Graphik, Hierarchien (drill down)</li>
+<li>Mitte: Utilities (Rest?) Wetter, Aktienkurse, Uhrzeit / Wecker</li>
+</ul>
+</li>
+<li>Objekthierarchie in der UI wiederspiegeln (Das hat mich überrascht, da man das auf dem Desktop ja eigentlich eher nicht machen will (Weil das Mentale Modell der user, nach dem man das Interface baut, nicht unbedingt der beste Implementierungsweg ist)</li>
+<li>Mit Papier Iterieren (Welcher Screen kommt wo und wann?) immer wieder...</li>
+</ul>
+</li>
+<li>Finalize<ul>
+<li>Verbessern mit Photos und Bildern</li>
+<li>Animation für Begeisterung und Feedback!</li>
+<li>Refine, Optimize, Enhance</li>
+</ul>
+</li>
+</ul>
+<p>Zusammengefasst:</p>
+<ul>
+<li>"Application Definition Statement" erstellen</li>
+<li>Iterieren "early and often" (Auf Papier?)</li>
+<li>Bis zum Release wiederholen - dann wieder von vorn. :)</li>
+</ul>
+<h2>UIKit Development</h2>
+<ul>
+<li>View Controllers stehen immer im Zentrum: "The C in MVC" :)<ul>
+<li>Einer für jeden Bildschirm / Screen in der App</li>
+<li>Zwei Sorten: Custom Subclasses (Typischerweise 1 Screen), Apples Subklassen (machen mehrere Screens!)</li>
+<li>"view" property zum ablegen des UIViews</li>
+<li>wichtige delegate methoden: loadView: viewDidLoad: viewWillAppear: viewDidAppear:</li>
+<li>initWithNibName:bundle:  -&gt; Designated initializer</li>
+<li>Releasen wenn man fertig ist mit anzeigen -&gt; Speicher sparen</li>
+<li>Navigation controller: "Drill Down" interfaces<ul>
+<li>Managt andere ViewController!</li>
+<li>wichtige Delegate Methoden: pushViewController:animated: popViewController:animated:</li>
+<li>Wechselt Controller, Show/Hide NavigationController (für die Rückwärtsnavigation und wenige Aktionen)</li>
+</ul>
+</li>
+<li>UITabBarController: Verschiedene Ansichten auf die gleichen Daten (iTunes)<ul>
+<li>Managt NSViewControllers</li>
+<li>More und Konfiguration (fast wie NSToolbar!)</li>
+<li>Icons schwarz-weiß Outlines mit Alpha!</li>
+</ul>
+</li>
+<li>Toolbars: Tools und Aktionen (nur ein Icon)<ul>
+<li>Kein UIViewController!</li>
+<li>OK: Modales-Sheet als Aktion bringen (Slide up from the bottom!)</li>
+<li>Slide up meint: Etwas worauf man reagieren muss (Slide across meint navigating)</li>
+<li>Nie im Tab-Switcher aktionen auslösen!</li>
+<li>Bookmarks: Sheet dass den ganzen Bildschirm abdeckt</li>
+</ul>
+</li>
+<li>UITableViewController: Tabellen...<ul>
+<li>Plain (Adressbuch), Grouped (Prefs)</li>
+<li>Header, Footer, Sektionen (wieder mit Header &amp; Footer)</li>
+<li>Jede menge delegate calls um es zu befüllen</li>
+<li>UITableCells: <ul>
+<li>Kann: Bild, Text, Disclosure / Accessory (evtl. auch checkbox?)</li>
+<li>Kann einfach Subviews hinzufügen (Yay, nie mehr SubviewTableViewController)<ul>
+<li>Speicher sparen: (Speziell beim scrollen wichtig, damit es flüssig ist) "Cellen" mit gleicher Klasse / Struktur sollten gleiche ID haben, dann kann man mit [tableView dequeReusableCellWithIdentifier:someID] die die oben rausgescrollt sind wieder verwenden statt jedesmal eine Neue zu machen</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>View Controller Tips<ul>
+<li>Immer festlegen ob man das View drehen kann oder nicht (Telefon verkehrt herum macht keinen Sinn - Spiele könnten aber auch in beiden Landscapes prima funktionieren)</li>
+<li>Bildschirmgröße kann unterschiedlich sein: Beim Telefonieren ist die Statusbar doppelt so hoch!</li>
+<li>Memory<ul>
+<li>Jeder UIViewController kriegt Memory-Warnings</li>
+<li>applicationDidFinishLaunching -&gt; leicht halten (für schnellen Startup)</li>
+<li>Jedes UIKit View ist / hat einen core-animation Layer -&gt; Macht spaß</li>
+<li>Während der Animation (asynchron) die Applikation blockieren. Wenn der User irgendwo klickt und einen view-wechsel auslöst, der die Animation sinnlos macht...</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Text Display:<ul>
+<li>UILabel, UIWebView (html, pdf, word)</li>
+<li>NSString (UIStringDrawing)</li>
+<li>UITextField (so wenig wie möglich, immer defaults anbieten!)</li>
+<li>Keyboard Code: (UITextInputTraits) oder IB <ul>
+<li>shown in becomesFirstResponder hidden in resignFirstResponder</li>
+<li>Cancel bedenken!</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>UITouch (ein Finger!)<ul>
+<li>multiTouch muss man per view einschalten!</li>
+<li>Gesten muss man selber erkennen</li>
+<li>touchesBegan:withEvent: touchesMoved:withEvent: touchesended:withEvent:</li>
+</ul>
+</li>
+<li>Accelerometer: Reichtung<ul>
+<li>deviceOrientationChanged: delegate </li>
+<li>Oder direkt -[UIAccelerometer sharedAccelerometer]<ul>
+<li>möglichst wenig (baterie) grob: 10/sec, spiel: 30/sec</li>
+<li>filtern! low pass  (konstante bewegungen)-&gt; Bubble-Level Sample, high-pass für plötzliche bewegungen</li>
+<li>Kriegt keine konstante Bewegung oder Richtung mit</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>MediaPlayer: Full screen movies</li>
+<li>Wichtig man kann zu jedem Zeitpunkt unterbrochen werden. Telefon, SMS, Termin (Telefonieren ist aber das wichtigste!)<ul>
+<li>Dann: Adio anhalten, Animation weg, Pausen-Funktion</li>
+<li>Bei einem Telefonanruf: Erst wird eine Pause ausgelöst, und eine Dialogbox die dem User erlaubt das Telefonat anzunehmen oder abzuweisen, Wenn er annimmt, wird die Applikation terminiert, sonst "resumed"</li>
+</ul>
+</li>
+<li>CoreLocation<ul>
+<li>Filter setzen damit weniger callbacks notwendig sind: distanceFilter = xxx; desiredAccuracy = kConstant;</li>
+<li>setzt man die filter "niedrig" genug wird möglicherweise GPS gar nicht angeworfen -&gt; weniger Strom, schneller</li>
+<li>Authorization Dialog: durch startUpdatingLocation -&gt; lehnt der User ab muss man das behandeln (Muss man das jedes mal authorisieren?)</li>
+</ul>
+</li>
+</ul>
+<h2>Optimization with Instruments</h2>
+<ul>
+<li>Wenig über Instruments und Shark. Mehr allgemeines Zeug</li>
+<li>Man muss sich klarmachen was man wo an informationen kriegen kann:<ul>
+<li>Simulator: Mac: 2 ghz, 2 gig ram, 500 gb platte, 2mb l2 cache, ethernet, wifi</li>
+<li>iPhone: 400mhz, 128 mb ram, 8-32 gb flash, kein cache, wifi, 3g, edge</li>
+</ul>
+</li>
+<li>Was messen: Speicher, Malen und Scrollen, Startzeit, Dateizugriff, Stromverbrauch</li>
+<li>VM gibt's, aber kein swap, read only pages (memmap) werden aber geschossen und neu geladen</li>
+<li>Keine Garbage Collector (man könnte sich aber mal an dem Boehm versuchen :)</li>
+</ul>
+<p>Tips:</p>
+<ul>
+<li>Static Memory minimieren<ul>
+<li>Code Size</li>
+<li>Compiler flags (schon standardmäßig): -mthumb -&gt; benutzt nur ein 16 Bit Subset und macht kleineren -&gt; Floating point Code wird aber wesentlich größer -&gt; Abwägen</li>
+<li>"Dead Code Stripping" -&gt; hilft aber nur bei C/C++ Code</li>
+<li>Möglichst abschalten was man nicht braucht (C++ RTTI, Exceptions)</li>
+<li>PNGs statt BMP/TIFF</li>
+<li>Plists als binary Variante (macht Xcode automatisch beim Resourcen Kopieren)</li>
+</ul>
+</li>
+<li>Dynamic Memory<ul>
+<li>NSAutoreleasePools eher vermeiden sonst so nutzen wie mans machen soll -&gt; computation intensive schleife -&gt; alle 100/1000 mal einen neuen nehmen</li>
+<li>"nonatomic" properties sind bis zu 10 mal schneller</li>
+<li>leaks vermeiden....</li>
+</ul>
+</li>
+<li>Memory warnings<ul>
+<li>Unbedingt reagieren -&gt; sonst wird die Applikation abgeschossen</li>
+<li>Werden u.a. via den UIViewControllern geliefert</li>
+<li>Dem Benutzer sagen dass die App gleich crashen könnte ist KEINE Lösung</li>
+</ul>
+</li>
+<li>Custom Drawing:<ul>
+<li>Views undurchsichtig (opaque) machen -&gt; schneller</li>
+<li>optimiert Zeichnen: -setNeedsDisplayInRect:, dann nur das in -drawRect: malen</li>
+<li>Cachen was sich nicht verändert</li>
+<li>Möglichst views nicht beim Scrollen allokieren -&gt; langsam<ul>
+<li>"reusable cells" machen mehr sinn (siehe dequeue...)</li>
+</ul>
+</li>
+<li>Cell layer hierarchies zusammenfallen lassen? (Unklar was das genau sein soll</li>
+<li>"Design for fast launch, short use"</li>
+<li>"Optimize startup, Optimize quit"</li>
+<li>Rest per lazy initializing</li>
+</ul>
+</li>
+<li>Große Datensets:<ul>
+<li>-[NSData initWithContentsOfMappedFile:]</li>
+<li>SQLite für random access in großen Datensets</li>
+</ul>
+</li>
+<li>So wenig wie möglich schreiben</li>
+<li>Sich schnell / langsam ändernde Daten trennen</li>
+<li>Möglichst wenig Batterie verbrauchen</li>
+<li>Möglichst wenig Netzwerktraffic<ul>
+<li>wenn doch: Viel auf einmal, wenig "chatty protokolls"</li>
+</ul>
+</li>
+<li>Location: <ul>
+<li>Holen, dann callbacks ausschalten</li>
+<li>Genauigkeit nur so weit einschränken wie man es tatsächlich braucht</li>
+</ul>
+</li>
+</ul>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/11/iphone-applicaton-development/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/11/piratenpartei-berlin-blog/">
         Piratenpartei Berlin Blog
         </a>
@@ -412,33 +739,6 @@
     
       <footer>
         <a href="../../2008/10/c-code-fu-r-c-und-c-verwendbar-machen/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/10/ich-find-user-ideen-grossartig/">
-        Ich find User-Ideen großartig
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-10-13">Montag, 13. Oktober 2008</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Einfach mal kreativ mit der Techik umgehen. Mal probieren und testen und dann die Erfahrung austauschen.</p>
-<p><img src="http://failblog.files.wordpress.com/2008/09/fail-owned-yahoo-science-mirror-fail1.jpg" alt="Image"> (<a href="http://failblog.org/2008/10/05/science-fail/">via</a>)</p>
-<p>Unglaublich über sowas einfach herzuziehen. <a href="http://video.google.com/videosearch?ie=UTF-8&amp;oe=utf8&amp;q=isight+mirror&amp;um=1&amp;sa=X&amp;oi=video_result_group&amp;resnum=4&amp;ct=title#">Einfach die eingebaute Kamera als Spiegel verwenden.</a> Zum Beispiel <a href="http://www.macupdate.com/info.php/id/18305">damit</a>.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/10/ich-find-user-ideen-grossartig/">weiterlesen…</a>
       </footer>
     
   </article>

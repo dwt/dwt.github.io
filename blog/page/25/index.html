@@ -57,6 +57,38 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/5/mein-name-ist-martin-und-ich-bin-ein-pirat/">
+        Mein Name ist Martin und ich bin ein Pirat
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-05-06">Dienstag, 6. Mai 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Denn das worum es heute geht ist die Frage wer die Kultur von Morgen kontrolliert.</p>
+<p>Die die es heute noch tun - oder die die sich gerade anschicken diese Kontrolle zu unterlaufen?</p>
+<p>Die Wissenschaftler, die Privatmenschen, die Berufsausübenden, die Künstler - alle, die jetzt nicht mehr durch einen Engpass (auch Firma genannt) davon abgehalten werden können ihren Sermon zu veröffentlichen.</p>
+<p>Manchmal werden diese Menschen Blogger genannt, aber es geht um etwas viel größeres.</p>
+<p>Unsere Kultur. Was wir daraus machen. Wie wir sie machen.</p>
+<hr>
+<p>Das ist in etwa die Meinung von <a href="http://de.wikipedia.org/wiki/Rickard_Falkvinge">Rickard</a> <a href="http://english.rickfalkvinge.se/">Falkvinge</a> die er in <a href="http://www.gulli.com/news/mein-name-ist-rickard-2006-06-05/">immer wieder Vertritt</a>.</p>
+<p>Heute kriegt er erst mal meine Zustimmung. An die Kritik mache ich mich Später.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/5/mein-name-ist-martin-und-ich-bin-ein-pirat/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/5/den-mobile-monday/">
         Den Mobile Monday
         </a>
@@ -345,57 +377,6 @@ HG: kann bisher noch nicht ins SVN comitten - aber immerhin <a href="http://code
     
       <footer>
         <a href="../../2008/4/das-neue-ubuntu-ist-da/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/4/function-call-vs-message-send/">
-        Function Call vs. Message Send
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-04-26">Samstag, 26. April 2008</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Oder: Wieso mich die Lisp Syntax so stört.</p>
-<p>In meiner Freizeit beschäftige ich mich gerade mit dem Buch <a href="http://gigamonkeys.com/book/">Practical Common Lisp</a>.</p>
-<p>Das Buch gefällt mir auch ganz gut - vielleicht abgesehen davon das er 'loop etwas zu häufig verwendet - ohne es zu erklären - was den Code gerade am Anfang reichlich magisch macht.</p>
-<p>Aber: Worum es mir eigentlich geht, ist die Syntax von Lips. Nicht die Klammern, nicht die Einrückung, nicht die Art wie man es schreibt, sondern schlicht die Reihenfolge.</p>
-<p>Weil: in Lisp ist erst einmal alles auf Funktionen abgebildet. Und das hat Vorteile aber eben auch einen gravierenden Nachteil: Jede Funktion muss immer als erstes in einem Funktionsaufruf Tupel stehen.</p>
-<div class="hll"><pre><span></span><span class="p">(</span><span class="nv">funktion</span> <span class="nv">argument-eins</span> <span class="nv">argument-zwei</span><span class="p">)</span>
-</pre></div>
-<p>Das ist ein Problem, weil man bei verschachtelten Funktionsaufrufen (auch schon bei nur sehr wenigen Ebenen) sehr schnell den Überblick verliert welcher Funktionsaufruf zu welchem argument gehört.</p>
-<div class="hll"><pre><span></span><span class="p">(</span><span class="nv">funktion</span> <span class="p">(</span><span class="nv">funktion-zwei</span> <span class="nv">argument-eins</span> <span class="p">(</span><span class="nv">funktion-drei</span> <span class="nv">argument-eins</span> <span class="nv">argument-zwei</span><span class="p">))</span> <span class="nv">argument-zwei</span><span class="p">)</span>
-</pre></div>
-<p>Das kann man jetzt natürlich auch als Feature sehen, weil man gezwungen wird seinen Code vernünftig einzurücken und keine zu langen Funktionen zu schreiben</p>
-<div class="hll"><pre><span></span><span class="p">(</span><span class="nv">funktion</span> <span class="p">(</span><span class="nv">funktion-zwei</span> <span class="nv">argument-eins</span>
-                     <span class="p">(</span><span class="nv">funktion-drei</span> <span class="nv">argument-eins</span> <span class="nv">argument-zwei</span><span class="p">))</span> 
-        <span class="nv">argument-zwei</span><span class="p">)</span>
-</pre></div>
-<p>Das hilft, aber eben nur so weit. Vor allem weil man beim Lesen von Code immer eine interne herumdrehung machen muss um den Code korrekt zu lesen.</p>
-<div class="hll"><pre><span></span><span class="p">(</span><span class="nb">defparameter</span> <span class="nv">a-list</span> <span class="p">(</span><span class="nb">list</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span><span class="p">))</span>
-
-<span class="p">(</span><span class="nb">car</span> <span class="p">(</span><span class="nb">cdr</span> <span class="p">(</span><span class="nb">cdr</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">a-list</span><span class="p">))))</span>
-</pre></div>
-<p>Soll (wenn (ich) (mich nicht verschrieben) habe) 5 ergeben.</p>
-<p>Aber man muss es von innen nach aussen lesen, damit man es richtig versteht.</p>
-<p>Und das erfordert jede menge Geistige Kapazität, die besser beim finden von guten Namen für Variablen und Funktionen aufgehoben ist. Viel besser.</p>
-<p>Jetzt zum Message-Passing - das ist zwar fundamental "weniger mächtig" als der Funktionsaufruf, weil man zum Beispiel generische Funktionen nicht oder nicht so gut implementieren kann, ABER: man kann viel besser mit dem resultat eines vorherigen Aufrufes das nächste tun.</p>
-<p>Weil die Reihenfolge in der die Sachen ausgeführt werden die gleiche ist in der die Sachen auf dem Bildschirm stehen.</p>
-<p>Und das ist eine ganze Menge besser les- und versteh-bar als die Funktion es jemals sein kann.</p>
-<p>Das war es was <a href="http://de.wikipedia.org/wiki/Alan_Kay">Alan Kay</a> meinte, als er sagt das das wichtigste an <a href="http://de.wikipedia.org/wiki/Smalltalk_(Programmiersprache">Smalltalk</a>) nicht die Objektorientierung, sondern das <a href="http://c2.com/cgi/wiki?AlanKayOnMessaging">Message Passing</a> gewesen ist.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/4/function-call-vs-message-send/">weiterlesen…</a>
       </footer>
     
   </article>

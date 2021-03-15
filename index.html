@@ -59,6 +59,33 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="blog/2021/3/crosswords-puzzle/">
+        Crosswords Puzzle
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2021-03-15">Montag, 15. März 2021</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Kreuzworträtsel finde ich eigentlich langweilig. Aber die Idee die Vorgaben über Reguläre Ausdrücke zu machen finde ich <em>klasse</em>.</p>
+<p><a href="http://jimbly.github.io/regex-crossword/">Hier geht es zum Puzzle</a> - mit Herzlichem Dank an <a href="https://github.com/Jimbly">Jimb Esser</a>.</p>
+<p>Ursprünglich entworfen hat es <a href="https://web.mit.edu/puzzle/www/2013/coinheist.com/rubik/a_regular_crossword/">Dan Gulotta am MIT</a> aber die JS Implementierung von <a href="https://github.com/Jimbly">Jimb Esser</a> ist einfach Gold wert.</p>
+
+    </section>
+    
+      <footer>
+        <a href="blog/2021/3/crosswords-puzzle/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="blog/2021/3/thermik-gradienten-lesen/">
         Thermik-Gradienten lesen
         </a>
@@ -153,43 +180,6 @@
     
       <footer>
         <a href="blog/2021/2/dependable-api-evolution/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="blog/2018/7/yeehaw-endlich-wieder-ein-blog/">
-        Yeehaw! Endlich wieder ein Blog!
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2018-07-16">Montag, 16. Juli 2018</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Lange hat es gedauert - Ahem.</p>
-<p>In den letzten Monaten habe ich mich mit <a href="https://getlektor.com">Lektor</a> auseinandergesetzt. Mit ein Paar Plugins (<a href="https://github.com/humrochagf/lektor-creative-commons">CreativeCommons</a> und <a href="https://github.com/lektor/lektor-markdown-highlighter">Markdown Highlighter</a>) kann man viel Spaß beim Blog-Post schreiben haben.</p>
-<p>Der große Vorteil von Lektor ist, dass man eine komplett statische Seite damit rendert. Man kann die Seite danach also über ein CDN ausliefern - 'Internet Scale' ist also gar kein Problem…</p>
-<p>Solche Systeme gibt es natürlich viele - aber mit Lektor kriegt man zusätzlich noch ein CMS (das Lokal läuft) - oder auch hinter <code>.htaccess</code> geschützt laufen kann, so dass man keine Sorgen haben muss, dass einem über so eine Webseite der Server aufgemacht wird.</p>
-<p>Aber Lektor überzeugt auch mit einer moderat einfachen <a href="https://www.getlektor.com/docs/api/">API</a>, selbst plugins dafür zu schreiben ist einfach und macht Spaß. Fast wie es bei <a href="https://trac.edgewall.org">Track</a> ganz am Anfang auch einmal war. ☺️</p>
-<p>Ich freue mich darüber dass ich jetzt eine voll-responsive Seite haben, die mit HTML und CSS wirklich auskommt - no JS needed. (Ich werde aber vielleicht in der Zukunft für Experimente auch JS in der Seite verwenden). Für jetzt ist es erst mal das Experiment wie lange ich ohne JS auskomme.</p>
-<p>Da wäre zum Beispiel das Menü - das auf Mobil mit Animation schön aufklappt. Hierzu habe ich verschiedene Techniken kombiniert.</p>
-<ol>
-<li><p>Die Verhältnisse der ganzen Abmessungen werden über <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_variables">CSS-Variablen</a> und <a href="https://developer.mozilla.org/de/docs/Web/CSS/calc">CSS-Calc</a> einmal global gesetzt. Das geht zwar noch nicht vollständig, da man CSS Variablen <a href="https://stackoverflow.com/questions/40722882/css-native-variables-not-working-in-media-queries#40723269">nicht in Media Queries einsetzen kann</a>, aber immerhin. Einzig dass man Stylesheets noch nicht 'nested' aufschreiben kann stört.</p>
-</li>
-<li><p>Die Animation beim klick auf das <a href="https://de.wikipedia.org/wiki/Hamburger-Menü-Icon">Hamburger Menü</a> sowie das Öffnen des Menüs kommt komplett ohne JS aus. Damit das geht braucht es ein DOM Element, dass den State 'ein oder ausgeblendet' hält, gleichzeitig via CSS abgefragt werden kann sowie diesen State durch Klick auf ein anderes Element ändert. Well, dafür funktioniert lustiger Weise das <code>&lt;input type=checkbox id=menu-state&gt;</code> Element. Das wechselt den <code>checked</code>-Zustand, was mann dankenswerter Weise in CSS mittels <code>:checked</code> herausfinden kann. Der Clou ist aber, dass man irgendwo anders im Dokument ein <code>&lt;label for=menu-state&gt;</code> haben kann, auf das man Klicken kann um diesen State zu wechseln. Und <code>&lt;label&gt;</code> kann man im Gegensatz zu <code>&lt;input type=checkbox&gt;</code> in allen Browsern vernünftig stylen. Und man kann mittels <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Animations/Using_CSS_animations">CSS-Animationen</a> alles animieren. Fuck yeah!</p>
-</li>
-</ol>
-
-    </section>
-    
-      <footer>
-        <a href="blog/2018/7/yeehaw-endlich-wieder-ein-blog/">weiterlesen…</a>
       </footer>
     
   </article>

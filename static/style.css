@@ -29,6 +29,7 @@ body > footer {
 
 .work.page img {
     max-width:100%;
+    padding: 2rem;
 }
 
 blockquote {

@@ -57,6 +57,48 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2010/6/objective-c-metaprogrammierung-blo-cke-zu-methoden/">
+        Objective-C Metaprogrammierung: Blöcke zu Methoden
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2010-06-20">Sunday, June 20, 2010</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Die Ruby Welt verwendet Blöcke (Closures) liebend gerne für alles mögliche. Zum Beispiel als Builder-Methapher um Baumstrukturen (XML, GUI's, HTML, Tests) in der Sprache hinzuschreiben und dann nur noch in die Target-Sprache zu rendern.</p>
+<p>Das sieht in Tests zum Beispiel so aus:</p>
+<div class="hll"><pre><span></span><span class="n">describe</span> <span class="s2">&quot;something&quot;</span> <span class="k">do</span>
+
+  <span class="n">it</span> <span class="s2">&quot;should do fnord&quot;</span> <span class="k">do</span>
+    <span class="n">someObject</span><span class="o">.</span><span class="n">should</span> <span class="n">be_fnordy</span>
+  <span class="k">end</span>
+
+<span class="k">end</span>
+</pre></div>
+<p>Der Trick dabei ist das alles von <code>do</code> bis <code>end</code> jeweils ein Block ist der von der Methode describe oder it dann in eine UnitTest Klassenstruktur eingehängt wird um dann später als 'ganz normale' unit tests ausgeführt zu werden.</p>
+<p>Jetzt wo Objective-C auch Blöcke unterstützt (ok, die können natürlich weniger als das Ruby Equivalent) müsste das eigenltich auch gehen - und siehe da mit <a href="http://github.com/pivotal/cedar">Cedar</a> gibt es auch schon einen ersten Versuch <a href="http://rspec.info/">RSpec</a> in Objective-C nachzubauen.</p>
+<p>Well und daher habe ich mir mal angeschaut wie weit man denn kommt wenn man in Objective-C einen Block in eine Instanz-Methode umwandeln will.</p>
+<p>Gleich vorneweg - das Typ-System von Objective-C macht mir hier einen kleinen Strich durch die Rechnung - ich habe es nicht geschafft einen Block nicht direkt als Funktions-pointer verwenden.</p>
+<p>Aber mit etwas Umweg geht es doch.</p>
+<p>Der Trick ist das Blöcke auch <code>id</code>'s sein können, d.h. man kann sie bequem in ein NSMutableDictionary packen.</p>
+<p>Also brauche ich auf meiner Klasse nur ein Dictionary, speichere die Blöcke darin mit dem Namen der Methode ab und baue mir einen generischen Dispatcher-IMP der den Selector (zweites unsichtbares Argument jeder Objective-C Methode) verwendet um den Block aus aus dem Dictionary zu ziehen und führe ihn dann einfach aus.</p>
+<p>[source:/open-source/adding-blocks-as-methods/trunk/AttachBlocksAsMethods.m So sieht dass dann aus]</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2010/6/objective-c-metaprogrammierung-blo-cke-zu-methoden/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2010/5/die-scho-nsten-testsuiten/">
         Die schönsten Testsuiten
         </a>
@@ -344,41 +386,6 @@
     
       <footer>
         <a href="../../2010/1/grand-unified-theory-of-programming/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2010/1/python-saugpunkte-klassenobjekte/">
-        Python Saugpunkte: Klassenobjekte
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2010-01-13">Wednesday, January 13, 2010</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Klassenobjekte sind special - daher hat man im boddy einer klasse keinen Zugriff auf das klassenobjekt.</p>
-<p>Weil, self ist ja auch nicht automatisch und man muss es in Methoden immer als explizites Argument hinschreiben, und so etwas gibt es ja bei Klassen nicht, denn das sind ja keine Methoden und daher kann man halt das Klassenobjekt nicht referenzieren im body.</p>
-<p>Doh.</p>
-<p>Und das nervt natürlich total bei der meta-programmierung.</p>
-<p>Hier mal ein Beispiel von etwas SQL-Alchemy Code wo mir das wieder aufgefallen ist:</p>
-<div class="hll"><pre><span></span><span class="k">class</span> <span class="nc">Poll</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
-    <span class="n">proposal</span> <span class="o">=</span> <span class="n">relation</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">Proposal</span><span class="p">,</span> <span class="n">backref</span><span class="o">=</span><span class="n">backref</span><span class="p">(</span><span class="s1">&#39;polls&#39;</span><span class="p">,</span> <span class="n">cascade</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span>
-                           <span class="n">lazy</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">order_by</span><span class="o">=</span><span class="n">Poll</span><span class="o">.</span><span class="n">begin_time</span><span class="o">.</span><span class="n">desc</span><span class="p">()))</span>
-</pre></div>
-<p>Das geht nicht, weil ich auf Poll nicht zugreifen kann und damit nicht auf andere attribute der Klasse. Der Workaround den SQLAlchemy dafür macht ist das man einen String hineinreicht und die den dann aufwendig parsen. Total gar nicht toll.</p>
-<p>:-(</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2010/1/python-saugpunkte-klassenobjekte/">weiterlesen…</a>
       </footer>
     
   </article>

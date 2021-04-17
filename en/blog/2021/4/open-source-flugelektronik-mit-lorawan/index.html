@@ -72,14 +72,15 @@
     
     <section class="blog-post-body">
       <p>Inzwischen gibt es mehrere Projekte die Lora Funktechnik für Ad-Hoc-Netzwerke in der Luft (und am Boden) verwenden.</p>
-<p><a href="https://github.com/lyusupov/SoftRF">SoftRF</a> ist vermutlich das bekannteste, da es mit günstiger Hardware eigentlich alle Standards unterstützt. <a href="https://de.aliexpress.com/item/4001286458852.html">Dieses</a> für in der Luft und und <a href="https://de.aliexpress.com/item/4000571051141.html">dieses</a> als Gegengerät am Boden und für Experimente - jeweils in der in Europa zugelassenen 868Mhz Variante - habe ich mir besorgt, da sie nur jeweils €25€ Kosten.</p>
+<p><a href="https://github.com/lyusupov/SoftRF">SoftRF</a> ist vermutlich das bekannteste, da es mit günstiger Hardware eigentlich alle Standards unterstützt. <a href="https://de.aliexpress.com/item/4001286458852.html">Dieses</a> für in der Luft und und <a href="https://de.aliexpress.com/item/4000571051141.html">dieses</a> als Gegengerät am Boden und für Experimente - jeweils in der in Europa zugelassenen 868Mhz Variante - habe ich mir besorgt, da sie nur jeweils ~25€ Kosten.</p>
 <p>SoftRF kommt darauf sogar schon vorinstalliert, das ist wirklich sehr komfortabel.</p>
-<p>In Betrieb lassen sich die Geräte auch ganz gut nehmen, einfach via USB an den Rechner anschließen, bei dem einen geht dann ein WLAN auf über das man es Konfigurieren kann, bei dem anderen hat man direkten Zugriff über die Serielle.</p>
+<p>In Betrieb lassen sich die Geräte auch ganz gut nehmen, einfach via USB an den Rechner anschließen, bei dem einen geht dann ein WLAN auf über das man es Konfigurieren kann, bei dem anderen hat man direkten Zugriff über die serielle:</p>
 <div class="hll"><pre><span></span>$ pip install pyserial
 $ python -m serial.tools.list_ports
 <span class="o">[</span>...<span class="o">]</span>
 $ python -m serial.tools.miniterm /path/to/port
 </pre></div>
+<p>Konfigurieren kann man das Gerät dann über eine Config-String, den man <a href="http://soaringweather.no-ip.info/SoftRF/settings.html">in diesem Web-Interface</a> generieren kann.</p>
 <p>Easy peasy.</p>
 <p>Next Tasks:</p>
 <ul>
@@ -107,7 +108,7 @@ $ python -m serial.tools.miniterm /path/to/port
     <div class="relative-navigation">
       
       
-        <div class="next">Nächstes Post: <a class="next" href="../../3/crosswords-puzzle/">Crosswords Puzzle</a></div>
+        <div class="next">Nächstes Post: <a class="next" href="../wie-und-wann-den-retter-werfen/">Wie und wann den Retter werfen?</a></div>
       
     </div>
     

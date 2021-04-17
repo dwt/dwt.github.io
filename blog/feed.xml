@@ -1,13 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Martin Häckers Blog - Software, Go / Baduk / Weiqi, Liquid Democracy</title><link href="https://h%C3%A4cker.net/en/blog/" rel="alternate"></link><link href="https://h%C3%A4cker.net/blog/feed.xml" rel="self"></link><id>urn:uuid:d0d51cf8-c6be-310d-a416-bf22c1661ce7</id><updated>2021-04-17T00:00:00Z</updated><author><name></name></author><subtitle></subtitle><entry><title>Open Source Flugelektronik mit Lora</title><link href="https://h%C3%A4cker.net/blog/2021/4/open-source-flugelektronik-mit-lorawan/" rel="alternate"></link><updated>2021-04-17T00:00:00Z</updated><author><name>Martin Häcker</name></author><id>urn:uuid:8fe7de32-bbfb-385d-9e4c-ae441b249a37</id><content type="html">&lt;p&gt;Inzwischen gibt es mehrere Projekte die Lora Funktechnik für Ad-Hoc-Netzwerke in der Luft (und am Boden) verwenden.&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://github.com/lyusupov/SoftRF"&gt;SoftRF&lt;/a&gt; ist vermutlich das bekannteste, da es mit günstiger Hardware eigentlich alle Standards unterstützt. &lt;a href="https://de.aliexpress.com/item/4001286458852.html"&gt;Dieses&lt;/a&gt; für in der Luft und und &lt;a href="https://de.aliexpress.com/item/4000571051141.html"&gt;dieses&lt;/a&gt; als Gegengerät am Boden und für Experimente - jeweils in der in Europa zugelassenen 868Mhz Variante - habe ich mir besorgt, da sie nur jeweils €25€ Kosten.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Martin Häckers Blog - Software, Go / Baduk / Weiqi, Liquid Democracy</title><link href="https://h%C3%A4cker.net/en/blog/" rel="alternate"></link><link href="https://h%C3%A4cker.net/blog/feed.xml" rel="self"></link><id>urn:uuid:d0d51cf8-c6be-310d-a416-bf22c1661ce7</id><updated>2021-04-17T00:00:00Z</updated><author><name></name></author><subtitle></subtitle><entry><title>Wie und wann den Retter werfen?</title><link href="https://h%C3%A4cker.net/blog/2021/4/wie-und-wann-den-retter-werfen/" rel="alternate"></link><updated>2021-04-17T00:00:00Z</updated><author><name>Martin Häcker</name></author><id>urn:uuid:4a1b9d86-543d-34a5-b0ec-924e3d4cf7d8</id><content type="html">&lt;p&gt;&lt;a href="https://www.youtube.com/watch?v=Oa1JCLqIwS0"&gt;Diesen Vortrag von Theo de Blic&lt;/a&gt; finde ich sehr sehenswert, da er a) viel Erfahrung mit Rettern hat - immerhin 14 Retterwürfe hat er schon durch, und b) einen wunderschön strukturierten Gedanken-Ablauf hat wan und wie man seine Retter werfen soll.&lt;/p&gt;
+&lt;p&gt;Besonders Wertvoll fand ich die Folie 'Know your limits' in denen er wiedergibt wann Er seinen Retter wirft. Ich habe beschlossen das ich mir diese 'Gedankenkarte' auf jeden fall auch ziehen möchte. Also: 'Note to self' - Wann immer eine dieser Situationen auftritt, egal welche Höhe, ziehe ich meine Rettung!&lt;/p&gt;
+&lt;h2&gt;Know your limits&lt;/h2&gt;
+&lt;h3&gt;Höhe&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Ich bin niedrig&lt;/li&gt;
+&lt;li&gt;Ich bin nicht sicher ob ich hoch oder niedrig bin&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Verloren Fühlen&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Ich weiß nicht was ich tun soll&lt;/li&gt;
+&lt;li&gt;Ich weiß nicht wo ich bin&lt;/li&gt;
+&lt;li&gt;Ich verstehe nicht was passiert&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Unlösbare Situationen&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Line over&lt;/li&gt;
+&lt;li&gt;Mehrere twists&lt;/li&gt;
+&lt;li&gt;Große Krawatte&lt;/li&gt;
+&lt;li&gt;Kaputter Flügel&lt;/li&gt;
+&lt;/ul&gt;
+</content></entry><entry><title>Open Source Flugelektronik mit Lora</title><link href="https://h%C3%A4cker.net/blog/2021/4/open-source-flugelektronik-mit-lorawan/" rel="alternate"></link><updated>2021-04-17T00:00:00Z</updated><author><name>Martin Häcker</name></author><id>urn:uuid:8fe7de32-bbfb-385d-9e4c-ae441b249a37</id><content type="html">&lt;p&gt;Inzwischen gibt es mehrere Projekte die Lora Funktechnik für Ad-Hoc-Netzwerke in der Luft (und am Boden) verwenden.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/lyusupov/SoftRF"&gt;SoftRF&lt;/a&gt; ist vermutlich das bekannteste, da es mit günstiger Hardware eigentlich alle Standards unterstützt. &lt;a href="https://de.aliexpress.com/item/4001286458852.html"&gt;Dieses&lt;/a&gt; für in der Luft und und &lt;a href="https://de.aliexpress.com/item/4000571051141.html"&gt;dieses&lt;/a&gt; als Gegengerät am Boden und für Experimente - jeweils in der in Europa zugelassenen 868Mhz Variante - habe ich mir besorgt, da sie nur jeweils ~25€ Kosten.&lt;/p&gt;
 &lt;p&gt;SoftRF kommt darauf sogar schon vorinstalliert, das ist wirklich sehr komfortabel.&lt;/p&gt;
-&lt;p&gt;In Betrieb lassen sich die Geräte auch ganz gut nehmen, einfach via USB an den Rechner anschließen, bei dem einen geht dann ein WLAN auf über das man es Konfigurieren kann, bei dem anderen hat man direkten Zugriff über die Serielle.&lt;/p&gt;
+&lt;p&gt;In Betrieb lassen sich die Geräte auch ganz gut nehmen, einfach via USB an den Rechner anschließen, bei dem einen geht dann ein WLAN auf über das man es Konfigurieren kann, bei dem anderen hat man direkten Zugriff über die serielle:&lt;/p&gt;
 &lt;div class="hll"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ pip install pyserial
 $ python -m serial.tools.list_ports
 &lt;span class="o"&gt;[&lt;/span&gt;...&lt;span class="o"&gt;]&lt;/span&gt;
 $ python -m serial.tools.miniterm /path/to/port
 &lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Konfigurieren kann man das Gerät dann über eine Config-String, den man &lt;a href="http://soaringweather.no-ip.info/SoftRF/settings.html"&gt;in diesem Web-Interface&lt;/a&gt; generieren kann.&lt;/p&gt;
 &lt;p&gt;Easy peasy.&lt;/p&gt;
 &lt;p&gt;Next Tasks:&lt;/p&gt;
 &lt;ul&gt;
@@ -721,8 +743,4 @@ sich die Viren nicht ausbreiten:&lt;/p&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Ain't that pretty?&lt;/p&gt;
 &lt;p&gt;[browser:open-source/smalltalk-like-iterators/trunk Here's the current version!]&lt;/p&gt;
-</content></entry><entry><title>Zur Polizeigewalt auf der Freiheit statt Angst-Demo</title><link href="https://h%C3%A4cker.net/blog/2009/9/zur-polizeigewalt-auf-der-freiheit-statt-angst-demo/" rel="alternate"></link><updated>2009-09-16T00:00:00Z</updated><author><name>Martin Häcker</name></author><id>urn:uuid:0f18a73f-c91f-388a-9bed-8b209ac72264</id><content type="html">&lt;p&gt;Spannend - vor allem die diversen Analysen im Netz dazu.&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://www.piksa.info/blog/2009/09/13/aufruf-nach-polizeigewalt-bei-der-fsa09-informiert-die-medien/"&gt;Peter Piksa hat die beste Zusammenfassung der Ereignisse die ich kenne&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Besonders Spannend finde ich da &lt;a href="https://tepin.aiki.de/blog/archives/422-Intensitaetsstufen-koerperlicher-Gewalt.html"&gt;die Nachlese von Markus Hansen&lt;/a&gt; der sehr schön die Fakten zu Körperlicher Gewalt auf den Tisch legt.&lt;/p&gt;
-&lt;p&gt;Sehr Lesenswert.&lt;/p&gt;
 </content></entry></feed>

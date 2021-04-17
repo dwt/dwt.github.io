@@ -57,6 +57,41 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2010/1/python-saugpunkte-klassenobjekte/">
+        Python Saugpunkte: Klassenobjekte
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2010-01-13">Wednesday, January 13, 2010</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Klassenobjekte sind special - daher hat man im boddy einer klasse keinen Zugriff auf das klassenobjekt.</p>
+<p>Weil, self ist ja auch nicht automatisch und man muss es in Methoden immer als explizites Argument hinschreiben, und so etwas gibt es ja bei Klassen nicht, denn das sind ja keine Methoden und daher kann man halt das Klassenobjekt nicht referenzieren im body.</p>
+<p>Doh.</p>
+<p>Und das nervt natürlich total bei der meta-programmierung.</p>
+<p>Hier mal ein Beispiel von etwas SQL-Alchemy Code wo mir das wieder aufgefallen ist:</p>
+<div class="hll"><pre><span></span><span class="k">class</span> <span class="nc">Poll</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">proposal</span> <span class="o">=</span> <span class="n">relation</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">Proposal</span><span class="p">,</span> <span class="n">backref</span><span class="o">=</span><span class="n">backref</span><span class="p">(</span><span class="s1">&#39;polls&#39;</span><span class="p">,</span> <span class="n">cascade</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span>
+                           <span class="n">lazy</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">order_by</span><span class="o">=</span><span class="n">Poll</span><span class="o">.</span><span class="n">begin_time</span><span class="o">.</span><span class="n">desc</span><span class="p">()))</span>
+</pre></div>
+<p>Das geht nicht, weil ich auf Poll nicht zugreifen kann und damit nicht auf andere attribute der Klasse. Der Workaround den SQLAlchemy dafür macht ist das man einen String hineinreicht und die den dann aufwendig parsen. Total gar nicht toll.</p>
+<p>:-(</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2010/1/python-saugpunkte-klassenobjekte/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2010/1/python-saug-punkte-contd/">
         Python Saug Punkte contd.
         </a>
@@ -385,51 +420,6 @@ sich die Viren nicht ausbreiten:</p>
     
       <footer>
         <a href="../../2009/11/zur-schweinegrippe/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2009/11/das-wikipedia-dilemma-lo-sen/">
-        Das Wikipedia Dilemma Lösen
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2009-11-14">Saturday, November 14, 2009</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Ich weiß ich bin etwas spät mich dazu auch zu äussern - aber jetzt wo die <a href="https://secure.wikimedia.de/spenden/list.php?datum=2009-11">Wikipedia wieder zu Spenden aufruft</a> möchte ich was dazu sagen wieso ich nicht spende.</p>
-<p>Das ist doch alles Kindergarten was in der Wikipedia gerade läuft.</p>
-<p>Also gut, "embrace your enemy" oder wie es heißt, da können wir etwas tun.</p>
-<p>Lasst uns einen Kindergarten eröffnen. Jeder neue Wikipedia-Artikel ist zuerst im Kindergarten und wenn er Groß und Stark geworden ist kann er irgendwann ins Erwachsenen-Artikel-Leben übertreten.</p>
-<p>Das hätte folgenden Vorteil: Alle Exkludisten und die die nur die beste Qualität haben wollen legen einen Schalter um und sehen diese Einträge erst mal nicht.</p>
-<p>Alle anderen verlieren nicht sofort die Lust an der Mitarbeit wenn einer Ihrer Artikel gelöscht wurde - weil er nicht gelöscht wurde.</p>
-<p>Wenn jemand auf eine Seite kommt die unterhalb seines Qualitätslevels liegt, kann er ja einen Hinweis kriegen dass sie existiert, damit er sie mit einem Klick zu sehen bekommt bzw. er seine Einstellung ändern kann.</p>
-<p>Alle sind Glücklich!</p>
-<ul>
-<li>Jeder Artikel kann jederzeit in den Kindergarten geschickt werden bis er groß wird.</li>
-<li>Jeder Artikel kann jederzeit aus dem Kindergarten "graduieren"</li>
-<li>Wer nur Inhalte von größtmöglicher geprüfter Qualität sehen möchte kann diese ausschließen</li>
-<li>Alle Anderen kriegen einen deutlichen Hinweis dass der Artikel noch im "Kindergarten" ist</li>
-<li>Man könnte Kindergarten Artikel generell anders Rendern damit der Unterschied ganz klar ist</li>
-</ul>
-<p>Ich persönlich würde es vorziehen wenn die Standardeinstellung "Alles anzeigen" ist - aber auch wenn der Standard wäre "nur die geprüften Artikel anzeigen" und man jederzeit sieht wenn man an einer Stelle ist die im Kindergarten noch mehr Inhalt enthällt und man die nach bedarf zeigen kann wäre ich zufrieden.</p>
-<p>Platz ist in der Wikipedia ja kein Problem - nur von Admins und regelmäßigen Mitarbeitern gepflegter Platz ist knapp.</p>
-<p>Was ich will, ist das die User entscheiden können was sie lieber wollen. Mehr Artikel, oder besser geflegte - und nicht die die die meiste Zeit in das Projekt stecken. Das halte ich für absolut wichtig.</p>
-<p>Ach ja, und falls das innerhalb der Wikipedia nicht funktioniert, müsste man so etwas als eigene Applikation davor setzen wikinursery.de / kindergarten.wikipedia.de oder per greasemonkey oder als iPhone App oder eben als "vollständige Wikipedia" irgendwo anders.</p>
-<p>Nur innerhalb der Wikipedia  wäre natürlich am besten - wobei zweifelhaft ist ob die macher des Projekts dafür bereit sind.</p>
-<p>Ja, die Idee wurde schon von ein paar anderen Leuten geäussert - ich wollte sie auch noch einmal aufschreiben weil ich sie so wichtig finde.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2009/11/das-wikipedia-dilemma-lo-sen/">weiterlesen…</a>
       </footer>
     
   </article>

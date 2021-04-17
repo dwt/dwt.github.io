@@ -68,14 +68,15 @@
     
     <section class="blog-post-body">
       <p>Inzwischen gibt es mehrere Projekte die Lora Funktechnik für Ad-Hoc-Netzwerke in der Luft (und am Boden) verwenden.</p>
-<p><a href="https://github.com/lyusupov/SoftRF">SoftRF</a> ist vermutlich das bekannteste, da es mit günstiger Hardware eigentlich alle Standards unterstützt. <a href="https://de.aliexpress.com/item/4001286458852.html">Dieses</a> für in der Luft und und <a href="https://de.aliexpress.com/item/4000571051141.html">dieses</a> als Gegengerät am Boden und für Experimente - jeweils in der in Europa zugelassenen 868Mhz Variante - habe ich mir besorgt, da sie nur jeweils €25€ Kosten.</p>
+<p><a href="https://github.com/lyusupov/SoftRF">SoftRF</a> ist vermutlich das bekannteste, da es mit günstiger Hardware eigentlich alle Standards unterstützt. <a href="https://de.aliexpress.com/item/4001286458852.html">Dieses</a> für in der Luft und und <a href="https://de.aliexpress.com/item/4000571051141.html">dieses</a> als Gegengerät am Boden und für Experimente - jeweils in der in Europa zugelassenen 868Mhz Variante - habe ich mir besorgt, da sie nur jeweils ~25€ Kosten.</p>
 <p>SoftRF kommt darauf sogar schon vorinstalliert, das ist wirklich sehr komfortabel.</p>
-<p>In Betrieb lassen sich die Geräte auch ganz gut nehmen, einfach via USB an den Rechner anschließen, bei dem einen geht dann ein WLAN auf über das man es Konfigurieren kann, bei dem anderen hat man direkten Zugriff über die Serielle.</p>
+<p>In Betrieb lassen sich die Geräte auch ganz gut nehmen, einfach via USB an den Rechner anschließen, bei dem einen geht dann ein WLAN auf über das man es Konfigurieren kann, bei dem anderen hat man direkten Zugriff über die serielle:</p>
 <div class="hll"><pre><span></span>$ pip install pyserial
 $ python -m serial.tools.list_ports
 <span class="o">[</span>...<span class="o">]</span>
 $ python -m serial.tools.miniterm /path/to/port
 </pre></div>
+<p>Konfigurieren kann man das Gerät dann über eine Config-String, den man <a href="http://soaringweather.no-ip.info/SoftRF/settings.html">in diesem Web-Interface</a> generieren kann.</p>
 <p>Easy peasy.</p>
 <p>Next Tasks:</p>
 <ul>
@@ -89,6 +90,51 @@ $ python -m serial.tools.miniterm /path/to/port
     
       <footer>
         <a href="2021/4/open-source-flugelektronik-mit-lorawan/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="2021/4/wie-und-wann-den-retter-werfen/">
+        Wie und wann den Retter werfen?
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2021-04-17">Saturday, April 17, 2021</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p><a href="https://www.youtube.com/watch?v=Oa1JCLqIwS0">Diesen Vortrag von Theo de Blic</a> finde ich sehr sehenswert, da er a) viel Erfahrung mit Rettern hat - immerhin 14 Retterwürfe hat er schon durch, und b) einen wunderschön strukturierten Gedanken-Ablauf hat wan und wie man seine Retter werfen soll.</p>
+<p>Besonders Wertvoll fand ich die Folie 'Know your limits' in denen er wiedergibt wann Er seinen Retter wirft. Ich habe beschlossen das ich mir diese 'Gedankenkarte' auf jeden fall auch ziehen möchte. Also: 'Note to self' - Wann immer eine dieser Situationen auftritt, egal welche Höhe, ziehe ich meine Rettung!</p>
+<h2>Know your limits</h2>
+<h3>Höhe</h3>
+<ul>
+<li>Ich bin niedrig</li>
+<li>Ich bin nicht sicher ob ich hoch oder niedrig bin</li>
+</ul>
+<h3>Verloren Fühlen</h3>
+<ul>
+<li>Ich weiß nicht was ich tun soll</li>
+<li>Ich weiß nicht wo ich bin</li>
+<li>Ich verstehe nicht was passiert</li>
+</ul>
+<h3>Unlösbare Situationen</h3>
+<ul>
+<li>Line over</li>
+<li>Mehrere twists</li>
+<li>Große Krawatte</li>
+<li>Kaputter Flügel</li>
+</ul>
+
+    </section>
+    
+      <footer>
+        <a href="2021/4/wie-und-wann-den-retter-werfen/">weiterlesen…</a>
       </footer>
     
   </article>
@@ -397,39 +443,6 @@ $ python -m serial.tools.miniterm /path/to/port
     
       <footer>
         <a href="2011/7/mappei-stu-tzen-und-rechnungsstellung/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="2011/4/musik-ist-doch-was-feines/">
-        Musik ist doch was feines
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2011-04-05">Tuesday, April 5, 2011</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Da gibts so viele Möglichkeiten.</p>
-<ul>
-<li><a href="http://www.youtube.com/watch?v=dmoDLyiQYKw">Auf einem Floppy-Drive</a></li>
-<li><a href="http://www.robotlab.de/instru/video.htm">Auf einem Roboterarm</a></li>
-<li><a href="http://www.youtube.com/watch?v=Ht96HJ01SE4">Auf einem Scanner</a></li>
-<li><a href="http://www.youtube.com/watch?v=qEG-1iYpgKU">Tesla Spulen</a></li>
-<li><a href="http://www.youtube.com/watch?v=fp4jQNa_9sY">Festplatten</a> <a href="http://www.youtube.com/watch?v=g8Y1i6_IMwU">und nochmal</a></li>
-<li><a href="http://www.youtube.com/watch?v=OhnK5LdUCiQ">Schleifgeräten</a></li>
-</ul>
-
-    </section>
-    
-      <footer>
-        <a href="2011/4/musik-ist-doch-was-feines/">weiterlesen…</a>
       </footer>
     
   </article>

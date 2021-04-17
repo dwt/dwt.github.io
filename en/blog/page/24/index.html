@@ -57,6 +57,32 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/5/oh-und-noch-was-zum-tanzen/">
+        Oh und noch was zum Tanzen
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-05-19">Monday, May 19, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p><a href="http://video.google.com/videoplay?docid=3063604376858291792">.. gibts hier zu sehen.</a></p>
+<p>GRANDIOS.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/5/oh-und-noch-was-zum-tanzen/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/5/parteitagsfazit/">
         Parteitagsfazit
         </a>
@@ -331,86 +357,6 @@
     
       <footer>
         <a href="../../2008/5/experimentalphysik-und-programmieren/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/5/wann-darf-man-eigentlich/">
-        Wann darf man eigentlich…
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-05-10">Saturday, May 10, 2008</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>…die Syntax einer Sprache modifizieren?</p>
-<p>In C natürlich. Das Problem ist klar: Makros können ja beliebige Ersetzungen im Text vornehmen und dann mit vielen Makros aus C Pascal zu machen geht auch - aber das will man ja nicht, denn sonst hat man das gleiche Problem wie die <a href="http://minnie.tuhs.org/UnixTree/V7/usr/src/cmd/sh/mac.h.html">Bourne</a>-<a href="http://minnie.tuhs.org/UnixTree/V7/usr/src/cmd/sh/args.c.html">Shell</a> die irgendwann niemand mehr weiterentwickeln konnte.</p>
-<p>Klar.</p>
-<p>Andererseits nervt es wirklich unter Cocoa z.B. für jede Iteration über einen Array das hier zu schreiben:</p>
-<div class="hll"><pre><span></span><span class="bp">NSArray</span> <span class="o">*</span><span class="n">someStrings</span> <span class="o">=</span> <span class="p">[</span><span class="bp">NSArray</span> <span class="nl">arrayWithObjects</span><span class="p">:</span><span class="s">@&quot;first&quot;</span><span class="p">,</span> <span class="s">@&quot;second&quot;</span><span class="p">,</span> <span class="s">@&quot;third&quot;</span><span class="p">,</span> <span class="s">@&quot;fourth&quot;</span><span class="p">,</span> <span class="nb">nil</span><span class="p">];</span>
-
-<span class="bp">NSString</span> <span class="o">*</span><span class="n">eachString</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
-<span class="bp">NSEnumerator</span> <span class="o">*</span><span class="n">enumerator</span> <span class="o">=</span> <span class="p">[</span><span class="n">someStrings</span> <span class="n">objectEnumerator</span><span class="p">];</span>
-
-<span class="k">while</span> <span class="p">(</span><span class="n">eachString</span> <span class="o">=</span> <span class="p">[</span><span class="n">enumerator</span> <span class="n">nextObject</span><span class="p">])</span>
-<span class="p">{</span>
-    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;eachString is %@&quot;</span><span class="p">,</span> <span class="n">eachString</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div>
-<p>Das heißt, für eine Schleife (zwei Zeilen) ha man noch mal mindestens zwei weitere Zeilen nur für das Setup.</p>
-<p>Das nervt so sehr, das viele Leute das etwas kürzen:</p>
-<div class="hll"><pre><span></span><span class="bp">NSArray</span> <span class="o">*</span><span class="n">someStrings</span> <span class="o">=</span> <span class="p">[</span><span class="bp">NSArray</span> <span class="nl">arrayWithObjects</span><span class="p">:</span><span class="s">@&quot;first&quot;</span><span class="p">,</span> <span class="s">@&quot;second&quot;</span><span class="p">,</span> <span class="s">@&quot;third&quot;</span><span class="p">,</span> <span class="s">@&quot;fourth&quot;</span><span class="p">,</span> <span class="nb">nil</span><span class="p">];</span>
-
-<span class="kt">id</span> <span class="n">eachString</span><span class="p">,</span> <span class="n">enumerator</span> <span class="o">=</span> <span class="p">[</span><span class="n">someStrings</span> <span class="n">objectEnumerator</span><span class="p">];</span>
-<span class="k">while</span> <span class="p">(</span><span class="n">eachString</span> <span class="o">=</span> <span class="p">[</span><span class="n">enumerator</span> <span class="n">nextObject</span><span class="p">])</span>
-<span class="p">{</span>
-    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;eachString is %@&quot;</span><span class="p">,</span> <span class="n">eachString</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div>
-<p>Schon besser, aber man verliert die Typchecks (falls man die haben will) und man muss trotzdem noch eine langweilige Zeile schreiben, die immer gleich ist und sich nicht wirklich kürzen lässt.</p>
-<p>Jetzt kann man natürlich unter C schön ein Makro bauen, was das schöner macht - aber, siehe <a href="http://minnie.tuhs.org/UnixTree/V7/usr/src/cmd/sh/args.c.html">Bourne Shell</a>...</p>
-<p>Aber, mit <a href="http://en.wikipedia.org/wiki/Objective-C#Fast_enumeration">ObjC 2.0</a> gibt es das <code>for(String *each in someStrings)</code> konstrukt, das schon deutlich kürzer (und auch schneller - aber aus anderen Gründen) ist.</p>
-<p>Also, doch mal ein Makro. Nach reiflichem (2 Minuten) überlegen hab ich mich entschieden es erst einmal mit einer <code>for</code> Schleife zu probieren, da das bedeutet das der Scope der Variablen schön beschränkt ist.</p>
-<p>Ziel wäre es also, das hier schreiben zu können:</p>
-<div class="hll"><pre><span></span><span class="bp">NSArray</span> <span class="o">*</span><span class="n">someStrings</span> <span class="o">=</span> <span class="p">[</span><span class="bp">NSArray</span> <span class="nl">arrayWithObjects</span><span class="p">:</span><span class="s">@&quot;first&quot;</span><span class="p">,</span> <span class="s">@&quot;second&quot;</span><span class="p">,</span> <span class="s">@&quot;third&quot;</span><span class="p">,</span> <span class="s">@&quot;fourth&quot;</span><span class="p">,</span> <span class="nb">nil</span><span class="p">];</span>
-
-<span class="n">FOREACH</span><span class="p">(</span><span class="n">eachString</span><span class="p">,</span> <span class="n">someStrings</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;eachString is %@&quot;</span><span class="p">,</span> <span class="n">eachString</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div>
-<p>Und das sähe dann so aus:</p>
-<div class="hll"><pre><span></span><span class="cp">#define FOREACH(each, collection) \</span>
-<span class="cp">    for(id __enumerator = [collection objectEnumerator], each = [__enumerator nextObject]; \</span>
-<span class="cp">        each; \</span>
-<span class="cp">        each = [__enumerator nextObject])</span>
-</pre></div>
-<p>In der Praxis hab ich es auf Wunsch meiner Kollegen noch etwas modifiziert, damit man den Typ der Variablen noch einstellen kann (auch wenn er bisher noch nicht verwendet wird - immerhin kann man ihn aber als Startpunkt für Dokumentations-Lookup verwenden).</p>
-<div class="hll"><pre><span></span><span class="c1">/// Use like this:</span>
-<span class="c1">// FOREACH(NSString *, each, arrayOfStrings)</span>
-<span class="c1">// {</span>
-<span class="c1">//      if ([each hasPrefix:@&quot;foo&quot;])</span>
-<span class="c1">//          [self doSomething];</span>
-<span class="c1">// }</span>
-<span class="c1">// This macro is in preparation of the ObjC 2.0 Fast enumeration protocol</span>
-<span class="cp">#define FOREACH(typeOfEach, each, collection) \</span>
-<span class="cp">    for(id __enumerator = [collection objectEnumerator], each = [__enumerator nextObject]; \</span>
-<span class="cp">        each; \</span>
-<span class="cp">        each = [__enumerator nextObject])</span>
-</pre></div>
-<p>Bei Verwendung, bitte e-mail. :-)</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/5/wann-darf-man-eigentlich/">weiterlesen…</a>
       </footer>
     
   </article>

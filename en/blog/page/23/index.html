@@ -57,6 +57,52 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/6/warum-kann-man/">
+        Warum kann man…
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-06-03">Tuesday, June 3, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>… eine Wurzel berechnen indem man einen <code>float</code> einfach um ein Bit nach rechts schiftet?</p>
+<div class="hll"><pre><span></span><span class="kt">float</span> <span class="nf">InvSqrt</span><span class="p">(</span><span class="kt">float</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">float</span> <span class="n">xhalf</span> <span class="o">=</span> <span class="mf">0.5f</span><span class="o">*</span><span class="n">x</span><span class="p">;</span> 
+    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">x</span><span class="p">;</span> <span class="c1">// get bits for floating value</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mh">0x5f3759df</span> <span class="o">-</span> <span class="p">(</span><span class="n">i</span><span class="o">&gt;&gt;</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// gives initial guess y0</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">i</span><span class="p">;</span> <span class="c1">// convert bits back to float</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">*</span><span class="p">(</span><span class="mf">1.5f</span><span class="o">-</span><span class="n">xhalf</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">x</span><span class="p">);</span> <span class="c1">// Newton step, repeating increases accuracy</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<p><a href="http://www.lomont.org/Math/Papers/2003/InvSqrt.pdf">Chris Lomont sich das mal angesehen</a> und seine Erklärung hab ich verstanden.</p>
+<p>Was diese Stelle tut:</p>
+<div class="hll"><pre><span></span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">x</span><span class="p">;</span> <span class="c1">// get bits for floating value</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mh">0x5f3759df</span> <span class="o">-</span> <span class="p">(</span><span class="n">i</span><span class="o">&gt;&gt;</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// gives initial guess y0</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">i</span><span class="p">;</span> <span class="c1">// convert bits back to float</span>
+</pre></div>
+<p>Ist total cool. das Bitmuster des <code>floats</code> wird einfach als long interpretiert - was nichts weiter bedeutet, als das die Teile des Floats, Vorzeichen, Mantisse und Exponent jetzt halt nebeneinander in einem Bitfeld liegen. Wenn man dieses Bitfeld jetzt nach rechts schiftet dann hat man das effektiv eben auch mit jedem der Bitfelder gemacht. Wenn man dann dieses Bitmuster noch etwas manipuliert, indem man es mit einer Korrekturkonstante vermurkst die die Fehler durch das hereinschiften von werten aus der Mantisse in den Exponent minimieren, dann hat man eine tolle Annäherung.</p>
+<p>Und diese Annäherung erlaubt es mit nur einem Schritt nach <a href="http://de.wikipedia.org/wiki/Newton-Verfahren">Newton</a> zu einer sehr guten Näherung an die Quadratwurzel zu kommen.</p>
+<p>Rockig.</p>
+<p>Vor allem finde ich es cool, wie die Hacker hinter diesem Algorithmus ihn gefunden haben. Das konnten sie nämlich nur machen, weil sie genau wussten wie ein <code>float</code> tatsächlich implementiert ist - einem Wissen das die meisten Hacker heute nur noch theoretisch haben - aber nicht so genau das sie dieses Format auch mal so ohne weiteres für so einen fiesen Trick missbrauchen können.</p>
+<p>In diesem Sinne: Aus der Geschichte lässt sich viel lernen. :-)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/6/warum-kann-man/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/6/was-macht-dieser-code/">
         Was macht dieser Code
         </a>
@@ -415,32 +461,6 @@ end with either a new-line or null character.
     
       <footer>
         <a href="../../2008/5/genshi/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/5/oh-und-noch-was-zum-tanzen/">
-        Oh und noch was zum Tanzen
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-05-19">Monday, May 19, 2008</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p><a href="http://video.google.com/videoplay?docid=3063604376858291792">.. gibts hier zu sehen.</a></p>
-<p>GRANDIOS.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/5/oh-und-noch-was-zum-tanzen/">weiterlesen…</a>
       </footer>
     
   </article>

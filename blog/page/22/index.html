@@ -57,6 +57,38 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/7/urlaub/">
+        Urlaub
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-07-04">Freitag, 4. Juli 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Ist schön!</p>
+<p>Barfuß laufen den ganzen Tag, jeden tag zweimal im Meer Schwimmen gehen, in der Sonne liegen und lesen...</p>
+<p><a href="http://www.hiddensee.de/">Hiddensee machts möglich</a>.</p>
+<p>Besonders schön an <a href="http://www.hiddensee.de/inselfuehrer/inseldoerfer.html">Neundorf</a>, es ist eigentlich vor allem nur eine große Wiese, auf die ein paar Häuser gebaut sind. Daher kann man eben auch alles Barfuß erlaufen. :)</p>
+<p>Ach ja, Autos gibts auf der Insel natürlich auch keine (ok, die Müllabfuhr und der Elektriker und noch zwei) was die Insel ganz dem Fahrad gehören lässt.</p>
+<p>Vitte und Kloster sind etwas größer, da hat man dann weniger Ruhe, in Kloster gibts natürlich noch den berühmten Leuchtturm - aber wer will schon da hin wo die Massen hinstreben...</p>
+<p>Natürlich alles ohne Computer, daher auch wenig Posts hier.</p>
+<p>Wird sich aber jetzt wieder ändern. :)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/7/urlaub/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/6/trac-die-webentwicklungsplattform/">
         Trac, die Webentwicklungsplattform
         </a>
@@ -327,52 +359,6 @@ Dauert also nicht mehr lange bis ich das hier fürs Bloggen einsetzen kann / wer
     
       <footer>
         <a href="../../2008/6/kommunikationsstrukturen/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/6/warum-kann-man/">
-        Warum kann man…
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-06-03">Dienstag, 3. Juni 2008</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>… eine Wurzel berechnen indem man einen <code>float</code> einfach um ein Bit nach rechts schiftet?</p>
-<div class="hll"><pre><span></span><span class="kt">float</span> <span class="nf">InvSqrt</span><span class="p">(</span><span class="kt">float</span> <span class="n">x</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="kt">float</span> <span class="n">xhalf</span> <span class="o">=</span> <span class="mf">0.5f</span><span class="o">*</span><span class="n">x</span><span class="p">;</span> 
-    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">x</span><span class="p">;</span> <span class="c1">// get bits for floating value</span>
-    <span class="n">i</span> <span class="o">=</span> <span class="mh">0x5f3759df</span> <span class="o">-</span> <span class="p">(</span><span class="n">i</span><span class="o">&gt;&gt;</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// gives initial guess y0</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">i</span><span class="p">;</span> <span class="c1">// convert bits back to float</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">*</span><span class="p">(</span><span class="mf">1.5f</span><span class="o">-</span><span class="n">xhalf</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">x</span><span class="p">);</span> <span class="c1">// Newton step, repeating increases accuracy</span>
-    <span class="k">return</span> <span class="n">x</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-<p><a href="http://www.lomont.org/Math/Papers/2003/InvSqrt.pdf">Chris Lomont sich das mal angesehen</a> und seine Erklärung hab ich verstanden.</p>
-<p>Was diese Stelle tut:</p>
-<div class="hll"><pre><span></span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">x</span><span class="p">;</span> <span class="c1">// get bits for floating value</span>
-    <span class="n">i</span> <span class="o">=</span> <span class="mh">0x5f3759df</span> <span class="o">-</span> <span class="p">(</span><span class="n">i</span><span class="o">&gt;&gt;</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// gives initial guess y0</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">i</span><span class="p">;</span> <span class="c1">// convert bits back to float</span>
-</pre></div>
-<p>Ist total cool. das Bitmuster des <code>floats</code> wird einfach als long interpretiert - was nichts weiter bedeutet, als das die Teile des Floats, Vorzeichen, Mantisse und Exponent jetzt halt nebeneinander in einem Bitfeld liegen. Wenn man dieses Bitfeld jetzt nach rechts schiftet dann hat man das effektiv eben auch mit jedem der Bitfelder gemacht. Wenn man dann dieses Bitmuster noch etwas manipuliert, indem man es mit einer Korrekturkonstante vermurkst die die Fehler durch das hereinschiften von werten aus der Mantisse in den Exponent minimieren, dann hat man eine tolle Annäherung.</p>
-<p>Und diese Annäherung erlaubt es mit nur einem Schritt nach <a href="http://de.wikipedia.org/wiki/Newton-Verfahren">Newton</a> zu einer sehr guten Näherung an die Quadratwurzel zu kommen.</p>
-<p>Rockig.</p>
-<p>Vor allem finde ich es cool, wie die Hacker hinter diesem Algorithmus ihn gefunden haben. Das konnten sie nämlich nur machen, weil sie genau wussten wie ein <code>float</code> tatsächlich implementiert ist - einem Wissen das die meisten Hacker heute nur noch theoretisch haben - aber nicht so genau das sie dieses Format auch mal so ohne weiteres für so einen fiesen Trick missbrauchen können.</p>
-<p>In diesem Sinne: Aus der Geschichte lässt sich viel lernen. :-)</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/6/warum-kann-man/">weiterlesen…</a>
       </footer>
     
   </article>

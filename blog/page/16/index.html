@@ -57,6 +57,53 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/10/c-code-fu-r-c-und-c-verwendbar-machen/">
+        C-Code für C und C++ verwendbar machen
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-10-21">Dienstag, 21. Oktober 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Ich hab mich schon immer gefragt woher man eigentlich diese Defines nimmt um C-Code deklarationen so zu schützen, dass sie auch in C++ Code gut reingeholt werden können.</p>
+<p>Ja klar, man kann das selber machen, etwas präprozessor bla und los gehts. Aber, das gibts ja vielleicht schon.</p>
+<p>Enter <code>#import &lt;sys/cdefs.h&gt;</code>.</p>
+<p>Und das ist in in Apple-Code praktischerweise immer schon includiert und enthält praktische Kleinigkeiten wie:</p>
+<ul>
+<li><code>__BEGIN_DECLS</code> - jetzt kommen C-Deklarationen</li>
+<li><code>__END_DECLS</code> - fettich</li>
+<li><code>__dead2</code> - diese Funktion kehrt nicht zurück (über das 2 könnte ich mich total amüsieren)</li>
+<li><code>__pure2</code> - diese Funktion hat keine Seiteneffekte</li>
+<li><code>__unused</code></li>
+<li><code>__printflike(formatArg, firstVarArg)</code></li>
+<li><code>__scanflike(formatArg, firstVarArg)</code></li>
+<li><code>__COPYRIGHT(string)</code> - erzeugt eine globale variable</li>
+<li><code>__PROJECT_VERSION(string)</code> - erzeugt eine globale variable</li>
+<li><code>__deprecated</code></li>
+</ul>
+<p>Dann gibts natürlich noch &lt;AvailabilityMacros.h&gt; das auch noch ein paar Kleinigkeiten enthält - neben dem ganzen Zeug um APIs zu versionieren sind da auch noch mal Attribute definiert:</p>
+<ul>
+<li>WEAK_IMPORT_ATTRIBUTE -- funktion ist vielleicht da</li>
+<li>DEPRECATED_ATTRIBUTE -- funktion soll nicht mehr verwendet werden</li>
+<li>UNAVAILABLE_ATTRIBUTE -- funktion ist nicht vorhanden (z.B. weil sie API ist die erst in einer späteren Version des Frameworks unterstützt wird)</li>
+</ul>
+<p>Vor allem <code>__BEGIN_DECLS</code>, <code>__END_DECLS</code> und <code>__deprecated</code> werde ich mit Sicherheit sofort benutzen. Ob ich die anderen auch verwende, weiß ich noch nicht. Mal schaun. :)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/10/c-code-fu-r-c-und-c-verwendbar-machen/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/10/ich-find-user-ideen-grossartig/">
         Ich find User-Ideen großartig
         </a>
@@ -365,37 +412,6 @@ Dann wird bisschen Krieg gemacht.
     
       <footer>
         <a href="../../2008/10/aus-einem-variablen-namen-einen-string-machen/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/10/history_v2/">
-        _HiStOrY_V2_
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-10-05">Sonntag, 5. Oktober 2008</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Mit ein bisschen Hilfe von meinen Freunden...</p>
-<p>Heute hab ich mal wieder die aktuelle Version von <a href="http://bazaar-vcs.org/">Bazaar (1.7.1)</a> ausprobiert. Soweit ganz schnuckelig. Sogar der SVN Checkout von [svn://svn.adiumx.com/adium/trunk Adium] hat hervorragend geklappt.</p>
-<p>Ich muss sagen, beeindruckend.</p>
-<p>Nur mit dem Plugin <a href="http://bazaar-vcs.org/BzrTools">bzrtools</a> hatte ich Schwierigkeiten, denn die darin enthaltene shell (ein geiles feature) zu benutzen brachte bzr reproduzierbar zum Absturz. :-(</p>
-<p>Stellt sich mit hilfe von #bazaar und nach einigen Detours über den Python Debugger (nice!) und <a href="http://developer.apple.com/documentation/Darwin/Reference/ManPages/man1/dtruss.1m.html">dtruss</a> (nice!) heraus dass es an der libreadline liegt.</p>
-<p>Die hat sich nämlich geändert und erwartet inzwischen am Anfang eines History-Files als allererste Zeile diesen eintrag: <strong><em>_HiStOrY<em>V2</em></em></strong>.</p>
-<p>Na toll. Und ansonsten stürzt das Programm einfach ab. Also wer sich das ausgedacht hat, der gehört aber auch echt erschossen. Wenigstens die Fehlermeldung hätte vernünftig sein können. Grumpf.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/10/history_v2/">weiterlesen…</a>
       </footer>
     
   </article>

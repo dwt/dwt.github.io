@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../../../static/style.css">
     <link rel="stylesheet" href="../../../../static/pygments.css">
-    <title>Crosswords Puzzle</title>
+    <title>Open Source Flugelektronik mit Lora</title>
     <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../feed.xml" />
   </head>
   <body>
@@ -34,7 +34,7 @@
       <a class=nav-link href="./">🇩🇪</a>
     </li>
     <li class="nav-item pull-right">
-      <a class=nav-link href="../../../../en/blog/2021/3/crosswords-puzzle/">🇬🇧</a>
+      <a class=nav-link href="../../../../en/blog/2021/4/open-source-flugelektronik-mit-lorawan/">🇬🇧</a>
     </li>
   </ul>
 </nav>
@@ -51,29 +51,43 @@
 <a class="breadcrumb-item " href="../../../">Blog</a>
 
 
-<a class="breadcrumb-item active" href="./">Crosswords Puzzle</a>
+<a class="breadcrumb-item active" href="./">Open Source Flugelektronik mit Lora</a>
 
 </nav>
     </header>
-    <article class="page crosswords-puzzle  container-fluid">
+    <article class="page open-source-flugelektronik-mit-lorawan  container-fluid">
       
   
   <article class="blog-post">
     <header>
       <h2>
         
-        Crosswords Puzzle
+        Open Source Flugelektronik mit Lora
         
       </h2>
       <p class="meta">
-        written by Martin Häcker on <time datetime="2021-03-15">Montag, 15. März 2021</time>
+        written by Martin Häcker on <time datetime="2021-04-17">Samstag, 17. April 2021</time>
       </p>
     </header>
     
     <section class="blog-post-body">
-      <p>Kreuzworträtsel finde ich eigentlich langweilig. Aber die Idee die Vorgaben über Reguläre Ausdrücke zu machen finde ich <em>klasse</em>.</p>
-<p><a href="http://jimbly.github.io/regex-crossword/">Hier geht es zum Puzzle</a> - mit Herzlichem Dank an <a href="https://github.com/Jimbly">Jimb Esser</a>.</p>
-<p>Ursprünglich entworfen hat es <a href="https://web.mit.edu/puzzle/www/2013/coinheist.com/rubik/a_regular_crossword/">Dan Gulotta am MIT</a> aber die JS Implementierung von <a href="https://github.com/Jimbly">Jimb Esser</a> ist einfach Gold wert.</p>
+      <p>Inzwischen gibt es mehrere Projekte die Lora Funktechnik für Ad-Hoc-Netzwerke in der Luft (und am Boden) verwenden.</p>
+<p><a href="https://github.com/lyusupov/SoftRF">SoftRF</a> ist vermutlich das bekannteste, da es mit günstiger Hardware eigentlich alle Standards unterstützt. <a href="https://de.aliexpress.com/item/4001286458852.html">Dieses</a> für in der Luft und und <a href="https://de.aliexpress.com/item/4000571051141.html">dieses</a> als Gegengerät am Boden und für Experimente - jeweils in der in Europa zugelassenen 868Mhz Variante - habe ich mir besorgt, da sie nur jeweils €25€ Kosten.</p>
+<p>SoftRF kommt darauf sogar schon vorinstalliert, das ist wirklich sehr komfortabel.</p>
+<p>In Betrieb lassen sich die Geräte auch ganz gut nehmen, einfach via USB an den Rechner anschließen, bei dem einen geht dann ein WLAN auf über das man es Konfigurieren kann, bei dem anderen hat man direkten Zugriff über die Serielle.</p>
+<div class="hll"><pre><span></span>$ pip install pyserial
+$ python -m serial.tools.list_ports
+<span class="o">[</span>...<span class="o">]</span>
+$ python -m serial.tools.miniterm /path/to/port
+</pre></div>
+<p>Easy peasy.</p>
+<p>Next Tasks:</p>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/NMEA_0183">NMEA</a> Nachrichten Parsen und lesbar Ausgeben</li>
+<li>Das zweite Gerät über Bluetooth Low Energy verbinden</li>
+<li>BLE mit einem meiner Flug-Computer-Smartphone Apps verbinden - <a href="http://flyskyhy.com">FlySkyHy</a> oder <a href="https://evario.variosoft.eu">eVario</a></li>
+<li>Herausfinden was es braucht um da noch einen guten Barometrischen Sensor mit einzubauen</li>
+</ul>
 
     </section>
     
@@ -84,7 +98,7 @@
   <div class="category-list">
     Kategorien:
       
-      <a href="../../../../categories/funny/">Spaß</a>
+      <a href="../../../../categories/sport/">Sport</a>
       
     
   </div>
@@ -92,10 +106,8 @@
     
     <div class="relative-navigation">
       
-        <div class="prev">Vorheriges Post: <a class="prev" href="../../4/open-source-flugelektronik-mit-lorawan/">Open Source Flugelektronik mit Lora</a></div>
       
-      
-        <div class="next">Nächstes Post: <a class="next" href="../thermik-gradienten-lesen/">Thermik-Gradienten lesen</a></div>
+        <div class="next">Nächstes Post: <a class="next" href="../../3/crosswords-puzzle/">Crosswords Puzzle</a></div>
       
     </div>
     

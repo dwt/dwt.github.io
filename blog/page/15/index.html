@@ -57,6 +57,34 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/11/apple-iphone-tech-talk/">
+        Apple iPhone Tech-Talk
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-11-10">Montag, 10. November 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>War ja ganz nett auf den <a href="http://developer.apple.com/events/iphone/techtalks/">Apple iPhone TechTalks</a> - alles zusammen allerdings etwas langweilig weil wenig in die Tiefe. :-(</p>
+<p>Lustiges Detail am Rande: Zwar war die Veranstaltung mit Anmeldung und schon lange vorher ausgebucht - aber trotzdem kam man vor Ort noch gut rein - das nächste mal kann man es also auch ohne Anmeldung einfach mal versuchen.</p>
+<p>Interessant auch, dass das ganze Event unter NDA stand, das heißt, obwohl ich dort war und nur Informationen verbreitet wurden die alle ohne NDA aus der API erhältlich waren, darf ich nicht darüber erzählen was es dort zu hören gab. Das fand ich so strange dass ich doch gleich einen der Vortragenden Apple-Mitarbeiter gefragt habe wie das zu verstehen ist: Dieser hat sich dann entschuldigt und bestätigt, dass natürlich alle Informationen die aus den APIs kommen frei bloggbar sind, aber eben nicht worüber auf dem Event darüber gesprochen wurde.</p>
+<p>Schade eigentlich.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/11/apple-iphone-tech-talk/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/11/iphone-applicaton-development/">
         iPhone Applicaton Development
         </a>
@@ -692,53 +720,6 @@
     
       <footer>
         <a href="../../2008/10/kongress-zum-bedingungslosen-grundeinkommen/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/10/c-code-fu-r-c-und-c-verwendbar-machen/">
-        C-Code für C und C++ verwendbar machen
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-10-21">Dienstag, 21. Oktober 2008</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Ich hab mich schon immer gefragt woher man eigentlich diese Defines nimmt um C-Code deklarationen so zu schützen, dass sie auch in C++ Code gut reingeholt werden können.</p>
-<p>Ja klar, man kann das selber machen, etwas präprozessor bla und los gehts. Aber, das gibts ja vielleicht schon.</p>
-<p>Enter <code>#import &lt;sys/cdefs.h&gt;</code>.</p>
-<p>Und das ist in in Apple-Code praktischerweise immer schon includiert und enthält praktische Kleinigkeiten wie:</p>
-<ul>
-<li><code>__BEGIN_DECLS</code> - jetzt kommen C-Deklarationen</li>
-<li><code>__END_DECLS</code> - fettich</li>
-<li><code>__dead2</code> - diese Funktion kehrt nicht zurück (über das 2 könnte ich mich total amüsieren)</li>
-<li><code>__pure2</code> - diese Funktion hat keine Seiteneffekte</li>
-<li><code>__unused</code></li>
-<li><code>__printflike(formatArg, firstVarArg)</code></li>
-<li><code>__scanflike(formatArg, firstVarArg)</code></li>
-<li><code>__COPYRIGHT(string)</code> - erzeugt eine globale variable</li>
-<li><code>__PROJECT_VERSION(string)</code> - erzeugt eine globale variable</li>
-<li><code>__deprecated</code></li>
-</ul>
-<p>Dann gibts natürlich noch &lt;AvailabilityMacros.h&gt; das auch noch ein paar Kleinigkeiten enthält - neben dem ganzen Zeug um APIs zu versionieren sind da auch noch mal Attribute definiert:</p>
-<ul>
-<li>WEAK_IMPORT_ATTRIBUTE -- funktion ist vielleicht da</li>
-<li>DEPRECATED_ATTRIBUTE -- funktion soll nicht mehr verwendet werden</li>
-<li>UNAVAILABLE_ATTRIBUTE -- funktion ist nicht vorhanden (z.B. weil sie API ist die erst in einer späteren Version des Frameworks unterstützt wird)</li>
-</ul>
-<p>Vor allem <code>__BEGIN_DECLS</code>, <code>__END_DECLS</code> und <code>__deprecated</code> werde ich mit Sicherheit sofort benutzen. Ob ich die anderen auch verwende, weiß ich noch nicht. Mal schaun. :)</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/10/c-code-fu-r-c-und-c-verwendbar-machen/">weiterlesen…</a>
       </footer>
     
   </article>

@@ -57,6 +57,47 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="2021/4/open-source-flugelektronik-mit-lorawan/">
+        Open Source Flugelektronik mit Lora
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2021-04-17">Saturday, April 17, 2021</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Inzwischen gibt es mehrere Projekte die Lora Funktechnik für Ad-Hoc-Netzwerke in der Luft (und am Boden) verwenden.</p>
+<p><a href="https://github.com/lyusupov/SoftRF">SoftRF</a> ist vermutlich das bekannteste, da es mit günstiger Hardware eigentlich alle Standards unterstützt. <a href="https://de.aliexpress.com/item/4001286458852.html">Dieses</a> für in der Luft und und <a href="https://de.aliexpress.com/item/4000571051141.html">dieses</a> als Gegengerät am Boden und für Experimente - jeweils in der in Europa zugelassenen 868Mhz Variante - habe ich mir besorgt, da sie nur jeweils €25€ Kosten.</p>
+<p>SoftRF kommt darauf sogar schon vorinstalliert, das ist wirklich sehr komfortabel.</p>
+<p>In Betrieb lassen sich die Geräte auch ganz gut nehmen, einfach via USB an den Rechner anschließen, bei dem einen geht dann ein WLAN auf über das man es Konfigurieren kann, bei dem anderen hat man direkten Zugriff über die Serielle.</p>
+<div class="hll"><pre><span></span>$ pip install pyserial
+$ python -m serial.tools.list_ports
+<span class="o">[</span>...<span class="o">]</span>
+$ python -m serial.tools.miniterm /path/to/port
+</pre></div>
+<p>Easy peasy.</p>
+<p>Next Tasks:</p>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/NMEA_0183">NMEA</a> Nachrichten Parsen und lesbar Ausgeben</li>
+<li>Das zweite Gerät über Bluetooth Low Energy verbinden</li>
+<li>BLE mit einem meiner Flug-Computer-Smartphone Apps verbinden - <a href="http://flyskyhy.com">FlySkyHy</a> oder <a href="https://evario.variosoft.eu">eVario</a></li>
+<li>Herausfinden was es braucht um da noch einen guten Barometrischen Sensor mit einzubauen</li>
+</ul>
+
+    </section>
+    
+      <footer>
+        <a href="2021/4/open-source-flugelektronik-mit-lorawan/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="2021/3/crosswords-puzzle/">
         Crosswords Puzzle
         </a>
@@ -389,34 +430,6 @@
     
       <footer>
         <a href="2011/4/musik-ist-doch-was-feines/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="2011/3/iranische-ma-nner-weinen-nicht/">
-        Iranische Männer weinen nicht...
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2011-03-21">Monday, March 21, 2011</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>... hat Ihm seine Mutter beigebracht als er ein Fahrad wollte dass sie sich nicht leisten konnte. Und dann weinte er so stark dass er sein Auto nicht mehr weiter fahren konnte und am Straßenrand anhalten musste.</p>
-<p><a href="http://www.thegreenwave-film.com/">http://www.thegreenwave-film.com/</a></p>
-<p>Dieser Film hat mich tief traurig gemacht, weil es Länder wie den Iran gibt, in denen so viele Menschen nicht ihre Freiheit genießen und so sorgenfrei aufwachsen und leben können wie ich das hier konnte und kann.</p>
-<p>Sehr sehenswert.</p>
-
-    </section>
-    
-      <footer>
-        <a href="2011/3/iranische-ma-nner-weinen-nicht/">weiterlesen…</a>
       </footer>
     
   </article>

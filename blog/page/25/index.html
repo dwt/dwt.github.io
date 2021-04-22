@@ -57,6 +57,41 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/5/experimentalphysik-und-programmieren/">
+        Experimentalphysik und Programmieren
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-05-10">Samstag, 10. Mai 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Das sind an sich identische Tätigkeiten - hat mir mein Vater heute klargemacht.</p>
+<p>Klar, er ist ein alter Physiker und trauert immer noch ein wenig der Tatsache nach das ich keiner geworden bin.</p>
+<p>Oder auch nicht, denn: Ein guter Experimentalphysiker arbeitet so, dass er in einer Versuchsreihe in jedem Schritt immer nur eine Variable verändert um methodisch vorzugehen. Entweder nimmt er eine (wirklich nur eine) Änderung an seinen Messinstrumenten, oder an dem Experiment vor.</p>
+<p>Dazu dann natürlich noch einiges an Intuition welche Veränderung sinnvoll ist - experimentelle Physik ist eben auch eine Kunst, genau wie das Programmieren.</p>
+<p>Ach ja, und natürlich schreibt er ein Protokoll um hinterher nachvollziehen zu können, was er eigentlich getan hat.</p>
+<p>Beim Programmieren kann man diese Techniken genau so wiederfinden. Die Messinstrumente sind in der Regel <a href="http://c2.com/cgi/wiki?UnitTest">UnitTests</a> oder etwas äquivalentes (wobei UnitTests besser geeignet sind, da sie exakter messen können) und damit wird eine API dann abgeklopft.</p>
+<p>Jetzt kommt bei uns Programmierern aber noch eine komplette Dimension dazu. Denn während ein Experimentalphysiker die Welt um ihn herum so hinnehmen muss wie sie ist, können wir Programmierer den Gegenstand unserer Tests beliebig verändern. Nur unser Phantasie schränkt uns ein.</p>
+<p>Aber es läuft genauso: Ein Messinstrument, ein Stück Weltveränderung, ad infinitum.</p>
+<p>Das letzte fehlende Detail ist das Logbuch: Das sind die schon geschriebenen Tests, die dokumentieren was wir schon herausgefunden haben.</p>
+<p>Ich war wirklich überrascht wie weit die analogie trägt. Und auch die Implikation gefällt mir als UnitTest-Fan natürlich sehr. Und natürlich auch der Fakt das wir als Informatiker 'wieder mal' mehr können als die Physiker.</p>
+<p>:-)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/5/experimentalphysik-und-programmieren/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/5/wann-darf-man-eigentlich/">
         Wann darf man eigentlich…
         </a>
@@ -385,45 +420,6 @@
     
       <footer>
         <a href="../../2008/4/das-internet-an-frau-merkel/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/4/hg-svn/">
-        hg &lt;-&gt; svn
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-04-28">Montag, 28. April 2008</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Tja... leider nicht so einfach wie ich dachte.</p>
-<p>Meine Versuche mit <a href="http://bazaar-vcs.org/">BZR</a> die verbindung herzustellen, haben leider nicht geklappt. Das <a href="https://launchpad.net/bzr-hg">hg-plugin</a> dort läuft mit der aktuellen Version leider nicht mehr - und hat auch keine Unit-Tests, sonst hätte ich mir ja schon mal etwas Zeit genommen um zu schauen woran es liegt.</p>
-<p>Aber so...</p>
-<p>Egal.</p>
-<p>Was doch geklappt hat, ist mit <a href="http://www.selenic.com/mercurial/wiki/index.cgi/WorkingWithSubversion">hgimportsvn</a> einen svn checkout zu machen. Mit einem lokalen hg clone konnte ich dann Arbeiten und auf den svn-checkout zurückschieben und dann von dort comitten.</p>
-<p>Vorteil:</p>
-<ul>
-<li>Es geht überhaupt</li>
-</ul>
-<p>Nachteil:</p>
-<ul>
-<li>Alle commit Kommentare gehen verloren</li>
-<li>Ich kann lokal so oft comitten wie ich will - im Subversion kommt nur ein commit an. :-/</li>
-</ul>
-<p>Eher unbefriedigend. Aber immerhin kann man überhaupt an einem SVN-Checkout arbeiten.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/4/hg-svn/">weiterlesen…</a>
       </footer>
     
   </article>

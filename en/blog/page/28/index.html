@@ -57,6 +57,47 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/4/programmieren-lernen-mit-scheme/">
+        Programmieren Lernen - mit Scheme?
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-04-06">Sunday, April 6, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Meine Freunden hat sich mal damit beschäftigt. Und da dachte ich, schauste doch mal was es da so gibt.</p>
+<p>Klaro das große alte <a href="http://mitpress.mit.edu/sicp/full-text/book/book.html">SICP</a>, der Großvater aller großartigen Programmierbücher mit Tiefgang. Gleichzeitig aber natürlich auch ziemlich Tief und für jemanden der sonst von Informatik nicht so viel Ahnung hat vielleicht zu viel.</p>
+<p>Das sehen <a href="http://www.cs.kent.ac.uk/people/staff/dat/miranda/wadler87.pdf">andere</a> <a href="http://citeseer.ist.psu.edu/cache/papers/cs/26833/http:zSzzSzpeople.cs.uchicago.eduzSz~robbyzSzpublicationszSzpaperszSzhtdp-sicp-fdpe2002.pdf/felleisen02structure.pdf">Leute</a> auch so und daher gibt es inzwischen einen Nachfolger: Das <a href="http://www.htdp.org/">HTDP</a>.</p>
+<p>Well, die Haupt Kritik war eigentlich das das Buch zu viele Grundlagen in der Elektrotechnik verlange und zu tief in die Konstruktion von Computern hineingeht, dabei aber gleichzeitig zu wenig darüber erklärt wie man eigentlich ein größeres Programm aufzieht.</p>
+<p>Und genau das wollten sie anders machen.</p>
+<p>Gut fand ich dass Sie sich mühe geben jede ihrer Kapitel mit einem <strong>Rezept</strong> abzuschließen, in dem dann Dinge stehen wie "Mach dir erst Gedanken darüber was aus deinen Funktionen herauskommen muss bevor Du sie implementierst, damit Du Logikfehler besser finden kannst. - Schon mal ein guter Ansatz.</p>
+<p>Dazu kommt durchweg eigentlich ein recht sauberer Programmierstil mit dem ich durchaus leben kann.</p>
+<p>Was mir eher auf den Geist ging: Die ganze Zeit über predigen sie es, dass man zu jeder Funktion einen "Kontrakt" schreibt, der erklärt welche Typen man erhält und welche man zurückgibt.</p>
+<p>Well, das ist ja ganz schön, aber entweder, soll man eine Sprache mit Typechecking nehmen, oder es lassen. Die Dokumentation ist zwar ganz nett - aber dann doch bitte so, dass man die Variablen so eindeutig benennt, das keine Typ-Unsicherheiten auftreten.</p>
+<p>So sind die Kommentare (von denen sie pro Funktion mindestens drei bis fünf Zeilen haben wollen) nach der ersten Änderung einer Funktion nicht mehr aktuell.</p>
+<p>:-(</p>
+<p>Dazu kommt, dass der Klammernwald von Scheme, natürlich gerade für Anfänger schnell mal verwirrend wird und ohne Editor-Unterstützung gar nicht handhabbar ist. Andererseits: da gewöhnt man sich gleich daran kleine Funktionen zu schreiben...</p>
+<p>Was ich auch merkwürdig finde ist, dass den studenten die wirkliche Freude eines <a href="http://en.wikipedia.org/wiki/Metacircular_Interpreter">metazirkulären Interpreters</a> vorenthalten wird. Da hat man sowas mit Scheme schon unter der Haube, und dann geht es irgendwann um den Interpreter und es werden lauter neue Datentypen eingeführt um etwas Scheme-Ähnliches darzustellen, dass dann nicht mal richtig interpretiert werden kann.</p>
+<p>Habt ihr wirklich toll gemacht.</p>
+<p>Generell hat das Buch weniger Tiefgang als das [- vor allem weil es dazu natürlich die ganz hervorragenden <a href="http://www.htdp.org/SICP]">http://swiss.csail.mit.edu/classes/6.001/abelson-sussman-lectures/ Video-Lectures</a> gibt, die einfach nur begeisternd sind.</p>
+<p>Fazit: Irgendwie hat das Buch schon Sinn - aber Begeistern kann es mich nicht. Mal schauen wie es meiner Freundin geht. :)</p>
+<p>p.s.: Zum SICP gibt es noch einen Nachfolger, <a href="http://mitpress.mit.edu/SICM/">SICM - Structure and Interpretion of Classical Mechanics</a>. Das werd ich mir mal demnächst ansehen müssen. :)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/4/programmieren-lernen-mit-scheme/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/4/computational-thinking/">
         Computational Thinking
         </a>
@@ -380,59 +421,6 @@
     
       <footer>
         <a href="../../2008/3/was-ist-an-diesem-programm-falsch/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/3/wie-schafft-man-sowas-eigentlich/">
-        Wie schafft man sowas eigentlich?
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-03-26">Wednesday, March 26, 2008</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>(Zu <a href="http://musicbrainz.org/track/c35eefc6-2b9d-4d12-b998-20570656013f.html">Rachel's Song von Vangelis</a>)</p>
-<p>Meine Bekannte <a href="http://katrinlang.de/">Katrin</a> hat sich eine <a href="http://de.wikipedia.org/wiki/Zeitschaltuhr">Zeitschaltuhr</a> zugelegt. Nun ja, da denkt man, diese Dinger gibts ja schon lange, kann ja alles nicht so schwer sein.</p>
-<p>:-D</p>
-<p>Nach längerer Zeit hat Sie herausgefunden wie der Funktioniert - zu zweit haben wir ihn dann mal im Detail angeschaut.</p>
-<p>Schonmal vorweg: Meinen Respekt. Was die alles Falsch gemacht haben, muss man wirklich absichtlich machen, sonst geht das einfach nicht.</p>
-<p>Hier erstmal ein Bild</p>
-<p><img src="../../2008/3/wie-schafft-man-sowas-eigentlich/Zeitschaltuhr.jpg" alt="Image"></p>
-<p>Vielleicht das gute Vorne weg: Es ist klar eine Durchgangssteckdose, wo man was einsteckt ist schon mal einfach.</p>
-<p>Nein, mehr positives fällt mir dazu nicht ein. Sorry.</p>
-<p>Kommen wir mal zu den Details. Es ist eine Zeitschaltuhr. Völlig unbedarft erwartet man also erst einmal eine Uhr, die schaltet. Und wenn man das Bild betrachtet, dann ist das ja auch schon mal vertraut. Da sind Zahlen und die sind im Kreis angeordnet.</p>
-<p>Ach ja, schalten... Das war schon die erste Schwierigkeit - wie schaltet man das gute Stück? Man muss die Schalter (der schwarze Kranz um das "Ziffernblatt" hoch oder herunterdrücken um den Strom zu schalten.</p>
-<p>Interessanterweise gibt es auf dem guten Stück aber keinerlei Hinweis welche Stellung ein entspricht! Soweit ich das beurteilen kann scheint aber "herausgezogen" ein zu bedeuten. Sehr intuitiv.</p>
-<p>Ach ja, und dann gibt es noch einen roten Schalter auf der Seite. Den haben wir auch nicht verstanden. Jetzt bei der Recherche hier zum Schreiben bin ich auf der Seite von Conrad-Elektronik fündig geworden. Offenbar ist das ein Master-Schalter der die Zeitschaltuhr völlig übergeht. Ist der UNBESCHRIFTETE Schalter also in der falschen Position, funktioniert sowieso gar nix.</p>
-<p>Aber falls er zufällig richtig ist ist es trotzdem noch kompliziert - denn welcher der etwa 120 Schalter in dem Aussenring ist für welche Zeit zuständig? Beim Versuch das herauszufinden stößt man schnell darauf das man den äusseren Ring mit den Zahlen - das "Ziffernblatt" sozusagen - drehen kann.</p>
-<p>Praktisch. So kann man zum Feststehenden Uhrzeiger die passende Uhrzeit einstellen.</p>
-<p>Ich stelle mir das so vor: Damit man nicht völlig verzweifelt, wird man vermutlich die Uhr so einstellen, dass 0/24 Uhr oben ist, und dann stellt man sich einen Wecker, damit man die Uhr zum richtigen Zeitpunkt einsteckt, damit die Uhrzeit die er dann anzeigt zur Tageszeit passt. Und vielleicht betreibt man es vorher dann noch ein paar Stunden damit der Zeiger auf eine passende Stelle zeigt und man nicht um Mitternacht zum Zeitschaltuhr einstecken aufstehen muss.</p>
-<p>Sehr komfortabel.</p>
-<p>Ach ja, ausserdem stellt man ungefähr zu diesem Zeitpunkt fest, das die Beschriftung auf dem Ziffernblatt in die falsche Richtung ist. Nicht wie bei einer Uhr, nein, nein - natürlich anders herum. Auch wenn einem der Pfeil auf der "Zeiger"-Scheibe eine normale Richtung vorgaukeln möchte. Ach ja, natürlich macht der schon Sinn - denn den "Ziffernblatt"-Ring kann man nämlich ohne große Kraft nur in diese Richtung drehen. Oder soll - damit das einstellen der Uhrzeit noch "leichter" fällt vielleicht?</p>
-<p>Der "Zeiger" jedenfalls bewegt sich genau in die andere Richtung.</p>
-<p>Fassen wir also mal Zusammen:</p>
-<ul>
-<li>Schalten? An schwarzen Stiften, so etwa 10 min pro Stift, was ein und was aus bedeutet muss man aber durch trial und Error bestimmen</li>
-<li>Es gibt einen unbeschrifteten Schalter, der den ganzen Mechanismus ausser Kraft setzt - Was ein und was aus bedeutet muss man ausprobieren.</li>
-<li>Man dreht nicht die Scheibe mit dem Pfeil darauf, sondern den Ring aussen herum auf dem die Zahlen stehen.</li>
-<li>Damit stellt man die Uhrzeit zu dem feststehenden "Uhrzeiger" ein. Man stellt also nicht den "Uhrzeiger" sondern das "Ziffernblatt"</li>
-<li>Das "Ziffernblatt" ist in die falsche Richtung beschriftet</li>
-</ul>
-<p>Eine tolle Uhr ist dass. Ich meine, man hat wirklich das Gefühl das der Konstruktör entweder noch nie eine Uhr in der Hand gehabt hat und daher etwas völlig neues erfinden musste, oder aber das er sich absichtlich überlegt hat, wie er seine Benutzer noch ein bisschen mehr quälen kann.</p>
-<p>Wirklich faszinierend.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/3/wie-schafft-man-sowas-eigentlich/">weiterlesen…</a>
       </footer>
     
   </article>

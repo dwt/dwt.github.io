@@ -57,6 +57,33 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/2/yay-ich-bin-auf-der-apple-homepage/">
+        YAY - ich bin auf der Apple Homepage
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-02-28">Thursday, February 28, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p><a href="http://www.apple.com/downloads/macosx/icons_screensavers/cafewallillusionsaver.html">Und zwar genau hier.</a></p>
+<p>Na gut... das ich nur für <a href="http://novamedia.de/index_d.html">Novamedia</a> arbeite und die Software trotzdem nur von mir Privat ist haben sie noch nicht hingekriegt, aber da Arbeite ich drann.</p>
+<p>:)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/2/yay-ich-bin-auf-der-apple-homepage/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/2/grundrecht-per-verfassungsgericht/">
         Grundrecht per Verfassungsgericht
         </a>
@@ -472,63 +499,6 @@ Ah well.</p>
     
       <footer>
         <a href="../../2008/2/logen-von-beliebig-vielen-argumenten/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/2/c-typen-in-die-laufzeitumgebung-heben/">
-        C-Typen in die Laufzeitumgebung heben
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-02-15">Friday, February 15, 2008</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Wendet man <code>@encode()</code> jetzt auf ein paar Deklarationen an, erhält man folgende Ergebnisse:</p>
-<div class="hll"><pre><span></span><span class="cp">#define LOG(what) [[Log sharedLog] logObjcType:@encode(typeof(what)) arguments:(void *)what]</span>
-
-<span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;fnord&quot;</span><span class="p">);</span> <span class="c1">// @</span>
-<span class="n">LOG</span><span class="p">(</span><span class="s">&quot;foo&quot;</span><span class="p">);</span> <span class="c1">// [3c]</span>
-<span class="kt">char</span> <span class="o">*</span><span class="n">string</span> <span class="o">=</span> <span class="s">&quot;fnord&quot;</span><span class="p">;</span>
-<span class="n">LOG</span><span class="p">(</span><span class="n">string</span><span class="p">);</span> <span class="c1">// *</span>
-</pre></div>
-<p>Ich parse das so:</p>
-<div class="hll"><pre><span></span><span class="cp">#define RAISE_UNSUPPORTED_TYPE(encodedType) \</span>
-<span class="cp">    [NSException raise:NSInvalidArgumentException \</span>
-<span class="cp">        format:@&quot; you are trying to log something that is not a string: %s&quot;, encodedType]</span>
-
-<span class="p">-</span> <span class="nf">stringFromType:</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="nv">encodedType</span> <span class="nf">inArray:</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="nv">what</span><span class="p">;</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="sc">&#39;[&#39;</span> <span class="o">!=</span> <span class="o">*</span><span class="n">encodedType</span><span class="p">)</span> <span class="n">RAISE_UNSUPPORTED_TYPE</span><span class="p">(</span><span class="n">encodedType</span><span class="p">);</span>
-
-    <span class="n">encodedType</span><span class="o">++</span><span class="p">;</span>
-    <span class="kt">unsigned</span> <span class="n">length</span> <span class="o">=</span> <span class="n">strtol</span><span class="p">(</span><span class="n">encodedType</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">encodedType</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
-    <span class="k">if</span> <span class="p">(</span><span class="sc">&#39;c&#39;</span> <span class="o">!=</span> <span class="o">*</span><span class="n">encodedType</span><span class="p">)</span> <span class="n">RAISE_UNSUPPORTED_TYPE</span><span class="p">(</span><span class="n">encodedType</span><span class="p">);</span>
-
-    <span class="k">return</span> <span class="p">[</span><span class="bp">NSString</span> <span class="nl">stringWithCString</span><span class="p">:</span><span class="n">what</span> <span class="nl">length</span><span class="p">:</span><span class="n">length</span><span class="mi">-1</span><span class="p">];</span> <span class="c1">// \0 ignored</span>
-<span class="p">}</span>
-
-<span class="o">-</span> <span class="nl">stringFromType</span><span class="p">:(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">encodedType</span> <span class="nl">inValue</span><span class="p">:(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="n">what</span><span class="p">;</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="sc">&#39;@&#39;</span> <span class="o">==</span> <span class="o">*</span><span class="n">encodedType</span><span class="p">)</span> <span class="k">return</span> <span class="p">[(</span><span class="kt">id</span><span class="p">)</span><span class="n">what</span> <span class="n">description</span><span class="p">];</span>
-    <span class="k">if</span> <span class="p">(</span><span class="sc">&#39;*&#39;</span> <span class="o">==</span> <span class="o">*</span><span class="n">encodedType</span><span class="p">)</span> <span class="k">return</span> <span class="p">[</span><span class="bp">NSString</span> <span class="nl">stringWithCString</span><span class="p">:(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">what</span><span class="p">];</span>
-    <span class="k">if</span> <span class="p">(</span><span class="sc">&#39;[&#39;</span> <span class="o">==</span> <span class="o">*</span><span class="n">encodedType</span><span class="p">)</span> <span class="k">return</span> <span class="p">[</span><span class="nb">self</span> <span class="nl">stringFromType</span><span class="p">:</span><span class="n">encodedType</span> <span class="nl">inArray</span><span class="p">:</span><span class="n">what</span><span class="p">];</span>
-    <span class="n">RAISE_UNSUPPORTED_TYPE</span><span class="p">(</span><span class="n">encodedType</span><span class="p">);</span>
-    <span class="k">return</span> <span class="nb">nil</span><span class="p">;</span> <span class="cm">/* never reached */</span>
-<span class="p">}</span>
-</pre></div>
-<p>(Vorschläge wie man das besser machen kann, bitte gerne an mich! ( z.B. via spamfaenger ät gmx de))</p>
-<p>Fehlt nur noch die Erweiterung auf beliebig viele Argumente. Dazu aber morgen mehr. :)</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/2/c-typen-in-die-laufzeitumgebung-heben/">weiterlesen…</a>
       </footer>
     
   </article>

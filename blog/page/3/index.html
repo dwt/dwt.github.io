@@ -57,6 +57,38 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2010/10/unsere-obsession-mit-der-shell/">
+        Unsere Obsession mit der Shell
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2010-10-26">Dienstag, 26. Oktober 2010</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Grade dachte ich mir ich mache mal wieder zum Spaß etwas an einem Open Source Projekt, checke es aus und will es mal bauen um etwas im Code herum zu lesen - und das erste was mir passiert ist das der Build-Prozess einfach irgendwann verstirbt.</p>
+<p>Nach einiger Debugging Zeit stellt sich dann heraus das das selbstgestrickte build-system (eine Sammlung von Shell-Scripten) halt nicht mit spaces im Pfad zu den Sourcen klarkommt.</p>
+<p>Gnarf! Wieso macht man sowas in Shell? Muss das sein?</p>
+<p>Ok, aber es gibt ja workarounds, und die kenne ich ja auch und die lassen sich ja auch relativ einfach einbauen. ABER: Nicht mal die Abhängigkeiten ([<a href="http://pkg-config.freedesktop.org/">pkg-config</a>] in diesem Fall) baut mit spaces im Pfad.</p>
+<p>ARGH!</p>
+<p>Und natürlich haben die ein <a href="http://www.shlomifish.org/open-source/anti/autohell/">Autohell</a> buildsystem an das ich nun wirklich nicht ranfassen will. :-(</p>
+<p>Wie sollen wir als Softwareentwickler eigentlich irgendwann zu dem Punkt kommen wo unsere Software auch nur so etwas einfaches wie Pfade korrekt verarbeitet - also mit Leezreichen, Umlauten und Sonderzeichen (jep '/' ist auch gemeint) - wenn nicht mal unsere Eigenen Build-Tools und Shell-Sprachen damit verlässlich klar kommen? Also die Basis auf die einfach immer wieder zurückgegriffen wird?</p>
+<p>Unglaublich.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2010/10/unsere-obsession-mit-der-shell/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2010/6/objective-c-metaprogrammierung-blo-cke-zu-methoden/">
         Objective-C Metaprogrammierung: Blöcke zu Methoden
         </a>
@@ -348,44 +380,6 @@
     
       <footer>
         <a href="../../2010/1/python-saug-punkte-contd-x-y-ist-nicht-x-x-y/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2010/1/grand-unified-theory-of-programming/">
-        Grand Unified Theory of Programming?
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2010-01-13">Mittwoch, 13. Januar 2010</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Das höchste Ziel in der Physik ist alle Kräfte durch eine Formel auszudrücken bzw. sie in Beziehung zueinander zu setzen. Maxwell zum Beispiel gelang das für elektrische und magnetische Felder - und dafür ist er noch heute berühmt.</p>
-<p>In der Software-Entwicklung gibt es so etwas bisher nicht. Klar, es gibt Daumenregeln, so wie:</p>
-<ul>
-<li>Keep it <a href="http://en.wikipedia.org/wiki/Don&#39;t_repeat_yourself">DRY</a></li>
-<li><a href="http://stephane.ducasse.free.fr/FreeBooks/BestSmalltalkPractices/Draft-Smalltalk%20Best%20Practice%20Patterns%20Kent%20Beck.pdf">Keep your Methods Small</a> **</li>
-<li>Work <a href="http://butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod">SOLID</a></li>
-<li>Obay the <a href="http://en.wikipedia.org/wiki/Law_of_Demeter">Law of Demeter</a></li>
-<li>und so weiter…</li>
-</ul>
-<p>Aber, und das ist der wichtige Teil: diese Daumenregeln sind keine Unifikation die die verschiedenen Probleme beim Programmieren abwägen und in Beziehung setzen.</p>
-<p>Daher finde ich <a href="http://onestepback.org/">Jim Weirichs</a> Vortrag <a href="http://mwrc2009.confreaks.com/14-mar-2009-18-10-the-building-blocks-of-modularity-jim-weirich.html">The Building Blocks of Modularity</a> sehr spannend - denn da stellt er den Ansatz der <a href="http://www.slideshare.net/LittleBIGRuby/the-building-blocks-of-modularity">Connascence</a> vor (ab Folie 35).</p>
-<p>Das ist letztlich eine Klassifizierung welche Art von Abhängigkeit man sich durch welche Programmiertechnik einfängt - und damit kann man 'normales' Refactoring anwenden um von problematischeren Connascence's (?) zu weniger problematischen zu kommen.</p>
-<p>Ach ja, ursprünglich kommt das aus dem Buch <a href="http://books.google.com/books?id=089qQgAACAAJ">What every Programmer should know about Object Oriented Design</a>. Davon kann man aber Getrost nur noch den dritten Teil lesen (über Connascence) - der rest ist nach 15 Jahren einfach veraltet. :)</p>
-<p>** Niemand sagt das so gut wie Kent Beck: "Lots of little pieces - Good code invariably has small methods and small objects. Only by factoring the system into many small pieces of state and function can you hope to satisfy the “once and only once” rule. I get lots of resistance to this idea, especially from experienced developers, but no one thing I do to systems provides as much help as breaking it into more pieces."</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2010/1/grand-unified-theory-of-programming/">weiterlesen…</a>
       </footer>
     
   </article>

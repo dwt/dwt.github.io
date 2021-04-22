@@ -1,0 +1,182 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../static/pygments.css">
+    <title>Open Source Flugelektronik 2 - BLE und Serial</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item "><a href="../../../../work/" class="nav-link">Professionelle Softwareentwicklung</a></li>
+    
+      <li class="nav-item "><a href="../../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../../publications/" class="nav-link">Veröffentlichungen und Vorträge</a></li>
+    
+      <li class="nav-item active"><a href="../../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../../categories/" class="nav-link">Kategorien</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="./">🇩🇪</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="../../../../en/blog/2021/4/open-source-flugelektronik-2-ble-und-serial/">🇬🇧</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../../">🏠</a>
+
+
+<a class="breadcrumb-item " href="../../../">Blog</a>
+
+
+<a class="breadcrumb-item active" href="./">Open Source Flugelektronik 2 - BLE und Serial</a>
+
+</nav>
+    </header>
+    <article class="page open-source-flugelektronik-2-ble-und-serial  container-fluid">
+      
+  
+  <article class="blog-post">
+    <header>
+      <h2>
+        
+        Open Source Flugelektronik 2 - BLE und Serial
+        
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2021-04-22">Donnerstag, 22. April 2021</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Langsam nähere ich mich meinen <a href="https://github.com/lyusupov/SoftRF">Soft-RF-Geräten</a> an. Ich kann jetzt auch über <a href="./">Bluetooth Low Energy (BLE)</a> mit dem Gerät reden. Das Python Framework <a href="https://pypi.org/project/bleak/">Bleak</a> war dabei unglaublich hilfreich, da ich fast den ganzen BLE-Code sehr plattform-neutral Scheiben kann. I.e. der Code ist zwar nur auf MacOS getestet, wird aber sehr wahrscheinlich auch unter Linux funktionieren. Der Code zu diesem Post liegt <a href="https://github.com/dwt/softrf-interfacing">auf github</a>.</p>
+<p>Wie läuft das jetzt? Zuerst braucht man einen BLE-Scanner, um die Adresse des Geräts zu finden. Bei mir sieht das so aus:</p>
+<pre><code>% ./ble_scanner.py
+........................................
+[...]
+0975FAB7-6F50-4B60-A0D8-9F11C817FB6D: SoftRF-f0c010-LE
+[...]
+</code></pre>
+<p>Mit dieser Adresse kann man dann reden um sich anzuschauen welche BLE-Services sie anbietet:</p>
+<pre><code>% ./ble_explore_device.py 0975FAB7-6F50-4B60-A0D8-9F11C817FB6D
+Connected: True
+[Service] 0000ffe0-0000-1000-8000-00805f9b34fb (Handle: 40): Vendor specific
+    [Characteristic] 0000ffe1-0000-1000-8000-00805f9b34fb (Handle: 41): Vendor specific (read,write-without-response,notify), Value: b',,,,,,,,,99.99,99.99'
+        [Descriptor] 00002901-0000-1000-8000-00805f9b34fb (Handle: 43): Characteristic User Description) | Value: b'HMSoft'
+        [Descriptor] 00002902-0000-1000-8000-00805f9b34fb (Handle: 44): Client Characteristic Configuration) | Value: b'\x00\x00'
+</code></pre>
+<p>Was heißt das? Das gerät bietet den Service <code>0000ffe0-*</code> an und darauf eine Characteristik <code>0000ffe1-*</code> die wiederum zwei Deskriptoren enthält. <code>00002901-*</code>und <code>00002902-*</code>. Nicht das ich BLE vollständig verstehe, aber zumindest weiß ich das ein Service der Grundsätzliche Behälter für alle BLE Interaktionen ist und eine Charactreristik einen lese und schreibbaren Wert darstellt. Deskriptoren können darin verschachtelt sein und sind entweder zusätzliche lese und schreibbare Werte oder haben einen technischen Sinn. In diesem Beispiel ist der zweite Descriptor notwendig um auf der Charakteristik nicht nur lesen und schreiben, sondern auch  Notify zu implementieren -&gt; und das braucht es für die Serielle Schnittstelle.</p>
+<p>Entscheidend ist hier die Service-Charakteristik <code>0000ffe1-0000-1000-8000-00805f9b34fb</code> Hier spielt die ganze Musik. Die Serielle Ausgabe des SoftRF kann man mittels Notify davon auslesen und man kann auf die Serielle Schnittstelle schreiben indem man darauf schreibt. Soweit so simpel. Und damit kriegt man auch schon ein sehr primitives UART hin:</p>
+<pre><code>% ./ble_uart.py 0975FAB7-6F50-4B60-A0D8-9F11C817FB6D
+Connected, start typing and press ENTER...
+0.00,0000.0000,N,00000.0000,E,0,00,100.0,0.0,M,0.0,M,,*5C
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+$PFLAU,0,0,0,1,0,,0,,,*4F
+$GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,000000.00,0000.0000,N,00000.0000,E,0,00,100.0,0.0,M,0.0,M,,*5C
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99$PFLAU,0,0,0,1,0,,0,,,*4F
+$GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,000000.00,0000.0000,N,00000.0000,E,0,00,100.0,0.0,M,0.0,M,,*5C
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+$PFLAU,0,0,0,1,0,,0,,,*4F
+$GPRMC,,V,,,,,,,,,,N*53
+</code></pre>
+<p>Yay!</p>
+<p>Nächste Tasks: das NMEA Encoding verstehen und mal schauen ob ich damit eine erste simple Visualisierung hinbekomme.</p>
+
+    </section>
+    
+  </article>
+
+  <nav>
+    
+  <div class="category-list">
+    Kategorien:
+      
+      <a href="../../../../categories/code/">Software Development</a>
+      , 
+    
+      
+      <a href="../../../../categories/sport/">Sport</a>
+      , 
+    
+      
+      <a href="../../../../categories/project/">Projekte</a>
+      
+    
+  </div>
+
+    
+    <div class="relative-navigation">
+      
+      
+        <div class="next">Nächstes Post: <a class="next" href="../open-source-flugelektronik-mit-lorawan/">Open Source Flugelektronik mit Lora</a></div>
+      
+    </div>
+    
+  </nav>
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2021 <a href="../../../../work/">Martin Häcker</a></span>
+  </li>
+  
+    
+    <li class="nav-item imprint">
+      <a class="nav-link" href="../../../../meta/#imprint">
+        Impressum
+      </a></li>
+  
+    
+    <li class="nav-item privacy-policy">
+      <a class="nav-link" href="../../../../meta/#privacy-policy">
+        Datenschutzerklärung
+      </a></li>
+  
+    
+    <li class="nav-item colophon">
+      <a class="nav-link" href="../../../../meta/#colophon">
+        Kolophon
+      </a></li>
+  
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

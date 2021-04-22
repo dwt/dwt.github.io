@@ -57,6 +57,64 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/8/debugging-magic-in-cococa/">
+        Debugging Magic in Cococa
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-08-25">Monday, August 25, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Erstaunlich aber wahr - viele Programmierer scheinen die Debugging-Möglichkeiten der Plattform ihrer Wahl nicht zu kennen.</p>
+<p>Cocoa zum Beispiel. Viele Programmierer wissen nicht wie man Speicherlöcher effektiv fängt.</p>
+<p>Well, nicht Leaks - da kann man ja mit <a href="http://developer.apple.com/documentation/DeveloperTools/Conceptual/InstrumentsUserGuide/Built-InInstruments/chapter_9_section_8.html">ObjectAlloc</a> draufhauen und dann das Programm fixen.</p>
+<p>Nein, viel problematischer als das sind die doppelten Befreiungen.</p>
+<div class="hll"><pre><span></span><span class="kt">id</span> <span class="n">foo</span> <span class="o">=</span> <span class="p">[[</span><span class="bp">NSString</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithFormat</span><span class="p">:</span><span class="s">@&quot;foo&quot;</span><span class="p">];</span>
+<span class="p">[</span><span class="n">foo</span> <span class="k">release</span><span class="p">];</span>
+<span class="c1">// do something else</span>
+<span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;foo is %d&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">foo</span> <span class="n">length</span><span class="p">]);</span> <span class="c1">// almost certainly bombs</span>
+</pre></div>
+<p>Die krachen nämlich fast immer - und dann sucht man sich tot was genau da eigentlich gekracht hat und woher das genau kommt. Tja.</p>
+<p>Dabei kriegt man aus dem Programm eigentlich alle Informationen heraus die man braucht. Man muss nur jedes malloc mitzählen und aufschreiben wo es passiert ist, dann jedes objekt das freigegeben wird, nicht wirklich freigeben, sondern lediglich markieren und dann bei einem weiteren Zugriff auf so ein Objekt eine Exception werfen.</p>
+<p>Nichts leichter als das. :)</p>
+<p>Man setze diese Environment Variablen (am besten auf einem Duplikat der zu entwanzenden Applikation in Xcode)</p>
+<pre><code>MallocStackLogging YES
+MallocStackLoggingNoCompact YES
+NSZombieEnabled YES
+NSDebugEnabled YES
+</code></pre>
+<p>Hat man dass macht die Runtime alles richtig. Jede allokation wird aufgezeichnet und jedes freigegebene Objekt durch einen Zombie ersetzt. Und der Meldet sich, sobald er für irgend etwas verwendet wird. Nämlich so:</p>
+<pre><code>2008-08-26 00:19:43.524 CrashTest[1663:817] *** -[CFString length]:
+    message sent to deallocated instance 0x105440
+</code></pre>
+<p>Hängt man dann im Debugger, kann man von dort aus direkt diese Information abgreifen.</p>
+<pre><code>(gdb) shell malloc_history 1663 0x105440
+
+Call [2] [arg=16]: thread_a00ddfa0 |start | main | -[NSString initWithFormat:] |
+ -[NSPlaceholderString initWithFormat:locale:arguments:] |
+ _CFStringCreateWithFormatAndArgumentsAux | CFStringCreateCopy |
+ __CFStringCreateImmutableFunnel3 | _CFRuntimeCreateInstance | malloc_zone_malloc
+</code></pre>
+<p>Die Syntax für malloc_history ist dabei <code>malloc_history pid address</code>.</p>
+<p>Jetzt weiß man mit was für einem Objekt man es zu tun hat und man weiß wo es her kommt.</p>
+<p>Nice! (Mehr unter <a href="http://developer.apple.com/technotes/tn2004/tn2124.html#SECMALLOC">Mac OS X Debugging Magic</a>)</p>
+<p>p.s.: Ohne etwas Schelte an Apple geht es aber nicht. Das man sich da von Hand die Umgebungsvariablen einstellen muss - böse. Zumal das noch an einer Custom Executable geschieht. Die sind nämlich nicht im Projektfile gespeichert, sondern in den Dateien die Xcode pro Benutzer anlegt. Das hat zur Folge, dass im Normalfall nicht ein Entwickler diese Dinge raussucht und dann alle anderen im Projekt dass als Tool nutzen können, sondern dass sich das jeder Selber einrichten und warten muss. Ach ja, und natürlich zeichnet malloc_history nur die allocs auf und nicht die frees - das wäre nämlich noch praktischer, dann könnte man nämlich direkt kucken wo es das erste mal freigegeben wurde. Aber nein....</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/8/debugging-magic-in-cococa/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/8/nstoolbaritem-whoes/">
         NSToolbarItem whoes
         </a>
@@ -351,32 +409,6 @@ The obvious first thing to do is to think about the GUI and what I want to achie
     
       <footer>
         <a href="../../2008/8/wer-die-olympia-start-zeremonie/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/8/beweismaschine/">
-        Beweismaschine
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-08-11">Monday, August 11, 2008</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p><a href="http://www.piratbyran.org/bevismaskinen/">sowas braucht man ja ab und an...</a></p>
-<p>(via <a href="http://rka.name/post/2810869/Auf-die-Beweismaschine-werde-ich-demn-chst">rka</a>)</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/8/beweismaschine/">weiterlesen…</a>
       </footer>
     
   </article>

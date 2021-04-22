@@ -57,6 +57,45 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/4/hg-svn/">
+        hg &lt;-&gt; svn
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-04-28">Montag, 28. April 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Tja... leider nicht so einfach wie ich dachte.</p>
+<p>Meine Versuche mit <a href="http://bazaar-vcs.org/">BZR</a> die verbindung herzustellen, haben leider nicht geklappt. Das <a href="https://launchpad.net/bzr-hg">hg-plugin</a> dort läuft mit der aktuellen Version leider nicht mehr - und hat auch keine Unit-Tests, sonst hätte ich mir ja schon mal etwas Zeit genommen um zu schauen woran es liegt.</p>
+<p>Aber so...</p>
+<p>Egal.</p>
+<p>Was doch geklappt hat, ist mit <a href="http://www.selenic.com/mercurial/wiki/index.cgi/WorkingWithSubversion">hgimportsvn</a> einen svn checkout zu machen. Mit einem lokalen hg clone konnte ich dann Arbeiten und auf den svn-checkout zurückschieben und dann von dort comitten.</p>
+<p>Vorteil:</p>
+<ul>
+<li>Es geht überhaupt</li>
+</ul>
+<p>Nachteil:</p>
+<ul>
+<li>Alle commit Kommentare gehen verloren</li>
+<li>Ich kann lokal so oft comitten wie ich will - im Subversion kommt nur ein commit an. :-/</li>
+</ul>
+<p>Eher unbefriedigend. Aber immerhin kann man überhaupt an einem SVN-Checkout arbeiten.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/4/hg-svn/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/4/bzr-svn/">
         BZR -&gt; SVN
         </a>
@@ -335,45 +374,6 @@ HG: kann bisher noch nicht ins SVN comitten - aber immerhin <a href="http://code
     
       <footer>
         <a href="../../2008/4/das-grundgesetzt-ist-die-institutionalisierung-des-misstrauens-der-bu-rger-gegen-den-staat/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/4/openwrt/">
-        OpenWRT
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-04-20">Sonntag, 20. April 2008</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Funkt.</p>
-<p>Jetzt endlich sogar kabellos verbunden mit meiner restlichen Infrastruktur.</p>
-<p>Schon spannend was das System alles an Paketen mitbringt.</p>
-<ul>
-<li>Aircrack-ng</li>
-<li>Aircrack-ptw</li>
-<li>etc...</li>
-</ul>
-<p>Die volle Ausstattung um Unsinn zu treiben. :-)</p>
-<p>Dazu noch die Pläne der Freifunker, einen La Fonera Router mit Notebook-Baterien im Rucksack liegen zu haben, der Mesh und gleichzeitig vorhandene Netze <del>Attakieren</del> öffnen kann...</p>
-<p>:-)</p>
-<p>Leider kann das gegenwärtige OpenWRT noch keinen AdHoc Modus gleichzeitig mit etwas anderem anbieten (sonst könnte der Accesspoint bis zu 4 Netzwerke gleichzeitig anbieten) so dass es nicht möglich ist, das er über ein Normales WLAN Netz sein Internet bezieht und diesen dann über das Mesh weiter gibt.</p>
-<p>Andererseits gibt es den <a href="http://download.berlin.freifunk.net/fonera/readme.txt">La Fonera Pack</a>, der auf das normale Fonera zusätzlich zu der Fonera Dienstleistung noch das Meshing anbietet.</p>
-<p>Also muss es wohl doch irgendwie gehen.</p>
-<p>Nur wie?</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/4/openwrt/">weiterlesen…</a>
       </footer>
     
   </article>

@@ -57,6 +57,63 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/2/c-typen-in-die-laufzeitumgebung-heben/">
+        C-Typen in die Laufzeitumgebung heben
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-02-15">Freitag, 15. Februar 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Wendet man <code>@encode()</code> jetzt auf ein paar Deklarationen an, erhält man folgende Ergebnisse:</p>
+<div class="hll"><pre><span></span><span class="cp">#define LOG(what) [[Log sharedLog] logObjcType:@encode(typeof(what)) arguments:(void *)what]</span>
+
+<span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;fnord&quot;</span><span class="p">);</span> <span class="c1">// @</span>
+<span class="n">LOG</span><span class="p">(</span><span class="s">&quot;foo&quot;</span><span class="p">);</span> <span class="c1">// [3c]</span>
+<span class="kt">char</span> <span class="o">*</span><span class="n">string</span> <span class="o">=</span> <span class="s">&quot;fnord&quot;</span><span class="p">;</span>
+<span class="n">LOG</span><span class="p">(</span><span class="n">string</span><span class="p">);</span> <span class="c1">// *</span>
+</pre></div>
+<p>Ich parse das so:</p>
+<div class="hll"><pre><span></span><span class="cp">#define RAISE_UNSUPPORTED_TYPE(encodedType) \</span>
+<span class="cp">    [NSException raise:NSInvalidArgumentException \</span>
+<span class="cp">        format:@&quot; you are trying to log something that is not a string: %s&quot;, encodedType]</span>
+
+<span class="p">-</span> <span class="nf">stringFromType:</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="nv">encodedType</span> <span class="nf">inArray:</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="nv">what</span><span class="p">;</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="sc">&#39;[&#39;</span> <span class="o">!=</span> <span class="o">*</span><span class="n">encodedType</span><span class="p">)</span> <span class="n">RAISE_UNSUPPORTED_TYPE</span><span class="p">(</span><span class="n">encodedType</span><span class="p">);</span>
+
+    <span class="n">encodedType</span><span class="o">++</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="n">length</span> <span class="o">=</span> <span class="n">strtol</span><span class="p">(</span><span class="n">encodedType</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">encodedType</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="sc">&#39;c&#39;</span> <span class="o">!=</span> <span class="o">*</span><span class="n">encodedType</span><span class="p">)</span> <span class="n">RAISE_UNSUPPORTED_TYPE</span><span class="p">(</span><span class="n">encodedType</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="p">[</span><span class="bp">NSString</span> <span class="nl">stringWithCString</span><span class="p">:</span><span class="n">what</span> <span class="nl">length</span><span class="p">:</span><span class="n">length</span><span class="mi">-1</span><span class="p">];</span> <span class="c1">// \0 ignored</span>
+<span class="p">}</span>
+
+<span class="o">-</span> <span class="nl">stringFromType</span><span class="p">:(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">encodedType</span> <span class="nl">inValue</span><span class="p">:(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="n">what</span><span class="p">;</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="sc">&#39;@&#39;</span> <span class="o">==</span> <span class="o">*</span><span class="n">encodedType</span><span class="p">)</span> <span class="k">return</span> <span class="p">[(</span><span class="kt">id</span><span class="p">)</span><span class="n">what</span> <span class="n">description</span><span class="p">];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="sc">&#39;*&#39;</span> <span class="o">==</span> <span class="o">*</span><span class="n">encodedType</span><span class="p">)</span> <span class="k">return</span> <span class="p">[</span><span class="bp">NSString</span> <span class="nl">stringWithCString</span><span class="p">:(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">what</span><span class="p">];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="sc">&#39;[&#39;</span> <span class="o">==</span> <span class="o">*</span><span class="n">encodedType</span><span class="p">)</span> <span class="k">return</span> <span class="p">[</span><span class="nb">self</span> <span class="nl">stringFromType</span><span class="p">:</span><span class="n">encodedType</span> <span class="nl">inArray</span><span class="p">:</span><span class="n">what</span><span class="p">];</span>
+    <span class="n">RAISE_UNSUPPORTED_TYPE</span><span class="p">(</span><span class="n">encodedType</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nb">nil</span><span class="p">;</span> <span class="cm">/* never reached */</span>
+<span class="p">}</span>
+</pre></div>
+<p>(Vorschläge wie man das besser machen kann, bitte gerne an mich! ( z.B. via spamfaenger ät gmx de))</p>
+<p>Fehlt nur noch die Erweiterung auf beliebig viele Argumente. Dazu aber morgen mehr. :)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/2/c-typen-in-die-laufzeitumgebung-heben/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/2/mit-c-makros-etwas-tun-was-mit-ihnen-nicht-mo-glich-ist/">
         Mit C Makros etwas tun, was mit ihnen nicht möglich ist
         </a>
@@ -379,48 +436,6 @@ Just two days ago I watched the episode <a href="http://www.wdr.de/tv/quarks/sen
     
       <footer>
         <a href="../../2008/2/50-of-50/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/2/wie-man-eine-scho-ne-animation-macht/">
-        Wie man eine schöne Animation macht...
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-02-04">Montag, 4. Februar 2008</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Das ist nämlich gar nicht so einfach.</p>
-<p>Ich arbeite ja nun seit ein paar Monaten bei <a href="http://www.novamedia.de/index_d.html">Novamedia</a> - und mein erstes Projekt war, (mit einem 'sportlichen' Zeitplan von etwa 6 Wochen) bis zur <a href="http://macworldexpo.com/">Macworld im Januar 08</a> das Produkt Fone2Phone fertigzustellen.</p>
-<p>Ziel der Aktion war es, ein Produkt zu haben, was bei der Migration von einem Telefon weg hilft. Dazu sollte Fone2Phone alles, was das Telefon an Daten enthält, aus diesem herausholen und in die jeweils zuständigen Apple-Applikationen befördern.</p>
-<p>Das ist für sich genommen natürlich recht wenig (wenn auch technisch anspruchsvoll), darum haben wir uns von vornherein das Ziel gesetzt, mit dem Produkt auf der Macworld möglichst viele Preise abzusahnen. (Was auch <a href="http://www.macobserver.com/article/2008/01/16.11.shtml">geklappt</a> <a href="http://www.powerpage.org/2008/01/mwsf08_powerpages_best_of_show_for_macworld_expo_2008.html">hat</a>. :)</p>
-<p>Aber das ist alles nur Vorrede (und Stolz, schließlich hab ich damit gezeigt, was ich kann). Also auf zum eigentlichen Zweck dieses Posts.</p>
-<p><img src="../../2008/2/wie-man-eine-scho-ne-animation-macht/Fone2Phone-Animation.gif" alt="Image"></p>
-<p>Die Animation. Damit Fone2Phone wirklich geil aussieht, haben wir tief in die Trickkiste gegriffen ('Wir' ist in diesem Zusammenhang mein Kollege <a href="http://www.lutomsky.de/">Andreas</a>).</p>
-<p>Denn damit die Animation richtig gut aussieht, überlagern wir drei Elemente.</p>
-<ol>
-<li>Eine Animation, die die beiden Views austauscht</li>
-<li>Eine variable Geschwindigkeit, das heißt die Animation beginnt langsam, beschleunigt sich dann und wird am Schluss wieder langsam.</li>
-</ol>
-<p>Bis hierher wäre ich auch darauf gekommen - aber der eigentliche Geniestreich liegt in dem letzten Element, das da noch oben drauf kommt:</p>
-<ol>
-<li>Die Views werden mit dem Hereinschieben eingeblendet / mit dem Herausschieben ausgeblendet.</li>
-</ol>
-<p>Dieses letzte Element macht die Animation soo viel besser - obwohl es in der Komposition zuerst bewust überhaupt nicht wahrgenommen wird.</p>
-<p>Und das ist die Lektion, die ich heute mitgenommen habe.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/2/wie-man-eine-scho-ne-animation-macht/">weiterlesen…</a>
       </footer>
     
   </article>

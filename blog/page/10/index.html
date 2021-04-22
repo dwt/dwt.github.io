@@ -57,6 +57,39 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2009/3/wer-ist-erfolgreich-und-warum/">
+        Wer ist Erfolgreich und warum?
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-03-15">Sonntag, 15. März 2009</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Diese Frage <a href="http://www.spokenword.org/program/155266">versucht Malcolm Gladwell zu beantworten</a> - und ich finde er hat wie immer einen erleuchtenden Ansatz.</p>
+<p>Der Kern-Punkt: Wir haben in unserer Gesellschaft ganz systematisch komplett dämliche Regeln die jede Menge Leute davon abhalten dass zu erreichen was sie erreichen können.</p>
+<p>Und das ist Fürchterlich! Denn im Gegnsatz zu Armut, die wir nur sehr schwer lösen können, sind die meisten dieser Regeln komplett zufällig und absolut leicht zu ändern!</p>
+<p>Ein Beispiel: Schule. In Amerika sind Reiche Kinder immer besser als arme Kinder. Wieso? Wenn man zu Beginn des Schuljahres misst, und am Ende erreichen Arme Kinder sogar einen größeren Fortschritt als Reiche - aber in den Sommerferien tut sich eine Kluft auf. Die Reichen kinder machen genau so große Fortschritte wie in der Schulzeit und die Armen quasi gar nicht.</p>
+<p>Und die Sommerferien sind in Amerika 3 Monate lang.</p>
+<p>Richtig Absurd wird das ganze wenn man sich anschaut wieso diese Ferien eingeführt wurden: Die Schulreformer im 19. Jahrhundert haben die Sommerferien nämlich eingeführt weil sie Überzeugt waren dass zu viel Schule bei Kindern zu Wahnsinn führt.</p>
+<p>Doh.</p>
+<p>Und dass passiert wenn man Politik macht ohne sich die Gründe anzuschauen wieso Entscheidungen gefällt werden und wurden. :-(</p>
+<p><a href="http://www.spokenword.org/program/155266">Ganz hervorragender Podcast - unbedingt anhören.</a></p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/3/wer-ist-erfolgreich-und-warum/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2009/3/scatman-john/">
         Scatman John
         </a>
@@ -344,60 +377,6 @@
     
       <footer>
         <a href="../../2009/2/netzmusik/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2009/2/xcode-mit-svn-1-5/">
-        Xcode mit svn 1.5
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2009-02-19">Donnerstag, 19. Februar 2009</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Eigentlich dachte ich ja ich hätte das schon gebloggt - aber ich habs nicht wiedergefunden. (Vielleicht sollte ich nochmal mit google suchen?)</p>
-<p>Ah well.</p>
-<p>Dieses Script bringt Xcode mit svn 1.5 via <a href="http://www.finkproject.org/">Fink</a> installiert zum laufen.</p>
-<div class="hll"><pre><span></span><span class="ch">#!/bin/sh</span>
-
-<span class="nv">svn_libs</span><span class="o">=</span>/sw/lib/svn15
-
-<span class="nb">cd</span> /Developer/Library/Xcode/Plug-ins/XcodeSubversionPlugin.xcplugin/Contents/MacOS <span class="o">||</span> <span class="nb">exit</span> <span class="m">1</span>
-ditto XcodeSubversionPlugin XcodeSubversionPlugin.new
-
-<span class="nv">libs</span><span class="o">=</span><span class="sb">`</span>otool -L XcodeSubversionPlugin.new <span class="p">|</span> grep libsvn <span class="p">|</span> awk <span class="s1">&#39;{ print $1 }&#39;</span><span class="sb">`</span>
-
-<span class="k">for</span> lib <span class="k">in</span> <span class="nv">$libs</span> <span class="p">;</span> <span class="k">do</span>
-  <span class="nv">new_lib</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$lib</span> <span class="p">|</span> sed <span class="s2">&quot;s,/usr/lib,</span><span class="nv">$svn_libs</span><span class="s2">,g&quot;</span><span class="sb">`</span>
-  <span class="nb">echo</span> <span class="s2">&quot;install_name_tool -change </span><span class="nv">$lib</span><span class="s2"> </span><span class="nv">$new_lib</span><span class="s2"> XcodeSubversionPlugin.new&quot;</span>
-  install_name_tool -change <span class="nv">$lib</span> <span class="nv">$new_lib</span> XcodeSubversionPlugin.new
-<span class="k">done</span>
-
-install_name_tool -change /usr/lib/libapr-1.0.dylib /sw/lib/libapr.0.dylib XcodeSubversionPlugin.new
-install_name_tool -change /usr/lib/libaprutil-1.0.dylib /sw/lib/libaprutil.0.dylib XcodeSubversionPlugin.new
-
-<span class="nb">echo</span> otool -L XcodeSubversionPlugin.new
-otool -L XcodeSubversionPlugin.new
-
-<span class="nb">echo</span>
-otool -L XcodeSubversionPlugin.new <span class="p">|</span> grep svn <span class="p">|</span> awk <span class="s1">&#39;{ print $1 }&#39;</span> <span class="p">|</span> xargs -n <span class="m">1</span> ls -la
-
-<span class="nb">exit</span> <span class="m">0</span>
-</pre></div>
-<p>Ach ja, am Schluss muss man noch von Hand in <code>/Developer/Library/Xcode/Plug-ins/XcodeSubversionPlugin.xcplugin/Contents/MacOS</code> das original zur Seite bewegen und bei dem neuen das ".new" streichen.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2009/2/xcode-mit-svn-1-5/">weiterlesen…</a>
       </footer>
     
   </article>

@@ -1,5 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Martin Häckers Blog - Software, Go / Baduk / Weiqi, Liquid Democracy</title><link href="https://h%C3%A4cker.net/en/blog/" rel="alternate"></link><link href="https://h%C3%A4cker.net/blog/feed.xml" rel="self"></link><id>urn:uuid:d0d51cf8-c6be-310d-a416-bf22c1661ce7</id><updated>2021-04-17T00:00:00Z</updated><author><name></name></author><subtitle></subtitle><entry><title>Wie und wann den Retter werfen?</title><link href="https://h%C3%A4cker.net/blog/2021/4/wie-und-wann-den-retter-werfen/" rel="alternate"></link><updated>2021-04-17T00:00:00Z</updated><author><name>Martin Häcker</name></author><id>urn:uuid:4a1b9d86-543d-34a5-b0ec-924e3d4cf7d8</id><content type="html">&lt;p&gt;&lt;a href="https://www.youtube.com/watch?v=Oa1JCLqIwS0"&gt;Diesen Vortrag von Theo de Blic&lt;/a&gt; finde ich sehr sehenswert, da er a) viel Erfahrung mit Rettern hat - immerhin 14 Retterwürfe hat er schon durch, und b) einen wunderschön strukturierten Gedanken-Ablauf hat wan und wie man seine Retter werfen soll.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Martin Häckers Blog - Software, Go / Baduk / Weiqi, Liquid Democracy</title><link href="https://h%C3%A4cker.net/en/blog/" rel="alternate"></link><link href="https://h%C3%A4cker.net/blog/feed.xml" rel="self"></link><id>urn:uuid:d0d51cf8-c6be-310d-a416-bf22c1661ce7</id><updated>2021-04-22T00:00:00Z</updated><author><name></name></author><subtitle></subtitle><entry><title>Open Source Flugelektronik 2 - BLE und Serial</title><link href="https://h%C3%A4cker.net/blog/2021/4/open-source-flugelektronik-2-ble-und-serial/" rel="alternate"></link><updated>2021-04-22T00:00:00Z</updated><author><name>Martin Häcker</name></author><id>urn:uuid:9d400487-c53e-3329-9e5c-5d1fa5d3b0e6</id><content type="html">&lt;p&gt;Langsam nähere ich mich meinen &lt;a href="https://github.com/lyusupov/SoftRF"&gt;Soft-RF-Geräten&lt;/a&gt; an. Ich kann jetzt auch über &lt;a href="./"&gt;Bluetooth Low Energy (BLE)&lt;/a&gt; mit dem Gerät reden. Das Python Framework &lt;a href="https://pypi.org/project/bleak/"&gt;Bleak&lt;/a&gt; war dabei unglaublich hilfreich, da ich fast den ganzen BLE-Code sehr plattform-neutral Scheiben kann. I.e. der Code ist zwar nur auf MacOS getestet, wird aber sehr wahrscheinlich auch unter Linux funktionieren. Der Code zu diesem Post liegt &lt;a href="https://github.com/dwt/softrf-interfacing"&gt;auf github&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Wie läuft das jetzt? Zuerst braucht man einen BLE-Scanner, um die Adresse des Geräts zu finden. Bei mir sieht das so aus:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;% ./ble_scanner.py
+........................................
+[...]
+0975FAB7-6F50-4B60-A0D8-9F11C817FB6D: SoftRF-f0c010-LE
+[...]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Mit dieser Adresse kann man dann reden um sich anzuschauen welche BLE-Services sie anbietet:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;% ./ble_explore_device.py 0975FAB7-6F50-4B60-A0D8-9F11C817FB6D
+Connected: True
+[Service] 0000ffe0-0000-1000-8000-00805f9b34fb (Handle: 40): Vendor specific
+    [Characteristic] 0000ffe1-0000-1000-8000-00805f9b34fb (Handle: 41): Vendor specific (read,write-without-response,notify), Value: b',,,,,,,,,99.99,99.99'
+        [Descriptor] 00002901-0000-1000-8000-00805f9b34fb (Handle: 43): Characteristic User Description) | Value: b'HMSoft'
+        [Descriptor] 00002902-0000-1000-8000-00805f9b34fb (Handle: 44): Client Characteristic Configuration) | Value: b'\x00\x00'
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Was heißt das? Das gerät bietet den Service &lt;code&gt;0000ffe0-*&lt;/code&gt; an und darauf eine Characteristik &lt;code&gt;0000ffe1-*&lt;/code&gt; die wiederum zwei Deskriptoren enthält. &lt;code&gt;00002901-*&lt;/code&gt;und &lt;code&gt;00002902-*&lt;/code&gt;. Nicht das ich BLE vollständig verstehe, aber zumindest weiß ich das ein Service der Grundsätzliche Behälter für alle BLE Interaktionen ist und eine Charactreristik einen lese und schreibbaren Wert darstellt. Deskriptoren können darin verschachtelt sein und sind entweder zusätzliche lese und schreibbare Werte oder haben einen technischen Sinn. In diesem Beispiel ist der zweite Descriptor notwendig um auf der Charakteristik nicht nur lesen und schreiben, sondern auch  Notify zu implementieren -&amp;gt; und das braucht es für die Serielle Schnittstelle.&lt;/p&gt;
+&lt;p&gt;Entscheidend ist hier die Service-Charakteristik &lt;code&gt;0000ffe1-0000-1000-8000-00805f9b34fb&lt;/code&gt; Hier spielt die ganze Musik. Die Serielle Ausgabe des SoftRF kann man mittels Notify davon auslesen und man kann auf die Serielle Schnittstelle schreiben indem man darauf schreibt. Soweit so simpel. Und damit kriegt man auch schon ein sehr primitives UART hin:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;% ./ble_uart.py 0975FAB7-6F50-4B60-A0D8-9F11C817FB6D
+Connected, start typing and press ENTER...
+0.00,0000.0000,N,00000.0000,E,0,00,100.0,0.0,M,0.0,M,,*5C
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+$PFLAU,0,0,0,1,0,,0,,,*4F
+$GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,000000.00,0000.0000,N,00000.0000,E,0,00,100.0,0.0,M,0.0,M,,*5C
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99$PFLAU,0,0,0,1,0,,0,,,*4F
+$GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,000000.00,0000.0000,N,00000.0000,E,0,00,100.0,0.0,M,0.0,M,,*5C
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+$PFLAU,0,0,0,1,0,,0,,,*4F
+$GPRMC,,V,,,,,,,,,,N*53
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Yay!&lt;/p&gt;
+&lt;p&gt;Nächste Tasks: das NMEA Encoding verstehen und mal schauen ob ich damit eine erste simple Visualisierung hinbekomme.&lt;/p&gt;
+</content></entry><entry><title>Wie und wann den Retter werfen?</title><link href="https://h%C3%A4cker.net/blog/2021/4/wie-und-wann-den-retter-werfen/" rel="alternate"></link><updated>2021-04-17T00:00:00Z</updated><author><name>Martin Häcker</name></author><id>urn:uuid:4a1b9d86-543d-34a5-b0ec-924e3d4cf7d8</id><content type="html">&lt;p&gt;&lt;a href="https://www.youtube.com/watch?v=Oa1JCLqIwS0"&gt;Diesen Vortrag von Theo de Blic&lt;/a&gt; finde ich sehr sehenswert, da er a) viel Erfahrung mit Rettern hat - immerhin 14 Retterwürfe hat er schon durch, und b) einen wunderschön strukturierten Gedanken-Ablauf hat wan und wie man seine Retter werfen soll.&lt;/p&gt;
 &lt;p&gt;Besonders Wertvoll fand ich die Folie 'Know your limits' in denen er wiedergibt wann Er seinen Retter wirft. Ich habe beschlossen das ich mir diese 'Gedankenkarte' auf jeden fall auch ziehen möchte. Also: 'Note to self' - Wann immer eine dieser Situationen auftritt, egal welche Höhe, ziehe ich meine Rettung!&lt;/p&gt;
 &lt;h2&gt;Know your limits&lt;/h2&gt;
 &lt;h3&gt;Höhe&lt;/h3&gt;
@@ -616,131 +650,4 @@ sich die Viren nicht ausbreiten:&lt;/p&gt;
 &lt;p&gt;Bundesweit waren es 2,0 % - 'immerhin' 0,5 % besser als das erste Ergebnis der Grünen (mit denen wir ja so oft verglichen werden).&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;katerausschlaf&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;Eine ganz gute Übersicht über die Ergebnisse gibt es &lt;a href="http://wahlarchiv.tagesschau.de/flash/index.shtml?wahl=2009-09-27-BT-DE"&gt;bei ARD&lt;/a&gt;&lt;/p&gt;
-</content></entry><entry><title>Blocks in Objective C</title><link href="https://h%C3%A4cker.net/blog/2009/9/blocks-in-objective-c/" rel="alternate"></link><updated>2009-09-26T00:00:00Z</updated><author><name>Martin Häcker</name></author><id>urn:uuid:5e1550ab-d1cb-3f01-b5f3-d718194f310d</id><content type="html">&lt;p&gt;I've long had a fascination with SmallTalk style blocks in Objective-C. So much so, that I learned a lot about how C and GCC work when I implemented them on the primitive of GCCs nested functions myself.&lt;/p&gt;
-&lt;p&gt;[browser:open-source/closures-in-objc/trunk Heres the Source]&lt;/p&gt;
-&lt;p&gt;Of course, just as I had it working, Apple deprecated GCCs nested functions, as they where implemented using a trampoline on the stack. And of course, a trampoline being executable code they where out when the non executable stack came in.&lt;/p&gt;
-&lt;p&gt;Ah well.&lt;/p&gt;
-&lt;p&gt;BUT, Apple just released with Snow-Leopard a new compiler feature [Blocks]!&lt;/p&gt;
-&lt;p&gt;Yay, closures in C!&lt;/p&gt;
-&lt;p&gt;So here's how it looks if you implement the Smalltalk collection iteration protocoll in ObjC. (Note: this of course are not propper ObjC-Names, but each Smalltalker will none the less get a tear in their eye when they see this)&lt;/p&gt;
-&lt;div class="hll"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;#import &amp;lt;Foundation/Foundation.h&amp;gt;&lt;/span&gt;
-
-&lt;span class="k"&gt;@implementation&lt;/span&gt; &lt;span class="bp"&gt;NSArray&lt;/span&gt; &lt;span class="nl"&gt;(BlocksTest)&lt;/span&gt;
-
-&lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nf"&gt;do:&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;^&lt;/span&gt;&lt;span class="p"&gt;)(&lt;/span&gt;&lt;span class="kt"&gt;id&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;&lt;span class="nv"&gt;aBlock&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="c1"&gt;// Take care, -enumerateObjectsUsingBlock: wraps an auto-release pool around the iteration&lt;/span&gt;
-    &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;self&lt;/span&gt; &lt;span class="nl"&gt;enumerateObjectsUsingBlock&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-        &lt;span class="o"&gt;^&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;id&lt;/span&gt; &lt;span class="n"&gt;obj&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;NSUInteger&lt;/span&gt; &lt;span class="n"&gt;idx&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;BOOL&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;stop&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="n"&gt;aBlock&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;obj&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="p"&gt;}];&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-
-&lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;NSArray&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nl"&gt;collect&lt;/span&gt;&lt;span class="p"&gt;:(&lt;/span&gt;&lt;span class="kt"&gt;id&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;^&lt;/span&gt;&lt;span class="p"&gt;)(&lt;/span&gt;&lt;span class="kt"&gt;id&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;&lt;span class="n"&gt;aBlock&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="kt"&gt;id&lt;/span&gt; &lt;span class="n"&gt;collectedItems&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="bp"&gt;NSMutableArray&lt;/span&gt; &lt;span class="nl"&gt;arrayWithCapacity&lt;/span&gt;&lt;span class="p"&gt;:[&lt;/span&gt;&lt;span class="nb"&gt;self&lt;/span&gt; &lt;span class="n"&gt;count&lt;/span&gt;&lt;span class="p"&gt;]];&lt;/span&gt;
-    &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;self&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;&lt;span class="o"&gt;:^&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;id&lt;/span&gt; &lt;span class="n"&gt;each&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;collectedItems&lt;/span&gt; &lt;span class="nl"&gt;addObject&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;aBlock&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;each&lt;/span&gt;&lt;span class="p"&gt;)];&lt;/span&gt;
-    &lt;span class="p"&gt;}];&lt;/span&gt;
-    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;collectedItems&lt;/span&gt; &lt;span class="k"&gt;copy&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt; &lt;span class="c1"&gt;// REFACT: consider to drop copy&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-
-&lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nl"&gt;detect&lt;/span&gt;&lt;span class="p"&gt;:(&lt;/span&gt;&lt;span class="kt"&gt;BOOL&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;^&lt;/span&gt;&lt;span class="p"&gt;)(&lt;/span&gt;&lt;span class="kt"&gt;id&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;&lt;span class="n"&gt;aBlock&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="c1"&gt;// Take care, -enumerateObjectsUsingBlock: wraps an auto-release pool around the iteration&lt;/span&gt;
-    &lt;span class="k"&gt;__block&lt;/span&gt; &lt;span class="kt"&gt;id&lt;/span&gt; &lt;span class="n"&gt;resultObject&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;nil&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;self&lt;/span&gt; &lt;span class="nl"&gt;enumerateObjectsUsingBlock&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-        &lt;span class="o"&gt;^&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;id&lt;/span&gt; &lt;span class="n"&gt;obj&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;NSUInteger&lt;/span&gt; &lt;span class="n"&gt;idx&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;BOOL&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;stop&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;aBlock&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;obj&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-                &lt;span class="n"&gt;resultObject&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;obj&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-                &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;stop&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;YES&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            &lt;span class="p"&gt;}&lt;/span&gt;
-        &lt;span class="p"&gt;}];&lt;/span&gt;
-    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;resultObject&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-
-&lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nl"&gt;detect&lt;/span&gt;&lt;span class="p"&gt;:(&lt;/span&gt;&lt;span class="kt"&gt;BOOL&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;^&lt;/span&gt;&lt;span class="p"&gt;)(&lt;/span&gt;&lt;span class="kt"&gt;id&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;&lt;span class="n"&gt;aBlock&lt;/span&gt; &lt;span class="nl"&gt;ifNone&lt;/span&gt;&lt;span class="p"&gt;:(&lt;/span&gt;&lt;span class="kt"&gt;id&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;^&lt;/span&gt;&lt;span class="p"&gt;)())&lt;/span&gt;&lt;span class="n"&gt;errorBlock&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="kt"&gt;id&lt;/span&gt; &lt;span class="n"&gt;foundElement&lt;/span&gt;  &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;self&lt;/span&gt; &lt;span class="nl"&gt;detect&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;aBlock&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
-    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;foundElement&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;foundElement&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="k"&gt;else&lt;/span&gt;
-        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;errorBlock&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-
-&lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nl"&gt;inject&lt;/span&gt;&lt;span class="p"&gt;:(&lt;/span&gt;&lt;span class="kt"&gt;id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="n"&gt;aValue&lt;/span&gt; &lt;span class="nl"&gt;into&lt;/span&gt;&lt;span class="p"&gt;:(&lt;/span&gt;&lt;span class="kt"&gt;id&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;^&lt;/span&gt;&lt;span class="p"&gt;)(&lt;/span&gt;&lt;span class="kt"&gt;id&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;id&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;&lt;span class="n"&gt;aBlock&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="c1"&gt;// Need to take care with retain here, because apple wraps an auto-release pool around the block iterator. :/&lt;/span&gt;
-    &lt;span class="k"&gt;__block&lt;/span&gt; &lt;span class="kt"&gt;id&lt;/span&gt; &lt;span class="n"&gt;collected&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;aValue&lt;/span&gt; &lt;span class="k"&gt;retain&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
-    &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;self&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;&lt;span class="o"&gt;:^&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;id&lt;/span&gt; &lt;span class="n"&gt;each&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
-        &lt;span class="n"&gt;collected&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;aBlock&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;collected&lt;/span&gt; &lt;span class="n"&gt;autorelease&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;each&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;retain&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
-    &lt;span class="p"&gt;}];&lt;/span&gt;
-    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;collected&lt;/span&gt; &lt;span class="n"&gt;autorelease&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-
-&lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;NSArray&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nl"&gt;reject&lt;/span&gt;&lt;span class="p"&gt;:(&lt;/span&gt;&lt;span class="kt"&gt;BOOL&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;^&lt;/span&gt;&lt;span class="p"&gt;)(&lt;/span&gt;&lt;span class="kt"&gt;id&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;&lt;span class="n"&gt;aBlock&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="kt"&gt;id&lt;/span&gt; &lt;span class="n"&gt;selectedObjects&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="bp"&gt;NSMutableArray&lt;/span&gt; &lt;span class="nl"&gt;arrayWithCapacity&lt;/span&gt;&lt;span class="p"&gt;:[&lt;/span&gt;&lt;span class="nb"&gt;self&lt;/span&gt; &lt;span class="n"&gt;count&lt;/span&gt;&lt;span class="p"&gt;]];&lt;/span&gt;
-    &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;self&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;&lt;span class="o"&gt;:^&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;id&lt;/span&gt; &lt;span class="n"&gt;each&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
-        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;aBlock&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;each&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-            &lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-        &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;selectedObjects&lt;/span&gt; &lt;span class="nl"&gt;addObject&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;each&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
-    &lt;span class="p"&gt;}];&lt;/span&gt;
-    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;selectedObjects&lt;/span&gt; &lt;span class="k"&gt;copy&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt; &lt;span class="c1"&gt;// REFACT: consider to drop copy&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-
-&lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;NSArray&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nl"&gt;select&lt;/span&gt;&lt;span class="p"&gt;:(&lt;/span&gt;&lt;span class="kt"&gt;BOOL&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;^&lt;/span&gt;&lt;span class="p"&gt;)(&lt;/span&gt;&lt;span class="kt"&gt;id&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;&lt;span class="n"&gt;aBlock&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;self&lt;/span&gt; &lt;span class="nl"&gt;reject&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;^&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;id&lt;/span&gt; &lt;span class="n"&gt;each&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;BOOL&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;!&lt;/span&gt; &lt;span class="n"&gt;aBlock&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;each&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="p"&gt;}];&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;span class="k"&gt;@end&lt;/span&gt;
-
-
-&lt;span class="cp"&gt;#define log(objcObject) fprintf(stdout, &amp;quot;%s\n&amp;quot;, [[objcObject description] UTF8String])&lt;/span&gt;
-
-&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;main&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;argc&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;const&lt;/span&gt; &lt;span class="kt"&gt;char&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;[])&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="bp"&gt;NSAutoreleasePool&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;pool&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[[&lt;/span&gt;&lt;span class="bp"&gt;NSAutoreleasePool&lt;/span&gt; &lt;span class="n"&gt;alloc&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
-
-    &lt;span class="kt"&gt;id&lt;/span&gt; &lt;span class="n"&gt;array&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="bp"&gt;NSArray&lt;/span&gt; &lt;span class="nl"&gt;arrayWithObjects&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;@&amp;quot;first&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;second&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;third&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;nil&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
-
-    &lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;@&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;do:&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-    &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;array&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;&lt;span class="o"&gt;:^&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;id&lt;/span&gt; &lt;span class="n"&gt;each&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
-        &lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;each&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-    &lt;span class="p"&gt;}];&lt;/span&gt;
-
-    &lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;@&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;collect:&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-    &lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;array&lt;/span&gt; &lt;span class="nl"&gt;collect&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;^&lt;/span&gt;&lt;span class="kt"&gt;id&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;id&lt;/span&gt; &lt;span class="n"&gt;each&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
-        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;each&lt;/span&gt; &lt;span class="n"&gt;uppercaseString&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
-    &lt;span class="p"&gt;}]);&lt;/span&gt;
-
-    &lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;@&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;detect:&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-    &lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;array&lt;/span&gt; &lt;span class="nl"&gt;detect&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;^&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;id&lt;/span&gt; &lt;span class="n"&gt;each&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
-        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;each&lt;/span&gt; &lt;span class="nl"&gt;isEqual&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;@&amp;quot;second&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
-    &lt;span class="p"&gt;}]);&lt;/span&gt;
-
-    &lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;@&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;detect:ifNone:&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-    &lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;array&lt;/span&gt; &lt;span class="nl"&gt;detect&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;^&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;id&lt;/span&gt; &lt;span class="n"&gt;each&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;NO&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt; 
-                        &lt;span class="nl"&gt;ifNone&lt;/span&gt;&lt;span class="p"&gt;:(&lt;/span&gt;&lt;span class="kt"&gt;id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;^&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Yeehaw!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="p"&gt;}]);&lt;/span&gt;
-
-    &lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;@&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;inject:into:&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-    &lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;array&lt;/span&gt; &lt;span class="nl"&gt;inject&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;@&amp;quot;&amp;quot;&lt;/span&gt; &lt;span class="nl"&gt;into&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="o"&gt;^&lt;/span&gt; &lt;span class="kt"&gt;id&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;id&lt;/span&gt; &lt;span class="n"&gt;concatenation&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;id&lt;/span&gt; &lt;span class="n"&gt;element&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
-        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;concatenation&lt;/span&gt; &lt;span class="nl"&gt;stringByAppendingString&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;element&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
-    &lt;span class="p"&gt;}]);&lt;/span&gt;
-
-    &lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;@&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;reject:&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-    &lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;array&lt;/span&gt; &lt;span class="nl"&gt;reject&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;^&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;id&lt;/span&gt; &lt;span class="n"&gt;each&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
-        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;each&lt;/span&gt; &lt;span class="nl"&gt;hasSuffix&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;@&amp;quot;nd&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
-    &lt;span class="p"&gt;}]);&lt;/span&gt;
-
-    &lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;@&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;select:&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-    &lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;array&lt;/span&gt; &lt;span class="nl"&gt;select&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;^&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;id&lt;/span&gt; &lt;span class="n"&gt;each&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
-        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;each&lt;/span&gt; &lt;span class="nl"&gt;hasSuffix&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;@&amp;quot;d&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
-    &lt;span class="p"&gt;}]);&lt;/span&gt;
-
-    &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;pool&lt;/span&gt; &lt;span class="n"&gt;drain&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
-    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Ain't that pretty?&lt;/p&gt;
-&lt;p&gt;[browser:open-source/smalltalk-like-iterators/trunk Here's the current version!]&lt;/p&gt;
 </content></entry></feed>

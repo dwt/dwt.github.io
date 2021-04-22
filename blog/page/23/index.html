@@ -57,6 +57,39 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/6/kommunikationsstrukturen/">
+        Kommunikationsstrukturen
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-06-04">Mittwoch, 4. Juni 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Wohin führt es, wenn in einer Firma keine geordneten Kommunikationsstrukturen existieren?</p>
+<p>Richtig, es wird weniger kommuniziert.</p>
+<p>Na hat Captain Obvious bei euch auch eingeschlagen?</p>
+<p>Ich finde es ja hochspannend, dass Kommunikation so ein Problem ist.</p>
+<p>Open Source Projekte lösen das in der Regel so, dass die Mailingliste die ständige und ausdauernde Besprechung ist, in die alle Vorschläge kommuniziert und diskutiert werden. Passt die Kommunikation nicht, wird das Projekt entweder geforkt (wenn es anderen Personen wichtig ist) oder aber das Projekt schläft ein und hört auf. (War also doch nicht soo wichtig)</p>
+<p>In Firmen werden gerne agile Methoden eingesetzt um das Problem zu lösen, da diese immer darum kreisen die Arbeit die passiert transparent zu machen und die Kommunikation der Teilnehmer zu erweitern.</p>
+<p>Ob das jetzt ein Stand-Up-Meeting oder das Daily-Scrum oder das was weiß ich was ist - immer geht es darum das man regelmäßig kommuniziert.</p>
+<p>Wichtig.</p>
+<p>Und jetzt zur nächsten Lektion: Wie kriegt man so eine Kommunikationsstruktur in eine Firma hinein die dass (noch) nicht macht?</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/6/kommunikationsstrukturen/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/6/warum-kann-man/">
         Warum kann man…
         </a>
@@ -405,62 +438,6 @@ end with either a new-line or null character.
     
       <footer>
         <a href="../../2008/5/wie-man-u-ber-objektorientierung-nachdenken-kann/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/5/genshi/">
-        Genshi
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-05-23">Freitag, 23. Mai 2008</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Heute habe ich mir mit <a href="http://www.felix-schwarz.name/Hauptseite">Felix</a> den Template Teil des Blogs, an dem wir gerade schrauben, angeschaut. Ziel war es eine Blog-Posting Seite zu bauen die möglichst einfach zu warten ist und gleichzeitig möglichst alle Features bietet die auch die <a href="http://www.hosted-projects.com/trac/TracDemo/Demo/wiki/WikiStart?action=edit">Standard Wiki-Editier-Seite</a> von <a href="http://trac.edgewall.org/">Trac</a> bietet.</p>
-<p>Das geht überraschenderweise sogar ganz gut. Denn: Trac ab 0.11 verwendet Genshi als Template-Sprache und Genshi wiederum ist XML mit <a href="http://de.wikipedia.org/wiki/XPath">XPath</a> allüren.</p>
-<p>Will heißen wir konnten uns das Template für die normale Wiki-Eingabe nehmen und dann sagen: Aber die Überschrift oben "Editing XXXXX" soll bitte weg und dafür soll da stehen "Create Blog Entry" - ein Feature das die meisten Template-Engines schon mal nicht bieten.</p>
-<p>Und das ist natürlich geil, weil wir nicht den kompletten Template-Source kopieren müssen um das gleiche look und feel zu kriegen.</p>
-<p>Nur das XPath natürlich wie alles bei XML total kompliziert macht. Das heißt zum Beispiel das man damit nicht sagen kann, nimm dass und ersetze darin das gegen dies. Neeeiiiin. Natürlich ist alles andersherum.</p>
-<p>Man sagt also: Meine Welt ist so definiert, das dies immer wenn es auftritt durch das ersetzt wird und jetzt hole ich mal das original in meine Welt hinein und magisch wird darin alles ersetzt.</p>
-<p>Großartig.</p>
-<p>Klar das geht - aber das hätte man auch einfacher haben können.</p>
-<p>p.s.: Weiß jemand wie man mit XPath aus dieser Struktur</p>
-<div class="hll"><pre><span></span><span class="nt">&lt;fieldset</span> <span class="na">id=</span><span class="s">&quot;changeinfo&quot;</span><span class="nt">&gt;</span>
- <span class="nt">&lt;legend&gt;</span>Change information<span class="nt">&lt;/legend&gt;</span>
-
- <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;field&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;tags&quot;</span><span class="nt">&gt;</span>Tag under: (<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;http://xn--hcker-gra.net/cgi-bin/trac.cgi/tags&quot;</span><span class="nt">&gt;</span>
-                            view all tags<span class="nt">&lt;/a&gt;</span>)<span class="nt">&lt;/label&gt;&lt;BR/&gt;</span>
-    <span class="nt">&lt;input</span> <span class="na">title=</span><span class="s">&quot;Comma separated list of tags&quot;</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">id=</span><span class="s">&#39;tags&#39;</span> 
-                <span class="na">name=</span><span class="s">&quot;tags&quot;</span> <span class="na">size=</span><span class="s">&quot;30&quot;</span> <span class="na">value=</span><span class="s">&quot;blog&quot;</span><span class="nt">&gt;</span>
- <span class="nt">&lt;/div&gt;</span>
- <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;field&quot;</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;label&gt;</span>Comment about this change (optional):<span class="nt">&lt;br</span> <span class="nt">/&gt;</span>
-  <span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">&quot;comment&quot;</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;comment&quot;</span> <span class="na">size=</span><span class="s">&quot;60&quot;</span> <span class="na">value=</span><span class="s">&quot;&quot;</span> <span class="nt">/&gt;&lt;/label&gt;</span>
- <span class="nt">&lt;/div&gt;&lt;br</span> <span class="nt">/&gt;</span>
-
-  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;options&quot;</span><span class="nt">&gt;</span>
-   <span class="nt">&lt;label&gt;&lt;input</span> <span class="na">type=</span><span class="s">&quot;checkbox&quot;</span> <span class="na">name=</span><span class="s">&quot;readonly&quot;</span> <span class="na">id=</span><span class="s">&quot;readonly&quot;</span> <span class="nt">/&gt;</span>
-   Page is read-only<span class="nt">&lt;/label&gt;</span>
-  <span class="nt">&lt;/div&gt;</span>
-
-<span class="nt">&lt;/fieldset&gt;</span>
-</pre></div>
-<p>nur das div mit dem label und input für den Kommentar herausmatchen kann?</p>
-<p>Unsere Versuche sind erst einmal bei diesem XPath query stehen geblieben <code>div[@id='changeinfo1']/div[@class='field']</code>.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/5/genshi/">weiterlesen…</a>
       </footer>
     
   </article>

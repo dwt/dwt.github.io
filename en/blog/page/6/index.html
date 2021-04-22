@@ -57,6 +57,157 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2009/9/blocks-in-objective-c/">
+        Blocks in Objective C
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-09-26">Saturday, September 26, 2009</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>I've long had a fascination with SmallTalk style blocks in Objective-C. So much so, that I learned a lot about how C and GCC work when I implemented them on the primitive of GCCs nested functions myself.</p>
+<p>[browser:open-source/closures-in-objc/trunk Heres the Source]</p>
+<p>Of course, just as I had it working, Apple deprecated GCCs nested functions, as they where implemented using a trampoline on the stack. And of course, a trampoline being executable code they where out when the non executable stack came in.</p>
+<p>Ah well.</p>
+<p>BUT, Apple just released with Snow-Leopard a new compiler feature [Blocks]!</p>
+<p>Yay, closures in C!</p>
+<p>So here's how it looks if you implement the Smalltalk collection iteration protocoll in ObjC. (Note: this of course are not propper ObjC-Names, but each Smalltalker will none the less get a tear in their eye when they see this)</p>
+<div class="hll"><pre><span></span><span class="cp">#import &lt;Foundation/Foundation.h&gt;</span>
+
+<span class="k">@implementation</span> <span class="bp">NSArray</span> <span class="nl">(BlocksTest)</span>
+
+<span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">do:</span><span class="p">(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">id</span><span class="p">))</span><span class="nv">aBlock</span><span class="p">;</span>
+<span class="p">{</span>
+    <span class="c1">// Take care, -enumerateObjectsUsingBlock: wraps an auto-release pool around the iteration</span>
+    <span class="p">[</span><span class="nb">self</span> <span class="nl">enumerateObjectsUsingBlock</span><span class="p">:</span>
+        <span class="o">^</span><span class="p">(</span><span class="kt">id</span> <span class="n">obj</span><span class="p">,</span> <span class="n">NSUInteger</span> <span class="n">idx</span><span class="p">,</span> <span class="kt">BOOL</span> <span class="o">*</span><span class="n">stop</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">aBlock</span><span class="p">(</span><span class="n">obj</span><span class="p">);</span>
+        <span class="p">}];</span>
+<span class="p">}</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="bp">NSArray</span> <span class="o">*</span><span class="p">)</span> <span class="nl">collect</span><span class="p">:(</span><span class="kt">id</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">id</span><span class="p">))</span><span class="n">aBlock</span><span class="p">;</span>
+<span class="p">{</span>
+    <span class="kt">id</span> <span class="n">collectedItems</span> <span class="o">=</span> <span class="p">[</span><span class="bp">NSMutableArray</span> <span class="nl">arrayWithCapacity</span><span class="p">:[</span><span class="nb">self</span> <span class="n">count</span><span class="p">]];</span>
+    <span class="p">[</span><span class="nb">self</span> <span class="k">do</span><span class="o">:^</span><span class="p">(</span><span class="kt">id</span> <span class="n">each</span><span class="p">)</span> <span class="p">{</span>
+        <span class="p">[</span><span class="n">collectedItems</span> <span class="nl">addObject</span><span class="p">:</span><span class="n">aBlock</span><span class="p">(</span><span class="n">each</span><span class="p">)];</span>
+    <span class="p">}];</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">collectedItems</span> <span class="k">copy</span><span class="p">];</span> <span class="c1">// REFACT: consider to drop copy</span>
+<span class="p">}</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span> <span class="nl">detect</span><span class="p">:(</span><span class="kt">BOOL</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">id</span><span class="p">))</span><span class="n">aBlock</span><span class="p">;</span>
+<span class="p">{</span>
+    <span class="c1">// Take care, -enumerateObjectsUsingBlock: wraps an auto-release pool around the iteration</span>
+    <span class="k">__block</span> <span class="kt">id</span> <span class="n">resultObject</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
+    <span class="p">[</span><span class="nb">self</span> <span class="nl">enumerateObjectsUsingBlock</span><span class="p">:</span>
+        <span class="o">^</span><span class="p">(</span><span class="kt">id</span> <span class="n">obj</span><span class="p">,</span> <span class="n">NSUInteger</span> <span class="n">idx</span><span class="p">,</span> <span class="kt">BOOL</span> <span class="o">*</span><span class="n">stop</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">aBlock</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span> <span class="p">{</span>
+                <span class="n">resultObject</span> <span class="o">=</span> <span class="n">obj</span><span class="p">;</span>
+                <span class="o">*</span><span class="n">stop</span> <span class="o">=</span> <span class="nb">YES</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}];</span>
+    <span class="k">return</span> <span class="n">resultObject</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span> <span class="nl">detect</span><span class="p">:(</span><span class="kt">BOOL</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">id</span><span class="p">))</span><span class="n">aBlock</span> <span class="nl">ifNone</span><span class="p">:(</span><span class="kt">id</span> <span class="p">(</span><span class="o">^</span><span class="p">)())</span><span class="n">errorBlock</span><span class="p">;</span>
+<span class="p">{</span>
+    <span class="kt">id</span> <span class="n">foundElement</span>  <span class="o">=</span> <span class="p">[</span><span class="nb">self</span> <span class="nl">detect</span><span class="p">:</span><span class="n">aBlock</span><span class="p">];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">foundElement</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">foundElement</span><span class="p">;</span>
+    <span class="k">else</span>
+        <span class="k">return</span> <span class="n">errorBlock</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span> <span class="nl">inject</span><span class="p">:(</span><span class="kt">id</span><span class="p">)</span><span class="n">aValue</span> <span class="nl">into</span><span class="p">:(</span><span class="kt">id</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">id</span><span class="p">,</span> <span class="kt">id</span><span class="p">))</span><span class="n">aBlock</span><span class="p">;</span>
+<span class="p">{</span>
+    <span class="c1">// Need to take care with retain here, because apple wraps an auto-release pool around the block iterator. :/</span>
+    <span class="k">__block</span> <span class="kt">id</span> <span class="n">collected</span> <span class="o">=</span> <span class="p">[</span><span class="n">aValue</span> <span class="k">retain</span><span class="p">];</span>
+    <span class="p">[</span><span class="nb">self</span> <span class="k">do</span><span class="o">:^</span><span class="p">(</span><span class="kt">id</span> <span class="n">each</span><span class="p">){</span>
+        <span class="n">collected</span> <span class="o">=</span> <span class="p">[</span><span class="n">aBlock</span><span class="p">([</span><span class="n">collected</span> <span class="n">autorelease</span><span class="p">],</span> <span class="n">each</span><span class="p">)</span> <span class="k">retain</span><span class="p">];</span>
+    <span class="p">}];</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">collected</span> <span class="n">autorelease</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="bp">NSArray</span> <span class="o">*</span><span class="p">)</span> <span class="nl">reject</span><span class="p">:(</span><span class="kt">BOOL</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">id</span><span class="p">))</span><span class="n">aBlock</span><span class="p">;</span>
+<span class="p">{</span>
+    <span class="kt">id</span> <span class="n">selectedObjects</span> <span class="o">=</span> <span class="p">[</span><span class="bp">NSMutableArray</span> <span class="nl">arrayWithCapacity</span><span class="p">:[</span><span class="nb">self</span> <span class="n">count</span><span class="p">]];</span>
+    <span class="p">[</span><span class="nb">self</span> <span class="k">do</span><span class="o">:^</span><span class="p">(</span><span class="kt">id</span> <span class="n">each</span><span class="p">){</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">aBlock</span><span class="p">(</span><span class="n">each</span><span class="p">))</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">[</span><span class="n">selectedObjects</span> <span class="nl">addObject</span><span class="p">:</span><span class="n">each</span><span class="p">];</span>
+    <span class="p">}];</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">selectedObjects</span> <span class="k">copy</span><span class="p">];</span> <span class="c1">// REFACT: consider to drop copy</span>
+<span class="p">}</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="bp">NSArray</span> <span class="o">*</span><span class="p">)</span> <span class="nl">select</span><span class="p">:(</span><span class="kt">BOOL</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">id</span><span class="p">))</span><span class="n">aBlock</span><span class="p">;</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="p">[</span><span class="nb">self</span> <span class="nl">reject</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="kt">id</span> <span class="n">each</span><span class="p">){</span> <span class="k">return</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span> <span class="o">!</span> <span class="n">aBlock</span><span class="p">(</span><span class="n">each</span><span class="p">);</span> <span class="p">}];</span>
+<span class="p">}</span>
+<span class="k">@end</span>
+
+
+<span class="cp">#define log(objcObject) fprintf(stdout, &quot;%s\n&quot;, [[objcObject description] UTF8String])</span>
+
+<span class="kt">int</span> <span class="n">main</span> <span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+    <span class="bp">NSAutoreleasePool</span> <span class="o">*</span> <span class="n">pool</span> <span class="o">=</span> <span class="p">[[</span><span class="bp">NSAutoreleasePool</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+
+    <span class="kt">id</span> <span class="n">array</span> <span class="o">=</span> <span class="p">[</span><span class="bp">NSArray</span> <span class="nl">arrayWithObjects</span><span class="p">:</span><span class="s">@&quot;first&quot;</span><span class="p">,</span> <span class="s">@&quot;second&quot;</span><span class="p">,</span> <span class="s">@&quot;third&quot;</span><span class="p">,</span> <span class="nb">nil</span><span class="p">];</span>
+
+    <span class="n">log</span><span class="p">(</span><span class="s">@&quot;</span><span class="se">\n</span><span class="s">do:&quot;</span><span class="p">);</span>
+    <span class="p">[</span><span class="n">array</span> <span class="k">do</span><span class="o">:^</span><span class="p">(</span><span class="kt">id</span> <span class="n">each</span><span class="p">){</span>
+        <span class="n">log</span><span class="p">(</span><span class="n">each</span><span class="p">);</span>
+    <span class="p">}];</span>
+
+    <span class="n">log</span><span class="p">(</span><span class="s">@&quot;</span><span class="se">\n</span><span class="s">collect:&quot;</span><span class="p">);</span>
+    <span class="n">log</span><span class="p">([</span><span class="n">array</span> <span class="nl">collect</span><span class="p">:</span><span class="o">^</span><span class="kt">id</span><span class="p">(</span><span class="kt">id</span> <span class="n">each</span><span class="p">){</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">each</span> <span class="n">uppercaseString</span><span class="p">];</span>
+    <span class="p">}]);</span>
+
+    <span class="n">log</span><span class="p">(</span><span class="s">@&quot;</span><span class="se">\n</span><span class="s">detect:&quot;</span><span class="p">);</span>
+    <span class="n">log</span><span class="p">([</span><span class="n">array</span> <span class="nl">detect</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="kt">id</span> <span class="n">each</span><span class="p">){</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">each</span> <span class="nl">isEqual</span><span class="p">:</span><span class="s">@&quot;second&quot;</span><span class="p">];</span>
+    <span class="p">}]);</span>
+
+    <span class="n">log</span><span class="p">(</span><span class="s">@&quot;</span><span class="se">\n</span><span class="s">detect:ifNone:&quot;</span><span class="p">);</span>
+    <span class="n">log</span><span class="p">([</span><span class="n">array</span> <span class="nl">detect</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="kt">id</span> <span class="n">each</span><span class="p">){</span> <span class="k">return</span> <span class="nb">NO</span><span class="p">;</span> <span class="p">}</span> 
+                        <span class="nl">ifNone</span><span class="p">:(</span><span class="kt">id</span><span class="p">)</span><span class="o">^</span><span class="p">{</span> <span class="k">return</span> <span class="s">@&quot;Yeehaw!&quot;</span><span class="p">;</span> <span class="p">}]);</span>
+
+    <span class="n">log</span><span class="p">(</span><span class="s">@&quot;</span><span class="se">\n</span><span class="s">inject:into:&quot;</span><span class="p">);</span>
+    <span class="n">log</span><span class="p">([</span><span class="n">array</span> <span class="nl">inject</span><span class="p">:</span><span class="s">@&quot;&quot;</span> <span class="nl">into</span><span class="p">:</span> <span class="o">^</span> <span class="kt">id</span> <span class="p">(</span><span class="kt">id</span> <span class="n">concatenation</span><span class="p">,</span> <span class="kt">id</span> <span class="n">element</span><span class="p">){</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">concatenation</span> <span class="nl">stringByAppendingString</span><span class="p">:</span><span class="n">element</span><span class="p">];</span>
+    <span class="p">}]);</span>
+
+    <span class="n">log</span><span class="p">(</span><span class="s">@&quot;</span><span class="se">\n</span><span class="s">reject:&quot;</span><span class="p">);</span>
+    <span class="n">log</span><span class="p">([</span><span class="n">array</span> <span class="nl">reject</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="kt">id</span> <span class="n">each</span><span class="p">){</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">each</span> <span class="nl">hasSuffix</span><span class="p">:</span><span class="s">@&quot;nd&quot;</span><span class="p">];</span>
+    <span class="p">}]);</span>
+
+    <span class="n">log</span><span class="p">(</span><span class="s">@&quot;</span><span class="se">\n</span><span class="s">select:&quot;</span><span class="p">);</span>
+    <span class="n">log</span><span class="p">([</span><span class="n">array</span> <span class="nl">select</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="kt">id</span> <span class="n">each</span><span class="p">){</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">each</span> <span class="nl">hasSuffix</span><span class="p">:</span><span class="s">@&quot;d&quot;</span><span class="p">];</span>
+    <span class="p">}]);</span>
+
+    <span class="p">[</span><span class="n">pool</span> <span class="n">drain</span><span class="p">];</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<p>Ain't that pretty?</p>
+<p>[browser:open-source/smalltalk-like-iterators/trunk Here's the current version!]</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/9/blocks-in-objective-c/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2009/9/zur-polizeigewalt-auf-der-freiheit-statt-angst-demo/">
         Zur Polizeigewalt auf der Freiheit statt Angst-Demo
         </a>
@@ -373,31 +524,6 @@ stew
     
       <footer>
         <a href="../../2009/6/mal-auf-den-punkt-gebracht/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2009/6/google-wave-kurz-erkla-rt/">
-        Google Wave kurz erklärt
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2009-06-03">Wednesday, June 3, 2009</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p><a href="http://www.youtube.com/watch?v=Itc4253kjhw">Schöne Zusammenfassung (~10 min) der 2 Stündigen Präsentation</a></p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2009/6/google-wave-kurz-erkla-rt/">weiterlesen…</a>
       </footer>
     
   </article>

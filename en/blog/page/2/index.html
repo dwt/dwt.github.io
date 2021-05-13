@@ -57,6 +57,63 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2011/11/ssl-certificate-trouble/">
+        SSL Certificate Trouble
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2011-11-18">Friday, November 18, 2011</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>If you should ever stumble upon this bug, consider yourself very lucky that I have found the solution to this already, because it took me <em>AGES</em> to figure this out. No shit.</p>
+<p>So here's the problem: We used a self signed certificate on on of our servers and curl and all tools relying on curl just couldn't connect to this server at all (with certificate validation). Despite the fact that the root certificate that signed the server certificate was happily in my keychain and marked as trusted.</p>
+<p>The solution first: Turns out that the Keychain will eat certificates in many formats, specifically it supports DER and PEM. curl however can't use the DER certificate in the keychain and just reports it as missing. Exporting the certificate, converting it to PEM and then reimporting it (making sure to remove the DER version beforehand) fixed it.</p>
+<p>I converted the file with this command
+<code>openssl x509 -inform DER -in some.ser.ver.der -out some.serv.ver.pem</code></p>
+<p>Here's some of the error messages I got:</p>
+<div class="hll"><pre><span></span><span class="gp">% </span>curl -I https://some.serv.ver -v
+<span class="go">* About to connect() to some.serv.ver port 443 (#0)</span>
+<span class="go">*   Trying some.ip... connected</span>
+<span class="go">* Connected to some.ser.ver (some.ip) port 443 (#0)</span>
+<span class="go">* SSLv3, TLS handshake, Client hello (1):</span>
+<span class="go">* SSLv3, TLS handshake, Server hello (2):</span>
+<span class="go">* SSLv3, TLS handshake, CERT (11):</span>
+<span class="go">* SSLv3, TLS alert, Server hello (2):</span>
+<span class="go">* SSL certificate problem, verify that the CA cert is OK. Details:</span>
+<span class="go">error:14090086:SSL routines:SSL3_GET_SERVER_CERTIFICATE:certificate verify failed</span>
+<span class="go">* Closing connection #0</span>
+<span class="go">curl: (60) SSL certificate problem, verify that the CA cert is OK. Details:</span>
+<span class="go">error:14090086:SSL routines:SSL3_GET_SERVER_CERTIFICATE:certificate verify failed</span>
+<span class="go">More details here: http://curl.haxx.se/docs/sslcerts.html</span>
+
+<span class="go">curl performs SSL certificate verification by default, using a &quot;bundle&quot;</span>
+<span class="go"> of Certificate Authority (CA) public keys (CA certs). If the default</span>
+<span class="go"> bundle file isn&#39;t adequate, you can specify an alternate file</span>
+<span class="go"> using the --cacert option.</span>
+<span class="go">If this HTTPS server uses a certificate signed by a CA represented in</span>
+<span class="go"> the bundle, the certificate verification probably failed due to a</span>
+<span class="go"> problem with the certificate (it might be expired, or the name might</span>
+<span class="go"> not match the domain name in the URL).</span>
+<span class="go">If you&#39;d like to turn off curl&#39;s verification of the certificate, use</span>
+<span class="go"> the -k (or --insecure) option.</span>
+</pre></div>
+<p>If you hit this brick wall - hope this helps you too.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2011/11/ssl-certificate-trouble/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2011/7/mappei-stu-tzen-und-rechnungsstellung/">
         Mappei Stützen und Rechnungsstellung
         </a>
@@ -311,39 +368,6 @@
     
       <footer>
         <a href="../../2010/11/nukleare-abschreckung/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2010/11/interessante-details-zur-castor-lieferung/">
-        Interessante Details zur Castor Lieferung
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2010-11-08">Monday, November 8, 2010</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <ol>
-<li>Die Castoren sind (durch die Strahlung?) 120 grad heiß wenn sie geliefert werden, Eier die man darauf wirft verkohlen sofort. :-)</li>
-<li>Die Castoren müssen erst mal 30 Jahre auskühlen bevor sie überhaupt in einer Salzmine endgelagert werden können</li>
-<li>Diese 30 Jahre stehen sie in einer Blechhalle nicht weit von Gorleben und strahlen da (hoffentlich nicht) vor sich hin</li>
-<li>Bevor sie in Gorleben eingelagert werden können müssen sie noch in kleinere Behälter 'Pollux' genannt umgefüllt werden</li>
-<li>Die Technologie dafür gibt es noch gar nicht</li>
-<li>Gorleben als Endlager ist noch gar nicht genehmigt</li>
-</ol>
-<p>Krass. <a href="http://www.zeit.de/2003/48/Gorleben">via</a></p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2010/11/interessante-details-zur-castor-lieferung/">weiterlesen…</a>
       </footer>
     
   </article>

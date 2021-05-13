@@ -57,6 +57,42 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2010/1/python-saug-punkte-contd-x-y-ist-nicht-x-x-y/">
+        Python Saug Punkte contd.: x += y ist nicht x = x + y
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2010-01-15">Friday, January 15, 2010</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <div class="hll"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">b</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;foo&#39;</span><span class="p">]</span>
+<span class="nb">print</span> <span class="n">b</span> <span class="c1"># =&gt; []</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">b</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+<span class="n">a</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">&#39;foo&#39;</span><span class="p">]</span>
+<span class="nb">print</span> <span class="n">b</span> <span class="c1"># =&gt; [&#39;foo&#39;]</span>
+</pre></div>
+<p>Doh. Wie kann das sein? Kommt man von C ist das erst mal sehr verblüffend - und auch die meisten anderen Programmiersprachen die ich kenne verwenden <code>a += b</code> als equivalent für <code>a = a + b</code>.</p>
+<p>Well, nicht so Python. Weil <a href="http://www.python.org/dev/peps/pep-0203/">da gab es offenbar mal Programmierer</a> die fanden dass man Code der mit Matrizen rechnet lieber mit Operatoren schreiben möchte weil sich das besser ließt. Natürlich nicht mit den normalen operatoren wie */+-, weil, da kann man ja den empfänger nicht in place modifizieren, und wie jeder weiß sind Matrizen ja so groß dass die dann nicht mehr in den Ram passen.</p>
+<p>Also haben sie die <op>= operatoren in Python so spezifiziert, dass sie ihre left-hand-variable in place modifizieren wenn diese mutable sind.</p>
+<p>:-(</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2010/1/python-saug-punkte-contd-x-y-ist-nicht-x-x-y/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2010/1/grand-unified-theory-of-programming/">
         Grand Unified Theory of Programming?
         </a>
@@ -364,32 +400,6 @@
     
       <footer>
         <a href="../../2009/12/python-distributions/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2009/11/flagge-zeigen/">
-        Flagge zeigen
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2009-11-29">Sunday, November 29, 2009</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p><img src="http://wurstball.de/static/ircview/pictures/ba57e733f5f0157a130c99f7e648cb58.jpg" alt="Image"></p>
-<p><a href="http://wurstball.de/25017/">via</a></p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2009/11/flagge-zeigen/">weiterlesen…</a>
       </footer>
     
   </article>

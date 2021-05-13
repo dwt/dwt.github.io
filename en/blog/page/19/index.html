@@ -57,6 +57,48 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/8/obfuscated-objc-oder-wie-macht-man-konstanten/">
+        Obfuscated Objc - oder - wie macht man Konstanten?
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-08-27">Wednesday, August 27, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Ist ja eigentlich nicht schwer, man braucht lediglich eine Definition wie diese</p>
+<div class="hll"><pre><span></span><span class="cp">#define kIOHIDVendorIDKey @&quot;VendorID&quot;</span>
+<span class="k">const</span> <span class="bp">NSString</span> <span class="o">*</span><span class="n">windowName</span> <span class="o">=</span> <span class="s">@&quot;Morgens&quot;</span>
+</pre></div>
+<p>Einziges Problem - immer wieder hat man vom System konstante C-Strings, die man aber als Objc-Strings benötigt.</p>
+<p>Interessanterweise hat der Compiler überhaupt kein Problem das hier zu machen:</p>
+<div class="hll"><pre><span></span><span class="cp">#define kIOHIDVendorIDKey &quot;VendorID&quot;</span>
+<span class="c1">// ...</span>
+<span class="p">[</span><span class="n">matchingDict</span> <span class="nl">setValue</span><span class="p">:[</span><span class="bp">NSNumber</span> <span class="nl">numberWithInt</span><span class="p">:</span><span class="n">entry</span><span class="o">-&gt;</span><span class="n">Vendor_ID</span><span class="p">]</span> 
+       <span class="nl">forKey</span><span class="p">:</span> <span class="p">@</span><span class="n">kIOHIDVendorIDKey</span><span class="p">];</span> 
+
+<span class="c1">// same, but more readable than</span>
+<span class="p">[</span><span class="n">matchingDict</span> <span class="nl">setValue</span><span class="p">:[</span><span class="bp">NSNumber</span> <span class="nl">numberWithInt</span><span class="p">:</span><span class="n">entry</span><span class="o">-&gt;</span><span class="n">Vendor_ID</span><span class="p">]</span> 
+       <span class="nl">forKey</span><span class="p">:</span> <span class="p">[</span><span class="bp">NSString</span> <span class="nl">stringWithCString</span><span class="p">:</span><span class="n">kIOHIDVendorIDKey</span><span class="p">]];</span>
+<span class="c1">// Also note that -stringWithCString is deprecated</span>
+</pre></div>
+<p>Oder mit anderen Worten man kann problemlos aus jeder C-String-Konstante eine Objc-String-Konstante machen, indem man einfach ein <strong><em>@</em></strong> davor schreibt.</p>
+<p>Neat.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/8/obfuscated-objc-oder-wie-macht-man-konstanten/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/8/debugging-magic-in-cococa/">
         Debugging Magic in Cococa
         </a>
@@ -383,32 +425,6 @@ The obvious first thing to do is to think about the GUI and what I want to achie
     
       <footer>
         <a href="../../2008/8/falls-ich-mal-wieder-argumente-fu-r-eine-killerspiele-debatte-brauche/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/8/wer-die-olympia-start-zeremonie/">
-        Wer die Olympia Start-Zeremonie
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-08-12">Tuesday, August 12, 2008</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>wie ich auch verpasst hat...</p>
-<p><a href="http://www.mininova.org/tor/1680702">Kann sie sich ja hier anschauen. :)</a></p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/8/wer-die-olympia-start-zeremonie/">weiterlesen…</a>
       </footer>
     
   </article>

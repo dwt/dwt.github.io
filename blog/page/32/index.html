@@ -57,6 +57,57 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/2/logen-von-beliebig-vielen-argumenten/">
+        LOGen von beliebig vielen Argumenten
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-02-16">Samstag, 16. Februar 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Fehlt noch ein letzter Schritt - der erstaunlicherweise ganz einfach war und ausserdem noch ein ganz anderes Problem löste...</p>
+<p>Zuerst die Implementierung:</p>
+<div class="hll"><pre><span></span><span class="cp">#define LOG(what, variableArguments...) \</span>
+<span class="cp">    [[Log sharedLog] logObjcType:@encode(typeof(what)) \</span>
+<span class="cp">        arguments:(void *)what , ##variableArguments]</span>
+
+<span class="p">-</span> <span class="nf">logObjcType:</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="nv">typeString</span> <span class="nf">arguments:</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span> <span class="nv">what</span><span class="p">,</span> <span class="p">...;</span> <span class="p">{</span>
+    <span class="kt">id</span> <span class="n">formatString</span> <span class="o">=</span>  <span class="p">[</span><span class="nb">self</span> <span class="nl">stringFromType</span><span class="p">:</span><span class="n">typeString</span> <span class="nl">inValue</span><span class="p">:</span><span class="n">what</span><span class="p">];</span>
+
+    <span class="kt">va_list</span> <span class="n">variadicArguments</span><span class="p">;</span>
+    <span class="n">va_start</span><span class="p">(</span><span class="n">variadicArguments</span><span class="p">,</span> <span class="n">what</span><span class="p">);</span>
+
+    <span class="kt">id</span> <span class="n">logString</span> <span class="o">=</span> <span class="p">[[[</span><span class="bp">NSString</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithFormat</span><span class="p">:</span><span class="n">formatString</span> 
+                    <span class="nl">arguments</span><span class="p">:</span><span class="n">variadicArguments</span><span class="p">]</span> <span class="n">autorelease</span><span class="p">];</span>
+
+    <span class="n">va_end</span><span class="p">(</span><span class="n">variadicArguments</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="p">[</span><span class="nb">self</span> <span class="nl">log</span><span class="p">:</span><span class="n">logString</span><span class="p">];</span>
+<span class="p">}</span>
+</pre></div>
+<p>Eigentlich hatte ich hier mehr Probleme erwartet.</p>
+<p>Ganz nebenbei löst das auch noch ein Problem von ganz zu Anfang:</p>
+<div class="hll"><pre><span></span><span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;%@&quot;</span><span class="p">,</span> <span class="p">[</span><span class="bp">NSString</span> <span class="nl">stringWithFormat</span><span class="p">:</span><span class="s">@&quot;%s,%s&quot;</span><span class="p">,</span> <span class="s">&quot;fnord&quot;</span><span class="p">,</span> <span class="s">&quot;fnord&quot;</span><span class="p">]);</span>
+</pre></div>
+<p>Das macht jetzt keine Probleme mehr, da die zusätzlichen Komas vom Präprozessor (fälschlicherweise) als zusätzliche Argumente zur dem variadischen Makro aufgefasst werden. Hehe...</p>
+<p>Jetzt fehlt nur noch ein Backend für den Logger und ich bin glücklich. Andererseits... da gibt es natürlich auch <a href="http://log4cocoa.sourceforge.net/">Log4Cocoa</a> das ich einfach erweitern könnte.</p>
+<p>Hm. Mal schauen.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/2/logen-von-beliebig-vielen-argumenten/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/2/c-typen-in-die-laufzeitumgebung-heben/">
         C-Typen in die Laufzeitumgebung heben
         </a>
@@ -406,36 +457,6 @@ Just two days ago I watched the episode <a href="http://www.wdr.de/tv/quarks/sen
     
       <footer>
         <a href="../../2008/2/kathy-sierra-didaktik-fu-r-reiche/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/2/50-of-50/">
-        50 of 50
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-02-05">Dienstag, 5. Februar 2008</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p><a href="http://en.wikipedia.org/wiki/Guy_L._Steele,_Jr.">Guy Steele</a> kennt man ja. <a href="http://en.wikipedia.org/wiki/Richard_P._Gabriel">Richard Gabriel</a> schon weniger.</p>
-<p>Wenn die beiden aber <a href="http://www.oopsla.org/oopsla2007/index.php?page=sub/&amp;id=267">zusammen einen Vortrag auf der OOPSLA</a> halten - dann sollte man zuhören.</p>
-<p>Richtiges, echtes, Geek-Kabarett.</p>
-<ul>
-<li><a href="http://www.oopsla.org/oopsla2007/podcasts/invited-talks/keynote0104-50-in-50.mp3">Download - mp3</a></li>
-</ul>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/2/50-of-50/">weiterlesen…</a>
       </footer>
     
   </article>

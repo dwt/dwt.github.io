@@ -57,6 +57,39 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2010/11/interessante-details-zur-castor-lieferung/">
+        Interessante Details zur Castor Lieferung
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2010-11-08">Montag, 8. November 2010</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <ol>
+<li>Die Castoren sind (durch die Strahlung?) 120 grad heiß wenn sie geliefert werden, Eier die man darauf wirft verkohlen sofort. :-)</li>
+<li>Die Castoren müssen erst mal 30 Jahre auskühlen bevor sie überhaupt in einer Salzmine endgelagert werden können</li>
+<li>Diese 30 Jahre stehen sie in einer Blechhalle nicht weit von Gorleben und strahlen da (hoffentlich nicht) vor sich hin</li>
+<li>Bevor sie in Gorleben eingelagert werden können müssen sie noch in kleinere Behälter 'Pollux' genannt umgefüllt werden</li>
+<li>Die Technologie dafür gibt es noch gar nicht</li>
+<li>Gorleben als Endlager ist noch gar nicht genehmigt</li>
+</ol>
+<p>Krass. <a href="http://www.zeit.de/2003/48/Gorleben">via</a></p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2010/11/interessante-details-zur-castor-lieferung/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2010/10/unsere-obsession-mit-der-shell/">
         Unsere Obsession mit der Shell
         </a>
@@ -344,42 +377,6 @@
     
       <footer>
         <a href="../../2010/1/softwareentwicklung-als-kooperatives-spiel/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2010/1/python-saug-punkte-contd-x-y-ist-nicht-x-x-y/">
-        Python Saug Punkte contd.: x += y ist nicht x = x + y
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2010-01-15">Freitag, 15. Januar 2010</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <div class="hll"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">b</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
-<span class="n">a</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;foo&#39;</span><span class="p">]</span>
-<span class="nb">print</span> <span class="n">b</span> <span class="c1"># =&gt; []</span>
-
-<span class="n">a</span> <span class="o">=</span> <span class="n">b</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
-<span class="n">a</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">&#39;foo&#39;</span><span class="p">]</span>
-<span class="nb">print</span> <span class="n">b</span> <span class="c1"># =&gt; [&#39;foo&#39;]</span>
-</pre></div>
-<p>Doh. Wie kann das sein? Kommt man von C ist das erst mal sehr verblüffend - und auch die meisten anderen Programmiersprachen die ich kenne verwenden <code>a += b</code> als equivalent für <code>a = a + b</code>.</p>
-<p>Well, nicht so Python. Weil <a href="http://www.python.org/dev/peps/pep-0203/">da gab es offenbar mal Programmierer</a> die fanden dass man Code der mit Matrizen rechnet lieber mit Operatoren schreiben möchte weil sich das besser ließt. Natürlich nicht mit den normalen operatoren wie */+-, weil, da kann man ja den empfänger nicht in place modifizieren, und wie jeder weiß sind Matrizen ja so groß dass die dann nicht mehr in den Ram passen.</p>
-<p>Also haben sie die <op>= operatoren in Python so spezifiziert, dass sie ihre left-hand-variable in place modifizieren wenn diese mutable sind.</p>
-<p>:-(</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2010/1/python-saug-punkte-contd-x-y-ist-nicht-x-x-y/">weiterlesen…</a>
       </footer>
     
   </article>

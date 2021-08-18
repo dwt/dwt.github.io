@@ -69,18 +69,18 @@
     <section class="blog-post-body">
       <p>Ist ja eigentlich nicht schwer, man braucht lediglich eine Definition wie diese</p>
 <div class="hll"><pre><span></span><span class="cp">#define kIOHIDVendorIDKey @&quot;VendorID&quot;</span>
-<span class="k">const</span> <span class="bp">NSString</span> <span class="o">*</span><span class="n">windowName</span> <span class="o">=</span> <span class="s">@&quot;Morgens&quot;</span>
+<span class="k">const</span><span class="w"> </span><span class="bp">NSString</span><span class="w"> </span><span class="o">*</span><span class="n">windowName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">@&quot;Morgens&quot;</span><span class="w"></span>
 </pre></div>
 <p>Einziges Problem - immer wieder hat man vom System konstante C-Strings, die man aber als Objc-Strings benötigt.</p>
 <p>Interessanterweise hat der Compiler überhaupt kein Problem das hier zu machen:</p>
 <div class="hll"><pre><span></span><span class="cp">#define kIOHIDVendorIDKey &quot;VendorID&quot;</span>
 <span class="c1">// ...</span>
-<span class="p">[</span><span class="n">matchingDict</span> <span class="nl">setValue</span><span class="p">:[</span><span class="bp">NSNumber</span> <span class="nl">numberWithInt</span><span class="p">:</span><span class="n">entry</span><span class="o">-&gt;</span><span class="n">Vendor_ID</span><span class="p">]</span> 
-       <span class="nl">forKey</span><span class="p">:</span> <span class="p">@</span><span class="n">kIOHIDVendorIDKey</span><span class="p">];</span> 
+<span class="p">[</span><span class="n">matchingDict</span><span class="w"> </span><span class="nl">setValue</span><span class="p">:[</span><span class="bp">NSNumber</span><span class="w"> </span><span class="nl">numberWithInt</span><span class="p">:</span><span class="n">entry</span><span class="o">-&gt;</span><span class="n">Vendor_ID</span><span class="p">]</span><span class="w"> </span>
+<span class="w">       </span><span class="nl">forKey</span><span class="p">:</span><span class="w"> </span><span class="p">@</span><span class="n">kIOHIDVendorIDKey</span><span class="p">];</span><span class="w"> </span>
 
 <span class="c1">// same, but more readable than</span>
-<span class="p">[</span><span class="n">matchingDict</span> <span class="nl">setValue</span><span class="p">:[</span><span class="bp">NSNumber</span> <span class="nl">numberWithInt</span><span class="p">:</span><span class="n">entry</span><span class="o">-&gt;</span><span class="n">Vendor_ID</span><span class="p">]</span> 
-       <span class="nl">forKey</span><span class="p">:</span> <span class="p">[</span><span class="bp">NSString</span> <span class="nl">stringWithCString</span><span class="p">:</span><span class="n">kIOHIDVendorIDKey</span><span class="p">]];</span>
+<span class="p">[</span><span class="n">matchingDict</span><span class="w"> </span><span class="nl">setValue</span><span class="p">:[</span><span class="bp">NSNumber</span><span class="w"> </span><span class="nl">numberWithInt</span><span class="p">:</span><span class="n">entry</span><span class="o">-&gt;</span><span class="n">Vendor_ID</span><span class="p">]</span><span class="w"> </span>
+<span class="w">       </span><span class="nl">forKey</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="bp">NSString</span><span class="w"> </span><span class="nl">stringWithCString</span><span class="p">:</span><span class="n">kIOHIDVendorIDKey</span><span class="p">]];</span><span class="w"></span>
 <span class="c1">// Also note that -stringWithCString is deprecated</span>
 </pre></div>
 <p>Oder mit anderen Worten man kann problemlos aus jeder C-String-Konstante eine Objc-String-Konstante machen, indem man einfach ein <strong><em>@</em></strong> davor schreibt.</p>
@@ -113,10 +113,10 @@
 <p>Cocoa zum Beispiel. Viele Programmierer wissen nicht wie man Speicherlöcher effektiv fängt.</p>
 <p>Well, nicht Leaks - da kann man ja mit <a href="http://developer.apple.com/documentation/DeveloperTools/Conceptual/InstrumentsUserGuide/Built-InInstruments/chapter_9_section_8.html">ObjectAlloc</a> draufhauen und dann das Programm fixen.</p>
 <p>Nein, viel problematischer als das sind die doppelten Befreiungen.</p>
-<div class="hll"><pre><span></span><span class="kt">id</span> <span class="n">foo</span> <span class="o">=</span> <span class="p">[[</span><span class="bp">NSString</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithFormat</span><span class="p">:</span><span class="s">@&quot;foo&quot;</span><span class="p">];</span>
-<span class="p">[</span><span class="n">foo</span> <span class="k">release</span><span class="p">];</span>
+<div class="hll"><pre><span></span><span class="kt">id</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[[</span><span class="bp">NSString</span><span class="w"> </span><span class="n">alloc</span><span class="p">]</span><span class="w"> </span><span class="nl">initWithFormat</span><span class="p">:</span><span class="s">@&quot;foo&quot;</span><span class="p">];</span><span class="w"></span>
+<span class="p">[</span><span class="n">foo</span><span class="w"> </span><span class="k">release</span><span class="p">];</span><span class="w"></span>
 <span class="c1">// do something else</span>
-<span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;foo is %d&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">foo</span> <span class="n">length</span><span class="p">]);</span> <span class="c1">// almost certainly bombs</span>
+<span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;foo is %d&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">foo</span><span class="w"> </span><span class="n">length</span><span class="p">]);</span><span class="w"> </span><span class="c1">// almost certainly bombs</span>
 </pre></div>
 <p>Die krachen nämlich fast immer - und dann sucht man sich tot was genau da eigentlich gekracht hat und woher das genau kommt. Tja.</p>
 <p>Dabei kriegt man aus dem Programm eigentlich alle Informationen heraus die man braucht. Man muss nur jedes malloc mitzählen und aufschreiben wo es passiert ist, dann jedes objekt das freigegeben wird, nicht wirklich freigeben, sondern lediglich markieren und dann bei einem weiteren Zugriff auf so ein Objekt eine Exception werfen.</p>

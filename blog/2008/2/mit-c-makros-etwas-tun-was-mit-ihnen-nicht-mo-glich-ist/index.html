@@ -75,15 +75,15 @@
 <p>Zugegeben, mir ist noch nicht klar wie ich das umsetzen kann.</p>
 <p>Aber, wenn man das Problem nur ein klein wenig vereinfacht, und nur versucht eines oder mehrere Argumente zu unterstützen...</p>
 <p>Also zum Beispiel ein <code>LOG()</code> Macro, dass als erstes Argument irgend etwas erhalten kann (für den Anfang, irgend etwas das sich in einen String umwandeln lässt) dann erhält man etwas das sich so verwenden lässt:</p>
-<div class="hll"><pre><span></span><span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;fnord&quot;</span><span class="p">);</span>
-<span class="n">LOG</span><span class="p">(</span><span class="s">&quot;fnord&quot;</span><span class="p">);</span>
-<span class="kt">char</span> <span class="o">*</span><span class="n">string</span> <span class="o">=</span> <span class="s">&quot;fnord&quot;</span><span class="p">;</span>
-<span class="n">LOG</span><span class="p">(</span><span class="n">string</span><span class="p">);</span>
-<span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;%@&quot;</span><span class="p">,</span> <span class="s">@&quot;fnord&quot;</span><span class="p">);</span>
-<span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;%s&quot;</span><span class="p">,</span> <span class="s">&quot;fnord&quot;</span><span class="p">);</span>
-<span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;%d&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
-<span class="n">LOG</span><span class="p">(</span><span class="s">&quot;%s&quot;</span><span class="p">,</span> <span class="s">&quot;fnord&quot;</span><span class="p">);</span>
-<span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;%@&quot;</span><span class="p">,</span> <span class="p">[</span><span class="bp">NSString</span> <span class="nl">stringWithFormat</span><span class="p">:</span><span class="s">@&quot;%s,%s&quot;</span><span class="p">,</span> <span class="s">&quot;fnord&quot;</span><span class="p">,</span> <span class="s">&quot;fnord&quot;</span><span class="p">]);</span>
+<div class="hll"><pre><span></span><span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;fnord&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="n">LOG</span><span class="p">(</span><span class="s">&quot;fnord&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">string</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;fnord&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="n">LOG</span><span class="p">(</span><span class="n">string</span><span class="p">);</span><span class="w"></span>
+<span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;%@&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;fnord&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;fnord&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;%d&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span><span class="w"></span>
+<span class="n">LOG</span><span class="p">(</span><span class="s">&quot;%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;fnord&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;%@&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="bp">NSString</span><span class="w"> </span><span class="nl">stringWithFormat</span><span class="p">:</span><span class="s">@&quot;%s,%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;fnord&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;fnord&quot;</span><span class="p">]);</span><span class="w"></span>
 </pre></div>
 <p>Die Implementierung ist allerdings etwas tricky.</p>
 <p>Typinvariante Makros wie <code>MAX(x, y)</code> schreibt man üblicherweise so:</p>

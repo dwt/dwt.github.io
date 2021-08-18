@@ -188,7 +188,7 @@
     <section class="blog-post-body">
       <p>Da gibt es doch tatsächlich in Objective C die Möglichkeit, jederzeit eine Klasse unter einem anderen Namen zu importieren.</p>
 <p>Nice.</p>
-<div class="hll"><pre><span></span><span class="p">@</span><span class="n">compatibility_alias</span> <span class="n">MyShortClassName</span> <span class="n">MyVeryLongClassNameThatIDontWantToTypeEveryTime</span><span class="p">;</span>
+<div class="hll"><pre><span></span><span class="p">@</span><span class="n">compatibility_alias</span><span class="w"> </span><span class="n">MyShortClassName</span><span class="w"> </span><span class="n">MyVeryLongClassNameThatIDontWantToTypeEveryTime</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 <p>Von <a href="http://cocoadevcentral.com/articles/000089.php">Write a Screen Saver Part II</a></p>
 
@@ -310,14 +310,14 @@ Dieser Gedanke trägt sich schon längere Zeit mit mir herum.</p>
     
     <section class="blog-post-body">
       <p>Es geht doch nichts über selbstbeschreibenden Code. ;)</p>
-<div class="hll"><pre><span></span><span class="n">IF_LAST_ERROR</span>
-        <span class="n">ERROR_HANDLING</span>
+<div class="hll"><pre><span></span><span class="n">IF_LAST_ERROR</span><span class="w"></span>
+<span class="w">        </span><span class="n">ERROR_HANDLING</span><span class="w"></span>
 </pre></div>
 <p>Hat mir dann auch gar nichts genützt die nächsten Zeile zu lesen:</p>
-<div class="hll"><pre><span></span><span class="n">diglossia</span><span class="o">*</span> <span class="n">oracle</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
-    <span class="k">struct</span> <span class="nc">NmGsmCtrlCoreMsg</span><span class="o">*</span> <span class="n">Msg</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
+<div class="hll"><pre><span></span><span class="n">diglossia</span><span class="o">*</span><span class="w"> </span><span class="n">oracle</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">struct</span> <span class="nc">NmGsmCtrlCoreMsg</span><span class="o">*</span><span class="w"> </span><span class="n">Msg</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span><span class="w"></span>
 
-    <span class="n">oracle</span><span class="o">=</span><span class="p">((</span><span class="n">diglossia</span><span class="o">*</span><span class="p">)</span><span class="n">PtrParamG</span><span class="o">-&gt;</span><span class="n">oracle</span><span class="p">);</span>
+<span class="w">    </span><span class="n">oracle</span><span class="o">=</span><span class="p">((</span><span class="n">diglossia</span><span class="o">*</span><span class="p">)</span><span class="n">PtrParamG</span><span class="o">-&gt;</span><span class="n">oracle</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 <p>Habt Mitleid mit mir....</p>
 
@@ -348,56 +348,56 @@ Dieser Gedanke trägt sich schon längere Zeit mit mir herum.</p>
 <p>Heute stellt sich mein Verständnis von C wirklich auf die Probe.</p>
 <p>Zuerst der Vorlauf, da gibt es einen parameter <strong>controller</strong> der immer als int übergeben wird - natürlich hartkodiert und ohne jeden kommentar was wofür steht. Ok, das ist jetzt ekelhaft, aaaber.</p>
 <p>Dieser int wird dann in einem struct element <strong>iType</strong> gespeichert. Um herauszufinden was dieser Parameter nun macht habe ich also mal durch den SourceCode gegreppt um herauszufinden was damit passiert und bin dabei auf die viel versprechende Zeile <strong>switch(self-&gt;iType)</strong> gestoßen. Groß war da meine Freude, wenn auch leider nur kurz.</p>
-<div class="hll"><pre><span></span><span class="k">switch</span><span class="p">(</span><span class="n">self</span><span class="o">-&gt;</span><span class="n">iType</span><span class="p">)</span>
-    <span class="p">{</span>
-            <span class="n">RefProg</span><span class="o">=</span><span class="n">USBprogressIndicator</span><span class="p">;</span>
-    <span class="p">}</span>
+<div class="hll"><pre><span></span><span class="k">switch</span><span class="p">(</span><span class="n">self</span><span class="o">-&gt;</span><span class="n">iType</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">RefProg</span><span class="o">=</span><span class="n">USBprogressIndicator</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 </pre></div>
 <p>Da stellt sich natürlich die Frage... was macht der Compiler daraus eigentlich? Interpretiert er es als</p>
-<div class="hll"><pre><span></span><span class="k">switch</span><span class="p">(</span><span class="n">self</span><span class="o">-&gt;</span><span class="n">iType</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="k">case</span> <span class="k">default</span><span class="o">:</span>
-            <span class="n">RefProg</span><span class="o">=</span><span class="n">USBprogressIndicator</span><span class="p">;</span>
-    <span class="p">}</span>
+<div class="hll"><pre><span></span><span class="k">switch</span><span class="p">(</span><span class="n">self</span><span class="o">-&gt;</span><span class="n">iType</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="k">default</span><span class="o">:</span><span class="w"></span>
+<span class="w">            </span><span class="n">RefProg</span><span class="o">=</span><span class="n">USBprogressIndicator</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 </pre></div>
 <p>oder doch als:</p>
-<div class="hll"><pre><span></span><span class="k">switch</span><span class="p">(</span><span class="n">self</span><span class="o">-&gt;</span><span class="n">iType</span><span class="p">)</span>
-    <span class="p">{</span>
-            <span class="n">RefProg</span><span class="o">=</span><span class="n">USBprogressIndicator</span><span class="p">;</span>
-        <span class="k">case</span> <span class="k">default</span><span class="o">:</span>
-    <span class="p">}</span>
+<div class="hll"><pre><span></span><span class="k">switch</span><span class="p">(</span><span class="n">self</span><span class="o">-&gt;</span><span class="n">iType</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">RefProg</span><span class="o">=</span><span class="n">USBprogressIndicator</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="k">default</span><span class="o">:</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 </pre></div>
 <p>i.e. heißt das eigentlich das der Code darin nicht ausgeführt wird? Und verhält sich das auf anderen Compilern / Compilerversionen genauso?</p>
 <p>Ist doch immer wieder schön solche zoten in Sourcecode zu finden. :)</p>
 <h2>Update</h2>
 <p>Inzwischen habe ich nachgeprüft was da Sache ist. Meine Vermutung war, dass der Programmierer es ja nur im Code gelassen hätte, wenn es einen Sinn hat. Nun ja, man glaubt ja an das Gute im Menschen.</p>
 <p>Ich musste mich dann aber doch eines besseren Belehren:</p>
-<div class="hll"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+<div class="hll"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
 
-<span class="kt">int</span> <span class="nf">main</span> <span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kt">int</span> <span class="n">foo</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
-        <span class="k">switch</span><span class="p">(</span><span class="n">foo</span><span class="p">)</span> <span class="p">{</span>
-                <span class="n">printf</span><span class="p">(</span><span class="s">&quot;gotit</span><span class="se">\n</span><span class="s">e</span><span class="se">\n\n\n</span><span class="s">&quot;</span><span class="p">);</span>
-                <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span> 
-        <span class="p">}</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="n">argv</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">switch</span><span class="p">(</span><span class="n">foo</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;gotit</span><span class="se">\n</span><span class="s">e</span><span class="se">\n\n\n</span><span class="s">&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w"> </span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
 
-        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;didn&#39;t get it</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;didn&#39;t get it</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 <p>Wie man am Beispiel sehen kann (mit etwas wie "<code>gcc -o foo test.c &amp;&amp; ./foo</code>" ist es einfach zu zeigen das <strong>switch(foo)</strong> tatsächlich den gleichen effekt hat wie</p>
-<div class="hll"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+<div class="hll"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
 
-<span class="kt">int</span> <span class="nf">main</span> <span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kt">int</span> <span class="n">foo</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="n">argv</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"></span>
 <span class="cp">#if 0</span><span class="c"></span>
 <span class="c">                printf(&quot;gotit\ne\n\n\n&quot;);</span>
 <span class="c">                return -1; </span>
 <span class="cp">#endif</span>
 
-        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;didn&#39;t get it</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;didn&#39;t get it</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 <p>Was ich wirklich herzlich Sinnlos finde.</p>
 

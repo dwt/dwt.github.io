@@ -111,7 +111,7 @@
 <div class="hll"><pre><span></span><span class="kd">function</span> <span class="nx">useNamespaceForFunction</span><span class="p">(</span><span class="nx">aNamespace</span><span class="p">,</span> <span class="nx">aFunction</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">namespacingCode</span> <span class="o">=</span> <span class="s2">&quot;with (aNamespace) { return (&quot;</span> <span class="o">+</span> <span class="nx">aFunction</span> <span class="o">+</span> <span class="s2">&quot;); }&quot;</span><span class="p">;</span>
     <span class="c1">// using new Function instead of eval to prevent the current namespace leaking into the eval&lt;</span>
-    <span class="k">return</span> <span class="k">new</span> <span class="nb">Function</span><span class="p">(</span><span class="s2">&quot;aNamespace&quot;</span><span class="p">,</span> <span class="nx">namespacingCode</span><span class="p">)(</span><span class="nx">aNamespace</span><span class="p">);</span>
+    <span class="k">return</span> <span class="ow">new</span> <span class="nb">Function</span><span class="p">(</span><span class="s2">&quot;aNamespace&quot;</span><span class="p">,</span> <span class="nx">namespacingCode</span><span class="p">)(</span><span class="nx">aNamespace</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 <p>So, lets see what uses come up for this technique - I've seen some js code that does an Interpreter of sorts with this trick - but thats about it.</p>

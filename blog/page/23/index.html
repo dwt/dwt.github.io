@@ -136,21 +136,21 @@
     
     <section class="blog-post-body">
       <p>… eine Wurzel berechnen indem man einen <code>float</code> einfach um ein Bit nach rechts schiftet?</p>
-<div class="hll"><pre><span></span><span class="kt">float</span> <span class="nf">InvSqrt</span><span class="p">(</span><span class="kt">float</span> <span class="n">x</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="kt">float</span> <span class="n">xhalf</span> <span class="o">=</span> <span class="mf">0.5f</span><span class="o">*</span><span class="n">x</span><span class="p">;</span> 
-    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">x</span><span class="p">;</span> <span class="c1">// get bits for floating value</span>
-    <span class="n">i</span> <span class="o">=</span> <span class="mh">0x5f3759df</span> <span class="o">-</span> <span class="p">(</span><span class="n">i</span><span class="o">&gt;&gt;</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// gives initial guess y0</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">i</span><span class="p">;</span> <span class="c1">// convert bits back to float</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">*</span><span class="p">(</span><span class="mf">1.5f</span><span class="o">-</span><span class="n">xhalf</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">x</span><span class="p">);</span> <span class="c1">// Newton step, repeating increases accuracy</span>
-    <span class="k">return</span> <span class="n">x</span><span class="p">;</span>
-<span class="p">}</span>
+<div class="hll"><pre><span></span><span class="kt">float</span><span class="w"> </span><span class="nf">InvSqrt</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">xhalf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5f</span><span class="o">*</span><span class="n">x</span><span class="p">;</span><span class="w"> </span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">x</span><span class="p">;</span><span class="w"> </span><span class="c1">// get bits for floating value</span>
+<span class="w">    </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x5f3759df</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="o">&gt;&gt;</span><span class="mi">1</span><span class="p">);</span><span class="w"> </span><span class="c1">// gives initial guess y0</span>
+<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">i</span><span class="p">;</span><span class="w"> </span><span class="c1">// convert bits back to float</span>
+<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="o">*</span><span class="p">(</span><span class="mf">1.5f</span><span class="o">-</span><span class="n">xhalf</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">x</span><span class="p">);</span><span class="w"> </span><span class="c1">// Newton step, repeating increases accuracy</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 <p><a href="http://www.lomont.org/Math/Papers/2003/InvSqrt.pdf">Chris Lomont sich das mal angesehen</a> und seine Erklärung hab ich verstanden.</p>
 <p>Was diese Stelle tut:</p>
-<div class="hll"><pre><span></span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">x</span><span class="p">;</span> <span class="c1">// get bits for floating value</span>
-    <span class="n">i</span> <span class="o">=</span> <span class="mh">0x5f3759df</span> <span class="o">-</span> <span class="p">(</span><span class="n">i</span><span class="o">&gt;&gt;</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// gives initial guess y0</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">i</span><span class="p">;</span> <span class="c1">// convert bits back to float</span>
+<div class="hll"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">x</span><span class="p">;</span><span class="w"> </span><span class="c1">// get bits for floating value</span>
+<span class="w">    </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x5f3759df</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="o">&gt;&gt;</span><span class="mi">1</span><span class="p">);</span><span class="w"> </span><span class="c1">// gives initial guess y0</span>
+<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">i</span><span class="p">;</span><span class="w"> </span><span class="c1">// convert bits back to float</span>
 </pre></div>
 <p>Ist total cool. das Bitmuster des <code>floats</code> wird einfach als long interpretiert - was nichts weiter bedeutet, als das die Teile des Floats, Vorzeichen, Mantisse und Exponent jetzt halt nebeneinander in einem Bitfeld liegen. Wenn man dieses Bitfeld jetzt nach rechts schiftet dann hat man das effektiv eben auch mit jedem der Bitfelder gemacht. Wenn man dann dieses Bitmuster noch etwas manipuliert, indem man es mit einer Korrekturkonstante vermurkst die die Fehler durch das hereinschiften von werten aus der Mantisse in den Exponent minimieren, dann hat man eine tolle Annäherung.</p>
 <p>Und diese Annäherung erlaubt es mit nur einem Schritt nach <a href="http://de.wikipedia.org/wiki/Newton-Verfahren">Newton</a> zu einer sehr guten Näherung an die Quadratwurzel zu kommen.</p>
@@ -182,27 +182,27 @@
     
     <section class="blog-post-body">
       <p>Aus dem <a href="http://svn.icculus.org/quake3/branches/1.34/code/qcommon/q_math.c?revision=2&amp;view=markup">Q3 Source Code</a>:</p>
-<div class="hll"><pre><span></span><span class="kt">float</span> <span class="nf">Q_rsqrt</span><span class="p">(</span> <span class="kt">float</span> <span class="n">number</span> <span class="p">)</span>
-<span class="p">{</span>
-  <span class="kt">long</span> <span class="n">i</span><span class="p">;</span>
-  <span class="kt">float</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y</span><span class="p">;</span>
-  <span class="k">const</span> <span class="kt">float</span> <span class="n">threehalfs</span> <span class="o">=</span> <span class="mf">1.5F</span><span class="p">;</span>
+<div class="hll"><pre><span></span><span class="kt">float</span><span class="w"> </span><span class="nf">Q_rsqrt</span><span class="p">(</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="kt">long</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">x2</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">threehalfs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.5F</span><span class="p">;</span><span class="w"></span>
 
-  <span class="n">x2</span> <span class="o">=</span> <span class="n">number</span> <span class="o">*</span> <span class="mf">0.5F</span><span class="p">;</span>
-  <span class="n">y</span>  <span class="o">=</span> <span class="n">number</span><span class="p">;</span>
-  <span class="n">i</span>  <span class="o">=</span> <span class="o">*</span> <span class="p">(</span> <span class="kt">long</span> <span class="o">*</span> <span class="p">)</span> <span class="o">&amp;</span><span class="n">y</span><span class="p">;</span>  <span class="c1">// evil floating point bit level hacking</span>
-  <span class="n">i</span>  <span class="o">=</span> <span class="mh">0x5f3759df</span> <span class="o">-</span> <span class="p">(</span> <span class="n">i</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span> <span class="p">);</span> <span class="c1">// what the fuck?</span>
-  <span class="n">y</span>  <span class="o">=</span> <span class="o">*</span> <span class="p">(</span> <span class="kt">float</span> <span class="o">*</span> <span class="p">)</span> <span class="o">&amp;</span><span class="n">i</span><span class="p">;</span>
-  <span class="n">y</span>  <span class="o">=</span> <span class="n">y</span> <span class="o">*</span> <span class="p">(</span> <span class="n">threehalfs</span> <span class="o">-</span> <span class="p">(</span> <span class="n">x2</span> <span class="o">*</span> <span class="n">y</span> <span class="o">*</span> <span class="n">y</span> <span class="p">)</span> <span class="p">);</span> <span class="c1">// 1st iteration</span>
-  <span class="c1">// y  = y * ( threehalfs - ( x2 * y * y ) ); // 2nd iteration, this can be removed</span>
+<span class="w">  </span><span class="n">x2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.5F</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">y</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">number</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">i</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&amp;</span><span class="n">y</span><span class="p">;</span><span class="w">  </span><span class="c1">// evil floating point bit level hacking</span>
+<span class="w">  </span><span class="n">i</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mh">0x5f3759df</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">);</span><span class="w"> </span><span class="c1">// what the fuck?</span>
+<span class="w">  </span><span class="n">y</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&amp;</span><span class="n">i</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">y</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">threehalfs</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"> </span><span class="c1">// 1st iteration</span>
+<span class="w">  </span><span class="c1">// y  = y * ( threehalfs - ( x2 * y * y ) ); // 2nd iteration, this can be removed</span>
 
-  <span class="cp">#ifndef Q3_VM</span>
-  <span class="cp">#ifdef __linux__</span>
-    <span class="n">assert</span><span class="p">(</span> <span class="o">!</span><span class="n">isnan</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="p">);</span> <span class="c1">// bk010122 - FPE?</span>
-  <span class="cp">#endif</span>
-  <span class="cp">#endif</span>
-  <span class="k">return</span> <span class="n">y</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="w">  </span><span class="cp">#ifndef Q3_VM</span>
+<span class="w">  </span><span class="cp">#ifdef __linux__</span>
+<span class="w">    </span><span class="n">assert</span><span class="p">(</span><span class="w"> </span><span class="o">!</span><span class="n">isnan</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"> </span><span class="c1">// bk010122 - FPE?</span>
+<span class="w">  </span><span class="cp">#endif</span>
+<span class="w">  </span><span class="cp">#endif</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 <p>Was macht das und wieso funktioniert es?</p>
 <p>(Für all zu ungeduldige: <a href="http://www.codemaestro.com/reviews/9">Auflösung</a>)</p>

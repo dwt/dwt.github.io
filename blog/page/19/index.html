@@ -57,6 +57,41 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/8/kontrollieren-welche-libraries-ein-programm-la-dt/">
+        Kontrollieren welche Libraries ein Programm lädt
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-08-29">Freitag, 29. August 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>ist beim Entwickeln ein echtes Problem.</p>
+<p>Frameworks unter Mac OS X werden schließlich so gelinkt, das jeder Framework den Pfad enthält, an dem er später einmal leben wird - und dieser Pfad wird dann in die Applikation eingetragen die ihn laden möchte.</p>
+<p>Das ist blöd, wenn man Frameworks in <code>/Library/Frameworks/</code> installiert, bei der Entwicklung dann aber mal eine andere Version ausprobieren will oder muss. Auch klassisch ist, dass ein Framework der von Apple kommt zu alt ist und man sicherstellen muss, das ein eigener Framework stattdessen verwendet wird, der Bugfixes enthält.</p>
+<p>Schwierig.</p>
+<p>Nunja, man macht das unter OS X mit dem Äquivalent des Linux Konstrukts <code>LD_LIBRARY_PATH</code>, also diversen Umgebungsvariablen, mit denen man das Verhalten des dynamischen linkers beeinflussen kann. Spaßigerweise hat Apple das verhalten des dynamischen Linkers unter Tiger (10.4) verändert, dass er sich jetzt genauso verhält wie unter Leopard (10.5) - zumindest sagt mein Gedächtnis andere Dinge als die 10.4 manpage von <code>dyld</code>.</p>
+<p>Also sind jetzt eigentlich nur noch zwei Umgebungsvariablen interessant:</p>
+<ul>
+<li><code>DYLD_FRAMEWORK_PATH</code> wenn man etwas laden will, bevor die Pfade verwendet werden die in der Applikation für einen Framework stehen -&gt; also um einen Framework zu überschreiben.</li>
+<li><code>DYLD_FALLBACK_FRAMEWORK_PATH</code> wenn man etwas nachladen will, nachdem es an den vorgegebenen Pfaden nicht gefunden wurde. Die Manpage ist mir da noch nicht 100% klar - es wirkt fast so, als könnte man dyld auch dafür verwenden eine neuere Version anzugeben, die nur genutzt wird, wenn in der alten ein bestimmtes Symbol nicht gefunden wurde - das konnte ich aber noch nicht testen (und kommt mir auch komisch vor).</li>
+</ul>
+<p>Also: kennen sollte man die - das gibt viel flexibilität.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/8/kontrollieren-welche-libraries-ein-programm-la-dt/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/8/obfuscated-objc-oder-wie-macht-man-konstanten/">
         Obfuscated Objc - oder - wie macht man Konstanten?
         </a>
@@ -399,32 +434,6 @@ The obvious first thing to do is to think about the GUI and what I want to achie
     
       <footer>
         <a href="../../2008/8/template-engines-in-python/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/8/falls-ich-mal-wieder-argumente-fu-r-eine-killerspiele-debatte-brauche/">
-        Falls ich mal wieder Argumente für eine Killerspiele-Debatte brauche...
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-08-12">Dienstag, 12. August 2008</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p><a href="http://www.youtube.com/watch?v=R9JRm3iQQak">...kann ich ja hier nochmal nachschlagen.</a></p>
-<p>An manchen Stellen noch nicht so stark wie sie sein könnte - aber ansonsten sehr ordentlich.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/8/falls-ich-mal-wieder-argumente-fu-r-eine-killerspiele-debatte-brauche/">weiterlesen…</a>
       </footer>
     
   </article>

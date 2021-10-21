@@ -59,6 +59,43 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../blog/2021/10/elon-musks-design-philosophie/">
+        Elon Musks Design Philosophie
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2021-10-21">Thursday, October 21, 2021</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Beim lesen <a href="https://everydayastronaut.com/starbase-tour-and-interview-with-elon-musk/">dieses Interview mit Elon Musk</a> (<a href="https://www.youtube.com/watch?v=t705r8ICkRw">hier auch als Video</a>) hatte ich wirklich Spaß.</p>
+<p>Diese Dinge sind nichts neues - aber mir ist klar geworden dass ich in der Vergangenheit viel zu Wenig wert darauf gelegt habe Requirements als Dumm zu identifizieren und Los zu werden, sowie Prozesse zu löschen. Autsch. Mea Culpa - ich gelobe Besserung.</p>
+<p>Hier vor allem für mich selbst archiviert:</p>
+<h2>Musk’s Engineering Philosophy:</h2>
+<p>Musk overviewed his five step engineering process, which must be completed in order:</p>
+<ol>
+<li>Make the requirements less dumb. The requirements are definitely dumb; it does not matter who gave them to you. He notes that it’s particularly dangerous if someone who is smart gives them the requirements, as one may not question the requirements enough. “Everyone’s wrong. No matter who you are, everyone is wrong some of the time.” He further notes that “all designs are wrong, it’s just a matter of how wrong.”</li>
+<li>Try very hard to delete the part or process. If parts are not being added back into the design at least 10% of the time, not enough parts are being deleted. Musk noted that the bias tends to be very strongly toward “let’s add this part or process step in case we need it.” Additionally, each required part and process must come from a name, not a department, as a department cannot be asked why a requirement exists, but a person can.</li>
+<li>Simplify and optimize the design. This is step three as the most common error of a smart engineer is to optimize something that should not exist.</li>
+<li>Accelerate cycle time. Musk states “you’re moving too slowly, go faster! But don’t go faster until you’ve worked on the other three things first.”</li>
+<li>Automate. An important part of this is to remove in-process testing after the problems have been diagnosed; if a product is reaching the end of a production line with a high acceptance rate, there is no need for in-process testing.
+Additionally, Musk restated that he believes everyone should be a chief engineer. Engineers need to understand the system at a high level to understand when they are making a bad optimization. As an example, Musk noted that an order of magnitude more time has been spent reducing engine mass than reducing residual propellant, despite both being equally as important.</li>
+</ol>
+
+    </section>
+    
+      <footer>
+        <a href="../blog/2021/10/elon-musks-design-philosophie/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../blog/2021/5/was-sagt-mir-ein-covid-schnelltest-ergebnis/">
         Was sagt mir ein Covid-Schnelltest Ergebnis?
         </a>
@@ -158,48 +195,6 @@ $GPRMC,,V,,,,,,,,,,N*53
     
       <footer>
         <a href="../blog/2021/4/open-source-flugelektronik-2-ble-und-serial/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../blog/2021/4/open-source-flugelektronik-mit-lorawan/">
-        Open Source Flugelektronik mit Lora
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2021-04-17">Saturday, April 17, 2021</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Inzwischen gibt es mehrere Projekte die Lora Funktechnik für Ad-Hoc-Netzwerke in der Luft (und am Boden) verwenden.</p>
-<p><a href="https://github.com/lyusupov/SoftRF">SoftRF</a> ist vermutlich das bekannteste, da es mit günstiger Hardware eigentlich alle Standards unterstützt. <a href="https://de.aliexpress.com/item/4001286458852.html">Dieses</a> für in der Luft und und <a href="https://de.aliexpress.com/item/4000571051141.html">dieses</a> als Gegengerät am Boden und für Experimente - jeweils in der in Europa zugelassenen 868Mhz Variante - habe ich mir besorgt, da sie nur jeweils ~25€ Kosten.</p>
-<p>SoftRF kommt darauf sogar schon vorinstalliert, das ist wirklich sehr komfortabel.</p>
-<p>In Betrieb lassen sich die Geräte auch ganz gut nehmen, einfach via USB an den Rechner anschließen, bei dem einen geht dann ein WLAN auf über das man es Konfigurieren kann, bei dem anderen hat man direkten Zugriff über die serielle:</p>
-<div class="hll"><pre><span></span>$ pip install pyserial
-$ python -m serial.tools.list_ports
-<span class="o">[</span>...<span class="o">]</span>
-$ python -m serial.tools.miniterm /path/to/port
-</pre></div>
-<p>Konfigurieren kann man das Gerät dann über eine Config-String, den man <a href="http://soaringweather.no-ip.info/SoftRF/settings.html">in diesem Web-Interface</a> generieren kann.</p>
-<p>Easy peasy.</p>
-<p>Next Tasks:</p>
-<ul>
-<li><a href="https://en.wikipedia.org/wiki/NMEA_0183">NMEA</a> Nachrichten Parsen und lesbar Ausgeben</li>
-<li>Das zweite Gerät über Bluetooth Low Energy verbinden</li>
-<li>BLE mit einem meiner Flug-Computer-Smartphone Apps verbinden - <a href="http://flyskyhy.com">FlySkyHy</a> oder <a href="https://evario.variosoft.eu">eVario</a></li>
-<li>Herausfinden was es braucht um da noch einen guten Barometrischen Sensor mit einzubauen</li>
-</ul>
-
-    </section>
-    
-      <footer>
-        <a href="../blog/2021/4/open-source-flugelektronik-mit-lorawan/">weiterlesen…</a>
       </footer>
     
   </article>

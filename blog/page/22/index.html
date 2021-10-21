@@ -57,6 +57,40 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/7/timemachine-auf-einem-beliebigen-nas/">
+        TimeMachine auf einem beliebigen NAS
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-07-12">Samstag, 12. Juli 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Backups übers WLAN auf ein NAS zu machen ist schick - aber <a href="http://www.apple.com/macosx/features/timemachine.html">TimeMachine</a> arbeitet ausschließlich mit <a href="http://www.apple.com/de/timecapsule/">Apple TimeCapsule</a></p>
+<p>Jetzt kriegt man aber auch schicke NAS mit anderthalb Terrabyte - nur das Ding zur Zusammenarbeit mit TimeMachine zu überreden ist schon etwas schwieriger - aber möglich.</p>
+<p>Zuerst habe ich TimeMachine so konfiguriert, dass es überhaupt alle Festplatten anzeigt:</p>
+<p><code>defaults write com.apple.systempreferences TMShowUnsupportedNetworkVolumes 1</code></p>
+<p>Danach das Disc-Image. TimeMachine kriegt es nicht gebacken - aber während es sein Glück versucht, kann man sehen wie der name sein sollte (mit <code>ls -al</code>)</p>
+<p>TimeMachine bricht dann zwar ab, aber man kann das Disk-Image problemlos selber mit hdiutil herstellen und dann rüberkopieren. Wichtig: <code>-volname</code> muss passen (das .tmp image rechtzeitig mounten). Der Trick liegt in dem Namen des <code>sparsebundles</code>, der besteht aus a) dem Namen des Rechners ($NAME), dann einem Underscore ("_") und der MAC-Adresse des Rechners ($MAC_ADRESS).</p>
+<pre><code>hdiutil create -library SPUD -size 1t -fs HFS+J -type SPARSEBUNDLE \
+    -volname "Backup of $NAME" $NAME_$MAC_ADRESS.sparsebundle
+</code></pre>
+<p>Ach ja, die Größe kann man natürlich einstellen und später mit resize ändern. Ich hab mich mal für einen Terrabyte entschieden.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/7/timemachine-auf-einem-beliebigen-nas/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/7/matjessalat-mit-roter-beete-und-apfel/">
         Matjessalat mit Roter Beete und Apfel
         </a>
@@ -322,34 +356,6 @@ Dauert also nicht mehr lange bis ich das hier fürs Bloggen einsetzen kann / wer
     
       <footer>
         <a href="../../2008/6/censorship-sells/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/6/outteach/">
-        Outteach
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-06-08">Sonntag, 8. Juni 2008</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Ich mag es wie <a href="http://headrush.typepad.com">Kathy Sierry</a> bloggt. Immer hat sie den Fokus darauf das Benutzer von Software (oder von irgend etwas) dadurch mehr schaffen können.</p>
-<p>Das ist der richtige Ansatz.</p>
-<p>Zusammengefasst ist dieser Grundsatz vielleicht <a href="http://headrush.typepad.com/creating_passionate_users/2007/03/seven_blog_virt.html">in dem Zitat: "Outteach not outspend".</a></p>
-<p>Ich bin noch am Überlegen wie das auf Novamedia anzuwenden ist - aber</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/6/outteach/">weiterlesen…</a>
       </footer>
     
   </article>

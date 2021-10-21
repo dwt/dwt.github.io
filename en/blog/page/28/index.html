@@ -57,6 +57,36 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/4/aircrack-auf-dem-iphone/">
+        Aircrack auf dem iPhone
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-04-08">Tuesday, April 8, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Will man sowas haben?</p>
+<p>Wäre ja schließlich ein Hackerwerkzeug und damit verboten.</p>
+<p>Nun, wer will da schon. Immerhin würde man damit ja schließlich normale WEP-Verschlüsselung in so etwa einer Minute entschlüsseln können.</p>
+<p>Pah...</p>
+<p>Aber <a href="http://es.truveo.com/Aircrack-on-iPod-touchiPhone/id/908374793">Ankucken ist ja nicht verboten</a>.</p>
+<p>:-)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/4/aircrack-auf-dem-iphone/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/4/was-willst-du-in-der-piratenpartei/">
         Was willst du in der Piratenpartei?
         </a>
@@ -378,41 +408,6 @@
     
       <footer>
         <a href="../../2008/3/fortgeschrittene-techniken-funktionaler-programmierung/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/3/python-saugt/">
-        Python saugt
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-03-28">Friday, March 28, 2008</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Schon lange hab ich mich gefragt, wieso eigentlich mich dieser eine Punkt an Python so sehr stört:</p>
-<p>Jede Methode eines Objektes erhält als ersten Parameter eine Referenz auf das aufrufende Objekt.</p>
-<p>Bisher konnte ich den Finger nie darauf legen konnte, wieso mir das eigentlich so auf den Keks geht. Bisher dachte ich immer das es mich stört, weil man schwieriger aus normalen Funktionen Methoden zu machen, beim Refactorn, aber so wirklich passt das nicht. Also dachte ich, vielleicht gewöhne ich mich ja irgendwann daran. Dem war aber nicht so.</p>
-<p>Bei den Vorbereitungen zum Java-Kurs ist mir jetzt durch einen Hinweis von <a href="http://wiki.freitagsrunde.org/Benutzer:Robert_Lubkoll">Robert</a> der eigentliche Grund Aufgefallen.</p>
-<p>Folgendes war der Auslöser: Wir haben uns gerade darüber unterhalten wie wir den Studenten im Java-Kurs erklären, wie sie <code>this</code> in Java verstehen sollen.</p>
-<p>Naja, von der technischen Seite ist das klar - die Methoden sind im Klassenobjekt implementiert und die Methode braucht aber einen Weg um an die Daten zum gegenwärtigen Instanz-Objekt zu gelangen. Also wird dieses Instanz-Objekt als verstecktes erstes Argument übergeben, das immer den namen <code>this</code> trägt.</p>
-<p>Soweit so klar.</p>
-<p>Das Mentale Bild das man von diesem Systems hat, ist aber eigentlich anders: Darin gehören die Methoden zum Instanz-Objekt und "leben" auch darin - damit ist dann auch klar, wieso eine Instanz-Methode zugriff auf die Daten des Objekts hat und wieso zum Beispiel eine Klassen-Methode das nicht kann - sie lebt einfach im falschen Objekt.</p>
-<p>Der Knackpunkt: <code>this</code> ist eigentlich ein Workaround (aber ein notwendiger) der zeigt wie diese Abstraktion implementiert wurde, der aber auch erlaubt eindeutig zu spezifizieren welchen Namensraum man jetzt meint. Jetzt möchte man aber die Implementierung möglichst von der Benutzung abstrahieren, damit man gut auf dieser Abstrakteren Ebene arbeiten kann und diese nicht ständig verlässt. Daher macht es viel Sinn diese Implementierung so transparent zu machen wie nur irgend möglich.</p>
-<p>In Python dagegen ist das anders. Hier wird ganz Explizit immer <code>self</code> als erster Parameter geschrieben. Der Effekt? Ständig wird man daran erinnert das die Abstraktion eigentlich nicht so ist wie man sich das denkt und es tatsächlich alles anders implementiert ist in Python. Das Problem? Man erhält durch diesen Abstraktionsbruch keinen Vorteil - ja, alles ist expliziter, aber es bricht auch ständig mit der Abstraktionsschicht auf der man Arbeitet. Details der Implementierung "bluten" über dieses "Loch" in den ganzen Code den man schreibt.</p>
-<p>Und saubere, klar getrennte Abstraktions-Ebenen sind einfach wichtiger als einfachste Implementierung - speziell für einen Sprachdesigner.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/3/python-saugt/">weiterlesen…</a>
       </footer>
     
   </article>

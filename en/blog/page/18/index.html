@@ -57,6 +57,34 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/9/afro-samurai/">
+        Afro Samurai
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-09-23">Tuesday, September 23, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Wunderschönes Comic - gezeichnet und gesprochen von Meistern.</p>
+<p>Eine schräge Mischung aus japanischem Samurai-Gemetzel mit western Einflüssen plus Handies und Roboter...</p>
+<p><a href="http://www.google.com/search?client=safari&amp;rls=de-de&amp;q=afro+samurai+torrent&amp;ie=UTF-8&amp;oe=UTF-8">Muss man sehen.</a></p>
+<p>(<a href="http://www.afrosamurai.com/">Mehr</a> <a href="http://en.wikipedia.org/wiki/Afro_Samurai">Info</a>)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/9/afro-samurai/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/9/ein-tool-sie-zu-finden-und-alle-zu-binden/">
         Ein Tool sie zu finden und alle zu binden...
         </a>
@@ -443,41 +471,6 @@ openssl dgst -dss1 -verify dsa_public_key.pem -signature decoded.signature.sig I
     
       <footer>
         <a href="../../2008/9/wo-ich-gerade-am-la-stern-bin/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/8/kontrollieren-welche-libraries-ein-programm-la-dt/">
-        Kontrollieren welche Libraries ein Programm lädt
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-08-29">Friday, August 29, 2008</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>ist beim Entwickeln ein echtes Problem.</p>
-<p>Frameworks unter Mac OS X werden schließlich so gelinkt, das jeder Framework den Pfad enthält, an dem er später einmal leben wird - und dieser Pfad wird dann in die Applikation eingetragen die ihn laden möchte.</p>
-<p>Das ist blöd, wenn man Frameworks in <code>/Library/Frameworks/</code> installiert, bei der Entwicklung dann aber mal eine andere Version ausprobieren will oder muss. Auch klassisch ist, dass ein Framework der von Apple kommt zu alt ist und man sicherstellen muss, das ein eigener Framework stattdessen verwendet wird, der Bugfixes enthält.</p>
-<p>Schwierig.</p>
-<p>Nunja, man macht das unter OS X mit dem Äquivalent des Linux Konstrukts <code>LD_LIBRARY_PATH</code>, also diversen Umgebungsvariablen, mit denen man das Verhalten des dynamischen linkers beeinflussen kann. Spaßigerweise hat Apple das verhalten des dynamischen Linkers unter Tiger (10.4) verändert, dass er sich jetzt genauso verhält wie unter Leopard (10.5) - zumindest sagt mein Gedächtnis andere Dinge als die 10.4 manpage von <code>dyld</code>.</p>
-<p>Also sind jetzt eigentlich nur noch zwei Umgebungsvariablen interessant:</p>
-<ul>
-<li><code>DYLD_FRAMEWORK_PATH</code> wenn man etwas laden will, bevor die Pfade verwendet werden die in der Applikation für einen Framework stehen -&gt; also um einen Framework zu überschreiben.</li>
-<li><code>DYLD_FALLBACK_FRAMEWORK_PATH</code> wenn man etwas nachladen will, nachdem es an den vorgegebenen Pfaden nicht gefunden wurde. Die Manpage ist mir da noch nicht 100% klar - es wirkt fast so, als könnte man dyld auch dafür verwenden eine neuere Version anzugeben, die nur genutzt wird, wenn in der alten ein bestimmtes Symbol nicht gefunden wurde - das konnte ich aber noch nicht testen (und kommt mir auch komisch vor).</li>
-</ul>
-<p>Also: kennen sollte man die - das gibt viel flexibilität.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/8/kontrollieren-welche-libraries-ein-programm-la-dt/">weiterlesen…</a>
       </footer>
     
   </article>

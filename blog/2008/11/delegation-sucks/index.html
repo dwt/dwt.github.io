@@ -75,12 +75,12 @@
 <p>This is not so much a problem in on itself, but the code sprouts dependencies that nobody is able to follow from just reading a class but which become crucial to the operation of the application.</p>
 <p>Well, out of frustration I started thinking about the saying that Design-Patterns are just for languages that are not powerful enough to implement something in the language.</p>
 <p>So lets see, what can we do to make this simpler:</p>
-<div class="hll"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">([</span><span class="n">someObject</span><span class="w"> </span><span class="nl">respondsToSelector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="nl">someDelegateMethod</span><span class="p">:)])</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="p">[</span><span class="n">someObject</span><span class="w"> </span><span class="nl">someDelegateMethod</span><span class="p">:</span><span class="nb">self</span><span class="p">];</span><span class="w"></span>
+<div class="hll"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">([</span><span class="n">someObject</span><span class="w"> </span><span class="n">respondsToSelector</span><span class="o">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">someDelegateMethod</span><span class="o">:</span><span class="p">)])</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="n">someObject</span><span class="w"> </span><span class="n">someDelegateMethod</span><span class="o">:</span><span class="nb">self</span><span class="p">];</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 </pre></div>
 <p>The key here is to only call the messagte <code>-someDelegateMethod:</code> if it is actually supported on the target. A perfect application [wiki:2008/10/26/20.59 of my invocation] [wiki:2008/10/25/01.21 catching code].</p>
-<div class="hll"><pre><span></span><span class="p">[[</span><span class="n">NMDelegateCaller</span><span class="w"> </span><span class="nl">callerForDelegate</span><span class="p">:</span><span class="n">object</span><span class="p">]</span><span class="w"> </span><span class="nl">someDelegateMethod</span><span class="p">:</span><span class="nb">self</span><span class="p">];</span><span class="w"></span>
+<div class="hll"><pre><span></span><span class="p">[[</span><span class="n">NMDelegateCaller</span><span class="w"> </span><span class="n">callerForDelegate</span><span class="o">:</span><span class="n">object</span><span class="p">]</span><span class="w"> </span><span class="n">someDelegateMethod</span><span class="o">:</span><span class="nb">self</span><span class="p">];</span><span class="w"></span>
 </pre></div>
 <p>In real life of course you would hide the delegator by just wrapping your delegate in the <code>-setDelegate:</code> method.</p>
 <p>Interestingly implementing this proved rather more tricky than I anticipated. This is because of the way the objc-runtime creates NSInvocations out of c-method calls. The trick is, that really at runtime nothing is known about how arguments have to be scraped out of the stack because in C you have no clue what arguments actually are on the stack.</p>
@@ -127,7 +127,7 @@
     <footer class="container-fluid ">
       <ul class="nav">
   <li class="nav-item copyright">
-    <span class="nav-link">&copy; 2021 <a href="../../../../work/">Martin Häcker</a></span>
+    <span class="nav-link">&copy; 2022 <a href="../../../../work/">Martin Häcker</a></span>
   </li>
   
     
@@ -155,11 +155,16 @@
     </a>
   </li>
   <li class="nav-item license">
-    
-      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
-        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
-      </a>
-    
+    <a class="nav-link" 
+      rel="license" 
+      target="_blank" 
+      href="None"
+    >
+      <img 
+        src="/static/cc-by-sa-88x31.png"
+        alt="None"
+      >
+    </a>
   </li>
 </ul>
     </footer>

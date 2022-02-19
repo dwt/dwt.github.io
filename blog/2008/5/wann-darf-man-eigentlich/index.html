@@ -75,7 +75,7 @@
 <p>In C natürlich. Das Problem ist klar: Makros können ja beliebige Ersetzungen im Text vornehmen und dann mit vielen Makros aus C Pascal zu machen geht auch - aber das will man ja nicht, denn sonst hat man das gleiche Problem wie die <a href="http://minnie.tuhs.org/UnixTree/V7/usr/src/cmd/sh/mac.h.html">Bourne</a>-<a href="http://minnie.tuhs.org/UnixTree/V7/usr/src/cmd/sh/args.c.html">Shell</a> die irgendwann niemand mehr weiterentwickeln konnte.</p>
 <p>Klar.</p>
 <p>Andererseits nervt es wirklich unter Cocoa z.B. für jede Iteration über einen Array das hier zu schreiben:</p>
-<div class="hll"><pre><span></span><span class="bp">NSArray</span><span class="w"> </span><span class="o">*</span><span class="n">someStrings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="bp">NSArray</span><span class="w"> </span><span class="nl">arrayWithObjects</span><span class="p">:</span><span class="s">@&quot;first&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;second&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;third&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;fourth&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">nil</span><span class="p">];</span><span class="w"></span>
+<div class="hll"><pre><span></span><span class="bp">NSArray</span><span class="w"> </span><span class="o">*</span><span class="n">someStrings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="bp">NSArray</span><span class="w"> </span><span class="n">arrayWithObjects</span><span class="o">:</span><span class="s">@&quot;first&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;second&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;third&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;fourth&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">nil</span><span class="p">];</span><span class="w"></span>
 
 <span class="bp">NSString</span><span class="w"> </span><span class="o">*</span><span class="n">eachString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">nil</span><span class="p">;</span><span class="w"></span>
 <span class="bp">NSEnumerator</span><span class="w"> </span><span class="o">*</span><span class="n">enumerator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">someStrings</span><span class="w"> </span><span class="n">objectEnumerator</span><span class="p">];</span><span class="w"></span>
@@ -87,7 +87,7 @@
 </pre></div>
 <p>Das heißt, für eine Schleife (zwei Zeilen) ha man noch mal mindestens zwei weitere Zeilen nur für das Setup.</p>
 <p>Das nervt so sehr, das viele Leute das etwas kürzen:</p>
-<div class="hll"><pre><span></span><span class="bp">NSArray</span><span class="w"> </span><span class="o">*</span><span class="n">someStrings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="bp">NSArray</span><span class="w"> </span><span class="nl">arrayWithObjects</span><span class="p">:</span><span class="s">@&quot;first&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;second&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;third&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;fourth&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">nil</span><span class="p">];</span><span class="w"></span>
+<div class="hll"><pre><span></span><span class="bp">NSArray</span><span class="w"> </span><span class="o">*</span><span class="n">someStrings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="bp">NSArray</span><span class="w"> </span><span class="n">arrayWithObjects</span><span class="o">:</span><span class="s">@&quot;first&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;second&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;third&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;fourth&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">nil</span><span class="p">];</span><span class="w"></span>
 
 <span class="kt">id</span><span class="w"> </span><span class="n">eachString</span><span class="p">,</span><span class="w"> </span><span class="n">enumerator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">someStrings</span><span class="w"> </span><span class="n">objectEnumerator</span><span class="p">];</span><span class="w"></span>
 <span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">eachString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">enumerator</span><span class="w"> </span><span class="n">nextObject</span><span class="p">])</span><span class="w"></span>
@@ -100,7 +100,7 @@
 <p>Aber, mit <a href="http://en.wikipedia.org/wiki/Objective-C#Fast_enumeration">ObjC 2.0</a> gibt es das <code>for(String *each in someStrings)</code> konstrukt, das schon deutlich kürzer (und auch schneller - aber aus anderen Gründen) ist.</p>
 <p>Also, doch mal ein Makro. Nach reiflichem (2 Minuten) überlegen hab ich mich entschieden es erst einmal mit einer <code>for</code> Schleife zu probieren, da das bedeutet das der Scope der Variablen schön beschränkt ist.</p>
 <p>Ziel wäre es also, das hier schreiben zu können:</p>
-<div class="hll"><pre><span></span><span class="bp">NSArray</span><span class="w"> </span><span class="o">*</span><span class="n">someStrings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="bp">NSArray</span><span class="w"> </span><span class="nl">arrayWithObjects</span><span class="p">:</span><span class="s">@&quot;first&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;second&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;third&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;fourth&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">nil</span><span class="p">];</span><span class="w"></span>
+<div class="hll"><pre><span></span><span class="bp">NSArray</span><span class="w"> </span><span class="o">*</span><span class="n">someStrings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="bp">NSArray</span><span class="w"> </span><span class="n">arrayWithObjects</span><span class="o">:</span><span class="s">@&quot;first&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;second&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;third&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;fourth&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">nil</span><span class="p">];</span><span class="w"></span>
 
 <span class="n">FOREACH</span><span class="p">(</span><span class="n">eachString</span><span class="p">,</span><span class="w"> </span><span class="n">someStrings</span><span class="p">)</span><span class="w"></span>
 <span class="p">{</span><span class="w"></span>
@@ -158,7 +158,7 @@
     <footer class="container-fluid ">
       <ul class="nav">
   <li class="nav-item copyright">
-    <span class="nav-link">&copy; 2021 <a href="../../../../work/">Martin Häcker</a></span>
+    <span class="nav-link">&copy; 2022 <a href="../../../../work/">Martin Häcker</a></span>
   </li>
   
     
@@ -186,11 +186,16 @@
     </a>
   </li>
   <li class="nav-item license">
-    
-      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
-        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
-      </a>
-    
+    <a class="nav-link" 
+      rel="license" 
+      target="_blank" 
+      href="None"
+    >
+      <img 
+        src="/static/cc-by-sa-88x31.png"
+        alt="None"
+      >
+    </a>
   </li>
 </ul>
     </footer>

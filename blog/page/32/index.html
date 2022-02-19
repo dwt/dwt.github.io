@@ -57,6 +57,76 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/2/trac-als-homepage/">
+        Trac als Homepage
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-02-18">Montag, 18. Februar 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>(Zu <a href="http://musicbrainz.org/track/9aeaaebe-2e01-4984-b7aa-6f43a5d77801.html">Amy Amy Amy</a>)</p>
+<p>Trac als Homepage hat sich für mich ja schon bewährt. Ein Wiki, eine Versionsverwaltung, Theoretisch auch noch Bug-Tracking (deaktiviert wg. Spammern) - was will man mehr.</p>
+<p>Naja, einen Blog. Und da fängt das Problem dann auch schon an.</p>
+<p>Traditionell sind Blogs alle in HTML oder mit merkwürdigen Wysiwyg-Editoren die nicht richtig funktionieren oder so beschränkt sind, das man darin gar nicht alles machen kann was man will (z.B. Source-Code highlighten. Noch dazu Objective-C!)</p>
+<p>Ausserdem will ich das mein Blog sauber mit meinem Wiki Verlinkt ist und ich die normale Wiki-Syntax zum Bloggen verwenden kann.</p>
+<p>Das mache ich bisher mit dem <a href="http://trac-hacks.org/wiki/TracBlogPlugin">TracBlogPlugin</a>, nachdem ich früher mal mit dem <a href="http://trac-hacks.org/wiki/SimpleBlogPlugin">SimpleBlogPlugin</a> eher... unzufrieden war.</p>
+<p>Leider aber ist auch das TracBlogPlugin nicht perfekt. Zwar setzt es auf das <a href="http://trac-hacks.org/wiki/TagsPlugin">TracTags</a> Plugin auf, das ganz excelent ist - aber leider bleiben einige schwächen.</p>
+<ul>
+<li>History + Archiv ist mehr oder weniger nicht vorhanden</li>
+<li>Kommentare gehen nicht.<ul>
+<li>Moderation derselben schon gleich gar nicht.</li>
+</ul>
+</li>
+<li>RSS-Feeds sind eher... nun ja, mit einigem Experimentieren kriegt man einiges hin, aber schön ist es nicht.</li>
+<li>WeblogPings und Backlinks werden nicht unterstützt.</li>
+<li>Blogrolls etc... alles von hand.</li>
+<li>XMLRPC... Ah well.</li>
+</ul>
+<p>Weiterentwickelt wurde das Plugin seit fast einem Jahr nicht mehr (ok, in <a href="http://trac-hacks.org/wiki/TracBlogPlugin#RecentChanges">den letzten Tagen</a> passiert wieder etwas, mal schauen wie das weiter geht)</p>
+<p>Jetzt hatte ich mir schon überlegt [vielleicht selber Hand anzulegen], da stellt sich heraus, das schon jemand anderes deutlich entnervt war und das Plugin <a href="http://trac-hacks.org/wiki/FullBlogPlugin">FullBlog</a> entwickelt hat.</p>
+<p>Pro:</p>
+<ul>
+<li>Feeds++</li>
+<li>Kategorien (mit TracTags Unterstützung?)</li>
+<li>Kommentare + Spamfilterung!</li>
+<li>XMLRPC support</li>
+</ul>
+<p>Cons:</p>
+<ul>
+<li>Seiten sind nicht im normalen Wiki-Namespace (Aber man kann wohl hin und her linken)</li>
+<li>Ich kann also nicht alle bestehenden Postings direkt übernehmen</li>
+<li>Der Code malt (da er keine normalen Wiki-Seiten verwendet) direkt in der Datenbank herum. Gnah.</li>
+</ul>
+<p>Mehr hab ich mir noch nicht angesehen. Aber eine vernünftige Blog-Integration für Trac wäre Gold wert. Will schließlich heute jeder haben, einen Blog.
+Ah well.</p>
+<p>Eye in the Sky Projektideen:</p>
+<ul>
+<li>Endlich mehr Blogging Features hier im Trac</li>
+<li>Mehr Release Management Unterstützung<ul>
+<li>Upload von neuen Releases</li>
+<li>App-Cast auto-generieren - mit Wiki-Seite für die Change-Notes</li>
+</ul>
+</li>
+<li>Buildserver wäre ein Traum - geht aber nicht solange ich auf Linux hoste und für den Mac Entwickle.</li>
+</ul>
+<p>Diesen Freitag 17:00 Uhr treff ich mich mit <a href="http://www.felix-schwarz.name/Hauptseite">Felix</a> und <a href="http://user.cs.tu-berlin.de/~felixf/">Felix</a> in der <a href="https://wiki.freitagsrunde.org/">Freitagsrunde</a> und wir werden mal weiter beraten was wir mit Trac weiter machen. Wer Trac Hacken mag oder schon tut und dazukommen mag ist natürlich herzlich eingeladen. :)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/2/trac-als-homepage/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/2/bei-mac-donalds/">
         Bei Mac Donalds
         </a>
@@ -100,22 +170,22 @@
 <span class="cp">        arguments:(void *)what , ##variableArguments]</span>
 
 <span class="p">-</span> <span class="nf">logObjcType:</span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="nv">typeString</span><span class="w"> </span><span class="nf">arguments:</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)</span> <span class="nv">what</span><span class="p">,</span><span class="w"> </span><span class="p">...;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kt">id</span><span class="w"> </span><span class="n">formatString</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="p">[</span><span class="nb">self</span><span class="w"> </span><span class="nl">stringFromType</span><span class="p">:</span><span class="n">typeString</span><span class="w"> </span><span class="nl">inValue</span><span class="p">:</span><span class="n">what</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="kt">id</span><span class="w"> </span><span class="n">formatString</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="p">[</span><span class="nb">self</span><span class="w"> </span><span class="n">stringFromType</span><span class="o">:</span><span class="n">typeString</span><span class="w"> </span><span class="n">inValue</span><span class="o">:</span><span class="n">what</span><span class="p">];</span><span class="w"></span>
 
 <span class="w">    </span><span class="kt">va_list</span><span class="w"> </span><span class="n">variadicArguments</span><span class="p">;</span><span class="w"></span>
 <span class="w">    </span><span class="n">va_start</span><span class="p">(</span><span class="n">variadicArguments</span><span class="p">,</span><span class="w"> </span><span class="n">what</span><span class="p">);</span><span class="w"></span>
 
-<span class="w">    </span><span class="kt">id</span><span class="w"> </span><span class="n">logString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[[[</span><span class="bp">NSString</span><span class="w"> </span><span class="n">alloc</span><span class="p">]</span><span class="w"> </span><span class="nl">initWithFormat</span><span class="p">:</span><span class="n">formatString</span><span class="w"> </span>
+<span class="w">    </span><span class="kt">id</span><span class="w"> </span><span class="n">logString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[[[</span><span class="bp">NSString</span><span class="w"> </span><span class="n">alloc</span><span class="p">]</span><span class="w"> </span><span class="n">initWithFormat</span><span class="o">:</span><span class="n">formatString</span><span class="w"> </span>
 <span class="w">                    </span><span class="nl">arguments</span><span class="p">:</span><span class="n">variadicArguments</span><span class="p">]</span><span class="w"> </span><span class="n">autorelease</span><span class="p">];</span><span class="w"></span>
 
 <span class="w">    </span><span class="n">va_end</span><span class="p">(</span><span class="n">variadicArguments</span><span class="p">);</span><span class="w"></span>
 
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="nb">self</span><span class="w"> </span><span class="nl">log</span><span class="p">:</span><span class="n">logString</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="nb">self</span><span class="w"> </span><span class="n">log</span><span class="o">:</span><span class="n">logString</span><span class="p">];</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 </pre></div>
 <p>Eigentlich hatte ich hier mehr Probleme erwartet.</p>
 <p>Ganz nebenbei löst das auch noch ein Problem von ganz zu Anfang:</p>
-<div class="hll"><pre><span></span><span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;%@&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="bp">NSString</span><span class="w"> </span><span class="nl">stringWithFormat</span><span class="p">:</span><span class="s">@&quot;%s,%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;fnord&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;fnord&quot;</span><span class="p">]);</span><span class="w"></span>
+<div class="hll"><pre><span></span><span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;%@&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="bp">NSString</span><span class="w"> </span><span class="n">stringWithFormat</span><span class="o">:</span><span class="s">@&quot;%s,%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;fnord&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;fnord&quot;</span><span class="p">]);</span><span class="w"></span>
 </pre></div>
 <p>Das macht jetzt keine Probleme mehr, da die zusätzlichen Komas vom Präprozessor (fälschlicherweise) als zusätzliche Argumente zur dem variadischen Makro aufgefasst werden. Hehe...</p>
 <p>Jetzt fehlt nur noch ein Backend für den Logger und ich bin glücklich. Andererseits... da gibt es natürlich auch <a href="http://log4cocoa.sourceforge.net/">Log4Cocoa</a> das ich einfach erweitern könnte.</p>
@@ -164,13 +234,13 @@
 <span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">length</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">strtol</span><span class="p">(</span><span class="n">encodedType</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">encodedType</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="sc">&#39;c&#39;</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="o">*</span><span class="n">encodedType</span><span class="p">)</span><span class="w"> </span><span class="n">RAISE_UNSUPPORTED_TYPE</span><span class="p">(</span><span class="n">encodedType</span><span class="p">);</span><span class="w"></span>
 
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="bp">NSString</span><span class="w"> </span><span class="nl">stringWithCString</span><span class="p">:</span><span class="n">what</span><span class="w"> </span><span class="nl">length</span><span class="p">:</span><span class="n">length</span><span class="mi">-1</span><span class="p">];</span><span class="w"> </span><span class="c1">// \0 ignored</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="bp">NSString</span><span class="w"> </span><span class="n">stringWithCString</span><span class="o">:</span><span class="n">what</span><span class="w"> </span><span class="n">length</span><span class="o">:</span><span class="n">length</span><span class="mi">-1</span><span class="p">];</span><span class="w"> </span><span class="c1">// \0 ignored</span>
 <span class="p">}</span><span class="w"></span>
 
-<span class="o">-</span><span class="w"> </span><span class="nl">stringFromType</span><span class="p">:(</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">encodedType</span><span class="w"> </span><span class="nl">inValue</span><span class="p">:(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">what</span><span class="p">;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="o">-</span><span class="w"> </span><span class="n">stringFromType</span><span class="o">:</span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">encodedType</span><span class="w"> </span><span class="n">inValue</span><span class="o">:</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">what</span><span class="p">;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="sc">&#39;@&#39;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">*</span><span class="n">encodedType</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="p">[(</span><span class="kt">id</span><span class="p">)</span><span class="n">what</span><span class="w"> </span><span class="n">description</span><span class="p">];</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="sc">&#39;*&#39;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">*</span><span class="n">encodedType</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="bp">NSString</span><span class="w"> </span><span class="nl">stringWithCString</span><span class="p">:(</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">what</span><span class="p">];</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="sc">&#39;[&#39;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">*</span><span class="n">encodedType</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="nb">self</span><span class="w"> </span><span class="nl">stringFromType</span><span class="p">:</span><span class="n">encodedType</span><span class="w"> </span><span class="nl">inArray</span><span class="p">:</span><span class="n">what</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="sc">&#39;*&#39;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">*</span><span class="n">encodedType</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="bp">NSString</span><span class="w"> </span><span class="n">stringWithCString</span><span class="o">:</span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">what</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="sc">&#39;[&#39;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">*</span><span class="n">encodedType</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="nb">self</span><span class="w"> </span><span class="n">stringFromType</span><span class="o">:</span><span class="n">encodedType</span><span class="w"> </span><span class="n">inArray</span><span class="o">:</span><span class="n">what</span><span class="p">];</span><span class="w"></span>
 <span class="w">    </span><span class="n">RAISE_UNSUPPORTED_TYPE</span><span class="p">(</span><span class="n">encodedType</span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">nil</span><span class="p">;</span><span class="w"> </span><span class="cm">/* never reached */</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
@@ -213,7 +283,7 @@
 <span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;fnord&quot;</span><span class="p">);</span><span class="w"></span>
 <span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;%d&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span><span class="w"></span>
 <span class="n">LOG</span><span class="p">(</span><span class="s">&quot;%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;fnord&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;%@&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="bp">NSString</span><span class="w"> </span><span class="nl">stringWithFormat</span><span class="p">:</span><span class="s">@&quot;%s,%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;fnord&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;fnord&quot;</span><span class="p">]);</span><span class="w"></span>
+<span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;%@&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="bp">NSString</span><span class="w"> </span><span class="n">stringWithFormat</span><span class="o">:</span><span class="s">@&quot;%s,%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;fnord&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;fnord&quot;</span><span class="p">]);</span><span class="w"></span>
 </pre></div>
 <p>Die Implementierung ist allerdings etwas tricky.</p>
 <p>Typinvariante Makros wie <code>MAX(x, y)</code> schreibt man üblicherweise so:</p>
@@ -260,7 +330,7 @@
 <p>Das macht vor allem in Objective-C mächtig Schwierigkeiten. Das hier zum Beispiel geht nicht.</p>
 <div class="hll"><pre><span></span><span class="cp">#define DO(argument) argument</span>
 
-<span class="n">DO</span><span class="p">([</span><span class="bp">NSString</span><span class="w"> </span><span class="nl">stringWithFormat</span><span class="p">:</span><span class="s">@&quot;%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;asdf&quot;</span><span class="p">]);</span><span class="w"></span>
+<span class="n">DO</span><span class="p">([</span><span class="bp">NSString</span><span class="w"> </span><span class="n">stringWithFormat</span><span class="o">:</span><span class="s">@&quot;%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;asdf&quot;</span><span class="p">]);</span><span class="w"></span>
 </pre></div>
 <p>Der Compiler meckert hier über zu viele Kommas und denkt das ich das Makro mit zwei Argumenten aufrufen will. Gnah.</p>
 <p>Warum beschäftigt mich das eigentlich?</p>
@@ -419,44 +489,6 @@ Just two days ago I watched the episode <a href="http://www.wdr.de/tv/quarks/sen
   </article>
 
   
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/2/beautiful-code/">
-        Beautiful Code
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-02-08">Freitag, 8. Februar 2008</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>"Lest mehr Code!" werde ich mir immer als Schlusswort des <a href="http://chaosradio.ccc.de/22c3_mp3-598.html">Literarischen Code-Quartetts</a> merken.</p>
-<p>Und weil man ja auch verdauen muss was man liest, empfiehlt sich natürlich guter Code - an dem man auch noch mehr lernen kann.</p>
-<p>Daher war ich begeistert, dass O'Reilly das Buch <a href="http://www.oreilly.com/catalog/9780596510046/">"Beautiful Code"</a> (<a href="http://beautifulcode.oreillynet.com/">blog</a>) herausbrachte. Das geniale daran: Es werden nicht nur gute Programme abgedruckt, sondern Erklärungen, was hervorragende Programmierer daran schön finden und warum!</p>
-<p>Und was für Perlen da drin sind.</p>
-<p>Besonders haben mir gefallen (ich bin noch nicht durch)</p>
-<ul>
-<li>Kapitel 1: Regex matcher in C - Brian Kernighan hat Stil! (und pointer :)</li>
-<li>Kapitel 14: Wie sich LAPACK über die Zeit und die verwendete Hardware veränderte</li>
-<li>Kapitel 17: Ein Rundgang durch die Layer des Virtuellen Dateisystems von BSD</li>
-<li>Kapitel 18: Wie Pythons Dictionaries implementiert sind</li>
-<li>Kapitel 22: Deadlock-Detection und subtile Bugs im Solaris Kernel (faszinierend)</li>
-</ul>
-<p>Und so geht es grade weiter.</p>
-<p>Gibts auf <a href="http://www.amazon.com/Beautiful-Code-Leading-Programmers-Practice/dp/0596510047">Amazon</a> oder einem Tracker in deiner Nähe.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/2/beautiful-code/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
   
   
     
@@ -476,7 +508,7 @@ Just two days ago I watched the episode <a href="http://www.wdr.de/tv/quarks/sen
     <footer class="container-fluid ">
       <ul class="nav">
   <li class="nav-item copyright">
-    <span class="nav-link">&copy; 2021 <a href="../../../work/">Martin Häcker</a></span>
+    <span class="nav-link">&copy; 2022 <a href="../../../work/">Martin Häcker</a></span>
   </li>
   
     

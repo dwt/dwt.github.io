@@ -57,6 +57,34 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/4/http-de-wikiversity-org-wiki-hauptseite-wikiversity/">
+        [Wikiversity](http://de.wikiversity.org/wiki/Hauptseite)
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-04-09">Mittwoch, 9. April 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Ist ein Schwesterprojekt der <a href="http://de.wikipedia.org/">Wikipedia</a>.</p>
+<p>Man sieht sich als <strong>eine Plattform zum gemeinschaftlichen Lernen, Lehren, Nachdenken und Forschen</strong>.</p>
+<p>Könnte das der lang ersehnte nächste Evolutionsschritt der Universität sein? Das wie sie in 10 Jahren aussieht?</p>
+<p>Mal genauer schauen. Morgen.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/4/http-de-wikiversity-org-wiki-hauptseite-wikiversity/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/4/aircrack-auf-dem-iphone/">
         Aircrack auf dem iPhone
         </a>
@@ -355,64 +383,6 @@
   </article>
 
   
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/3/fortgeschrittene-techniken-funktionaler-programmierung/">
-        Fortgeschrittene Techniken Funktionaler Programmierung
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-03-28">Freitag, 28. März 2008</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>(zu <a href="http://musicbrainz.org/track/9077f130-512d-4b88-afe4-8ad8e13ce39e.html">Mother Earth von Within Temptation</a>)</p>
-<p><a href="http://uebb.cs.tu-berlin.de/lehre/2005WVftfp/">Diese Folien</a> habe ich gestern gefunden.</p>
-<p>Das Thema finde ich schon spannend - immerhin wird doch einiges angesprochen, das ich mal wieder auffrischen könnte. Monaden, und effiziente implementierungen von Sequenzen und Maps würden mich vor allem interessieren.</p>
-<p>Aber leider kranken die Folien unter einem ganz spezifischen Problem: Sie strotzen nur so vor Begeisterung über die tollen typographischen Möglichkeiten von <a href="http://de.wikipedia.org/wiki/TeX">Tex</a>.</p>
-<p>:-(</p>
-<p>Besonders bezeichnend finde ich <a href="http://uebb.cs.tu-berlin.de/lehre/2005WVftfp/files/VL.3.2.pdf">Vorlesung 3.2</a>. Ich meine, es ist ja schön, das man mit Tech Programme auf solch mathematische Art und Weise schreiben kann.</p>
-<p>Aber wer bitte soll das Lesen? Und wieso wohl hat sich APL nicht durchgesetzt?</p>
-<p>Im GCC gibt es auch <a href="http://gcc.gnu.org/onlinedocs/gcc-3.3.1/gcc/Conditionals.html#Conditionals">eine Erweiterung</a> die den tertiären Operator erweitert <code>(test) ? ifTrueValue : ifFalseValue</code> so dass man den mitleren Operanden weglassen kann um bei dieser Form zu landen <code>aValue ?: ifValueEvaluatedToFalse</code>. Das ist für sich gesehen nun jetzt erst einmal blöde - andersherum ergibt sich daraus die schöne Möglichkeit einen "Oder" Operator zu haben.</p>
-<p>Das heißt: Muss man dieses Beispiel</p>
-<div class="hll"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">getImportantValue</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">somethingWhichGeneratesAStringOrNull</span><span class="p">();</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-</pre></div>
-<p>erweitern, dass es nie null zurückgibt, sondern stattdessen immer mindestens einen leeren String, geht jetzt einfacher. Klassisch würde man das so machen müssen:</p>
-<div class="hll"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">getImportantValue</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="n">somethingWhichGeneratesAString</span><span class="p">();</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">value</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-</pre></div>
-<p>Oder eben kürzer mit der Erweiterung:</p>
-<div class="hll"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">getImportantValue</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">somethingWhichGeneratesAString</span><span class="p">()</span><span class="w"> </span><span class="o">?:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-</pre></div>
-<p>Ist diese Vereinfachung beim Schreiben die größere Komplexität beim Lesen wert? Immerhin wird fast kein C-Coder dieses Konstrukt kennen und daher zuerst einmal überrascht sein wird.</p>
-<p>Vielleicht sollte man es dann also in ein Macro packen, das diese Funktion über den Namen dokumentiert, etwa</p>
-<div class="hll"><pre><span></span><span class="cp">#define IF_NULL_USE ?:</span>
-</pre></div>
-<p>Dann kann man aber eigentlich auch schon wieder ein Makro bauen das das explizit macht. So zum Beispiel:</p>
-<div class="hll"><pre><span></span><span class="cp">#define IF_NULL_USE(testedValue, alternativeValue) (testedValue) ?: alternativeValue;</span>
-</pre></div>
-<p>Oder man definiert sowas gleich als Funktion.</p>
-<p>Und das ist genau das Problem dass diese Konstrukte, ob in Opal oder in C, immer haben. Es ist ja schön das man sowas machen kann - aber es dokumentiert sich selbst ganz beschissen. Und man schreibt den Code nun mal für andere Menschen - nicht für das Satzsystem.  Also muss man doch eine Funktion oder ein Makro definieren, damit sich dieser Trick selbst dokumentiert - und dann kann man an der einen Stelle auch gleich ein <code>if</code> hinschreiben.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/3/fortgeschrittene-techniken-funktionaler-programmierung/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
   
   
     
@@ -432,7 +402,7 @@
     <footer class="container-fluid ">
       <ul class="nav">
   <li class="nav-item copyright">
-    <span class="nav-link">&copy; 2021 <a href="../../../work/">Martin Häcker</a></span>
+    <span class="nav-link">&copy; 2022 <a href="../../../work/">Martin Häcker</a></span>
   </li>
   
     

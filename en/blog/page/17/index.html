@@ -57,6 +57,32 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/10/wie-kriegt-man-eigentlich-mit-was-sich-im-linux-kernel-so-tut/">
+        Wie kriegt man eigentlich mit was sich im Linux Kernel so tut?
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-10-12">Sunday, October 12, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Schließlich gibt es dort nicht so ausgezeichnete release notes wie man sie von <a href="http://archive.eclipse.org/eclipse/downloads/drops/S-3.4M7-200805020100/eclipse-news-M7.html">Eclipse</a>, <a href="http://library.gnome.org/misc/release-notes/2.24/">Gnome</a> oder <a href="https://wiki.ubuntu.com/IntrepidIbex/TechnicalOverview">Ubuntu</a> kennt.</p>
+<p>Die Antwort ist überraschenderweise: <a href="http://www.heise.de/open/Viel-bewegt-Die-Neuerungen-von-Linux-2-6-27--/artikel/116387/0">Heise lesen</a>. Und sogar <a href="http://www.heise-online.co.uk/open/Kernel-Log-Linux-2-6-27-Released--/features/111671">optional auch auf englisch</a>.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/10/wie-kriegt-man-eigentlich-mit-was-sich-im-linux-kernel-so-tut/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/10/cocoa-hat-ja-regex-support/">
         Cocoa hat ja Regex Support
         </a>
@@ -71,12 +97,12 @@
 <p>Das der so vollständig ist, hätte ich nicht erwartet. Aber in der Tat, <a href="http://www.icu-project.org/userguide/regexp.html">ICU-Regexe in ihrer ganzen Pracht</a>. Völlig ohne eine neue externe Dependency.</p>
 <p>Laut der Dokumentation sollte das sogar in 10.4 schon funktionieren - mit dem einen Caveat, dass multiline Support dort wohl von Hand eingeschaltet werden muss (via <code>(?m)</code>)</p>
 <p>Sowas wird da möglich:</p>
-<div class="hll"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">([</span><span class="s">@&quot;aaa&quot;</span><span class="w"> </span><span class="nl">matchesRegex</span><span class="p">:</span><span class="s">@&quot;a{3}&quot;</span><span class="p">])</span><span class="w"></span>
+<div class="hll"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">([</span><span class="s">@&quot;aaa&quot;</span><span class="w"> </span><span class="n">matchesRegex</span><span class="o">:</span><span class="s">@&quot;a{3}&quot;</span><span class="p">])</span><span class="w"></span>
 <span class="w">    </span><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;gotcha&quot;</span><span class="p">);</span><span class="w"></span>
 
 <span class="c1">// other examples</span>
-<span class="p">[</span><span class="s">@&quot;argh fnord argh&quot;</span><span class="w"> </span><span class="nl">matchesRegex</span><span class="p">:</span><span class="s">@&quot;.*</span><span class="se">\\</span><span class="s">bfnord</span><span class="se">\\</span><span class="s">b.*&quot;</span><span class="p">];</span><span class="w"></span>
-<span class="p">[</span><span class="s">@&quot;aaa&quot;</span><span class="w"> </span><span class="nl">matchesRegex</span><span class="p">:</span><span class="s">@&quot;</span><span class="se">\\</span><span class="s">w{3}&quot;</span><span class="p">];</span><span class="w"></span>
+<span class="p">[</span><span class="s">@&quot;argh fnord argh&quot;</span><span class="w"> </span><span class="n">matchesRegex</span><span class="o">:</span><span class="s">@&quot;.*</span><span class="se">\\</span><span class="s">bfnord</span><span class="se">\\</span><span class="s">b.*&quot;</span><span class="p">];</span><span class="w"></span>
+<span class="p">[</span><span class="s">@&quot;aaa&quot;</span><span class="w"> </span><span class="n">matchesRegex</span><span class="o">:</span><span class="s">@&quot;</span><span class="se">\\</span><span class="s">w{3}&quot;</span><span class="p">];</span><span class="w"></span>
 </pre></div>
 <p>Und das mit extrem wenig Aufwand:</p>
 <div class="hll"><pre><span></span><span class="k">@interface</span> <span class="bp">NSString</span> <span class="nl">(SimpleRegexMatching)</span><span class="w"></span>
@@ -86,8 +112,8 @@
 <span class="k">@implementation</span> <span class="bp">NSString</span> <span class="nl">(SimpleRegexMatching)</span><span class="w"></span>
 <span class="p">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span> <span class="nf">matchesRegex:</span><span class="p">(</span><span class="bp">NSString</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="nv">aRegex</span><span class="p">;</span><span class="w"></span>
 <span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kt">id</span><span class="w"> </span><span class="n">predicate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="bp">NSPredicate</span><span class="w"> </span><span class="nl">predicateWithFormat</span><span class="p">:</span><span class="s">@&quot;self matches %@&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">aRegex</span><span class="p">];</span><span class="w"></span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="n">predicate</span><span class="w"> </span><span class="nl">evaluateWithObject</span><span class="p">:</span><span class="nb">self</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="kt">id</span><span class="w"> </span><span class="n">predicate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="bp">NSPredicate</span><span class="w"> </span><span class="n">predicateWithFormat</span><span class="o">:</span><span class="s">@&quot;self matches %@&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">aRegex</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="n">predicate</span><span class="w"> </span><span class="n">evaluateWithObject</span><span class="o">:</span><span class="nb">self</span><span class="p">];</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 <span class="k">@end</span><span class="w"></span>
 </pre></div>
@@ -273,9 +299,9 @@
 <div class="hll"><pre><span></span><span class="c1">//  Use like this:</span>
 <span class="w">    </span><span class="kt">id</span><span class="w"> </span><span class="n">dict</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="bp">NSDictionary</span><span class="w"> </span><span class="n">dictionary</span><span class="p">];</span><span class="w"></span>
 <span class="w">    </span><span class="bp">NSNumber</span><span class="w"> </span><span class="o">*</span><span class="n">ten</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NMMakeNumber</span><span class="p">(</span><span class="mf">10.0f</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">[</span><span class="n">dict</span><span class="w"> </span><span class="nl">setObject</span><span class="p">:</span><span class="n">ten</span><span class="w"> </span><span class="nl">forKey</span><span class="p">:</span><span class="s">@&quot;numberOfFingers&quot;</span><span class="p">];</span><span class="w"></span>
-<span class="w">    </span><span class="p">[</span><span class="n">dict</span><span class="w"> </span><span class="nl">setObject</span><span class="p">:</span><span class="n">NMMakeNumber</span><span class="p">(</span><span class="mi">23</span><span class="p">)</span><span class="w"> </span><span class="nl">forKey</span><span class="p">:</span><span class="s">@&quot;fnord&quot;</span><span class="p">];</span><span class="w"></span>
-<span class="w">    </span><span class="p">[</span><span class="n">dict</span><span class="w"> </span><span class="nl">setObject</span><span class="p">:</span><span class="n">NMMakeNumber</span><span class="p">(</span><span class="nb">YES</span><span class="p">)</span><span class="w"> </span><span class="nl">forKey</span><span class="p">:</span><span class="s">@&quot;wantFries&quot;</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="n">dict</span><span class="w"> </span><span class="n">setObject</span><span class="o">:</span><span class="n">ten</span><span class="w"> </span><span class="n">forKey</span><span class="o">:</span><span class="s">@&quot;numberOfFingers&quot;</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="n">dict</span><span class="w"> </span><span class="n">setObject</span><span class="o">:</span><span class="n">NMMakeNumber</span><span class="p">(</span><span class="mi">23</span><span class="p">)</span><span class="w"> </span><span class="n">forKey</span><span class="o">:</span><span class="s">@&quot;fnord&quot;</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="n">dict</span><span class="w"> </span><span class="n">setObject</span><span class="o">:</span><span class="n">NMMakeNumber</span><span class="p">(</span><span class="nb">YES</span><span class="p">)</span><span class="w"> </span><span class="n">forKey</span><span class="o">:</span><span class="s">@&quot;wantFries&quot;</span><span class="p">];</span><span class="w"></span>
 </pre></div>
 <p>I'ts almost the way <a href="http://en.wikipedia.org/wiki/Object_type#Autoboxing">Autoboxing</a> works in <a href="http://java.sun.com/j2se/1.5.0/docs/guide/language/autoboxing.html">Java</a> or C#.</p>
 <p>This quite eases the pain of creating NSNumbers correctly for me, because it means I don't have to repeat the type of what I am working with quite as often.</p>
@@ -342,32 +368,6 @@
   </article>
 
   
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/9/applicationen-in-den-appstore-zu-kriegen/">
-        Applicationen in den AppStore zu kriegen...
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-09-24">Wednesday, September 24, 2008</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>... ist schwer.</p>
-<p>Glücklicherweise <a href="http://www.joyoftech.com/joyoftech/joyarchives/1151.html">wurde der Prozess endlich offen gelegt!</a></p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/9/applicationen-in-den-appstore-zu-kriegen/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
   
   
     
@@ -387,7 +387,7 @@
     <footer class="container-fluid ">
       <ul class="nav">
   <li class="nav-item copyright">
-    <span class="nav-link">&copy; 2021 <a href="../../../work/">Martin Häcker</a></span>
+    <span class="nav-link">&copy; 2022 <a href="../../../work/">Martin Häcker</a></span>
   </li>
   
     

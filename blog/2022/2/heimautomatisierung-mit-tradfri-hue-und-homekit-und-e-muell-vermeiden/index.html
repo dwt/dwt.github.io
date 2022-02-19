@@ -1,0 +1,156 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../static/pygments.css">
+    <title>Heimautomatisierung mit Tradfri, Hue und HomeKit - und e-Müll vermeiden</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item "><a href="../../../../work/" class="nav-link">Professionelle Softwareentwicklung</a></li>
+    
+      <li class="nav-item "><a href="../../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../../publications/" class="nav-link">Veröffentlichungen und Vorträge</a></li>
+    
+      <li class="nav-item active"><a href="../../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../../categories/" class="nav-link">Kategorien</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="./">🇩🇪</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="../../../../en/blog/2022/2/heimautomatisierung-mit-tradfri-hue-und-homekit-und-e-muell-vermeiden/">🇬🇧</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../../">🏠</a>
+
+
+<a class="breadcrumb-item " href="../../../">Blog</a>
+
+
+<a class="breadcrumb-item active" href="./">Heimautomatisierung mit Tradfri, Hue und HomeKit - und e-Müll vermeiden</a>
+
+</nav>
+    </header>
+    <article class="page heimautomatisierung-mit-tradfri-hue-und-homekit-und-e-muell-vermeiden  container-fluid">
+      
+  
+  <article class="blog-post">
+    <header>
+      <h2>
+        
+        Heimautomatisierung mit Tradfri, Hue und HomeKit - und e-Müll vermeiden
+        
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2022-02-19">Samstag, 19. Februar 2022</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Zu meinen Ikea Trådfri Leuchten habe ich mir jetzt einen Phillips Hue LED-Streifen dazu geholt. Letztlich aus drei Gründen:</p>
+<ul>
+<li>Weil die viel Heller sind als fast alle Konkurrenzprodukte</li>
+<li>Weil sie auch <a href="https://de.wikipedia.org/wiki/ZigBee">ZigBee</a> verwendet und damit nahtlos in meine Ikea Trådfri infrastruktur passt (theoretisch…)</li>
+<li>Weil ich mir die Ikea Bridge sehr bewusst ausgesucht habe, weil sie eben <em>ohne</em> einen Cloud zwang daher kommt.</li>
+<li>Weil ich sie in einem Sonderangebot 3 Meter für 50 € bekommen habe.</li>
+</ul>
+<p>Well, also der Klebestreifen auf der LED-Schlange verdient diesen Namen schon mal nicht. Nicht nur das man den in 10 cm Inkrementen abpulen musste, er klebt zwar prima an der Tapete - aber nicht am LED-Streifen. WTF?</p>
+<p>Davon abgesehen ist er super hell und lässt sich über Tradfri gut anbinden und steuern. ABER: Tradfri pusht ihn <em>NICHT</em> nach <a href="https://de.wikipedia.org/wiki/HomeKit">HomeKit</a> wie es das mit den anderne Ikea eigenen Produkten macht. 😣💩😣💩😣🤬</p>
+<p>Software Updates spielt die Tradfri Basis auch nicht ein - aber ok, das kriege ich via Bluetooth hin, was der LED-Streifen auch noch kann.</p>
+<p>Jetzt extra noch eine Hue Bridge zu kaufen, nur damit ich dieses eine Gerät auch in HomeKit schalten kann, sehe ich jedenfalls mal gar nicht ein. Also hab ich mein trusty schweizer Messer Python ausgepackt und <a href="https://github.com/dwt/home-automation">mit etwas Code</a> nachgeholfen das fehlenden Device von Trådfri nach HomeKit zu pushen. Et Voila. :-)</p>
+<p>Fazit: Die Schaltzeiten leiden etwas, Kann durchaus auch mal eine Sekunde dauern, anstatt der fast instantanen schaltzeit der Lampen die direkt über die Tradfri Bridge gehen. Aber wurscht, keine extra Bridge, etwas Spaß mit Python und die Erfahrung das es leicht geht da beliebigen eigenen Code einzubinden, der z.B. schöne Hintergrund-Farbwechsel ambient Lights produziert.</p>
+
+    </section>
+    
+  </article>
+
+  <nav>
+    
+  <div class="category-list">
+    Kategorien:
+      
+      <a href="../../../../categories/code/">Software Development</a>
+      , 
+    
+      
+      <a href="../../../../categories/miscellaneous/">Sonstiges</a>
+      
+    
+  </div>
+
+    
+    <div class="relative-navigation">
+      
+      
+        <div class="next">Nächstes Post: <a class="next" href="../../../2021/10/elon-musks-design-philosophie/">Elon Musks Design Philosophie</a></div>
+      
+    </div>
+    
+  </nav>
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2022 <a href="../../../../work/">Martin Häcker</a></span>
+  </li>
+  
+    
+    <li class="nav-item imprint">
+      <a class="nav-link" href="../../../../meta/#imprint">
+        Impressum
+      </a></li>
+  
+    
+    <li class="nav-item privacy-policy">
+      <a class="nav-link" href="../../../../meta/#privacy-policy">
+        Datenschutzerklärung
+      </a></li>
+  
+    
+    <li class="nav-item colophon">
+      <a class="nav-link" href="../../../../meta/#colophon">
+        Kolophon
+      </a></li>
+  
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    
+      <a class="nav-link" rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">
+        <img alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz" style="border-width:0" src="/static/lektor-creative-commons/by-sa/4.0/88x31.png" />
+      </a>
+    
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

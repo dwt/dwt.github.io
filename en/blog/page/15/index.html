@@ -57,6 +57,38 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/11/das-life-bildarchiv-ist-online-gegangen/">
+        Das Life Bildarchiv ist online gegangen
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-11-22">Saturday, November 22, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Wohl eines der wichtigsten Bildarchive unserer Zeit. <a href="http://images.google.com/hosted/life">Hier</a>.</p>
+<p>Besonders beeindruckend finde ich die Übersichtsbilder über Hiroshima.</p>
+<ul>
+<li><a href="http://images.google.com/hosted/life/f?q=hiroshima+source:life&amp;imgurl=43974bc5beedd9a1">Pilzwolke der Explosion</a></li>
+<li><a href="http://images.google.com/hosted/life/f?q=hiroshima+source:life&amp;imgurl=8ff91a8d99a88783">Flüchtlingszug bei der Fahrt aus der zerstörten Stadt</a></li>
+<li><a href="http://images.google.com/hosted/life/f?q=hiroshima+source:life&amp;imgurl=2dc83a0fb071c4bb">Übersicht über die zerstörte Stadt</a>, <a href="http://images.google.com/hosted/life/f?q=hiroshima+source:life&amp;imgurl=6f3587a04bfcb780">nochmal</a>, <a href="http://images.google.com/hosted/life/f?q=hiroshima+source:life&amp;imgurl=9ea81b72f8524dd0">nochmal</a>, <a href="http://images.google.com/hosted/life/f?q=hiroshima+source:life&amp;imgurl=8aca0f3016b8a17f">nochmal</a>, <a href="http://images.google.com/hosted/life/f?q=hiroshima+source:life&amp;imgurl=0b513e15e9025ec1">nochmal</a></li>
+</ul>
+<p><a href="http://blog.fefe.de/?ts=b7dab39a">via</a></p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/11/das-life-bildarchiv-ist-online-gegangen/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/11/warum-ich-c-hasse/">
         Warum ich C++ hasse
         </a>
@@ -597,12 +629,12 @@
 <p>This is not so much a problem in on itself, but the code sprouts dependencies that nobody is able to follow from just reading a class but which become crucial to the operation of the application.</p>
 <p>Well, out of frustration I started thinking about the saying that Design-Patterns are just for languages that are not powerful enough to implement something in the language.</p>
 <p>So lets see, what can we do to make this simpler:</p>
-<div class="hll"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">([</span><span class="n">someObject</span><span class="w"> </span><span class="nl">respondsToSelector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="nl">someDelegateMethod</span><span class="p">:)])</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="p">[</span><span class="n">someObject</span><span class="w"> </span><span class="nl">someDelegateMethod</span><span class="p">:</span><span class="nb">self</span><span class="p">];</span><span class="w"></span>
+<div class="hll"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">([</span><span class="n">someObject</span><span class="w"> </span><span class="n">respondsToSelector</span><span class="o">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">someDelegateMethod</span><span class="o">:</span><span class="p">)])</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="n">someObject</span><span class="w"> </span><span class="n">someDelegateMethod</span><span class="o">:</span><span class="nb">self</span><span class="p">];</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 </pre></div>
 <p>The key here is to only call the messagte <code>-someDelegateMethod:</code> if it is actually supported on the target. A perfect application [wiki:2008/10/26/20.59 of my invocation] [wiki:2008/10/25/01.21 catching code].</p>
-<div class="hll"><pre><span></span><span class="p">[[</span><span class="n">NMDelegateCaller</span><span class="w"> </span><span class="nl">callerForDelegate</span><span class="p">:</span><span class="n">object</span><span class="p">]</span><span class="w"> </span><span class="nl">someDelegateMethod</span><span class="p">:</span><span class="nb">self</span><span class="p">];</span><span class="w"></span>
+<div class="hll"><pre><span></span><span class="p">[[</span><span class="n">NMDelegateCaller</span><span class="w"> </span><span class="n">callerForDelegate</span><span class="o">:</span><span class="n">object</span><span class="p">]</span><span class="w"> </span><span class="n">someDelegateMethod</span><span class="o">:</span><span class="nb">self</span><span class="p">];</span><span class="w"></span>
 </pre></div>
 <p>In real life of course you would hide the delegator by just wrapping your delegate in the <code>-setDelegate:</code> method.</p>
 <p>Interestingly implementing this proved rather more tricky than I anticipated. This is because of the way the objc-runtime creates NSInvocations out of c-method calls. The trick is, that really at runtime nothing is known about how arguments have to be scraped out of the stack because in C you have no clue what arguments actually are on the stack.</p>
@@ -628,54 +660,6 @@
   </article>
 
   
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/10/syntax-matters/">
-        Syntax matters
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-10-26">Sunday, October 26, 2008</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>[wiki:2008/10/25/01.21 Gerade habe ich doch ein Stück Code hochgeladen] mit dem man jeden beliebigen Methodenaufruf in eine Invocation umwandeln kann.</p>
-<p>Nun, das hat mir nicht gereicht. Jetzt hab ich mich noch mal hingesetzt und mich an einer anderen Syntax versucht:</p>
-<div class="hll"><pre><span></span><span class="c1">// anstatt</span>
-<span class="kt">id</span><span class="w"> </span><span class="n">invocation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NMCatchInvocation</span><span class="p">(</span><span class="s">@&quot;fnord&quot;</span><span class="p">,</span><span class="w"> </span><span class="nl">stringByAppendingString</span><span class="p">:</span><span class="s">@&quot;42&quot;</span><span class="p">);</span><span class="w"></span>
-
-<span class="c1">// jetzt</span>
-<span class="kt">id</span><span class="w"> </span><span class="n">invocation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">NMRecordingInvocation</span><span class="w"> </span><span class="n">invocation</span><span class="p">];</span><span class="w"></span>
-<span class="p">[</span><span class="n">invocation</span><span class="w"> </span><span class="nl">recordWithTarget</span><span class="p">:</span><span class="s">@&quot;fnord&quot;</span><span class="p">]</span><span class="w"> </span><span class="nl">stringByAppendingString</span><span class="p">:</span><span class="s">@&quot;42&quot;</span><span class="p">];</span><span class="w"></span>
-
-<span class="c1">// oder</span>
-<span class="kt">id</span><span class="w"> </span><span class="n">invocation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">NMRecordingInvocation</span><span class="w"> </span><span class="nl">invocationWithTarget</span><span class="p">:</span><span class="s">@&quot;fnord&quot;</span><span class="p">];</span><span class="w"></span>
-<span class="p">[</span><span class="n">invocation</span><span class="w"> </span><span class="n">record</span><span class="p">]</span><span class="w"> </span><span class="nl">stringByAppendingString</span><span class="p">:</span><span class="s">@&quot;42&quot;</span><span class="p">];</span><span class="w"></span>
-</pre></div>
-<p>Und ich  finde das ist von der Syntax her deutlich eleganter als das Makro.</p>
-<p>Allerdings:</p>
-<ul>
-<li>Es ist etwa der doppelte Aufwand dass zu implementieren</li>
-<li>Das Makro erzeugt viel schnelleren Code (viel weniger allokationen)</li>
-</ul>
-<p>Was soll ich davon jetzt halten? Small is beautifull? Keep it simple stupid? Oder ist doch wichtiger dass der zweite Versuch eher dem Objc-Spirit entspricht?</p>
-<p>Mir ist das auch nach einem Tag darüber nachdenken erheblich unklar.</p>
-<ul>
-<li>[source:open-source/NMInvocationBuilder/trunk Hier gehts zum Code]</li>
-</ul>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/10/syntax-matters/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
   
   
     
@@ -695,7 +679,7 @@
     <footer class="container-fluid ">
       <ul class="nav">
   <li class="nav-item copyright">
-    <span class="nav-link">&copy; 2021 <a href="../../../work/">Martin Häcker</a></span>
+    <span class="nav-link">&copy; 2022 <a href="../../../work/">Martin Häcker</a></span>
   </li>
   
     

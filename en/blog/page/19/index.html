@@ -57,6 +57,37 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/9/wo-ich-gerade-am-la-stern-bin/">
+        Wo ich gerade am lästern bin
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-09-01">Monday, September 1, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Apple hat sich da ja einen richtigen Kracher geleistet mit ihrem <a href="http://www.apple.com/iphone/appstore/">App-Store</a>. Vor allem ist das Update-System absolut grandios gelöst.</p>
+<p>Man geht einfach im iPhone auf den App-Store, dort in den Updates-Reiter und.... sieht nichts. Weil, da sind zwar die Updates. Aber eben nicht alle.</p>
+<p>Ein Programm das ich mir gekauft hatte (<a href="http://www.culturedcode.com/things/">Things</a>, weil die UI einfach sehr, sehr gut ist) tauchte dort nämlich nicht auf - obwohl ich es sehnsüchtig erwartete. Und das, obwohl der iTunes Store das Programm schon längst als upgedatet aufgelistet hat.</p>
+<p>Tja, was tun? Letztlich habe ich mich dann dafür entschieden, dass ich für 8 € auch das Programm einfach noch einmal herunterladen kann. Wenigstens kann ich dann die neue Version nutzen. Und kann so mal Probieren ob der App-Store nicht vielleicht einen Bug hat und mir den Preis nur fälschlicherweise anzeigt.</p>
+<p>Gesagt getan - da kommt dann erst eine Warnung dass der Betrag jetzt direkt von meiner Kreditkarte abgezogen wird (gut, Kreditkarte hab ich nicht, aber das ist halt ne Amerikanische Firma) und dann... dann kommt der Dialog der mir erklärt das ich das Produkt ja schon gekauft hätte und das Update daher kostenlos sei.</p>
+<p>Pfffff. Wenn ich ein Update lade, dann will ich vorher wissen ob mich das Geld kostet! Vorher, nicht hinterher. Vielleicht.</p>
+<p>Ganz große Klasse.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/9/wo-ich-gerade-am-la-stern-bin/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/8/kontrollieren-welche-libraries-ein-programm-la-dt/">
         Kontrollieren welche Libraries ein Programm lädt
         </a>
@@ -110,12 +141,12 @@
 <p>Interessanterweise hat der Compiler überhaupt kein Problem das hier zu machen:</p>
 <div class="hll"><pre><span></span><span class="cp">#define kIOHIDVendorIDKey &quot;VendorID&quot;</span>
 <span class="c1">// ...</span>
-<span class="p">[</span><span class="n">matchingDict</span><span class="w"> </span><span class="nl">setValue</span><span class="p">:[</span><span class="bp">NSNumber</span><span class="w"> </span><span class="nl">numberWithInt</span><span class="p">:</span><span class="n">entry</span><span class="o">-&gt;</span><span class="n">Vendor_ID</span><span class="p">]</span><span class="w"> </span>
+<span class="p">[</span><span class="n">matchingDict</span><span class="w"> </span><span class="n">setValue</span><span class="o">:</span><span class="p">[</span><span class="bp">NSNumber</span><span class="w"> </span><span class="n">numberWithInt</span><span class="o">:</span><span class="n">entry</span><span class="o">-&gt;</span><span class="n">Vendor_ID</span><span class="p">]</span><span class="w"> </span>
 <span class="w">       </span><span class="nl">forKey</span><span class="p">:</span><span class="w"> </span><span class="p">@</span><span class="n">kIOHIDVendorIDKey</span><span class="p">];</span><span class="w"> </span>
 
 <span class="c1">// same, but more readable than</span>
-<span class="p">[</span><span class="n">matchingDict</span><span class="w"> </span><span class="nl">setValue</span><span class="p">:[</span><span class="bp">NSNumber</span><span class="w"> </span><span class="nl">numberWithInt</span><span class="p">:</span><span class="n">entry</span><span class="o">-&gt;</span><span class="n">Vendor_ID</span><span class="p">]</span><span class="w"> </span>
-<span class="w">       </span><span class="nl">forKey</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="bp">NSString</span><span class="w"> </span><span class="nl">stringWithCString</span><span class="p">:</span><span class="n">kIOHIDVendorIDKey</span><span class="p">]];</span><span class="w"></span>
+<span class="p">[</span><span class="n">matchingDict</span><span class="w"> </span><span class="n">setValue</span><span class="o">:</span><span class="p">[</span><span class="bp">NSNumber</span><span class="w"> </span><span class="n">numberWithInt</span><span class="o">:</span><span class="n">entry</span><span class="o">-&gt;</span><span class="n">Vendor_ID</span><span class="p">]</span><span class="w"> </span>
+<span class="w">       </span><span class="nl">forKey</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="bp">NSString</span><span class="w"> </span><span class="n">stringWithCString</span><span class="o">:</span><span class="n">kIOHIDVendorIDKey</span><span class="p">]];</span><span class="w"></span>
 <span class="c1">// Also note that -stringWithCString is deprecated</span>
 </pre></div>
 <p>Oder mit anderen Worten man kann problemlos aus jeder C-String-Konstante eine Objc-String-Konstante machen, indem man einfach ein <strong><em>@</em></strong> davor schreibt.</p>
@@ -148,7 +179,7 @@
 <p>Cocoa zum Beispiel. Viele Programmierer wissen nicht wie man Speicherlöcher effektiv fängt.</p>
 <p>Well, nicht Leaks - da kann man ja mit <a href="http://developer.apple.com/documentation/DeveloperTools/Conceptual/InstrumentsUserGuide/Built-InInstruments/chapter_9_section_8.html">ObjectAlloc</a> draufhauen und dann das Programm fixen.</p>
 <p>Nein, viel problematischer als das sind die doppelten Befreiungen.</p>
-<div class="hll"><pre><span></span><span class="kt">id</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[[</span><span class="bp">NSString</span><span class="w"> </span><span class="n">alloc</span><span class="p">]</span><span class="w"> </span><span class="nl">initWithFormat</span><span class="p">:</span><span class="s">@&quot;foo&quot;</span><span class="p">];</span><span class="w"></span>
+<div class="hll"><pre><span></span><span class="kt">id</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[[</span><span class="bp">NSString</span><span class="w"> </span><span class="n">alloc</span><span class="p">]</span><span class="w"> </span><span class="n">initWithFormat</span><span class="o">:</span><span class="s">@&quot;foo&quot;</span><span class="p">];</span><span class="w"></span>
 <span class="p">[</span><span class="n">foo</span><span class="w"> </span><span class="k">release</span><span class="p">];</span><span class="w"></span>
 <span class="c1">// do something else</span>
 <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;foo is %d&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">foo</span><span class="w"> </span><span class="n">length</span><span class="p">]);</span><span class="w"> </span><span class="c1">// almost certainly bombs</span>
@@ -410,35 +441,6 @@ The obvious first thing to do is to think about the GUI and what I want to achie
   </article>
 
   
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/8/template-engines-in-python/">
-        Template engines in Python
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-08-14">Thursday, August 14, 2008</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Sind fast alle XML-Basiert, oder haben eine hässliche special case Syntax.</p>
-<p>Well, zumindest finde ich das.</p>
-<p>Jetzt bin ich über <a href="http://jinja.pocoo.org/">Jinja</a> gestolpert und war auf den ersten Eindruck erst mal ganz überrascht. Übersichtliche Syntax, kein xml Zwang, und template inheritance.</p>
-<p>Muss ich mal genauer anschauen. Immerhin finde ich Xpath wie es in Genshi implementiert ist auch reichlich nice - damit kann man sich wunderschön in bestehende Templates reinhacken - auch wenn die gar nicht dafür gemacht sind wiederverwendet zu werden.</p>
-<p>Das ist natürlich gut und schlecht zugleich, daher bin ich mir nicht sicher dass das die beste aller Ideen ist. Also mal schaun.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/8/template-engines-in-python/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
   
   
     
@@ -458,7 +460,7 @@ The obvious first thing to do is to think about the GUI and what I want to achie
     <footer class="container-fluid ">
       <ul class="nav">
   <li class="nav-item copyright">
-    <span class="nav-link">&copy; 2021 <a href="../../../work/">Martin Häcker</a></span>
+    <span class="nav-link">&copy; 2022 <a href="../../../work/">Martin Häcker</a></span>
   </li>
   
     

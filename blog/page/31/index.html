@@ -57,6 +57,37 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/3/das-iteam-die-jungs-mit-der-maus/">
+        Das iTeam: Die Jungs mit der Maus
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-03-02">Sonntag, 2. März 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Da gibt es eine grandiose englische Comedy-Serie <a href="http://de.wikipedia.org/wiki/The_IT_Crowd">The IT Crowd</a> bei der man sich nur totlachen kann.</p>
+<p>Nun, da dachte sich SAT 1 wohl, hey, das können wir doch alles wörtlich ins Deutsche übersetzten und dem deutschen Fernsehpublikum verkaufen.</p>
+<p>Nun, überraschenderweise hat sich gezeigt, das der Wortwitz der die Serie ganz wesentlich trägt bei dieser Übersetzung fast vollständig verloren geht.</p>
+<p>DOH.</p>
+<p><a href="http://www.youtube.com/watch?v=Q9RLaKUiiqk">Hier kann man sich selber überzeugen.</a></p>
+<p>p.s.: Die Tiefe der Misere kann man ja schon am Titel erkennen. Der Wurde nämlich von "Die Jungs mit der Maus" in "Die Jungs an der Maus" geändert um auch noch die letzte Mehrdeutigkeit zu entfernen...</p>
+<p>Armes deutsches Fernsehen.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/3/das-iteam-die-jungs-mit-der-maus/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/3/if-z-z0-then/">
         if [ &#34;z$?&#34; != &#34;z0&#34; ] ; then ...
         </a>
@@ -454,76 +485,6 @@ Me: NaN from your sentence.
   </article>
 
   
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/2/trac-als-homepage/">
-        Trac als Homepage
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-02-18">Montag, 18. Februar 2008</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>(Zu <a href="http://musicbrainz.org/track/9aeaaebe-2e01-4984-b7aa-6f43a5d77801.html">Amy Amy Amy</a>)</p>
-<p>Trac als Homepage hat sich für mich ja schon bewährt. Ein Wiki, eine Versionsverwaltung, Theoretisch auch noch Bug-Tracking (deaktiviert wg. Spammern) - was will man mehr.</p>
-<p>Naja, einen Blog. Und da fängt das Problem dann auch schon an.</p>
-<p>Traditionell sind Blogs alle in HTML oder mit merkwürdigen Wysiwyg-Editoren die nicht richtig funktionieren oder so beschränkt sind, das man darin gar nicht alles machen kann was man will (z.B. Source-Code highlighten. Noch dazu Objective-C!)</p>
-<p>Ausserdem will ich das mein Blog sauber mit meinem Wiki Verlinkt ist und ich die normale Wiki-Syntax zum Bloggen verwenden kann.</p>
-<p>Das mache ich bisher mit dem <a href="http://trac-hacks.org/wiki/TracBlogPlugin">TracBlogPlugin</a>, nachdem ich früher mal mit dem <a href="http://trac-hacks.org/wiki/SimpleBlogPlugin">SimpleBlogPlugin</a> eher... unzufrieden war.</p>
-<p>Leider aber ist auch das TracBlogPlugin nicht perfekt. Zwar setzt es auf das <a href="http://trac-hacks.org/wiki/TagsPlugin">TracTags</a> Plugin auf, das ganz excelent ist - aber leider bleiben einige schwächen.</p>
-<ul>
-<li>History + Archiv ist mehr oder weniger nicht vorhanden</li>
-<li>Kommentare gehen nicht.<ul>
-<li>Moderation derselben schon gleich gar nicht.</li>
-</ul>
-</li>
-<li>RSS-Feeds sind eher... nun ja, mit einigem Experimentieren kriegt man einiges hin, aber schön ist es nicht.</li>
-<li>WeblogPings und Backlinks werden nicht unterstützt.</li>
-<li>Blogrolls etc... alles von hand.</li>
-<li>XMLRPC... Ah well.</li>
-</ul>
-<p>Weiterentwickelt wurde das Plugin seit fast einem Jahr nicht mehr (ok, in <a href="http://trac-hacks.org/wiki/TracBlogPlugin#RecentChanges">den letzten Tagen</a> passiert wieder etwas, mal schauen wie das weiter geht)</p>
-<p>Jetzt hatte ich mir schon überlegt [vielleicht selber Hand anzulegen], da stellt sich heraus, das schon jemand anderes deutlich entnervt war und das Plugin <a href="http://trac-hacks.org/wiki/FullBlogPlugin">FullBlog</a> entwickelt hat.</p>
-<p>Pro:</p>
-<ul>
-<li>Feeds++</li>
-<li>Kategorien (mit TracTags Unterstützung?)</li>
-<li>Kommentare + Spamfilterung!</li>
-<li>XMLRPC support</li>
-</ul>
-<p>Cons:</p>
-<ul>
-<li>Seiten sind nicht im normalen Wiki-Namespace (Aber man kann wohl hin und her linken)</li>
-<li>Ich kann also nicht alle bestehenden Postings direkt übernehmen</li>
-<li>Der Code malt (da er keine normalen Wiki-Seiten verwendet) direkt in der Datenbank herum. Gnah.</li>
-</ul>
-<p>Mehr hab ich mir noch nicht angesehen. Aber eine vernünftige Blog-Integration für Trac wäre Gold wert. Will schließlich heute jeder haben, einen Blog.
-Ah well.</p>
-<p>Eye in the Sky Projektideen:</p>
-<ul>
-<li>Endlich mehr Blogging Features hier im Trac</li>
-<li>Mehr Release Management Unterstützung<ul>
-<li>Upload von neuen Releases</li>
-<li>App-Cast auto-generieren - mit Wiki-Seite für die Change-Notes</li>
-</ul>
-</li>
-<li>Buildserver wäre ein Traum - geht aber nicht solange ich auf Linux hoste und für den Mac Entwickle.</li>
-</ul>
-<p>Diesen Freitag 17:00 Uhr treff ich mich mit <a href="http://www.felix-schwarz.name/Hauptseite">Felix</a> und <a href="http://user.cs.tu-berlin.de/~felixf/">Felix</a> in der <a href="https://wiki.freitagsrunde.org/">Freitagsrunde</a> und wir werden mal weiter beraten was wir mit Trac weiter machen. Wer Trac Hacken mag oder schon tut und dazukommen mag ist natürlich herzlich eingeladen. :)</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/2/trac-als-homepage/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
   
   
     
@@ -543,7 +504,7 @@ Ah well.</p>
     <footer class="container-fluid ">
       <ul class="nav">
   <li class="nav-item copyright">
-    <span class="nav-link">&copy; 2021 <a href="../../../work/">Martin Häcker</a></span>
+    <span class="nav-link">&copy; 2022 <a href="../../../work/">Martin Häcker</a></span>
   </li>
   
     

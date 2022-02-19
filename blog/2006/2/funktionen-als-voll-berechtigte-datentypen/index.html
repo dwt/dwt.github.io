@@ -99,12 +99,12 @@
 <span class="n">button</span><span class="p">.</span><span class="na">addActionListener</span><span class="p">(</span><span class="n">aClickResponder</span><span class="p">);</span>
 </pre></div>
 <div class="hll"><pre><span></span><span class="c1">// Obj-C</span>
-<span class="p">[</span><span class="n">aButton</span><span class="w"> </span><span class="nl">setTarget</span><span class="p">:</span><span class="w"> </span><span class="nb">self</span><span class="p">];</span><span class="w"></span>
-<span class="p">[</span><span class="n">aButton</span><span class="w"> </span><span class="nl">setAction</span><span class="p">:</span><span class="w"> </span><span class="k">@selector</span><span class="p">(</span><span class="nl">respondToClick</span><span class="p">:)];</span><span class="w"></span>
+<span class="p">[</span><span class="n">aButton</span><span class="w"> </span><span class="n">setTarget</span><span class="o">:</span><span class="w"> </span><span class="nb">self</span><span class="p">];</span><span class="w"></span>
+<span class="p">[</span><span class="n">aButton</span><span class="w"> </span><span class="n">setAction</span><span class="o">:</span><span class="w"> </span><span class="k">@selector</span><span class="p">(</span><span class="n">respondToClick</span><span class="o">:</span><span class="p">)];</span><span class="w"></span>
 </pre></div>
 <p>Aber dieses Muster ist noch viel weiter verwendbar - in Objective-C gibt es eine Möglichkeit, auf alle Elemente eines Containers eine Methode <strong>doSomethingWithEachElement:</strong> anzuwenden, die ein Argument - das jeweilige Element - erhält.</p>
 <div class="hll"><pre><span></span><span class="c1">// Obj-C</span>
-<span class="p">[</span><span class="n">aList</span><span class="w"> </span><span class="nl">makeObjectsPerformSelector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="nl">doSomethingWithEachElement</span><span class="p">:)];</span><span class="w"></span>
+<span class="p">[</span><span class="n">aList</span><span class="w"> </span><span class="n">makeObjectsPerformSelector</span><span class="o">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">doSomethingWithEachElement</span><span class="o">:</span><span class="p">)];</span><span class="w"></span>
 </pre></div>
 <p>Äquivalent läuft das in den GUI-Toolkits von Java, Cocoa, Gnome, KDE, WxWidgets...</p>
 <p>Fortgeschrittenere Sprachen und Toolkits verwenden dieses Design-Pattern auch noch an vielen weiteren Stellen. Besonders hervorzuheben ist dabei in letzter Zeit Ruby, wo nach diesem Muster nicht nur Iteration, sondern auch das Bearbeiten jeder Zeile in einer Datei, das Senden von Daten über einen Socket, ... verläuft.</p>
@@ -113,14 +113,14 @@
 <h2>Umsetzung</h2>
 <p>Um mit Higher-Order-Funktionen in Java / Obj-C zu programmieren, kann man z.B. so vorgehen:</p>
 <div class="hll"><pre><span></span><span class="c1">// Obj-C</span>
-<span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="nl">setAction</span><span class="p">:</span><span class="w"> </span><span class="p">(</span><span class="kt">SEL</span><span class="p">)</span><span class="w"> </span><span class="n">aSelector</span><span class="w"> </span><span class="nl">forTarget</span><span class="p">:</span><span class="w"> </span><span class="n">aTarget</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="n">setAction</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="kt">SEL</span><span class="p">)</span><span class="w"> </span><span class="n">aSelector</span><span class="w"> </span><span class="n">forTarget</span><span class="o">:</span><span class="w"> </span><span class="n">aTarget</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="n">action</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aSelector</span><span class="p">;</span><span class="w"></span>
 <span class="w">    </span><span class="n">target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aTarget</span><span class="p">;</span><span class="w"></span>
 <span class="w"> </span><span class="p">}</span><span class="w"></span>
 
 <span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="n">trigger</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">([</span><span class="n">target</span><span class="w"> </span><span class="nl">respondsToSelector</span><span class="p">:</span><span class="w"> </span><span class="n">action</span><span class="p">])</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="p">[</span><span class="n">target</span><span class="w"> </span><span class="nl">performSelector</span><span class="p">:</span><span class="w"> </span><span class="n">action</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">([</span><span class="n">target</span><span class="w"> </span><span class="n">respondsToSelector</span><span class="o">:</span><span class="w"> </span><span class="n">action</span><span class="p">])</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="p">[</span><span class="n">target</span><span class="w"> </span><span class="n">performSelector</span><span class="o">:</span><span class="w"> </span><span class="n">action</span><span class="p">];</span><span class="w"></span>
 <span class="w">    </span><span class="p">}</span><span class="w"></span>
 <span class="w"> </span><span class="p">}</span><span class="w"></span>
 </pre></div>
@@ -162,7 +162,7 @@
     <footer class="container-fluid ">
       <ul class="nav">
   <li class="nav-item copyright">
-    <span class="nav-link">&copy; 2021 <a href="../../../../work/">Martin Häcker</a></span>
+    <span class="nav-link">&copy; 2022 <a href="../../../../work/">Martin Häcker</a></span>
   </li>
   
     

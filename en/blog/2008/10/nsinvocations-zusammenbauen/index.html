@@ -76,49 +76,49 @@
 <p>Zum Beispiel:</p>
 <div class="hll"><pre><span></span><span class="cp">#import &lt;Foundation/Foundation.h&gt;</span>
 
-<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">argv</span><span class="p">[])</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="bp">NSAutoreleasePool</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pool</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[[</span><span class="bp">NSAutoreleasePool</span><span class="w"> </span><span class="n">alloc</span><span class="p">]</span><span class="w"> </span><span class="n">init</span><span class="p">];</span><span class="w"></span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">argv</span><span class="p">[])</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="bp">NSAutoreleasePool</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pool</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[[</span><span class="bp">NSAutoreleasePool</span><span class="w"> </span><span class="n">alloc</span><span class="p">]</span><span class="w"> </span><span class="n">init</span><span class="p">];</span>
 
-<span class="w">    </span><span class="kt">id</span><span class="w"> </span><span class="n">aString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">@&quot;fnord&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">id</span><span class="w"> </span><span class="n">aString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">@&quot;fnord&quot;</span><span class="p">;</span>
 
-<span class="w">    </span><span class="kt">id</span><span class="w"> </span><span class="n">signature</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">aString</span><span class="w"> </span><span class="n">methodSignatureForSelector</span><span class="o">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">stringByAppendingString</span><span class="o">:</span><span class="p">)];</span><span class="w"></span>
-<span class="w">    </span><span class="kt">id</span><span class="w"> </span><span class="n">invocation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="bp">NSInvocation</span><span class="w"> </span><span class="n">invocationWithMethodSignature</span><span class="o">:</span><span class="n">signature</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="kt">id</span><span class="w"> </span><span class="n">signature</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">aString</span><span class="w"> </span><span class="n">methodSignatureForSelector</span><span class="o">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">stringByAppendingString</span><span class="o">:</span><span class="p">)];</span>
+<span class="w">    </span><span class="kt">id</span><span class="w"> </span><span class="n">invocation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="bp">NSInvocation</span><span class="w"> </span><span class="n">invocationWithMethodSignature</span><span class="o">:</span><span class="n">signature</span><span class="p">];</span>
 
-<span class="w">    </span><span class="p">[</span><span class="n">invocation</span><span class="w"> </span><span class="n">setTarget</span><span class="o">:</span><span class="n">aString</span><span class="p">];</span><span class="w"></span>
-<span class="w">    </span><span class="p">[</span><span class="n">invocation</span><span class="w"> </span><span class="n">setSelector</span><span class="o">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">stringByAppendingString</span><span class="o">:</span><span class="p">)];</span><span class="w"></span>
-<span class="w">    </span><span class="kt">id</span><span class="w"> </span><span class="n">appender</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">@&quot;23&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">[</span><span class="n">invocation</span><span class="w"> </span><span class="n">setArgument</span><span class="o">:&amp;</span><span class="n">appender</span><span class="w"> </span><span class="n">atIndex</span><span class="o">:</span><span class="mi">2</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="n">invocation</span><span class="w"> </span><span class="n">setTarget</span><span class="o">:</span><span class="n">aString</span><span class="p">];</span>
+<span class="w">    </span><span class="p">[</span><span class="n">invocation</span><span class="w"> </span><span class="n">setSelector</span><span class="o">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">stringByAppendingString</span><span class="o">:</span><span class="p">)];</span>
+<span class="w">    </span><span class="kt">id</span><span class="w"> </span><span class="n">appender</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">@&quot;23&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">[</span><span class="n">invocation</span><span class="w"> </span><span class="n">setArgument</span><span class="o">:&amp;</span><span class="n">appender</span><span class="w"> </span><span class="n">atIndex</span><span class="o">:</span><span class="mi">2</span><span class="p">];</span>
 
-<span class="w">    </span><span class="p">[</span><span class="n">invocation</span><span class="w"> </span><span class="n">invoke</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="n">invocation</span><span class="w"> </span><span class="n">invoke</span><span class="p">];</span>
 
-<span class="w">    </span><span class="kt">id</span><span class="w"> </span><span class="n">returnValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">nil</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">[</span><span class="n">invocation</span><span class="w"> </span><span class="n">getReturnValue</span><span class="o">:&amp;</span><span class="n">returnValue</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="kt">id</span><span class="w"> </span><span class="n">returnValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">nil</span><span class="p">;</span>
+<span class="w">    </span><span class="p">[</span><span class="n">invocation</span><span class="w"> </span><span class="n">getReturnValue</span><span class="o">:&amp;</span><span class="n">returnValue</span><span class="p">];</span>
 
-<span class="w">    </span><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;Got: %@&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">returnValue</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;Got: %@&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">returnValue</span><span class="p">);</span>
 
-<span class="w">    </span><span class="p">[</span><span class="n">pool</span><span class="w"> </span><span class="n">drain</span><span class="p">];</span><span class="w"></span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="n">pool</span><span class="w"> </span><span class="n">drain</span><span class="p">];</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
 <p>Das nervt sobald man es öfters als einmal machen muss.</p>
 <p>Darum hab ich mir nach langem nachdenken mal etwas zusammengebaut das das erleichtert. Es ist nicht perfekt und ich hab auch eine Menge Ideen wie man es noch schöner machen kann, aber es funktioniert. :)</p>
 <div class="hll"><pre><span></span><span class="cp">#import &lt;Foundation/Foundation.h&gt;</span>
 
-<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">argv</span><span class="p">[])</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="bp">NSAutoreleasePool</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pool</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[[</span><span class="bp">NSAutoreleasePool</span><span class="w"> </span><span class="n">alloc</span><span class="p">]</span><span class="w"> </span><span class="n">init</span><span class="p">];</span><span class="w"></span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">argv</span><span class="p">[])</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="bp">NSAutoreleasePool</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pool</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[[</span><span class="bp">NSAutoreleasePool</span><span class="w"> </span><span class="n">alloc</span><span class="p">]</span><span class="w"> </span><span class="n">init</span><span class="p">];</span>
 
-<span class="w">    </span><span class="kt">id</span><span class="w"> </span><span class="n">invocation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NMCatchInvocation</span><span class="p">(</span><span class="s">@&quot;fnord&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">stringByAppendingString</span><span class="o">:</span><span class="s">@&quot;23&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="kt">id</span><span class="w"> </span><span class="n">invocation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NMCatchInvocation</span><span class="p">(</span><span class="s">@&quot;fnord&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">stringByAppendingString</span><span class="o">:</span><span class="s">@&quot;23&quot;</span><span class="p">);</span>
 
-<span class="w">    </span><span class="p">[</span><span class="n">invocation</span><span class="w"> </span><span class="n">invoke</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="n">invocation</span><span class="w"> </span><span class="n">invoke</span><span class="p">];</span>
 
-<span class="w">    </span><span class="kt">id</span><span class="w"> </span><span class="n">returnValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">nil</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">[</span><span class="n">invocation</span><span class="w"> </span><span class="n">getReturnValue</span><span class="o">:&amp;</span><span class="n">returnValue</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="kt">id</span><span class="w"> </span><span class="n">returnValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">nil</span><span class="p">;</span>
+<span class="w">    </span><span class="p">[</span><span class="n">invocation</span><span class="w"> </span><span class="n">getReturnValue</span><span class="o">:&amp;</span><span class="n">returnValue</span><span class="p">];</span>
 
-<span class="w">    </span><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;Got: %@&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">returnValue</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;Got: %@&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">returnValue</span><span class="p">);</span>
 
-<span class="w">    </span><span class="p">[</span><span class="n">pool</span><span class="w"> </span><span class="n">drain</span><span class="p">];</span><span class="w"></span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="n">pool</span><span class="w"> </span><span class="n">drain</span><span class="p">];</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
 <p>Und das sieht schon bedeutend besser aus.</p>
 <ul>
@@ -155,7 +155,7 @@
     <footer class="container-fluid ">
       <ul class="nav">
   <li class="nav-item copyright">
-    <span class="nav-link">&copy; 2022 <a href="../../../../work/">Martin Häcker</a></span>
+    <span class="nav-link">&copy; 2024 <a href="../../../../work/">Martin Häcker</a></span>
   </li>
   
     

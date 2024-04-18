@@ -57,6 +57,41 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2007/12/descriptiver-code/">
+        Descriptiver Code…
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2007-12-28">Friday, December 28, 2007</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Es geht doch nichts über selbstbeschreibenden Code. ;)</p>
+<div class="hll"><pre><span></span><span class="n">IF_LAST_ERROR</span>
+<span class="w">        </span><span class="n">ERROR_HANDLING</span>
+</pre></div>
+<p>Hat mir dann auch gar nichts genützt die nächsten Zeile zu lesen:</p>
+<div class="hll"><pre><span></span><span class="n">diglossia</span><span class="o">*</span><span class="w"> </span><span class="n">oracle</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">NmGsmCtrlCoreMsg</span><span class="o">*</span><span class="w"> </span><span class="n">Msg</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">oracle</span><span class="o">=</span><span class="p">((</span><span class="n">diglossia</span><span class="o">*</span><span class="p">)</span><span class="n">PtrParamG</span><span class="o">-&gt;</span><span class="n">oracle</span><span class="p">);</span>
+</pre></div>
+<p>Habt Mitleid mit mir....</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2007/12/descriptiver-code/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2007/12/bitte-kein-c/">
         Bitte kein C...
         </a>
@@ -71,56 +106,56 @@
 <p>Heute stellt sich mein Verständnis von C wirklich auf die Probe.</p>
 <p>Zuerst der Vorlauf, da gibt es einen parameter <strong>controller</strong> der immer als int übergeben wird - natürlich hartkodiert und ohne jeden kommentar was wofür steht. Ok, das ist jetzt ekelhaft, aaaber.</p>
 <p>Dieser int wird dann in einem struct element <strong>iType</strong> gespeichert. Um herauszufinden was dieser Parameter nun macht habe ich also mal durch den SourceCode gegreppt um herauszufinden was damit passiert und bin dabei auf die viel versprechende Zeile <strong>switch(self-&gt;iType)</strong> gestoßen. Groß war da meine Freude, wenn auch leider nur kurz.</p>
-<div class="hll"><pre><span></span><span class="k">switch</span><span class="p">(</span><span class="n">self</span><span class="o">-&gt;</span><span class="n">iType</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
-<span class="w">            </span><span class="n">RefProg</span><span class="o">=</span><span class="n">USBprogressIndicator</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<div class="hll"><pre><span></span><span class="k">switch</span><span class="p">(</span><span class="n">self</span><span class="o">-&gt;</span><span class="n">iType</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">            </span><span class="n">RefProg</span><span class="o">=</span><span class="n">USBprogressIndicator</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 </pre></div>
 <p>Da stellt sich natürlich die Frage... was macht der Compiler daraus eigentlich? Interpretiert er es als</p>
-<div class="hll"><pre><span></span><span class="k">switch</span><span class="p">(</span><span class="n">self</span><span class="o">-&gt;</span><span class="n">iType</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="nl">default</span><span class="p">:</span><span class="w"></span>
-<span class="w">            </span><span class="n">RefProg</span><span class="o">=</span><span class="n">USBprogressIndicator</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<div class="hll"><pre><span></span><span class="k">switch</span><span class="p">(</span><span class="n">self</span><span class="o">-&gt;</span><span class="n">iType</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="no">default</span><span class="p">:</span>
+<span class="w">            </span><span class="n">RefProg</span><span class="o">=</span><span class="n">USBprogressIndicator</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 </pre></div>
 <p>oder doch als:</p>
-<div class="hll"><pre><span></span><span class="k">switch</span><span class="p">(</span><span class="n">self</span><span class="o">-&gt;</span><span class="n">iType</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
-<span class="w">            </span><span class="n">RefProg</span><span class="o">=</span><span class="n">USBprogressIndicator</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="nl">default</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<div class="hll"><pre><span></span><span class="k">switch</span><span class="p">(</span><span class="n">self</span><span class="o">-&gt;</span><span class="n">iType</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">            </span><span class="n">RefProg</span><span class="o">=</span><span class="n">USBprogressIndicator</span><span class="p">;</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="no">default</span><span class="p">:</span>
+<span class="w">    </span><span class="p">}</span>
 </pre></div>
 <p>i.e. heißt das eigentlich das der Code darin nicht ausgeführt wird? Und verhält sich das auf anderen Compilern / Compilerversionen genauso?</p>
 <p>Ist doch immer wieder schön solche zoten in Sourcecode zu finden. :)</p>
 <h2>Update</h2>
 <p>Inzwischen habe ich nachgeprüft was da Sache ist. Meine Vermutung war, dass der Programmierer es ja nur im Code gelassen hätte, wenn es einen Sinn hat. Nun ja, man glaubt ja an das Gute im Menschen.</p>
 <p>Ich musste mich dann aber doch eines besseren Belehren:</p>
-<div class="hll"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+<div class="hll"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
 
-<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="n">argv</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="k">switch</span><span class="p">(</span><span class="n">foo</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">                </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;gotit</span><span class="se">\n</span><span class="s">e</span><span class="se">\n\n\n</span><span class="s">&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="n">argv</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+<span class="w">        </span><span class="k">switch</span><span class="p">(</span><span class="n">foo</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;gotit</span><span class="se">\n</span><span class="s">e</span><span class="se">\n\n\n</span><span class="s">&quot;</span><span class="p">);</span>
 <span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w"> </span>
-<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span>
 
-<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;didn&#39;t get it</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;didn&#39;t get it</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
 <p>Wie man am Beispiel sehen kann (mit etwas wie "<code>gcc -o foo test.c &amp;&amp; ./foo</code>" ist es einfach zu zeigen das <strong>switch(foo)</strong> tatsächlich den gleichen effekt hat wie</p>
-<div class="hll"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+<div class="hll"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
 
-<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="n">argv</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"></span>
-<span class="cp">#if 0</span><span class="c"></span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="n">argv</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+<span class="cp">#if 0</span>
 <span class="c">                printf(&quot;gotit\ne\n\n\n&quot;);</span>
 <span class="c">                return -1; </span>
 <span class="cp">#endif</span>
 
-<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;didn&#39;t get it</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;didn&#39;t get it</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
 <p>Was ich wirklich herzlich Sinnlos finde.</p>
 
@@ -379,45 +414,6 @@ Ever wondered how useful it would be to always have a Flashlight with you?</p>
   </article>
 
   
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2007/7/tanguera/">
-        ! Tanguera
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2007-07-19">Thursday, July 19, 2007</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Wie soll ich sagen - ich wollte meine Freundin zum Geburtstag ausführen, wir tanzen sehr gerne zusammen und in Berlin findet ausgerechnet zu ihrem Geburtstag eine Tanzshow erster Güte statt. <a href="http://www.tanguera.com/">Tanguera</a>, in der <a href="http://www.staatsoper-berlin.de/spielplan/detailansicht.php?id_event_date=0&amp;id_event_cluster=61843&amp;id_language=1&amp;bereich=spielplan&amp;aktiv=special">Staatsoper Berlin</a>, was man als Laie doch als Qualitätssiegel auffasst. (<a href="http://www.berlin.de/kultur-und-tickets/events/tanguera_musical.php">Die Presse offenbar auch</a>.)</p>
-<p>Nun, dieser letzte Punkt ist offenbar leider problematisch. Denn: So gut war die Show nämlich nicht. Genau genommen war sie sogar überhaupt nicht gut. Leider.</p>
-<p>Zuerst ein positiver Punkt: Die Tänzer und Tänzerinnen konnten tanzen. Immerhin.</p>
-<p>Aber in 80 Minuten Vorstellung gab es:</p>
-<ul>
-<li>überhaupt keine Variation in den Tänzen, ständig die gleichen (Hebe-) Figuren.</li>
-<li>kein Gefühl in der Darstellung, ständig nur kühl die gleichen Tänze. Obwohl doch eigentlich Sex, Liebe und Tod ausgedrückt werden sollte. (Die beste Szene war noch, wie sich die drei Freunde auf die Nacht der langen Messer vorbereiten und mit ihren Stühlen Tango tanzen. Aber wieso bitte muss das der Höhepunkt des Ausdrucks sein?)</li>
-<li>Nur eine Sängerin (!), die auch noch über ein Mikro gesungen hat. Wofür bitteschön hat die ihre Ausbildung gemacht?</li>
-<li>Alle Musik sonst aus der Dose. Na toll. Spart sicher Kosten, keine Musiker anzustellen.</li>
-<li>Keine Dia-Projektion mit Übersetzungen der spanischen Texte oder irgend eine andere Hilfe für die Zuschauer. (Obwohl, so war es deutlich einfacher, vollends aus der Handlung auszusteigen.)</li>
-</ul>
-<p>Ich könnte noch weiter meckern. Aber ich spare es mir ab hier. Jedenfalls bin ich ob solcher Produktionen nicht überrascht das es den Opernhäusern in Deutschland beständig immer schlechter geht.</p>
-<p>Oh doch, eine Sache fand ich gut. Immerhin sind wir, im Gegensatz zu fast allen anderen Gästen, nicht beim Ticketpreis so übel abgezogen worden. Finden wir jedenfalls.</p>
-<p>Unsere Empfehlung? Nicht anschauen. Lieber ein <a href="http://www.youtube.com/watch?v=Li8ZuSwI6DU">YouTube-Video anschauen</a>, da sieht man sogar fast noch mehr Tango und der schreckliche Rest fällt weg.</p>
-<p>Tja, schade um die alten Medien irgendwie.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2007/7/tanguera/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
   
   
     
@@ -437,7 +433,7 @@ Ever wondered how useful it would be to always have a Flashlight with you?</p>
     <footer class="container-fluid ">
       <ul class="nav">
   <li class="nav-item copyright">
-    <span class="nav-link">&copy; 2022 <a href="../../../work/">Martin Häcker</a></span>
+    <span class="nav-link">&copy; 2024 <a href="../../../work/">Martin Häcker</a></span>
   </li>
   
     

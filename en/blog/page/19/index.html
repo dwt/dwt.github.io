@@ -57,6 +57,47 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/9/kryptographie-saugt/">
+        Kryptographie saugt
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-09-01">Monday, September 1, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Und zwar gewaltig.</p>
+<p>Heute hab ich eine Menge Zeit darauf verbrannt unserem Online-Update-System auf den Zahn zu fühlen. Das arbeitet nämlich ganz hervorragend mit <a href="http://sparkle.andymatuschak.org/">Sparkle</a> um für unsere Applikation via <a href="http://connectedflow.com/appcasting/">Appcast</a> herunter zu laden, wenn eine neue Version ansteht. Und damit das auch schön sicher ist, nutzen wir ein kleines öffentlich/privates Schlüsselpärchen um das abzusichern.</p>
+<p>Nun ja, bis heute mittag - da hat es nämlich auf einmal aufgehört und konnte die heruntergeladenen Dateien nicht mehr validieren.</p>
+<p>Jetzt hatte ich natürlich das Problem, das ich an sich recht wenig von Crypto verstehe und erst recht wie man das von der shell aus einsetzt. Das wiederum hatte zur Folge, dass ich das nicht sofort auf der Shell nachvollziehen konnte und wir schon anfingen zu fürchten das vielleicht unsere Schlüssel abgelaufen sind.</p>
+<p>Gott sei dank war es aber doch was anderes - denn unser Proxy hatte fieser weise einfach eine alte Version des Appcasts gespeichert und stattdessen immer die ausgeliefert - was natürlich nicht funktionierte... Grumpf.</p>
+<p>Note to self: Nächstes mal gleich den ganzen Vorgang von Hand reproduzieren um zu sehen wo es schief läuft - und zwar angefangen von da wo das Programm anfängt. (Auch wenn in diesem Fall die Fehlermeldung wirklich eher auf einen OpenSSL Fehler hindeutete).</p>
+<p>Debuggen ist eben schwieriger als den Code zu schreiben. Ich vermute, weil man ihn dafür <strong><em>wirklich</em></strong> verstehen muss - inklusive aller Fehler die man in seinem eigenen Verständnis hat.</p>
+<p>P.S.: So Signiert und Validiert man ein File mit OpenSSL von der Kommandozeile:</p>
+<div class="hll"><pre><span></span><span class="c1"># base 64 encoding to ease textual transmission</span>
+openssl<span class="w"> </span>dgst<span class="w"> </span>-dss1<span class="w"> </span>-sign<span class="w"> </span>dsa_private_key.pem<span class="w"> </span>Important.rtf<span class="w"> </span><span class="p">|</span><span class="w"> </span>openssl<span class="w"> </span>enc<span class="w"> </span>-base64<span class="w"> </span>&gt;<span class="w"> </span>signature.sig
+<span class="c1"># and decode again</span>
+openssl<span class="w"> </span>enc<span class="w"> </span>-base64<span class="w"> </span>-d<span class="w"> </span>&lt;<span class="w"> </span>signature.sig<span class="w"> </span>&gt;<span class="w"> </span>decoded.signature.sig
+<span class="c1"># and verify</span>
+openssl<span class="w"> </span>dgst<span class="w"> </span>-dss1<span class="w"> </span>-verify<span class="w"> </span>dsa_public_key.pem<span class="w"> </span>-signature<span class="w"> </span>decoded.signature.sig<span class="w"> </span>Important.rtf
+</pre></div>
+<p>Einige Fallstricke: -dss1 und -sha1 erzeugen offenbar die gleichen Checksummen (man könnte also meinen das es der gleiche Algorithmus ist) die beiden digest modi werden aber in openssl offenbar unterschiedlich behandelt. Beim Signieren löst das verwenden von -sha1 auch schön eine Fehlermeldung aus - wenn man beim Überprüfen aber -sha1 zu verwenden versucht, dann erhält man nur den Hinweis dass die Verifikation gescheitert ist - an einem falschen public key. Seeehr hilfreich liebe Entwickler.</p>
+<p>Wie man ein Schlüsselpaar erzeugt und vieles mehr <a href="http://www.madboa.com/geek/openssl/">gibts hier</a>.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/9/kryptographie-saugt/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/9/wo-ich-gerade-am-la-stern-bin/">
         Wo ich gerade am lästern bin
         </a>
@@ -135,7 +176,7 @@
     <section class="blog-post-body">
       <p>Ist ja eigentlich nicht schwer, man braucht lediglich eine Definition wie diese</p>
 <div class="hll"><pre><span></span><span class="cp">#define kIOHIDVendorIDKey @&quot;VendorID&quot;</span>
-<span class="k">const</span><span class="w"> </span><span class="bp">NSString</span><span class="w"> </span><span class="o">*</span><span class="n">windowName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">@&quot;Morgens&quot;</span><span class="w"></span>
+<span class="k">const</span><span class="w"> </span><span class="bp">NSString</span><span class="w"> </span><span class="o">*</span><span class="n">windowName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">@&quot;Morgens&quot;</span>
 </pre></div>
 <p>Einziges Problem - immer wieder hat man vom System konstante C-Strings, die man aber als Objc-Strings benötigt.</p>
 <p>Interessanterweise hat der Compiler überhaupt kein Problem das hier zu machen:</p>
@@ -146,7 +187,7 @@
 
 <span class="c1">// same, but more readable than</span>
 <span class="p">[</span><span class="n">matchingDict</span><span class="w"> </span><span class="n">setValue</span><span class="o">:</span><span class="p">[</span><span class="bp">NSNumber</span><span class="w"> </span><span class="n">numberWithInt</span><span class="o">:</span><span class="n">entry</span><span class="o">-&gt;</span><span class="n">Vendor_ID</span><span class="p">]</span><span class="w"> </span>
-<span class="w">       </span><span class="nl">forKey</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="bp">NSString</span><span class="w"> </span><span class="n">stringWithCString</span><span class="o">:</span><span class="n">kIOHIDVendorIDKey</span><span class="p">]];</span><span class="w"></span>
+<span class="w">       </span><span class="nl">forKey</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="bp">NSString</span><span class="w"> </span><span class="n">stringWithCString</span><span class="o">:</span><span class="n">kIOHIDVendorIDKey</span><span class="p">]];</span>
 <span class="c1">// Also note that -stringWithCString is deprecated</span>
 </pre></div>
 <p>Oder mit anderen Worten man kann problemlos aus jeder C-String-Konstante eine Objc-String-Konstante machen, indem man einfach ein <strong><em>@</em></strong> davor schreibt.</p>
@@ -179,8 +220,8 @@
 <p>Cocoa zum Beispiel. Viele Programmierer wissen nicht wie man Speicherlöcher effektiv fängt.</p>
 <p>Well, nicht Leaks - da kann man ja mit <a href="http://developer.apple.com/documentation/DeveloperTools/Conceptual/InstrumentsUserGuide/Built-InInstruments/chapter_9_section_8.html">ObjectAlloc</a> draufhauen und dann das Programm fixen.</p>
 <p>Nein, viel problematischer als das sind die doppelten Befreiungen.</p>
-<div class="hll"><pre><span></span><span class="kt">id</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[[</span><span class="bp">NSString</span><span class="w"> </span><span class="n">alloc</span><span class="p">]</span><span class="w"> </span><span class="n">initWithFormat</span><span class="o">:</span><span class="s">@&quot;foo&quot;</span><span class="p">];</span><span class="w"></span>
-<span class="p">[</span><span class="n">foo</span><span class="w"> </span><span class="k">release</span><span class="p">];</span><span class="w"></span>
+<div class="hll"><pre><span></span><span class="kt">id</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[[</span><span class="bp">NSString</span><span class="w"> </span><span class="n">alloc</span><span class="p">]</span><span class="w"> </span><span class="n">initWithFormat</span><span class="o">:</span><span class="s">@&quot;foo&quot;</span><span class="p">];</span>
+<span class="p">[</span><span class="n">foo</span><span class="w"> </span><span class="k">release</span><span class="p">];</span>
 <span class="c1">// do something else</span>
 <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;foo is %d&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">foo</span><span class="w"> </span><span class="n">length</span><span class="p">]);</span><span class="w"> </span><span class="c1">// almost certainly bombs</span>
 </pre></div>
@@ -411,36 +452,6 @@ The obvious first thing to do is to think about the GUI and what I want to achie
   </article>
 
   
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/8/unsere-neutrale-und-gute-presse/">
-        Unsere neutrale und gute Presse
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-08-16">Saturday, August 16, 2008</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Seit ein paar Jahren muss ich mich mühsam mit dem Gedanken anfreunden, dass unsere Presse vielleicht doch nicht das gelbe vom Ei ist.</p>
-<p>Well, aus persönlicher Erfahrung wird man klüger. <a href="http://www.3sat.de/3sat.php?/kulturzeit/lesezeit/114141/index.html">Spannend finde ich, das inzwischen auch immer mehr Journalisten dieses Problem einsehen und durchaus auch selbstkritisch sein können.</a></p>
-<p>Besonders spannend finde ich die Beschreibung der Journalistentätigkeit in fremden Ländern. Man fliegt hin, und hat dort am Ziel zwei Menschen die einem Helfen. Ein Übersetzer und ein Fixer. Der letzte ist spannend - denn das ist der, der dem Journalisten die leute vermittelt, die in extrem kurzer Zeit das sagen können, was er hören will.</p>
-<p>Wunderschöne Objektivität.</p>
-<p>Mehr davon.</p>
-<p>(via <a href="http://blog.fefe.de/?ts=b9f33bfe">fefe</a>)</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/8/unsere-neutrale-und-gute-presse/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
   
   
     
@@ -460,7 +471,7 @@ The obvious first thing to do is to think about the GUI and what I want to achie
     <footer class="container-fluid ">
       <ul class="nav">
   <li class="nav-item copyright">
-    <span class="nav-link">&copy; 2022 <a href="../../../work/">Martin Häcker</a></span>
+    <span class="nav-link">&copy; 2024 <a href="../../../work/">Martin Häcker</a></span>
   </li>
   
     

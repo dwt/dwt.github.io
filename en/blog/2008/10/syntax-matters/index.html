@@ -74,15 +74,15 @@
       <p>[wiki:2008/10/25/01.21 Gerade habe ich doch ein Stück Code hochgeladen] mit dem man jeden beliebigen Methodenaufruf in eine Invocation umwandeln kann.</p>
 <p>Nun, das hat mir nicht gereicht. Jetzt hab ich mich noch mal hingesetzt und mich an einer anderen Syntax versucht:</p>
 <div class="hll"><pre><span></span><span class="c1">// anstatt</span>
-<span class="kt">id</span><span class="w"> </span><span class="n">invocation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NMCatchInvocation</span><span class="p">(</span><span class="s">@&quot;fnord&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">stringByAppendingString</span><span class="o">:</span><span class="s">@&quot;42&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="kt">id</span><span class="w"> </span><span class="n">invocation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NMCatchInvocation</span><span class="p">(</span><span class="s">@&quot;fnord&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">stringByAppendingString</span><span class="o">:</span><span class="s">@&quot;42&quot;</span><span class="p">);</span>
 
 <span class="c1">// jetzt</span>
-<span class="kt">id</span><span class="w"> </span><span class="n">invocation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">NMRecordingInvocation</span><span class="w"> </span><span class="n">invocation</span><span class="p">];</span><span class="w"></span>
-<span class="p">[</span><span class="n">invocation</span><span class="w"> </span><span class="n">recordWithTarget</span><span class="o">:</span><span class="s">@&quot;fnord&quot;</span><span class="p">]</span><span class="w"> </span><span class="n">stringByAppendingString</span><span class="o">:</span><span class="s">@&quot;42&quot;</span><span class="p">];</span><span class="w"></span>
+<span class="kt">id</span><span class="w"> </span><span class="n">invocation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">NMRecordingInvocation</span><span class="w"> </span><span class="n">invocation</span><span class="p">];</span>
+<span class="p">[</span><span class="n">invocation</span><span class="w"> </span><span class="n">recordWithTarget</span><span class="o">:</span><span class="s">@&quot;fnord&quot;</span><span class="p">]</span><span class="w"> </span><span class="n">stringByAppendingString</span><span class="o">:</span><span class="s">@&quot;42&quot;</span><span class="p">];</span>
 
 <span class="c1">// oder</span>
-<span class="kt">id</span><span class="w"> </span><span class="n">invocation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">NMRecordingInvocation</span><span class="w"> </span><span class="n">invocationWithTarget</span><span class="o">:</span><span class="s">@&quot;fnord&quot;</span><span class="p">];</span><span class="w"></span>
-<span class="p">[</span><span class="n">invocation</span><span class="w"> </span><span class="n">record</span><span class="p">]</span><span class="w"> </span><span class="n">stringByAppendingString</span><span class="o">:</span><span class="s">@&quot;42&quot;</span><span class="p">];</span><span class="w"></span>
+<span class="kt">id</span><span class="w"> </span><span class="n">invocation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">NMRecordingInvocation</span><span class="w"> </span><span class="n">invocationWithTarget</span><span class="o">:</span><span class="s">@&quot;fnord&quot;</span><span class="p">];</span>
+<span class="p">[</span><span class="n">invocation</span><span class="w"> </span><span class="n">record</span><span class="p">]</span><span class="w"> </span><span class="n">stringByAppendingString</span><span class="o">:</span><span class="s">@&quot;42&quot;</span><span class="p">];</span>
 </pre></div>
 <p>Und ich  finde das ist von der Syntax her deutlich eleganter als das Makro.</p>
 <p>Allerdings:</p>
@@ -126,7 +126,7 @@
     <footer class="container-fluid ">
       <ul class="nav">
   <li class="nav-item copyright">
-    <span class="nav-link">&copy; 2022 <a href="../../../../work/">Martin Häcker</a></span>
+    <span class="nav-link">&copy; 2024 <a href="../../../../work/">Martin Häcker</a></span>
   </li>
   
     

@@ -57,6 +57,45 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="2024/4/chestertons-fence-oder-was-ist-denken-zweiter-ordnung/">
+        Chestertons Fence oder was ist Denken zweiter Ordnung?
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2024-04-18">Thursday, April 18, 2024</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p><a href="https://fs.blog/chestertons-fence/">Mir hat dieser Artikel über das Denken zweiter Ordnung sehr gut gefallen.</a></p>
+<p><img src="2024/4/chestertons-fence-oder-was-ist-denken-zweiter-ordnung/chestertons-fence.jpeg" alt="Einsam stehendes Auto vor einem Zaun über eine Straße"></p>
+<p>Er erklärt am Beispiel von 'Chestertons-Fence', warum es wichtig ist, vor Änderungen an Systemen das Denken zweiter Ordnung einzusetzen.
+Er nutzt dazu die Methapher eines Zauns über eine Straße. Diesen sollte man nicht einfach wegräumen, nur weil er nervt. Warum? Weil die Menschen die ihn gebaut haben hatten damit Aufwand, den Sie nicht einfach nur so zum Spaß investiert haben. Deren Gründe muss man verstehen um zu sehen ob der Zaun tatsächich weg kann, oder nach wie vor nötig ist.</p>
+<p>Angenommen hinter dem Zaun befindet sich ein Straßenabschnitt, der mit Minen verseucht ist. Leider ist dies in der Ukraine ja ein häufiges Problem. Der Zaun sollte erst entfernt werden, wenn die Minen geräumt sind, um Todesfälle und Verletzungen zu vermeiden. Die Toten und Verletzten sind hier der Effekt zweiter Ordnung.</p>
+<p>Denken zweiter Ordnung heißt also nicht nur zu hinterfragen, warum etwas so ist, wie es ist, sondern auch zu verstehen, warum die Menschen, die es geschaffen haben (in unserem Fall meistens Code), es auf diese Weise gebaut haben. Bevor ich Änderungen vornehme, sollte ich mir Zeit nehmen, um die Gründe für die ursprüngliche Gestaltung zu verstehen, da unbedachte Änderungen unerwünschte Effekte haben werden.</p>
+<p>So zu denken finde ich nicht leicht. Oft misslingt es mir. Aber es ist für mich ein Ziel.</p>
+<h2>Was heißt das für uns Entwickler?</h2>
+<p>Besonders bei der Frage: Wieso sind unsere Systeme so wie sie sind? Ist das für mich super relevant. Aber auch immer wenn ich Programmiere. Wenn ich einen Zaun aufstelle, also z.B. etwas komplizierter mache als es sein könnte, dann schreibe ich einen Kommentar wieso ich mich gegen die einfachere Lösung entschieden habe, damit die nach mir kommenden verstehen ob meine - für Sie - überkomplizierte Lösung noch nötig ist.
+Wenn ich eine weiter reichende Entscheidung fälle, dann Dokumentiere ich diese gerne mit eineme Architektural Decision Record (ADR) der enthällt aus welchen Gründen wir uns so entschieden haben.
+Wenn ich eine Story schreibe, dann muss da nicht nur das Feature drauf, sondern eben auch der Grund dafür, damit ich oder andere später nachvollzieen können, wieso dieses Feature existiert, oder eben wieso es nicht mehr nötig ist.
+Idealerweise würde ich auch gerne vom Code über die Commits zur Story zurück kommen - aber das gelingt mir bisher regelmäßig nicht.</p>
+<h2>Fazit</h2>
+<p>Viele der Praktiken, die wir in der Softwareentwicklung als Standards ansehen, dienen eigentlich dazu, das Denken zweiter Ordnung zu erleichtern – ein wichtiger Zusammenhang, der oft unerwähnt bleibt, mir aber zunehmend klarer wird.</p>
+<p>Ganz besonders wichtig ist mir aber der Respekt, im Zweifel sollte ich erst einmal annehmen das der andere sich etwas dabei gedacht hat. Bevor ich das nicht verstehe sollte ich nicht die Axt ansetzen.</p>
+
+    </section>
+    
+      <footer>
+        <a href="2024/4/chestertons-fence-oder-was-ist-denken-zweiter-ordnung/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="2022/2/heimautomatisierung-mit-tradfri-hue-und-homekit-und-e-muell-vermeiden/">
         Heimautomatisierung mit Tradfri, Hue und HomeKit - und e-Müll vermeiden
         </a>
@@ -252,10 +291,10 @@ $GPRMC,,V,,,,,,,,,,N*53
 <p><a href="https://github.com/lyusupov/SoftRF">SoftRF</a> ist vermutlich das bekannteste, da es mit günstiger Hardware eigentlich alle Standards unterstützt. <a href="https://de.aliexpress.com/item/4001286458852.html">Dieses</a> für in der Luft und und <a href="https://de.aliexpress.com/item/4000571051141.html">dieses</a> als Gegengerät am Boden und für Experimente - jeweils in der in Europa zugelassenen 868Mhz Variante - habe ich mir besorgt, da sie nur jeweils ~25€ Kosten.</p>
 <p>SoftRF kommt darauf sogar schon vorinstalliert, das ist wirklich sehr komfortabel.</p>
 <p>In Betrieb lassen sich die Geräte auch ganz gut nehmen, einfach via USB an den Rechner anschließen, bei dem einen geht dann ein WLAN auf über das man es Konfigurieren kann, bei dem anderen hat man direkten Zugriff über die serielle:</p>
-<div class="hll"><pre><span></span>$ pip install pyserial
-$ python -m serial.tools.list_ports
+<div class="hll"><pre><span></span>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>pyserial
+$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>serial.tools.list_ports
 <span class="o">[</span>...<span class="o">]</span>
-$ python -m serial.tools.miniterm /path/to/port
+$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>serial.tools.miniterm<span class="w"> </span>/path/to/port
 </pre></div>
 <p>Konfigurieren kann man das Gerät dann über eine Config-String, den man <a href="http://soaringweather.no-ip.info/SoftRF/settings.html">in diesem Web-Interface</a> generieren kann.</p>
 <p>Easy peasy.</p>
@@ -452,43 +491,6 @@ $ python -m serial.tools.miniterm /path/to/port
   </article>
 
   
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="2018/7/yeehaw-endlich-wieder-ein-blog/">
-        Yeehaw! Endlich wieder ein Blog!
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2018-07-16">Monday, July 16, 2018</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Lange hat es gedauert - Ahem.</p>
-<p>In den letzten Monaten habe ich mich mit <a href="https://getlektor.com">Lektor</a> auseinandergesetzt. Mit ein Paar Plugins (<a href="https://github.com/humrochagf/lektor-creative-commons">CreativeCommons</a> und <a href="https://github.com/lektor/lektor-markdown-highlighter">Markdown Highlighter</a>) kann man viel Spaß beim Blog-Post schreiben haben.</p>
-<p>Der große Vorteil von Lektor ist, dass man eine komplett statische Seite damit rendert. Man kann die Seite danach also über ein CDN ausliefern - 'Internet Scale' ist also gar kein Problem…</p>
-<p>Solche Systeme gibt es natürlich viele - aber mit Lektor kriegt man zusätzlich noch ein CMS (das Lokal läuft) - oder auch hinter <code>.htaccess</code> geschützt laufen kann, so dass man keine Sorgen haben muss, dass einem über so eine Webseite der Server aufgemacht wird.</p>
-<p>Aber Lektor überzeugt auch mit einer moderat einfachen <a href="https://www.getlektor.com/docs/api/">API</a>, selbst plugins dafür zu schreiben ist einfach und macht Spaß. Fast wie es bei <a href="https://trac.edgewall.org">Track</a> ganz am Anfang auch einmal war. ☺️</p>
-<p>Ich freue mich darüber dass ich jetzt eine voll-responsive Seite haben, die mit HTML und CSS wirklich auskommt - no JS needed. (Ich werde aber vielleicht in der Zukunft für Experimente auch JS in der Seite verwenden). Für jetzt ist es erst mal das Experiment wie lange ich ohne JS auskomme.</p>
-<p>Da wäre zum Beispiel das Menü - das auf Mobil mit Animation schön aufklappt. Hierzu habe ich verschiedene Techniken kombiniert.</p>
-<ol>
-<li><p>Die Verhältnisse der ganzen Abmessungen werden über <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_variables">CSS-Variablen</a> und <a href="https://developer.mozilla.org/de/docs/Web/CSS/calc">CSS-Calc</a> einmal global gesetzt. Das geht zwar noch nicht vollständig, da man CSS Variablen <a href="https://stackoverflow.com/questions/40722882/css-native-variables-not-working-in-media-queries#40723269">nicht in Media Queries einsetzen kann</a>, aber immerhin. Einzig dass man Stylesheets noch nicht 'nested' aufschreiben kann stört.</p>
-</li>
-<li><p>Die Animation beim klick auf das <a href="https://de.wikipedia.org/wiki/Hamburger-Menü-Icon">Hamburger Menü</a> sowie das Öffnen des Menüs kommt komplett ohne JS aus. Damit das geht braucht es ein DOM Element, dass den State 'ein oder ausgeblendet' hält, gleichzeitig via CSS abgefragt werden kann sowie diesen State durch Klick auf ein anderes Element ändert. Well, dafür funktioniert lustiger Weise das <code>&lt;input type=checkbox id=menu-state&gt;</code> Element. Das wechselt den <code>checked</code>-Zustand, was mann dankenswerter Weise in CSS mittels <code>:checked</code> herausfinden kann. Der Clou ist aber, dass man irgendwo anders im Dokument ein <code>&lt;label for=menu-state&gt;</code> haben kann, auf das man Klicken kann um diesen State zu wechseln. Und <code>&lt;label&gt;</code> kann man im Gegensatz zu <code>&lt;input type=checkbox&gt;</code> in allen Browsern vernünftig stylen. Und man kann mittels <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Animations/Using_CSS_animations">CSS-Animationen</a> alles animieren. Fuck yeah!</p>
-</li>
-</ol>
-
-    </section>
-    
-      <footer>
-        <a href="2018/7/yeehaw-endlich-wieder-ein-blog/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
   
   
     
@@ -508,7 +510,7 @@ $ python -m serial.tools.miniterm /path/to/port
     <footer class="container-fluid ">
       <ul class="nav">
   <li class="nav-item copyright">
-    <span class="nav-link">&copy; 2022 <a href="../work/">Martin Häcker</a></span>
+    <span class="nav-link">&copy; 2024 <a href="../work/">Martin Häcker</a></span>
   </li>
   
     

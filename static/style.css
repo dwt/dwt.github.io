@@ -1,4 +1,4 @@
-@import 'hamburger.css';
+@import "hamburger.css";
 
 /* FIXME these are verbatim also part of bootstrap - why do I need to copy them? */
 :root {
@@ -11,14 +11,15 @@
     --breakpoint-xl: 1200px;
 }
 
-html, body {
+html,
+body {
     height: 100%;
     position: relative;
 }
 
 body {
-    display:flex; 
-    flex-direction:column;
+    display: flex;
+    flex-direction: column;
 }
 
 body > footer {
@@ -28,7 +29,7 @@ body > footer {
 }
 
 .work.page img {
-    max-width:100%;
+    max-width: 100%;
     padding: 2rem;
 }
 
@@ -38,10 +39,16 @@ blockquote {
     text-align: center;
 }
 
-@media (min-width: 576px) { /* --breakpoint-sm */
+.blog-post-body img {
+    max-width: 100%;
+}
+
+@media (min-width: 576px) {
+    /* --breakpoint-sm */
     /* REFACT consider to pull right all images on category pages */
     .work.page img,
-    .liquid.page img {
+    .liquid.page img,
+    .blog-post-body img {
         float: right;
         max-width: 50%;
     }
@@ -54,13 +61,17 @@ blockquote {
 }
 
 .homepage .blog-post .blog-post-body:after {
-    content: '';
+    content: "";
     text-align: right;
     position: absolute;
     bottom: 0;
     width: 100%;
     height: 1.2em;
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 50%);
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0),
+        rgba(255, 255, 255, 1) 50%
+    );
 }
 
 .nav-item.license img {

@@ -57,6 +57,38 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/2/cafe-wall-illusion-saver-was-skewed-lines-saver/">
+        Café Wall Illusion Saver (was Skewed Lines Saver)
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-02-19">Dienstag, 19. Februar 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Here it comes, the new version!</p>
+<p>Now with configurable animation speed and block size. (Though I still find the default most pleasing :)</p>
+<p>Oh, and I also fixed the buildscript so it now produces <code>good</code> zip files. Sorry for that on the first try.</p>
+<p>Have fun trying it till your eyes become squared (as my boss uses to say. :)</p>
+<ul>
+<li><a href="http://dwt.schwarz-online.org/software/CafeWallIllusion.zip">download</a></li>
+<li>[source:open-source/skewed-lines-illusion-screensaver browse source]</li>
+</ul>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/2/cafe-wall-illusion-saver-was-skewed-lines-saver/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/2/trac-als-homepage/">
         Trac als Homepage
         </a>
@@ -169,23 +201,23 @@ Ah well.</p>
 <span class="cp">    [[Log sharedLog] logObjcType:@encode(typeof(what)) \</span>
 <span class="cp">        arguments:(void *)what , ##variableArguments]</span>
 
-<span class="p">-</span> <span class="nf">logObjcType:</span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="nv">typeString</span><span class="w"> </span><span class="nf">arguments:</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)</span> <span class="nv">what</span><span class="p">,</span><span class="w"> </span><span class="p">...;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kt">id</span><span class="w"> </span><span class="n">formatString</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="p">[</span><span class="nb">self</span><span class="w"> </span><span class="n">stringFromType</span><span class="o">:</span><span class="n">typeString</span><span class="w"> </span><span class="n">inValue</span><span class="o">:</span><span class="n">what</span><span class="p">];</span><span class="w"></span>
+<span class="p">-</span> <span class="nf">logObjcType:</span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="nv">typeString</span><span class="w"> </span><span class="nf">arguments:</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)</span> <span class="nv">what</span><span class="p">,</span><span class="w"> </span><span class="p">...;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">id</span><span class="w"> </span><span class="n">formatString</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="p">[</span><span class="nb">self</span><span class="w"> </span><span class="n">stringFromType</span><span class="o">:</span><span class="n">typeString</span><span class="w"> </span><span class="n">inValue</span><span class="o">:</span><span class="n">what</span><span class="p">];</span>
 
-<span class="w">    </span><span class="kt">va_list</span><span class="w"> </span><span class="n">variadicArguments</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="n">va_start</span><span class="p">(</span><span class="n">variadicArguments</span><span class="p">,</span><span class="w"> </span><span class="n">what</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="kt">va_list</span><span class="w"> </span><span class="n">variadicArguments</span><span class="p">;</span>
+<span class="w">    </span><span class="n">va_start</span><span class="p">(</span><span class="n">variadicArguments</span><span class="p">,</span><span class="w"> </span><span class="n">what</span><span class="p">);</span>
 
 <span class="w">    </span><span class="kt">id</span><span class="w"> </span><span class="n">logString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[[[</span><span class="bp">NSString</span><span class="w"> </span><span class="n">alloc</span><span class="p">]</span><span class="w"> </span><span class="n">initWithFormat</span><span class="o">:</span><span class="n">formatString</span><span class="w"> </span>
-<span class="w">                    </span><span class="nl">arguments</span><span class="p">:</span><span class="n">variadicArguments</span><span class="p">]</span><span class="w"> </span><span class="n">autorelease</span><span class="p">];</span><span class="w"></span>
+<span class="w">                    </span><span class="nl">arguments</span><span class="p">:</span><span class="n">variadicArguments</span><span class="p">]</span><span class="w"> </span><span class="n">autorelease</span><span class="p">];</span>
 
-<span class="w">    </span><span class="n">va_end</span><span class="p">(</span><span class="n">variadicArguments</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">va_end</span><span class="p">(</span><span class="n">variadicArguments</span><span class="p">);</span>
 
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="nb">self</span><span class="w"> </span><span class="n">log</span><span class="o">:</span><span class="n">logString</span><span class="p">];</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="nb">self</span><span class="w"> </span><span class="n">log</span><span class="o">:</span><span class="n">logString</span><span class="p">];</span>
+<span class="p">}</span>
 </pre></div>
 <p>Eigentlich hatte ich hier mehr Probleme erwartet.</p>
 <p>Ganz nebenbei löst das auch noch ein Problem von ganz zu Anfang:</p>
-<div class="hll"><pre><span></span><span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;%@&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="bp">NSString</span><span class="w"> </span><span class="n">stringWithFormat</span><span class="o">:</span><span class="s">@&quot;%s,%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;fnord&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;fnord&quot;</span><span class="p">]);</span><span class="w"></span>
+<div class="hll"><pre><span></span><span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;%@&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="bp">NSString</span><span class="w"> </span><span class="n">stringWithFormat</span><span class="o">:</span><span class="s">@&quot;%s,%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;fnord&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;fnord&quot;</span><span class="p">]);</span>
 </pre></div>
 <p>Das macht jetzt keine Probleme mehr, da die zusätzlichen Komas vom Präprozessor (fälschlicherweise) als zusätzliche Argumente zur dem variadischen Makro aufgefasst werden. Hehe...</p>
 <p>Jetzt fehlt nur noch ein Backend für den Logger und ich bin glücklich. Andererseits... da gibt es natürlich auch <a href="http://log4cocoa.sourceforge.net/">Log4Cocoa</a> das ich einfach erweitern könnte.</p>
@@ -219,7 +251,7 @@ Ah well.</p>
 
 <span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;fnord&quot;</span><span class="p">);</span><span class="w"> </span><span class="c1">// @</span>
 <span class="n">LOG</span><span class="p">(</span><span class="s">&quot;foo&quot;</span><span class="p">);</span><span class="w"> </span><span class="c1">// [3c]</span>
-<span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">string</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;fnord&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">string</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;fnord&quot;</span><span class="p">;</span>
 <span class="n">LOG</span><span class="p">(</span><span class="n">string</span><span class="p">);</span><span class="w"> </span><span class="c1">// *</span>
 </pre></div>
 <p>Ich parse das so:</p>
@@ -227,23 +259,23 @@ Ah well.</p>
 <span class="cp">    [NSException raise:NSInvalidArgumentException \</span>
 <span class="cp">        format:@&quot; you are trying to log something that is not a string: %s&quot;, encodedType]</span>
 
-<span class="p">-</span> <span class="nf">stringFromType:</span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="nv">encodedType</span><span class="w"> </span><span class="nf">inArray:</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="nv">what</span><span class="p">;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="sc">&#39;[&#39;</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="o">*</span><span class="n">encodedType</span><span class="p">)</span><span class="w"> </span><span class="n">RAISE_UNSUPPORTED_TYPE</span><span class="p">(</span><span class="n">encodedType</span><span class="p">);</span><span class="w"></span>
+<span class="p">-</span> <span class="nf">stringFromType:</span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="nv">encodedType</span><span class="w"> </span><span class="nf">inArray:</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="nv">what</span><span class="p">;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="sc">&#39;[&#39;</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="o">*</span><span class="n">encodedType</span><span class="p">)</span><span class="w"> </span><span class="n">RAISE_UNSUPPORTED_TYPE</span><span class="p">(</span><span class="n">encodedType</span><span class="p">);</span>
 
-<span class="w">    </span><span class="n">encodedType</span><span class="o">++</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">length</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">strtol</span><span class="p">(</span><span class="n">encodedType</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">encodedType</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="sc">&#39;c&#39;</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="o">*</span><span class="n">encodedType</span><span class="p">)</span><span class="w"> </span><span class="n">RAISE_UNSUPPORTED_TYPE</span><span class="p">(</span><span class="n">encodedType</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">encodedType</span><span class="o">++</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">length</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">strtol</span><span class="p">(</span><span class="n">encodedType</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">encodedType</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="sc">&#39;c&#39;</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="o">*</span><span class="n">encodedType</span><span class="p">)</span><span class="w"> </span><span class="n">RAISE_UNSUPPORTED_TYPE</span><span class="p">(</span><span class="n">encodedType</span><span class="p">);</span>
 
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="bp">NSString</span><span class="w"> </span><span class="n">stringWithCString</span><span class="o">:</span><span class="n">what</span><span class="w"> </span><span class="n">length</span><span class="o">:</span><span class="n">length</span><span class="mi">-1</span><span class="p">];</span><span class="w"> </span><span class="c1">// \0 ignored</span>
-<span class="p">}</span><span class="w"></span>
+<span class="p">}</span>
 
-<span class="o">-</span><span class="w"> </span><span class="n">stringFromType</span><span class="o">:</span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">encodedType</span><span class="w"> </span><span class="n">inValue</span><span class="o">:</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">what</span><span class="p">;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="sc">&#39;@&#39;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">*</span><span class="n">encodedType</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="p">[(</span><span class="kt">id</span><span class="p">)</span><span class="n">what</span><span class="w"> </span><span class="n">description</span><span class="p">];</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="sc">&#39;*&#39;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">*</span><span class="n">encodedType</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="bp">NSString</span><span class="w"> </span><span class="n">stringWithCString</span><span class="o">:</span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">what</span><span class="p">];</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="sc">&#39;[&#39;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">*</span><span class="n">encodedType</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="nb">self</span><span class="w"> </span><span class="n">stringFromType</span><span class="o">:</span><span class="n">encodedType</span><span class="w"> </span><span class="n">inArray</span><span class="o">:</span><span class="n">what</span><span class="p">];</span><span class="w"></span>
-<span class="w">    </span><span class="n">RAISE_UNSUPPORTED_TYPE</span><span class="p">(</span><span class="n">encodedType</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">nil</span><span class="p">;</span><span class="w"> </span><span class="cm">/* never reached */</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="o">-</span><span class="w"> </span><span class="n">stringFromType</span><span class="o">:</span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">encodedType</span><span class="w"> </span><span class="n">inValue</span><span class="o">:</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">what</span><span class="p">;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="sc">&#39;@&#39;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">*</span><span class="n">encodedType</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="p">[(</span><span class="kt">id</span><span class="p">)</span><span class="n">what</span><span class="w"> </span><span class="n">description</span><span class="p">];</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="sc">&#39;*&#39;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">*</span><span class="n">encodedType</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="bp">NSString</span><span class="w"> </span><span class="n">stringWithCString</span><span class="o">:</span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">what</span><span class="p">];</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="sc">&#39;[&#39;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">*</span><span class="n">encodedType</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="nb">self</span><span class="w"> </span><span class="n">stringFromType</span><span class="o">:</span><span class="n">encodedType</span><span class="w"> </span><span class="n">inArray</span><span class="o">:</span><span class="n">what</span><span class="p">];</span>
+<span class="w">    </span><span class="n">RAISE_UNSUPPORTED_TYPE</span><span class="p">(</span><span class="n">encodedType</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">nil</span><span class="p">;</span><span class="w"> </span><span class="cm">/* never reached */</span>
+<span class="p">}</span>
 </pre></div>
 <p>(Vorschläge wie man das besser machen kann, bitte gerne an mich! ( z.B. via spamfaenger ät gmx de))</p>
 <p>Fehlt nur noch die Erweiterung auf beliebig viele Argumente. Dazu aber morgen mehr. :)</p>
@@ -275,15 +307,15 @@ Ah well.</p>
 <p>Zugegeben, mir ist noch nicht klar wie ich das umsetzen kann.</p>
 <p>Aber, wenn man das Problem nur ein klein wenig vereinfacht, und nur versucht eines oder mehrere Argumente zu unterstützen...</p>
 <p>Also zum Beispiel ein <code>LOG()</code> Macro, dass als erstes Argument irgend etwas erhalten kann (für den Anfang, irgend etwas das sich in einen String umwandeln lässt) dann erhält man etwas das sich so verwenden lässt:</p>
-<div class="hll"><pre><span></span><span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;fnord&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="n">LOG</span><span class="p">(</span><span class="s">&quot;fnord&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">string</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;fnord&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="n">LOG</span><span class="p">(</span><span class="n">string</span><span class="p">);</span><span class="w"></span>
-<span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;%@&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;fnord&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;fnord&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;%d&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span><span class="w"></span>
-<span class="n">LOG</span><span class="p">(</span><span class="s">&quot;%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;fnord&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;%@&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="bp">NSString</span><span class="w"> </span><span class="n">stringWithFormat</span><span class="o">:</span><span class="s">@&quot;%s,%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;fnord&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;fnord&quot;</span><span class="p">]);</span><span class="w"></span>
+<div class="hll"><pre><span></span><span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;fnord&quot;</span><span class="p">);</span>
+<span class="n">LOG</span><span class="p">(</span><span class="s">&quot;fnord&quot;</span><span class="p">);</span>
+<span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">string</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;fnord&quot;</span><span class="p">;</span>
+<span class="n">LOG</span><span class="p">(</span><span class="n">string</span><span class="p">);</span>
+<span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;%@&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;fnord&quot;</span><span class="p">);</span>
+<span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;fnord&quot;</span><span class="p">);</span>
+<span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;%d&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span>
+<span class="n">LOG</span><span class="p">(</span><span class="s">&quot;%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;fnord&quot;</span><span class="p">);</span>
+<span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;%@&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="bp">NSString</span><span class="w"> </span><span class="n">stringWithFormat</span><span class="o">:</span><span class="s">@&quot;%s,%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;fnord&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;fnord&quot;</span><span class="p">]);</span>
 </pre></div>
 <p>Die Implementierung ist allerdings etwas tricky.</p>
 <p>Typinvariante Makros wie <code>MAX(x, y)</code> schreibt man üblicherweise so:</p>
@@ -330,32 +362,32 @@ Ah well.</p>
 <p>Das macht vor allem in Objective-C mächtig Schwierigkeiten. Das hier zum Beispiel geht nicht.</p>
 <div class="hll"><pre><span></span><span class="cp">#define DO(argument) argument</span>
 
-<span class="n">DO</span><span class="p">([</span><span class="bp">NSString</span><span class="w"> </span><span class="n">stringWithFormat</span><span class="o">:</span><span class="s">@&quot;%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;asdf&quot;</span><span class="p">]);</span><span class="w"></span>
+<span class="n">DO</span><span class="p">([</span><span class="bp">NSString</span><span class="w"> </span><span class="n">stringWithFormat</span><span class="o">:</span><span class="s">@&quot;%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;asdf&quot;</span><span class="p">]);</span>
 </pre></div>
 <p>Der Compiler meckert hier über zu viele Kommas und denkt das ich das Makro mit zwei Argumenten aufrufen will. Gnah.</p>
 <p>Warum beschäftigt mich das eigentlich?</p>
 <p>Ich möchte gerne Macro's haben, die je nach Typ des Arguments etwas anderes machen. Für Unit-Tests z.B. möchte ich sagen:</p>
-<div class="hll"><pre><span></span><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">testOverloadedAssert</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="s">@&quot;barf&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;barf&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="s">&quot;bar&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;bar&quot;</span><span class="p">);</span><span class="w"></span>
+<div class="hll"><pre><span></span><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">testOverloadedAssert</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">);</span>
+<span class="w">    </span><span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="s">@&quot;barf&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;barf&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="s">&quot;bar&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;bar&quot;</span><span class="p">);</span>
 
 <span class="w">    </span><span class="c1">// These should fail in a sensible manner</span>
-<span class="w">    </span><span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="s">&quot;bar&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;bar&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mf">3.3</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="s">&quot;bar&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;bar&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mf">3.3</span><span class="p">);</span>
+<span class="p">}</span>
 </pre></div>
 <p>Das ist aber schon ein großes Problem. In C++ könnte man den ersten teil ja noch über überladene Funktionen lösen - das geht in reinem Objective-C aber schon mal nicht. Dazu kommt ja noch der zweite Teil - da kriegt man vielleicht noch Compiler-Fehlermeldungen, wenn der Compiler nicht auto-conversion von Parametern anwirft. :-/</p>
 <p>Dazu kommt, das ich C++ nicht mag und schon gar nicht in alle meine Tests eine zwingende Abhängigkeit auf C++ einfügen will.</p>
 <p>Will man dann aber noch weiter gehen, wird es endgültig schwierig. Hier ein paar Beispiele:</p>
-<div class="hll"><pre><span></span><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">testAdvancedAssert</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="mf">3.3</span><span class="p">,</span><span class="w"> </span><span class="mf">3.3</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span><span class="w"> </span><span class="cm">/* accuracy */</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="mf">3.3</span><span class="p">,</span><span class="w"> </span><span class="mf">3.3</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;important meta information&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;info contains: %@ in %s:%d&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">         </span><span class="s">@&quot;other info&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">__PRETTY_FUNCTION__</span><span class="p">,</span><span class="w"> </span><span class="n">__LINE__</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="hll"><pre><span></span><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">testAdvancedAssert</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="mf">3.3</span><span class="p">,</span><span class="w"> </span><span class="mf">3.3</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span><span class="w"> </span><span class="cm">/* accuracy */</span><span class="p">);</span>
+<span class="w">    </span><span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="mf">3.3</span><span class="p">,</span><span class="w"> </span><span class="mf">3.3</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;important meta information&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;info contains: %@ in %s:%d&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="s">@&quot;other info&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">__PRETTY_FUNCTION__</span><span class="p">,</span><span class="w"> </span><span class="n">__LINE__</span><span class="p">);</span>
+<span class="p">}</span>
 </pre></div>
 <p>In reinem C hätte man hier gar keine Möglichkeiten mehr etwas zu machen.</p>
 <p>Wie weit ich mit einer Lösung dennoch gekommen bin - morgen. :)</p>
@@ -463,32 +495,6 @@ Just two days ago I watched the episode <a href="http://www.wdr.de/tv/quarks/sen
   </article>
 
   
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/2/god-wrote-in-lisp-code/">
-        God wrote in Lisp-Code!
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-02-09">Samstag, 9. Februar 2008</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Supreme Geek-Unterhaltung aus dem Vortrag [wiki:2008/02/05/22.00 50 of 50].</p>
-<p><a href="http://www.prometheus-music.com/audio/eternalflame.mp3">download - mp3</a> (von <a href="http://www.prometheus-music.com/roundworm.html">Prometheus Music</a>)</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/2/god-wrote-in-lisp-code/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
   
   
     
@@ -508,7 +514,7 @@ Just two days ago I watched the episode <a href="http://www.wdr.de/tv/quarks/sen
     <footer class="container-fluid ">
       <ul class="nav">
   <li class="nav-item copyright">
-    <span class="nav-link">&copy; 2022 <a href="../../../work/">Martin Häcker</a></span>
+    <span class="nav-link">&copy; 2024 <a href="../../../work/">Martin Häcker</a></span>
   </li>
   
     

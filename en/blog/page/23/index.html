@@ -57,6 +57,35 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/6/itunes-ohne-schlu-ssel/">
+        iTunes - ohne Schlüssel?
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-06-14">Saturday, June 14, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Ist ja nicht so einfach. <a href="http://en.wikipedia.org/wiki/QTFairUse">Die</a> <a href="http://en.wikipedia.org/wiki/JHymn">verschiedenen</a> <a href="http://en.wikipedia.org/wiki/FairPlay#Requiem">Versuche</a> waren immer mit nur kurzen Halbwertszeiten gesegnet.</p>
+<p>Aber <a href="http://en.wikipedia.org/wiki/FairPlay#Requiem">Reqiem</a> ist ganz Nett. Schöne C-Implementierung, <a href="http://www.google.com/search?ie=utf8&amp;oe=utf8&amp;q=filetype:torrent+reqiem+1.7">verteilt über viele Torrents</a> und mit einer Homepage die in Freenet gehostet wird (1) kann man sich echte Chancen ausrechnen das es mal bestand haben wird.</p>
+<p>Zumindest von einer technischen Seite aus.</p>
+<p>Davon abgesehen finde ich den Sourcecode aber auch Schick. :-)</p>
+<p>(1) Reqiem Homepage: freenet:USK@GSQgFDoeQUG0cSkbUVYYkB-ssqEEavRdo-RDVEAm0jk,rVvV3LjSZq3UNdGJrrup~~ZBPq4ohBhJeKkREXDLULw,AQACAAE/requiem/-1/</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/6/itunes-ohne-schlu-ssel/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/6/censorship-sells/">
         Censorship sells
         </a>
@@ -190,15 +219,15 @@
     
     <section class="blog-post-body">
       <p>… eine Wurzel berechnen indem man einen <code>float</code> einfach um ein Bit nach rechts schiftet?</p>
-<div class="hll"><pre><span></span><span class="kt">float</span><span class="w"> </span><span class="nf">InvSqrt</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
+<div class="hll"><pre><span></span><span class="kt">float</span><span class="w"> </span><span class="nf">InvSqrt</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
 <span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">xhalf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5f</span><span class="o">*</span><span class="n">x</span><span class="p">;</span><span class="w"> </span>
 <span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">x</span><span class="p">;</span><span class="w"> </span><span class="c1">// get bits for floating value</span>
 <span class="w">    </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x5f3759df</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="o">&gt;&gt;</span><span class="mi">1</span><span class="p">);</span><span class="w"> </span><span class="c1">// gives initial guess y0</span>
 <span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">i</span><span class="p">;</span><span class="w"> </span><span class="c1">// convert bits back to float</span>
 <span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="o">*</span><span class="p">(</span><span class="mf">1.5f</span><span class="o">-</span><span class="n">xhalf</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">x</span><span class="p">);</span><span class="w"> </span><span class="c1">// Newton step, repeating increases accuracy</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
 <p><a href="http://www.lomont.org/Math/Papers/2003/InvSqrt.pdf">Chris Lomont sich das mal angesehen</a> und seine Erklärung hab ich verstanden.</p>
 <p>Was diese Stelle tut:</p>
@@ -236,17 +265,17 @@
     
     <section class="blog-post-body">
       <p>Aus dem <a href="http://svn.icculus.org/quake3/branches/1.34/code/qcommon/q_math.c?revision=2&amp;view=markup">Q3 Source Code</a>:</p>
-<div class="hll"><pre><span></span><span class="kt">float</span><span class="w"> </span><span class="nf">Q_rsqrt</span><span class="p">(</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="kt">long</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">x2</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">threehalfs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.5F</span><span class="p">;</span><span class="w"></span>
+<div class="hll"><pre><span></span><span class="kt">float</span><span class="w"> </span><span class="nf">Q_rsqrt</span><span class="p">(</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kt">long</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">x2</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">threehalfs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.5F</span><span class="p">;</span>
 
-<span class="w">  </span><span class="n">x2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.5F</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="n">y</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">number</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">x2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.5F</span><span class="p">;</span>
+<span class="w">  </span><span class="n">y</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">number</span><span class="p">;</span>
 <span class="w">  </span><span class="n">i</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&amp;</span><span class="n">y</span><span class="p">;</span><span class="w">  </span><span class="c1">// evil floating point bit level hacking</span>
 <span class="w">  </span><span class="n">i</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mh">0x5f3759df</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">);</span><span class="w"> </span><span class="c1">// what the fuck?</span>
-<span class="w">  </span><span class="n">y</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&amp;</span><span class="n">i</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">y</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&amp;</span><span class="n">i</span><span class="p">;</span>
 <span class="w">  </span><span class="n">y</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">threehalfs</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"> </span><span class="c1">// 1st iteration</span>
 <span class="w">  </span><span class="c1">// y  = y * ( threehalfs - ( x2 * y * y ) ); // 2nd iteration, this can be removed</span>
 
@@ -255,8 +284,8 @@
 <span class="w">    </span><span class="n">assert</span><span class="p">(</span><span class="w"> </span><span class="o">!</span><span class="n">isnan</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"> </span><span class="c1">// bk010122 - FPE?</span>
 <span class="w">  </span><span class="cp">#endif</span>
 <span class="w">  </span><span class="cp">#endif</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
 <p>Was macht das und wieso funktioniert es?</p>
 <p>(Für all zu ungeduldige: <a href="http://www.codemaestro.com/reviews/9">Auflösung</a>)</p>
@@ -381,7 +410,7 @@ end with either a new-line or null character.
 <span class="c1"># Solves the problem that shebang lines can&#39;t contain spaces </span>
 <span class="c1"># (even escaped or quoted) in the interpreter path via a polyglot</span>
 <span class="s2">&quot;&quot;&quot;false&quot;</span>
-<span class="nb">exec</span> /Users/dwt/Archiv/Code/Aktive<span class="se">\ </span>Projekte/Trac/env-trac-0.11/bin/python <span class="nv">$0</span> <span class="nv">$@</span>
+<span class="nb">exec</span><span class="w"> </span>/Users/dwt/Archiv/Code/Aktive<span class="se">\ </span>Projekte/Trac/env-trac-0.11/bin/python<span class="w"> </span><span class="nv">$0</span><span class="w"> </span><span class="nv">$@</span>
 <span class="s2">&quot;&quot;&quot;</span>
 
 <span class="s2">import sys</span>
@@ -406,33 +435,6 @@ end with either a new-line or null character.
   </article>
 
   
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/5/liquid-democracy/">
-        Liquid Democracy
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-05-28">Wednesday, May 28, 2008</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Heute hat mich Bernd auf diesen coolen Wikipedia-Artikel hingewiesen: <a href="http://en.wikipedia.org/wiki/Proxy_voting">Proxy Voting</a>. Dort wird das was wir uns bei der Piratenpartei Berlin als Liquid Democracy vorstellen sehr schön beschrieben - insbesondere auch mit vielen Beispielen wo das schon angewendet wird.</p>
-<p>Spannend finde ich auch das ein paar Leute wohl gleich versucht haben das in der Wikipedia einzuführen - erst mal ohne Erfolg.</p>
-<p><a href="http://en.wikipedia.org/wiki/Wikipedia:Delegable_proxy">Aber die Diskussion darum ist sehr lesenswert.</a></p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/5/liquid-democracy/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
   
   
     
@@ -452,7 +454,7 @@ end with either a new-line or null character.
     <footer class="container-fluid ">
       <ul class="nav">
   <li class="nav-item copyright">
-    <span class="nav-link">&copy; 2022 <a href="../../../work/">Martin Häcker</a></span>
+    <span class="nav-link">&copy; 2024 <a href="../../../work/">Martin Häcker</a></span>
   </li>
   
     

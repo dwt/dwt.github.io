@@ -57,6 +57,36 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2007/1/filesharing-und-freie-inhalte/">
+        Filesharing und freie Inhalte
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2007-01-25">Donnerstag, 25. Januar 2007</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Nachdem die Musikindustrie immer noch nicht einsieht das <a href="http://www.heise.de/newsticker/meldung/83670">Massenklagen gegen die eigenen Käufer</a> letztlich kein Mittel sind diese in 'willig zahlende Käufer' zu verwandeln (Kunden finde ich als Wort dafür schon zu gutwillig) kann ich nur sagen das ich mich immer weiter davon entferne überhaupt Content zu konsumieren der unter solchen restriktiven Lizenzen steht.</p>
+<p>Für Video gibt es iTunes oder was ich heute wiederentdeckt habe Projekte wie den <a href="http://www.getdemocracy.com/">Democracy Player</a>.</p>
+<p>So. Jetzt geh mir zum Teufel Industrie.</p>
+<p>p.s.: Freie inhalte gibts ja auch in der Forschung. Leider hat noch nicht jeder Wissenschaftler die Möglichkeit frei nach den<a href="http://de.wikipedia.org/wiki/Open_Access">Open Access</a> Prinzipien zu veröffentlichen. Das ist vor allem bedenklich, da die Veröffentlichungsindustrie die um die Wissenschaften gewachsen ist <a href="http://ec.europa.eu/research/science-society/pdf/scientific-publication-study_en.pdf">monopolartige Strukturen angenommen hat</a>.</p>
+<p>Gott sei dank gibt es aber <a href="http://www.ec-petition.eu/">eine Petition großer Wissenschafatsverbände</a> in Deutschland durch den <a href="http://www.dfg.de/">DFG</a> vertreten die sich für eine gesetzliche Grundlage für Wissenschaftler einsetzen das diese ihre Papers nach 6 Monaten per Open Access Veröffentlich können.</p>
+<p><a href="http://www.ec-petition.eu/">Unbedingt unterschreiben</a>.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2007/1/filesharing-und-freie-inhalte/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2007/1/demokratie-und-zukunft/">
         Demokratie und Zukunft
         </a>
@@ -184,17 +214,17 @@ Just as an exercise I ripped the progress bar rendering code out of MPlayer and 
       <p>Funktionale Sprachen erhalten ihre Eleganz dadurch, dass sie die Programmierung mit Funktionen als Argumente und Rückgabewerte erlauben. Schön erklärt wird das im <a href="http://mitpress.mit.edu/sicp/full-text/book/book-Z-H-12.html#%25_sec_1.3">SICP</a>. Tatsächlich kann das so weit gehen, dass zum Beispiel in Lisp <a href="http://mitpress.mit.edu/sicp/full-text/book/book-Z-H-14.html#%25_idx_1460">gar kein Unterschied mehr zwischen Funktionen und beliebigen Daten gemacht wird</a>. Aber das ist zugegebenermaßen extrem.</p>
 <p>Für die Kürze nennt man diese Art zu programmieren auch gerne: "Higher-Order-Programmierung" und die entsprechenden Funktionen "Higher-Order-Funktionen".</p>
 <p>In der Imperativen Programmierung werden Funktionen als Argumente oder Rückgabetypen eher selten verwendet. In C gerade noch beim Standard-Algorithmus <strong>Binary-Search</strong></p>
-<div class="hll"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"></span>
-<span class="nf">bsearch</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">base</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">nmemb</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">size</span><span class="p">,</span><span class="w"></span>
-<span class="w">         </span><span class="kt">int</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">compare</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">));</span><span class="w"></span>
+<div class="hll"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="o">*</span>
+<span class="nf">bsearch</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">base</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">nmemb</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">size</span><span class="p">,</span>
+<span class="w">         </span><span class="kt">int</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">compare</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">));</span>
 </pre></div>
 <p>bei dem die <strong>compare</strong>-Funktion genau so eine Higher-Order-Funktion ist. Danach ist es aber erstmal lange zappenduster, was Higher-Order-Programmierung angeht. (Hervorragende Programmierer nutzten dieses Design-Pattern aber schon immer - wenn es auch selten explizit genannt wurde)</p>
 <p>So kam es dann auch, dass manche objektorientierten Sprachen Objekte wie Knöpfe, Textfelder etc. hatten, die man ableiten konnte, um ihr Verhalten zu verändern. Java etwa erlaubt das noch heute:</p>
 <div class="hll"><pre><span></span><span class="c1">// Java</span>
-<span class="kd">class</span> <span class="nc">OKButtonForThatSpecificDialog</span> <span class="kd">extends</span> <span class="n">JButton</span> <span class="p">{</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">doClick</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Yay, I was clicked&quot;</span><span class="p">);</span>
-    <span class="p">}</span>
+<span class="kd">class</span> <span class="nc">OKButtonForThatSpecificDialog</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">JButton</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">doClick</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Yay, I was clicked&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <p>Zwei Probleme ergeben sich aus dieser Art zu programmieren:</p>
@@ -205,16 +235,16 @@ Just as an exercise I ripped the progress bar rendering code out of MPlayer and 
 <p>Beide Probleme kann man mit dem oben beschriebenen Mechanismus der Higher-Order-Funktionen elegant lösen - und tatsächlich wird das auch gemacht. In <a href="http://www.martinfowler.com/bliki/InversionOfControl.html">Inversion of Controll (IOC)</a>-Frameworks etwa. Hier ruft man nicht mehr eine Funktion auf, um ein Ergebnis zu bekommen, sondern konfiguriert den Framework (Knöpfe, Textfelder, etc.) mit eigenen (Higher-Order)-Funktionen, die dieser aufruft, sobald ein Ergebnis oder Ereignis vorliegt.</p>
 <p>Absolut typisch für dieses Muster sind alle mir bekannten aktuell verwendeten GUI-Toolkits, die immer so funktionieren, dass man z.B. einen Knopf erzeugt, um danach mit einer (Higher-Order)-Funktion zu konfigurieren, was denn passieren soll, wenn auf ihn geklickt wird.</p>
 <div class="hll"><pre><span></span><span class="c1">// Java</span>
-<span class="n">JButton</span> <span class="n">button</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JButton</span><span class="p">(</span><span class="s">&quot;Titel&quot;</span><span class="p">);</span>
+<span class="n">JButton</span><span class="w"> </span><span class="n">button</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">JButton</span><span class="p">(</span><span class="s">&quot;Titel&quot;</span><span class="p">);</span>
 <span class="n">button</span><span class="p">.</span><span class="na">addActionListener</span><span class="p">(</span><span class="n">aClickResponder</span><span class="p">);</span>
 </pre></div>
 <div class="hll"><pre><span></span><span class="c1">// Obj-C</span>
-<span class="p">[</span><span class="n">aButton</span><span class="w"> </span><span class="n">setTarget</span><span class="o">:</span><span class="w"> </span><span class="nb">self</span><span class="p">];</span><span class="w"></span>
-<span class="p">[</span><span class="n">aButton</span><span class="w"> </span><span class="n">setAction</span><span class="o">:</span><span class="w"> </span><span class="k">@selector</span><span class="p">(</span><span class="n">respondToClick</span><span class="o">:</span><span class="p">)];</span><span class="w"></span>
+<span class="p">[</span><span class="n">aButton</span><span class="w"> </span><span class="n">setTarget</span><span class="o">:</span><span class="w"> </span><span class="nb">self</span><span class="p">];</span>
+<span class="p">[</span><span class="n">aButton</span><span class="w"> </span><span class="n">setAction</span><span class="o">:</span><span class="w"> </span><span class="k">@selector</span><span class="p">(</span><span class="n">respondToClick</span><span class="o">:</span><span class="p">)];</span>
 </pre></div>
 <p>Aber dieses Muster ist noch viel weiter verwendbar - in Objective-C gibt es eine Möglichkeit, auf alle Elemente eines Containers eine Methode <strong>doSomethingWithEachElement:</strong> anzuwenden, die ein Argument - das jeweilige Element - erhält.</p>
 <div class="hll"><pre><span></span><span class="c1">// Obj-C</span>
-<span class="p">[</span><span class="n">aList</span><span class="w"> </span><span class="n">makeObjectsPerformSelector</span><span class="o">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">doSomethingWithEachElement</span><span class="o">:</span><span class="p">)];</span><span class="w"></span>
+<span class="p">[</span><span class="n">aList</span><span class="w"> </span><span class="n">makeObjectsPerformSelector</span><span class="o">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">doSomethingWithEachElement</span><span class="o">:</span><span class="p">)];</span>
 </pre></div>
 <p>Äquivalent läuft das in den GUI-Toolkits von Java, Cocoa, Gnome, KDE, WxWidgets...</p>
 <p>Fortgeschrittenere Sprachen und Toolkits verwenden dieses Design-Pattern auch noch an vielen weiteren Stellen. Besonders hervorzuheben ist dabei in letzter Zeit Ruby, wo nach diesem Muster nicht nur Iteration, sondern auch das Bearbeiten jeder Zeile in einer Datei, das Senden von Daten über einen Socket, ... verläuft.</p>
@@ -223,25 +253,25 @@ Just as an exercise I ripped the progress bar rendering code out of MPlayer and 
 <h2>Umsetzung</h2>
 <p>Um mit Higher-Order-Funktionen in Java / Obj-C zu programmieren, kann man z.B. so vorgehen:</p>
 <div class="hll"><pre><span></span><span class="c1">// Obj-C</span>
-<span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="n">setAction</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="kt">SEL</span><span class="p">)</span><span class="w"> </span><span class="n">aSelector</span><span class="w"> </span><span class="n">forTarget</span><span class="o">:</span><span class="w"> </span><span class="n">aTarget</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">action</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aSelector</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="n">target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aTarget</span><span class="p">;</span><span class="w"></span>
-<span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="n">setAction</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="kt">SEL</span><span class="p">)</span><span class="w"> </span><span class="n">aSelector</span><span class="w"> </span><span class="n">forTarget</span><span class="o">:</span><span class="w"> </span><span class="n">aTarget</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">action</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aSelector</span><span class="p">;</span>
+<span class="w">    </span><span class="n">target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aTarget</span><span class="p">;</span>
+<span class="w"> </span><span class="p">}</span>
 
-<span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="n">trigger</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">([</span><span class="n">target</span><span class="w"> </span><span class="n">respondsToSelector</span><span class="o">:</span><span class="w"> </span><span class="n">action</span><span class="p">])</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="p">[</span><span class="n">target</span><span class="w"> </span><span class="n">performSelector</span><span class="o">:</span><span class="w"> </span><span class="n">action</span><span class="p">];</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="n">trigger</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">([</span><span class="n">target</span><span class="w"> </span><span class="n">respondsToSelector</span><span class="o">:</span><span class="w"> </span><span class="n">action</span><span class="p">])</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="p">[</span><span class="n">target</span><span class="w"> </span><span class="n">performSelector</span><span class="o">:</span><span class="w"> </span><span class="n">action</span><span class="p">];</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w"> </span><span class="p">}</span>
 </pre></div>
 <div class="hll"><pre><span></span><span class="c1">// Java</span>
- <span class="kt">void</span> <span class="nf">setActionListener</span><span class="p">(</span><span class="n">ActionListener</span> <span class="n">listener</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">this</span><span class="p">.</span><span class="na">listener</span> <span class="o">=</span> <span class="n">listener</span><span class="p">;</span>
- <span class="p">}</span>
+<span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setActionListener</span><span class="p">(</span><span class="n">ActionListener</span><span class="w"> </span><span class="n">listener</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="na">listener</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">listener</span><span class="p">;</span>
+<span class="w"> </span><span class="p">}</span>
 
- <span class="kt">void</span> <span class="nf">trigger</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">listener</span><span class="p">.</span><span class="na">actionPerformed</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
- <span class="p">}</span>
+<span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">trigger</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">listener</span><span class="p">.</span><span class="na">actionPerformed</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+<span class="w"> </span><span class="p">}</span>
 </pre></div>
 <p>Das wars - so einfach geht das.</p>
 <p>TODO: Auf [<a href="http://libsigc.sourceforge.net/libsigc2/docs/manual/html/ch02.html">http://libsigc.sourceforge.net/libsigc2/docs/manual/html/ch02.html</a>] verweisen und vergleichen wie Callbacks mit sowas und (beste C++ Callback Bibliothek) gehen. Vergleichen wie echte Lambdas das leichter machen können.</p>
@@ -339,11 +369,11 @@ Just as an exercise I ripped the progress bar rendering code out of MPlayer and 
 <li>Coroutinen: Am einfachsten als eine Art Ultraleicht-Thread zu verstehen</li>
 </ul>
 <p>Einige dieser Design Patterns werden auch in anderen Sprachen intensiv genutzt. Die Lambda-Abstraktion zum Beispiel spielt eine zentrale Rolle in Java, wenn man dort GUIs baut, da sie der ideale Callback sind. Also im Beispiel:</p>
-<div class="hll"><pre><span></span><span class="n">JButton</span> <span class="n">button</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JButton</span><span class="p">(</span><span class="s">&quot;Titel&quot;</span><span class="p">);</span>
-<span class="n">button</span><span class="p">.</span><span class="na">addActionListener</span><span class="p">(</span><span class="k">new</span> <span class="n">ActionListener</span><span class="p">()</span> <span class="p">{</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">actionPerformed</span><span class="p">(</span><span class="n">java</span><span class="p">.</span><span class="na">awt</span><span class="p">.</span><span class="na">event</span><span class="p">.</span><span class="na">ActionEvent</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">// this is a lambda</span>
-    <span class="p">}</span>
+<div class="hll"><pre><span></span><span class="n">JButton</span><span class="w"> </span><span class="n">button</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">JButton</span><span class="p">(</span><span class="s">&quot;Titel&quot;</span><span class="p">);</span>
+<span class="n">button</span><span class="p">.</span><span class="na">addActionListener</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">ActionListener</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">actionPerformed</span><span class="p">(</span><span class="n">java</span><span class="p">.</span><span class="na">awt</span><span class="p">.</span><span class="na">event</span><span class="p">.</span><span class="na">ActionEvent</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// this is a lambda</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <p>Gibt es noch mehr dieser Design Patterns? Funktionale Sprachen werden doch von jeder Menge Menschen benutzt...</p>
@@ -388,44 +418,6 @@ Just as an exercise I ripped the progress bar rendering code out of MPlayer and 
   </article>
 
   
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2006/1/ober-und-unterton-oder-kehlgesang/">
-        Ober- und Unterton- oder Kehlgesang
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2006-01-29">Sonntag, 29. Januar 2006</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Was es alles gibt! Ich bin fasziniert wozu die Menschliche Stimme so alles in der Lage ist. Obertongesänge kannte ich auch schon länger, aber die zweite Variante, Untertongesänge, wie sie hauptsächlich in <a href="http://de.wikipedia.org/wiki/Tuva">Tuva</a> vorkommt war mir neu.</p>
-<p>Viel sagen will ich dazu eigentlich gar nicht, das muss man mal gehört haben:</p>
-<ul>
-<li><a href="http://oberton.org/ws_mp3/Jerusalem_Dream_Satz2_5_16_96kbps.mp3">Kehlgesang aus Jerusalem, sowohl Sygit als auch Khöömej</a> <a href="http://oberton.org/ws_mp3/ws_mp3.html">mehr...</a></li>
-<li><a href="http://www.huunhuurtu.com/">Huun-Huur-Tu</a> eine "Band" aus Tuva mit allen Varianten von Kehlgesang (Beispiele von <a href="http://khoomei.com/">Khomeei.com</a>):<ul>
-<li><a href="http://dwt.schwarz-online.org/blog-attachments/throatsinging/Ko.mov">Film</a>, <a href="http://dwt.schwarz-online.org/blog-attachments/throatsinging/LyoshaSygyt.mov">Film</a>, <a href="http://dwt.schwarz-online.org/blog-attachments/throatsinging/Tolya.mov">Film</a></li>
-<li><a href="http://dwt.schwarz-online.org/blog-attachments/throatsinging/kokarg.aiff">Ton</a>, <a href="http://dwt.schwarz-online.org/blog-attachments/throatsinging/kokarg.mp3">Ton</a>, <a href="http://dwt.schwarz-online.org/blog-attachments/throatsinging/kokhoomei.mp3">Ton</a>, <a href="http://dwt.schwarz-online.org/blog-attachments/throatsinging/kosygyt.aiff">Ton</a></li>
-</ul>
-</li>
-<li>Mehr Beispiele: <a href="http://www.ubu.com/ethno/soundings/tuva.html">noch mehr Tuva</a> und noch ein anderer Stiel, wie er von Inuits <a href="http://www.ubu.com/ethno/soundings/inuit.html">praktiziert wird</a></li>
-</ul>
-<p>Weitere Informationen gibt's bei der <a href="http://de.wikipedia.org/wiki/Obertongesang">Wikipedia</a>, <a href="http://oberton.org/">Oberton.org</a> und auch bei <a href="http://khoomei.com/">Khomeei.com</a> der das ganze auch schön in Spektrogrammen zeigen kann.</p>
-<p>Notiz an selbst: Bei gelegenheit mal den Film <a href="http://www.genghisblues.com/">Ghengis Blues</a> anschauen.</p>
-<p>Nachnotiz an selbst: Zum Lernen <a href="http://www.busker-kibbutznik.org/khoomei/HOW-TO/crashcourse.html">hier</a>, <a href="http://khoomei.com/types.htm">hier (unten)</a> und <a href="http://www.fotuva.org/music/emory.html">hier lang.</a></p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2006/1/ober-und-unterton-oder-kehlgesang/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
   
   
     
@@ -445,7 +437,7 @@ Just as an exercise I ripped the progress bar rendering code out of MPlayer and 
     <footer class="container-fluid ">
       <ul class="nav">
   <li class="nav-item copyright">
-    <span class="nav-link">&copy; 2022 <a href="../../../work/">Martin Häcker</a></span>
+    <span class="nav-link">&copy; 2024 <a href="../../../work/">Martin Häcker</a></span>
   </li>
   
     

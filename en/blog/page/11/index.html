@@ -57,6 +57,35 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2009/3/gehackt/">
+        Gehackt
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-03-01">Sunday, March 1, 2009</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>Ich bin ja ganz erstaunt wie viel spaß es macht Web-Software zu hacken. Bisher habe ich das ja immer vor mir hergeschoben, dass ich es später machen werde...</p>
+<p>Nun ja, jetzt ist später, ich habe mich das erste mal erfolgreich per SQL-Injection durch ein Login-Formular gehackt. Und es fühlt sich großartig an.</p>
+<p>Muss ich definitiv öfters machen - ich denke dass sich das auch ganz ausgezeichnet als patch an Open Source Projekte schicken lässt.</p>
+<p>(Ich will ja gar nicht wissen welche Sicherheitslücken dieses uralte Trac hier noch alles aufweißt. Hm, wird dringend Zeit für ein Update.)</p>
+<p>Naja, später... ;)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/3/gehackt/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2009/2/guter-service-von-apple/">
         Guter Service von Apple
         </a>
@@ -162,27 +191,27 @@
 
 <span class="nv">svn_libs</span><span class="o">=</span>/sw/lib/svn15
 
-<span class="nb">cd</span> /Developer/Library/Xcode/Plug-ins/XcodeSubversionPlugin.xcplugin/Contents/MacOS <span class="o">||</span> <span class="nb">exit</span> <span class="m">1</span>
-ditto XcodeSubversionPlugin XcodeSubversionPlugin.new
+<span class="nb">cd</span><span class="w"> </span>/Developer/Library/Xcode/Plug-ins/XcodeSubversionPlugin.xcplugin/Contents/MacOS<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+ditto<span class="w"> </span>XcodeSubversionPlugin<span class="w"> </span>XcodeSubversionPlugin.new
 
-<span class="nv">libs</span><span class="o">=</span><span class="sb">`</span>otool -L XcodeSubversionPlugin.new <span class="p">|</span> grep libsvn <span class="p">|</span> awk <span class="s1">&#39;{ print $1 }&#39;</span><span class="sb">`</span>
+<span class="nv">libs</span><span class="o">=</span><span class="sb">`</span>otool<span class="w"> </span>-L<span class="w"> </span>XcodeSubversionPlugin.new<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>libsvn<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{ print $1 }&#39;</span><span class="sb">`</span>
 
-<span class="k">for</span> lib <span class="k">in</span> <span class="nv">$libs</span> <span class="p">;</span> <span class="k">do</span>
-  <span class="nv">new_lib</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$lib</span> <span class="p">|</span> sed <span class="s2">&quot;s,/usr/lib,</span><span class="nv">$svn_libs</span><span class="s2">,g&quot;</span><span class="sb">`</span>
-  <span class="nb">echo</span> <span class="s2">&quot;install_name_tool -change </span><span class="nv">$lib</span><span class="s2"> </span><span class="nv">$new_lib</span><span class="s2"> XcodeSubversionPlugin.new&quot;</span>
-  install_name_tool -change <span class="nv">$lib</span> <span class="nv">$new_lib</span> XcodeSubversionPlugin.new
+<span class="k">for</span><span class="w"> </span>lib<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">$libs</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">  </span><span class="nv">new_lib</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span><span class="w"> </span><span class="nv">$lib</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span><span class="s2">&quot;s,/usr/lib,</span><span class="nv">$svn_libs</span><span class="s2">,g&quot;</span><span class="sb">`</span>
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;install_name_tool -change </span><span class="nv">$lib</span><span class="s2"> </span><span class="nv">$new_lib</span><span class="s2"> XcodeSubversionPlugin.new&quot;</span>
+<span class="w">  </span>install_name_tool<span class="w"> </span>-change<span class="w"> </span><span class="nv">$lib</span><span class="w"> </span><span class="nv">$new_lib</span><span class="w"> </span>XcodeSubversionPlugin.new
 <span class="k">done</span>
 
-install_name_tool -change /usr/lib/libapr-1.0.dylib /sw/lib/libapr.0.dylib XcodeSubversionPlugin.new
-install_name_tool -change /usr/lib/libaprutil-1.0.dylib /sw/lib/libaprutil.0.dylib XcodeSubversionPlugin.new
+install_name_tool<span class="w"> </span>-change<span class="w"> </span>/usr/lib/libapr-1.0.dylib<span class="w"> </span>/sw/lib/libapr.0.dylib<span class="w"> </span>XcodeSubversionPlugin.new
+install_name_tool<span class="w"> </span>-change<span class="w"> </span>/usr/lib/libaprutil-1.0.dylib<span class="w"> </span>/sw/lib/libaprutil.0.dylib<span class="w"> </span>XcodeSubversionPlugin.new
 
-<span class="nb">echo</span> otool -L XcodeSubversionPlugin.new
-otool -L XcodeSubversionPlugin.new
+<span class="nb">echo</span><span class="w"> </span>otool<span class="w"> </span>-L<span class="w"> </span>XcodeSubversionPlugin.new
+otool<span class="w"> </span>-L<span class="w"> </span>XcodeSubversionPlugin.new
 
 <span class="nb">echo</span>
-otool -L XcodeSubversionPlugin.new <span class="p">|</span> grep svn <span class="p">|</span> awk <span class="s1">&#39;{ print $1 }&#39;</span> <span class="p">|</span> xargs -n <span class="m">1</span> ls -la
+otool<span class="w"> </span>-L<span class="w"> </span>XcodeSubversionPlugin.new<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>svn<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{ print $1 }&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>-n<span class="w"> </span><span class="m">1</span><span class="w"> </span>ls<span class="w"> </span>-la
 
-<span class="nb">exit</span> <span class="m">0</span>
+<span class="nb">exit</span><span class="w"> </span><span class="m">0</span>
 </pre></div>
 <p>Ach ja, am Schluss muss man noch von Hand in <code>/Developer/Library/Xcode/Plug-ins/XcodeSubversionPlugin.xcplugin/Contents/MacOS</code> das original zur Seite bewegen und bei dem neuen das ".new" streichen.</p>
 
@@ -370,33 +399,6 @@ otool -L XcodeSubversionPlugin.new <span class="p">|</span> grep svn <span class
   </article>
 
   
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2009/2/change-you-can-download/">
-        Change you can download
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2009-02-09">Monday, February 9, 2009</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Jede Menge Congressional Reports - also Ergebnisse die der wissenschaftliche Dienst des Amerikanischen Kongresses erarbeitet hat <a href="https://secure.wikileaks.org/wiki/Change_you_can_download:_a_billion_in_secret_Congressional_reports">zum download</a>.</p>
-<p>Fuck yeah. Wikileaks rockt mächtig!</p>
-<p><a href="http://blog.fefe.de/?ts=b7700afd">via</a></p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2009/2/change-you-can-download/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
   
   
     
@@ -416,7 +418,7 @@ otool -L XcodeSubversionPlugin.new <span class="p">|</span> grep svn <span class
     <footer class="container-fluid ">
       <ul class="nav">
   <li class="nav-item copyright">
-    <span class="nav-link">&copy; 2022 <a href="../../../work/">Martin Häcker</a></span>
+    <span class="nav-link">&copy; 2024 <a href="../../../work/">Martin Häcker</a></span>
   </li>
   
     

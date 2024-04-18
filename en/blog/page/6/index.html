@@ -57,6 +57,77 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2009/10/playing-with-javascript-variable-lookup/">
+        Playing with JavaScript variable lookup
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-10-17">Saturday, October 17, 2009</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>I am always amazed at the very nice features of JavaScript on the one hand and the very, very bad features of it on the other side.</p>
+<p>Here's something I learned the other week that I find quite interesting: <code>eval</code> vs. <code>new Function</code>. Here's what I wanted to achieve: I was looking for a way to do some meta-programming with JavaScrip, specifically prevent the problem that any variable you assign to but don't declare ends up as a member of the global object.</p>
+<p>The problem is that name lookup in JavaScript is quite peculiar. First it consults the current function activation for local variables and then it goes straight back to the <code>window</code> object and just prepends all it's contents to the local namespace.</p>
+<p>Doh. This has the very bad consequence that every variable you forget to declare via the <code>var someVariableName</code> syntax becomes part of the global object - and therefore itself global.</p>
+<p>Now you can change this lookup by inserting some of your objects in this lookup chain by using the <a href="http://yuiblog.com/blog/2006/04/11/with-statement-considered-harmful/">somewhat controversial</a> <code>with</code> statement like so:</p>
+<div class="hll"><pre><span></span><span class="kd">var</span><span class="w"> </span><span class="nx">namespace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="nx">foo</span><span class="o">:</span><span class="s1">&#39;bar&#39;</span><span class="p">};</span>
+<span class="kd">with</span><span class="w"> </span><span class="p">(</span><span class="nx">namespace</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// this scope now has a local variable foo with the value bar</span>
+<span class="p">}</span>
+</pre></div>
+<p>This is considered a bad feature, as it means that if you assign to <code>foo</code> that will assign a new value to <code>namespace</code> but if you assign to something else or mistype, that will still end up on the global object. Not very nice - and therefore most JavaScript programmers don't use <code>with</code> ever.</p>
+<p>Still with some working and eval it can be used to re-map free functions transparently, so that you can do something like this:</p>
+<div class="hll"><pre><span></span><span class="kd">var</span><span class="w"> </span><span class="nx">namespace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">equals</span><span class="o">:</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">actual</span><span class="p">,</span><span class="w"> </span><span class="nx">expected</span><span class="p">){</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">actual</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="nx">expected</span><span class="p">)</span>
+<span class="w">            </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;actual&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">actual</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;does not equal expected&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">expected</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">function</span><span class="w"> </span><span class="nx">test</span><span class="p">(</span><span class="nx">aDescription</span><span class="p">,</span><span class="w"> </span><span class="nx">aTestFunction</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">useNamespaceForFunction</span><span class="p">(</span><span class="nx">namespace</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="nx">aTestFunction</span><span class="p">)();</span>
+<span class="p">}</span>
+
+<span class="nx">test</span><span class="p">(</span><span class="s2">&quot;that I can call equals as a free function&quot;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">(){</span>
+<span class="w">    </span><span class="nx">equals</span><span class="p">(</span><span class="mf">1</span><span class="p">,</span><span class="mf">1</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+<p>Which would allow you to not pollute the global namespace with all the testing equality functions but still call them in a convenient way (that is without needing to go through an object.</p>
+<p>All in all, quite nice really - even though I haven't really found a use for this yet. :-)</p>
+<p>Implementing the <code>useNamespaceForFunction</code> however isn't quite as straightforward as I had thought - here's my first go at it:</p>
+<div class="hll"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">useNamespaceForFunction</span><span class="p">(</span><span class="nx">aNamespace</span><span class="p">,</span><span class="w"> </span><span class="nx">aFunction</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">with</span><span class="w"> </span><span class="p">(</span><span class="nx">aNamespace</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w">  </span><span class="nb">eval</span><span class="p">(</span><span class="s1">&#39;(&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">aFunction</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;)&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>I have since learned that actually using <code>new Function</code> to do the eval might be quite a good idea as the whole point of it is that it ignores the namespace around it, so here's my version two:</p>
+<div class="hll"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">useNamespaceForFunction</span><span class="p">(</span><span class="nx">aNamespace</span><span class="p">,</span><span class="w"> </span><span class="nx">aFunction</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">namespacingCode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;with (aNamespace) { return (&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">aFunction</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot;); }&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">// using new Function instead of eval to prevent the current namespace leaking into the eval&lt;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Function</span><span class="p">(</span><span class="s2">&quot;aNamespace&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">namespacingCode</span><span class="p">)(</span><span class="nx">aNamespace</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+<p>So, lets see what uses come up for this technique - I've seen some js code that does an Interpreter of sorts with this trick - but thats about it.</p>
+<p>So - I didn't achieve my initial goal - but I did come nearer to it. So I'll call it a success here for now.</p>
+<p>If you find any use for this technique, please let me know!</p>
+<p>[browser:open-source/javascript-hacks/trunk/namespacing-functions.js Get the source!]</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/10/playing-with-javascript-variable-lookup/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2009/10/simple-super/">
         Simple super
         </a>
@@ -205,121 +276,121 @@
 <p>So here's how it looks if you implement the Smalltalk collection iteration protocoll in ObjC. (Note: this of course are not propper ObjC-Names, but each Smalltalker will none the less get a tear in their eye when they see this)</p>
 <div class="hll"><pre><span></span><span class="cp">#import &lt;Foundation/Foundation.h&gt;</span>
 
-<span class="k">@implementation</span> <span class="bp">NSArray</span> <span class="nl">(BlocksTest)</span><span class="w"></span>
+<span class="k">@implementation</span> <span class="bp">NSArray</span> <span class="nl">(BlocksTest)</span>
 
-<span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">do:</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">id</span><span class="p">))</span><span class="nv">aBlock</span><span class="p">;</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
+<span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">do:</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">id</span><span class="p">))</span><span class="nv">aBlock</span><span class="p">;</span>
+<span class="p">{</span>
 <span class="w">    </span><span class="c1">// Take care, -enumerateObjectsUsingBlock: wraps an auto-release pool around the iteration</span>
-<span class="w">    </span><span class="p">[</span><span class="nb">self</span><span class="w"> </span><span class="n">enumerateObjectsUsingBlock</span><span class="o">:</span><span class="w"></span>
-<span class="w">        </span><span class="o">^</span><span class="p">(</span><span class="kt">id</span><span class="w"> </span><span class="n">obj</span><span class="p">,</span><span class="w"> </span><span class="n">NSUInteger</span><span class="w"> </span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="kt">BOOL</span><span class="w"> </span><span class="o">*</span><span class="n">stop</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">            </span><span class="n">aBlock</span><span class="p">(</span><span class="n">obj</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="p">}];</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="nb">self</span><span class="w"> </span><span class="n">enumerateObjectsUsingBlock</span><span class="o">:</span>
+<span class="w">        </span><span class="o">^</span><span class="p">(</span><span class="kt">id</span><span class="w"> </span><span class="n">obj</span><span class="p">,</span><span class="w"> </span><span class="n">NSUInteger</span><span class="w"> </span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="kt">BOOL</span><span class="w"> </span><span class="o">*</span><span class="n">stop</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">aBlock</span><span class="p">(</span><span class="n">obj</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}];</span>
+<span class="p">}</span>
 
-<span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="bp">NSArray</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">collect</span><span class="o">:</span><span class="p">(</span><span class="kt">id</span><span class="w"> </span><span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">id</span><span class="p">))</span><span class="n">aBlock</span><span class="p">;</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kt">id</span><span class="w"> </span><span class="n">collectedItems</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="bp">NSMutableArray</span><span class="w"> </span><span class="n">arrayWithCapacity</span><span class="o">:</span><span class="p">[</span><span class="nb">self</span><span class="w"> </span><span class="n">count</span><span class="p">]];</span><span class="w"></span>
-<span class="w">    </span><span class="p">[</span><span class="nb">self</span><span class="w"> </span><span class="k">do</span><span class="o">:^</span><span class="p">(</span><span class="kt">id</span><span class="w"> </span><span class="n">each</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="p">[</span><span class="n">collectedItems</span><span class="w"> </span><span class="n">addObject</span><span class="o">:</span><span class="n">aBlock</span><span class="p">(</span><span class="n">each</span><span class="p">)];</span><span class="w"></span>
-<span class="w">    </span><span class="p">}];</span><span class="w"></span>
+<span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="bp">NSArray</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">collect</span><span class="o">:</span><span class="p">(</span><span class="kt">id</span><span class="w"> </span><span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">id</span><span class="p">))</span><span class="n">aBlock</span><span class="p">;</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">id</span><span class="w"> </span><span class="n">collectedItems</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="bp">NSMutableArray</span><span class="w"> </span><span class="n">arrayWithCapacity</span><span class="o">:</span><span class="p">[</span><span class="nb">self</span><span class="w"> </span><span class="n">count</span><span class="p">]];</span>
+<span class="w">    </span><span class="p">[</span><span class="nb">self</span><span class="w"> </span><span class="k">do</span><span class="o">:^</span><span class="p">(</span><span class="kt">id</span><span class="w"> </span><span class="n">each</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="p">[</span><span class="n">collectedItems</span><span class="w"> </span><span class="n">addObject</span><span class="o">:</span><span class="n">aBlock</span><span class="p">(</span><span class="n">each</span><span class="p">)];</span>
+<span class="w">    </span><span class="p">}];</span>
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="n">collectedItems</span><span class="w"> </span><span class="k">copy</span><span class="p">];</span><span class="w"> </span><span class="c1">// REFACT: consider to drop copy</span>
-<span class="p">}</span><span class="w"></span>
+<span class="p">}</span>
 
-<span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="w"> </span><span class="n">detect</span><span class="o">:</span><span class="p">(</span><span class="kt">BOOL</span><span class="w"> </span><span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">id</span><span class="p">))</span><span class="n">aBlock</span><span class="p">;</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
+<span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="w"> </span><span class="n">detect</span><span class="o">:</span><span class="p">(</span><span class="kt">BOOL</span><span class="w"> </span><span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">id</span><span class="p">))</span><span class="n">aBlock</span><span class="p">;</span>
+<span class="p">{</span>
 <span class="w">    </span><span class="c1">// Take care, -enumerateObjectsUsingBlock: wraps an auto-release pool around the iteration</span>
-<span class="w">    </span><span class="k">__block</span><span class="w"> </span><span class="kt">id</span><span class="w"> </span><span class="n">resultObject</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">nil</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">[</span><span class="nb">self</span><span class="w"> </span><span class="n">enumerateObjectsUsingBlock</span><span class="o">:</span><span class="w"></span>
-<span class="w">        </span><span class="o">^</span><span class="p">(</span><span class="kt">id</span><span class="w"> </span><span class="n">obj</span><span class="p">,</span><span class="w"> </span><span class="n">NSUInteger</span><span class="w"> </span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="kt">BOOL</span><span class="w"> </span><span class="o">*</span><span class="n">stop</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">aBlock</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">                </span><span class="n">resultObject</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">obj</span><span class="p">;</span><span class="w"></span>
-<span class="w">                </span><span class="o">*</span><span class="n">stop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">YES</span><span class="p">;</span><span class="w"></span>
-<span class="w">            </span><span class="p">}</span><span class="w"></span>
-<span class="w">        </span><span class="p">}];</span><span class="w"></span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">resultObject</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">__block</span><span class="w"> </span><span class="kt">id</span><span class="w"> </span><span class="n">resultObject</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">nil</span><span class="p">;</span>
+<span class="w">    </span><span class="p">[</span><span class="nb">self</span><span class="w"> </span><span class="n">enumerateObjectsUsingBlock</span><span class="o">:</span>
+<span class="w">        </span><span class="o">^</span><span class="p">(</span><span class="kt">id</span><span class="w"> </span><span class="n">obj</span><span class="p">,</span><span class="w"> </span><span class="n">NSUInteger</span><span class="w"> </span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="kt">BOOL</span><span class="w"> </span><span class="o">*</span><span class="n">stop</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">aBlock</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">resultObject</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">obj</span><span class="p">;</span>
+<span class="w">                </span><span class="o">*</span><span class="n">stop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">YES</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}];</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">resultObject</span><span class="p">;</span>
+<span class="p">}</span>
 
-<span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="w"> </span><span class="n">detect</span><span class="o">:</span><span class="p">(</span><span class="kt">BOOL</span><span class="w"> </span><span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">id</span><span class="p">))</span><span class="n">aBlock</span><span class="w"> </span><span class="n">ifNone</span><span class="o">:</span><span class="p">(</span><span class="kt">id</span><span class="w"> </span><span class="p">(</span><span class="o">^</span><span class="p">)())</span><span class="n">errorBlock</span><span class="p">;</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kt">id</span><span class="w"> </span><span class="n">foundElement</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="nb">self</span><span class="w"> </span><span class="n">detect</span><span class="o">:</span><span class="n">aBlock</span><span class="p">];</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">foundElement</span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">foundElement</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="k">else</span><span class="w"></span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">errorBlock</span><span class="p">();</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="w"> </span><span class="n">detect</span><span class="o">:</span><span class="p">(</span><span class="kt">BOOL</span><span class="w"> </span><span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">id</span><span class="p">))</span><span class="n">aBlock</span><span class="w"> </span><span class="n">ifNone</span><span class="o">:</span><span class="p">(</span><span class="kt">id</span><span class="w"> </span><span class="p">(</span><span class="o">^</span><span class="p">)())</span><span class="n">errorBlock</span><span class="p">;</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">id</span><span class="w"> </span><span class="n">foundElement</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="nb">self</span><span class="w"> </span><span class="n">detect</span><span class="o">:</span><span class="n">aBlock</span><span class="p">];</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">foundElement</span><span class="p">)</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">foundElement</span><span class="p">;</span>
+<span class="w">    </span><span class="k">else</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">errorBlock</span><span class="p">();</span>
+<span class="p">}</span>
 
-<span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="w"> </span><span class="n">inject</span><span class="o">:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="n">aValue</span><span class="w"> </span><span class="n">into</span><span class="o">:</span><span class="p">(</span><span class="kt">id</span><span class="w"> </span><span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">id</span><span class="p">,</span><span class="w"> </span><span class="kt">id</span><span class="p">))</span><span class="n">aBlock</span><span class="p">;</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
+<span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="w"> </span><span class="n">inject</span><span class="o">:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="n">aValue</span><span class="w"> </span><span class="n">into</span><span class="o">:</span><span class="p">(</span><span class="kt">id</span><span class="w"> </span><span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">id</span><span class="p">,</span><span class="w"> </span><span class="kt">id</span><span class="p">))</span><span class="n">aBlock</span><span class="p">;</span>
+<span class="p">{</span>
 <span class="w">    </span><span class="c1">// Need to take care with retain here, because apple wraps an auto-release pool around the block iterator. :/</span>
-<span class="w">    </span><span class="k">__block</span><span class="w"> </span><span class="kt">id</span><span class="w"> </span><span class="n">collected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">aValue</span><span class="w"> </span><span class="k">retain</span><span class="p">];</span><span class="w"></span>
-<span class="w">    </span><span class="p">[</span><span class="nb">self</span><span class="w"> </span><span class="k">do</span><span class="o">:^</span><span class="p">(</span><span class="kt">id</span><span class="w"> </span><span class="n">each</span><span class="p">){</span><span class="w"></span>
-<span class="w">        </span><span class="n">collected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">aBlock</span><span class="p">([</span><span class="n">collected</span><span class="w"> </span><span class="n">autorelease</span><span class="p">],</span><span class="w"> </span><span class="n">each</span><span class="p">)</span><span class="w"> </span><span class="k">retain</span><span class="p">];</span><span class="w"></span>
-<span class="w">    </span><span class="p">}];</span><span class="w"></span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="n">collected</span><span class="w"> </span><span class="n">autorelease</span><span class="p">];</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">__block</span><span class="w"> </span><span class="kt">id</span><span class="w"> </span><span class="n">collected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">aValue</span><span class="w"> </span><span class="k">retain</span><span class="p">];</span>
+<span class="w">    </span><span class="p">[</span><span class="nb">self</span><span class="w"> </span><span class="k">do</span><span class="o">:^</span><span class="p">(</span><span class="kt">id</span><span class="w"> </span><span class="n">each</span><span class="p">){</span>
+<span class="w">        </span><span class="n">collected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">aBlock</span><span class="p">([</span><span class="n">collected</span><span class="w"> </span><span class="n">autorelease</span><span class="p">],</span><span class="w"> </span><span class="n">each</span><span class="p">)</span><span class="w"> </span><span class="k">retain</span><span class="p">];</span>
+<span class="w">    </span><span class="p">}];</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="n">collected</span><span class="w"> </span><span class="n">autorelease</span><span class="p">];</span>
+<span class="p">}</span>
 
-<span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="bp">NSArray</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">reject</span><span class="o">:</span><span class="p">(</span><span class="kt">BOOL</span><span class="w"> </span><span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">id</span><span class="p">))</span><span class="n">aBlock</span><span class="p">;</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kt">id</span><span class="w"> </span><span class="n">selectedObjects</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="bp">NSMutableArray</span><span class="w"> </span><span class="n">arrayWithCapacity</span><span class="o">:</span><span class="p">[</span><span class="nb">self</span><span class="w"> </span><span class="n">count</span><span class="p">]];</span><span class="w"></span>
-<span class="w">    </span><span class="p">[</span><span class="nb">self</span><span class="w"> </span><span class="k">do</span><span class="o">:^</span><span class="p">(</span><span class="kt">id</span><span class="w"> </span><span class="n">each</span><span class="p">){</span><span class="w"></span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">aBlock</span><span class="p">(</span><span class="n">each</span><span class="p">))</span><span class="w"></span>
-<span class="w">            </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="p">[</span><span class="n">selectedObjects</span><span class="w"> </span><span class="n">addObject</span><span class="o">:</span><span class="n">each</span><span class="p">];</span><span class="w"></span>
-<span class="w">    </span><span class="p">}];</span><span class="w"></span>
+<span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="bp">NSArray</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">reject</span><span class="o">:</span><span class="p">(</span><span class="kt">BOOL</span><span class="w"> </span><span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">id</span><span class="p">))</span><span class="n">aBlock</span><span class="p">;</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">id</span><span class="w"> </span><span class="n">selectedObjects</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="bp">NSMutableArray</span><span class="w"> </span><span class="n">arrayWithCapacity</span><span class="o">:</span><span class="p">[</span><span class="nb">self</span><span class="w"> </span><span class="n">count</span><span class="p">]];</span>
+<span class="w">    </span><span class="p">[</span><span class="nb">self</span><span class="w"> </span><span class="k">do</span><span class="o">:^</span><span class="p">(</span><span class="kt">id</span><span class="w"> </span><span class="n">each</span><span class="p">){</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">aBlock</span><span class="p">(</span><span class="n">each</span><span class="p">))</span>
+<span class="w">            </span><span class="k">return</span><span class="p">;</span>
+<span class="w">        </span><span class="p">[</span><span class="n">selectedObjects</span><span class="w"> </span><span class="n">addObject</span><span class="o">:</span><span class="n">each</span><span class="p">];</span>
+<span class="w">    </span><span class="p">}];</span>
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="n">selectedObjects</span><span class="w"> </span><span class="k">copy</span><span class="p">];</span><span class="w"> </span><span class="c1">// REFACT: consider to drop copy</span>
-<span class="p">}</span><span class="w"></span>
+<span class="p">}</span>
 
-<span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="bp">NSArray</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">select</span><span class="o">:</span><span class="p">(</span><span class="kt">BOOL</span><span class="w"> </span><span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">id</span><span class="p">))</span><span class="n">aBlock</span><span class="p">;</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="nb">self</span><span class="w"> </span><span class="n">reject</span><span class="o">:^</span><span class="p">(</span><span class="kt">id</span><span class="w"> </span><span class="n">each</span><span class="p">){</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="n">aBlock</span><span class="p">(</span><span class="n">each</span><span class="p">);</span><span class="w"> </span><span class="p">}];</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-<span class="k">@end</span><span class="w"></span>
+<span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="bp">NSArray</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">select</span><span class="o">:</span><span class="p">(</span><span class="kt">BOOL</span><span class="w"> </span><span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">id</span><span class="p">))</span><span class="n">aBlock</span><span class="p">;</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="nb">self</span><span class="w"> </span><span class="n">reject</span><span class="o">:^</span><span class="p">(</span><span class="kt">id</span><span class="w"> </span><span class="n">each</span><span class="p">){</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="n">aBlock</span><span class="p">(</span><span class="n">each</span><span class="p">);</span><span class="w"> </span><span class="p">}];</span>
+<span class="p">}</span>
+<span class="k">@end</span>
 
 
 <span class="cp">#define log(objcObject) fprintf(stdout, &quot;%s\n&quot;, [[objcObject description] UTF8String])</span>
 
-<span class="kt">int</span><span class="w"> </span><span class="n">main</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">argv</span><span class="p">[])</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="bp">NSAutoreleasePool</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pool</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[[</span><span class="bp">NSAutoreleasePool</span><span class="w"> </span><span class="n">alloc</span><span class="p">]</span><span class="w"> </span><span class="n">init</span><span class="p">];</span><span class="w"></span>
+<span class="kt">int</span><span class="w"> </span><span class="n">main</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">argv</span><span class="p">[])</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="bp">NSAutoreleasePool</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pool</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[[</span><span class="bp">NSAutoreleasePool</span><span class="w"> </span><span class="n">alloc</span><span class="p">]</span><span class="w"> </span><span class="n">init</span><span class="p">];</span>
 
-<span class="w">    </span><span class="kt">id</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="bp">NSArray</span><span class="w"> </span><span class="n">arrayWithObjects</span><span class="o">:</span><span class="s">@&quot;first&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;second&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;third&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">nil</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="kt">id</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="bp">NSArray</span><span class="w"> </span><span class="n">arrayWithObjects</span><span class="o">:</span><span class="s">@&quot;first&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;second&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;third&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">nil</span><span class="p">];</span>
 
-<span class="w">    </span><span class="n">log</span><span class="p">(</span><span class="s">@&quot;</span><span class="se">\n</span><span class="s">do:&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">[</span><span class="n">array</span><span class="w"> </span><span class="k">do</span><span class="o">:^</span><span class="p">(</span><span class="kt">id</span><span class="w"> </span><span class="n">each</span><span class="p">){</span><span class="w"></span>
-<span class="w">        </span><span class="n">log</span><span class="p">(</span><span class="n">each</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">}];</span><span class="w"></span>
+<span class="w">    </span><span class="n">log</span><span class="p">(</span><span class="s">@&quot;</span><span class="se">\n</span><span class="s">do:&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">[</span><span class="n">array</span><span class="w"> </span><span class="k">do</span><span class="o">:^</span><span class="p">(</span><span class="kt">id</span><span class="w"> </span><span class="n">each</span><span class="p">){</span>
+<span class="w">        </span><span class="n">log</span><span class="p">(</span><span class="n">each</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}];</span>
 
-<span class="w">    </span><span class="n">log</span><span class="p">(</span><span class="s">@&quot;</span><span class="se">\n</span><span class="s">collect:&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">log</span><span class="p">([</span><span class="n">array</span><span class="w"> </span><span class="n">collect</span><span class="o">:^</span><span class="kt">id</span><span class="p">(</span><span class="kt">id</span><span class="w"> </span><span class="n">each</span><span class="p">){</span><span class="w"></span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="n">each</span><span class="w"> </span><span class="n">uppercaseString</span><span class="p">];</span><span class="w"></span>
-<span class="w">    </span><span class="p">}]);</span><span class="w"></span>
+<span class="w">    </span><span class="n">log</span><span class="p">(</span><span class="s">@&quot;</span><span class="se">\n</span><span class="s">collect:&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">log</span><span class="p">([</span><span class="n">array</span><span class="w"> </span><span class="n">collect</span><span class="o">:^</span><span class="kt">id</span><span class="p">(</span><span class="kt">id</span><span class="w"> </span><span class="n">each</span><span class="p">){</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="n">each</span><span class="w"> </span><span class="n">uppercaseString</span><span class="p">];</span>
+<span class="w">    </span><span class="p">}]);</span>
 
-<span class="w">    </span><span class="n">log</span><span class="p">(</span><span class="s">@&quot;</span><span class="se">\n</span><span class="s">detect:&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">log</span><span class="p">([</span><span class="n">array</span><span class="w"> </span><span class="n">detect</span><span class="o">:^</span><span class="p">(</span><span class="kt">id</span><span class="w"> </span><span class="n">each</span><span class="p">){</span><span class="w"></span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="n">each</span><span class="w"> </span><span class="n">isEqual</span><span class="o">:</span><span class="s">@&quot;second&quot;</span><span class="p">];</span><span class="w"></span>
-<span class="w">    </span><span class="p">}]);</span><span class="w"></span>
+<span class="w">    </span><span class="n">log</span><span class="p">(</span><span class="s">@&quot;</span><span class="se">\n</span><span class="s">detect:&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">log</span><span class="p">([</span><span class="n">array</span><span class="w"> </span><span class="n">detect</span><span class="o">:^</span><span class="p">(</span><span class="kt">id</span><span class="w"> </span><span class="n">each</span><span class="p">){</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="n">each</span><span class="w"> </span><span class="n">isEqual</span><span class="o">:</span><span class="s">@&quot;second&quot;</span><span class="p">];</span>
+<span class="w">    </span><span class="p">}]);</span>
 
-<span class="w">    </span><span class="n">log</span><span class="p">(</span><span class="s">@&quot;</span><span class="se">\n</span><span class="s">detect:ifNone:&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">log</span><span class="p">(</span><span class="s">@&quot;</span><span class="se">\n</span><span class="s">detect:ifNone:&quot;</span><span class="p">);</span>
 <span class="w">    </span><span class="n">log</span><span class="p">([</span><span class="n">array</span><span class="w"> </span><span class="n">detect</span><span class="o">:^</span><span class="p">(</span><span class="kt">id</span><span class="w"> </span><span class="n">each</span><span class="p">){</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nb">NO</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span>
-<span class="w">                        </span><span class="nl">ifNone</span><span class="p">:(</span><span class="kt">id</span><span class="p">)</span><span class="o">^</span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="s">@&quot;Yeehaw!&quot;</span><span class="p">;</span><span class="w"> </span><span class="p">}]);</span><span class="w"></span>
+<span class="w">                        </span><span class="nl">ifNone</span><span class="p">:(</span><span class="kt">id</span><span class="p">)</span><span class="o">^</span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="s">@&quot;Yeehaw!&quot;</span><span class="p">;</span><span class="w"> </span><span class="p">}]);</span>
 
-<span class="w">    </span><span class="n">log</span><span class="p">(</span><span class="s">@&quot;</span><span class="se">\n</span><span class="s">inject:into:&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">log</span><span class="p">([</span><span class="n">array</span><span class="w"> </span><span class="n">inject</span><span class="o">:</span><span class="s">@&quot;&quot;</span><span class="w"> </span><span class="n">into</span><span class="o">:</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="kt">id</span><span class="w"> </span><span class="p">(</span><span class="kt">id</span><span class="w"> </span><span class="n">concatenation</span><span class="p">,</span><span class="w"> </span><span class="kt">id</span><span class="w"> </span><span class="n">element</span><span class="p">){</span><span class="w"></span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="n">concatenation</span><span class="w"> </span><span class="n">stringByAppendingString</span><span class="o">:</span><span class="n">element</span><span class="p">];</span><span class="w"></span>
-<span class="w">    </span><span class="p">}]);</span><span class="w"></span>
+<span class="w">    </span><span class="n">log</span><span class="p">(</span><span class="s">@&quot;</span><span class="se">\n</span><span class="s">inject:into:&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">log</span><span class="p">([</span><span class="n">array</span><span class="w"> </span><span class="n">inject</span><span class="o">:</span><span class="s">@&quot;&quot;</span><span class="w"> </span><span class="n">into</span><span class="o">:</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="kt">id</span><span class="w"> </span><span class="p">(</span><span class="kt">id</span><span class="w"> </span><span class="n">concatenation</span><span class="p">,</span><span class="w"> </span><span class="kt">id</span><span class="w"> </span><span class="n">element</span><span class="p">){</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="n">concatenation</span><span class="w"> </span><span class="n">stringByAppendingString</span><span class="o">:</span><span class="n">element</span><span class="p">];</span>
+<span class="w">    </span><span class="p">}]);</span>
 
-<span class="w">    </span><span class="n">log</span><span class="p">(</span><span class="s">@&quot;</span><span class="se">\n</span><span class="s">reject:&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">log</span><span class="p">([</span><span class="n">array</span><span class="w"> </span><span class="n">reject</span><span class="o">:^</span><span class="p">(</span><span class="kt">id</span><span class="w"> </span><span class="n">each</span><span class="p">){</span><span class="w"></span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="n">each</span><span class="w"> </span><span class="n">hasSuffix</span><span class="o">:</span><span class="s">@&quot;nd&quot;</span><span class="p">];</span><span class="w"></span>
-<span class="w">    </span><span class="p">}]);</span><span class="w"></span>
+<span class="w">    </span><span class="n">log</span><span class="p">(</span><span class="s">@&quot;</span><span class="se">\n</span><span class="s">reject:&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">log</span><span class="p">([</span><span class="n">array</span><span class="w"> </span><span class="n">reject</span><span class="o">:^</span><span class="p">(</span><span class="kt">id</span><span class="w"> </span><span class="n">each</span><span class="p">){</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="n">each</span><span class="w"> </span><span class="n">hasSuffix</span><span class="o">:</span><span class="s">@&quot;nd&quot;</span><span class="p">];</span>
+<span class="w">    </span><span class="p">}]);</span>
 
-<span class="w">    </span><span class="n">log</span><span class="p">(</span><span class="s">@&quot;</span><span class="se">\n</span><span class="s">select:&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">log</span><span class="p">([</span><span class="n">array</span><span class="w"> </span><span class="n">select</span><span class="o">:^</span><span class="p">(</span><span class="kt">id</span><span class="w"> </span><span class="n">each</span><span class="p">){</span><span class="w"></span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="n">each</span><span class="w"> </span><span class="n">hasSuffix</span><span class="o">:</span><span class="s">@&quot;d&quot;</span><span class="p">];</span><span class="w"></span>
-<span class="w">    </span><span class="p">}]);</span><span class="w"></span>
+<span class="w">    </span><span class="n">log</span><span class="p">(</span><span class="s">@&quot;</span><span class="se">\n</span><span class="s">select:&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">log</span><span class="p">([</span><span class="n">array</span><span class="w"> </span><span class="n">select</span><span class="o">:^</span><span class="p">(</span><span class="kt">id</span><span class="w"> </span><span class="n">each</span><span class="p">){</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="n">each</span><span class="w"> </span><span class="n">hasSuffix</span><span class="o">:</span><span class="s">@&quot;d&quot;</span><span class="p">];</span>
+<span class="w">    </span><span class="p">}]);</span>
 
-<span class="w">    </span><span class="p">[</span><span class="n">pool</span><span class="w"> </span><span class="n">drain</span><span class="p">];</span><span class="w"></span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="n">pool</span><span class="w"> </span><span class="n">drain</span><span class="p">];</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
 <p>Ain't that pretty?</p>
 <p>[browser:open-source/smalltalk-like-iterators/trunk Here's the current version!]</p>
@@ -488,70 +559,6 @@
   </article>
 
   
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2009/7/freenode-dass-ich-nicht-lache/">
-        FreeNode dass ich nicht lache...
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2009-07-13">Monday, July 13, 2009</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Heute bin ich mal wieder im CCC - und überraschenderweise fällt mir da diese Fehlermeldung auf:</p>
-<pre><code>20:05:26 wolfe.freenode.net: (notice) 
-*** Banned:  You've been temporarily blocked 
-due to filtering problems. Sorry for the 
-inconvenience! Mail kline@freenode.net with questions.
-</code></pre>
-<p>Well, da melde ich mich doch mal:</p>
-<pre><code>Your IP address is: 195.160.172.2
-Your hostname is: fuckup.club.berlin.ccc.de
-I am writing this because I got a message about a 
-filtering problem that accidentally banned me.
-
-So here I am.
-</code></pre>
-<p>To witch I got this answer:</p>
-<pre><code>Please connect from a host which has an IP that doesn't resolve to a
-name that contains "fuck".
-
-Thanks,
-stew
-</code></pre>
-<p>Meine Hinweis dass:</p>
-<pre><code>You do realize that this is in reference to the "First Universal 
-Cybernetic-Kinetic Ultra-Micro Programmer" from 
-Hagbard Celine in the Illuminati Trilogy?
-
-So I'd urge you to please take that out of the filter list.
-</code></pre>
-<p>wurde dann allerdings nur noch abgebügelt.</p>
-<pre><code>No, and I don't think you should expect people to know this reference.
-
-&gt; So I'd urge you to please take that out of the filter list.
-
-I don't believe there are any plans to change this filter.
-
-thanks,
-stew
-</code></pre>
-<p>Tja. So viel zu selbsternannten Moralaposteln die mit Wortfilterlisten spielen. Mein Vorschlag: Erwachsen werden und <a href="http://de.wikipedia.org/wiki/Illuminatus!">Illuminatus!</a> lesen!</p>
-<p><strong><em>Update:</em></strong> <a href="http://superfluousandsparse.blogspot.com/2009/07/freenode-fail.html">Florian</a> hatte die gute Idee doch mal nach dem Servernamen von Freenode auf dem ich connected war zu googeln. Sieh an, was für eindeutige Angebote... Ich finde im Lichte dieser neuen Erkenntnis sollten die dort dringend ihren Servernamen ändern.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2009/7/freenode-dass-ich-nicht-lache/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
   
   
     
@@ -571,7 +578,7 @@ stew
     <footer class="container-fluid ">
       <ul class="nav">
   <li class="nav-item copyright">
-    <span class="nav-link">&copy; 2022 <a href="../../../work/">Martin Häcker</a></span>
+    <span class="nav-link">&copy; 2024 <a href="../../../work/">Martin Häcker</a></span>
   </li>
   
     

@@ -76,42 +76,42 @@
 <p>The problem is that name lookup in JavaScript is quite peculiar. First it consults the current function activation for local variables and then it goes straight back to the <code>window</code> object and just prepends all it's contents to the local namespace.</p>
 <p>Doh. This has the very bad consequence that every variable you forget to declare via the <code>var someVariableName</code> syntax becomes part of the global object - and therefore itself global.</p>
 <p>Now you can change this lookup by inserting some of your objects in this lookup chain by using the <a href="http://yuiblog.com/blog/2006/04/11/with-statement-considered-harmful/">somewhat controversial</a> <code>with</code> statement like so:</p>
-<div class="hll"><pre><span></span><span class="kd">var</span> <span class="nx">namespace</span> <span class="o">=</span> <span class="p">{</span><span class="nx">foo</span><span class="o">:</span><span class="s1">&#39;bar&#39;</span><span class="p">};</span>
-<span class="kd">with</span> <span class="p">(</span><span class="nx">namespace</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c1">// this scope now has a local variable foo with the value bar</span>
+<div class="hll"><pre><span></span><span class="kd">var</span><span class="w"> </span><span class="nx">namespace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="nx">foo</span><span class="o">:</span><span class="s1">&#39;bar&#39;</span><span class="p">};</span>
+<span class="kd">with</span><span class="w"> </span><span class="p">(</span><span class="nx">namespace</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// this scope now has a local variable foo with the value bar</span>
 <span class="p">}</span>
 </pre></div>
 <p>This is considered a bad feature, as it means that if you assign to <code>foo</code> that will assign a new value to <code>namespace</code> but if you assign to something else or mistype, that will still end up on the global object. Not very nice - and therefore most JavaScript programmers don't use <code>with</code> ever.</p>
 <p>Still with some working and eval it can be used to re-map free functions transparently, so that you can do something like this:</p>
-<div class="hll"><pre><span></span><span class="kd">var</span> <span class="nx">namespace</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="nx">equals</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">actual</span><span class="p">,</span> <span class="nx">expected</span><span class="p">){</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">actual</span> <span class="o">!==</span> <span class="nx">expected</span><span class="p">)</span>
-            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;actual&#39;</span><span class="p">,</span> <span class="nx">actual</span><span class="p">,</span> <span class="s1">&#39;does not equal expected&#39;</span><span class="p">,</span> <span class="nx">expected</span><span class="p">);</span>
-    <span class="p">}</span>
+<div class="hll"><pre><span></span><span class="kd">var</span><span class="w"> </span><span class="nx">namespace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">equals</span><span class="o">:</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">actual</span><span class="p">,</span><span class="w"> </span><span class="nx">expected</span><span class="p">){</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">actual</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="nx">expected</span><span class="p">)</span>
+<span class="w">            </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;actual&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">actual</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;does not equal expected&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">expected</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 
-<span class="kd">function</span> <span class="nx">test</span><span class="p">(</span><span class="nx">aDescription</span><span class="p">,</span> <span class="nx">aTestFunction</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">useNamespaceForFunction</span><span class="p">(</span><span class="nx">namespace</span> <span class="p">,</span> <span class="nx">aTestFunction</span><span class="p">)();</span>
+<span class="kd">function</span><span class="w"> </span><span class="nx">test</span><span class="p">(</span><span class="nx">aDescription</span><span class="p">,</span><span class="w"> </span><span class="nx">aTestFunction</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">useNamespaceForFunction</span><span class="p">(</span><span class="nx">namespace</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="nx">aTestFunction</span><span class="p">)();</span>
 <span class="p">}</span>
 
-<span class="nx">test</span><span class="p">(</span><span class="s2">&quot;that I can call equals as a free function&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
-    <span class="nx">equals</span><span class="p">(</span><span class="mf">1</span><span class="p">,</span><span class="mf">1</span><span class="p">);</span>
+<span class="nx">test</span><span class="p">(</span><span class="s2">&quot;that I can call equals as a free function&quot;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">(){</span>
+<span class="w">    </span><span class="nx">equals</span><span class="p">(</span><span class="mf">1</span><span class="p">,</span><span class="mf">1</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
 <p>Which would allow you to not pollute the global namespace with all the testing equality functions but still call them in a convenient way (that is without needing to go through an object.</p>
 <p>All in all, quite nice really - even though I haven't really found a use for this yet. :-)</p>
 <p>Implementing the <code>useNamespaceForFunction</code> however isn't quite as straightforward as I had thought - here's my first go at it:</p>
-<div class="hll"><pre><span></span><span class="kd">function</span> <span class="nx">useNamespaceForFunction</span><span class="p">(</span><span class="nx">aNamespace</span><span class="p">,</span> <span class="nx">aFunction</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">with</span> <span class="p">(</span><span class="nx">aNamespace</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span>  <span class="nb">eval</span><span class="p">(</span><span class="s1">&#39;(&#39;</span> <span class="o">+</span> <span class="nx">aFunction</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span><span class="p">);</span>
-    <span class="p">}</span>
+<div class="hll"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">useNamespaceForFunction</span><span class="p">(</span><span class="nx">aNamespace</span><span class="p">,</span><span class="w"> </span><span class="nx">aFunction</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">with</span><span class="w"> </span><span class="p">(</span><span class="nx">aNamespace</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w">  </span><span class="nb">eval</span><span class="p">(</span><span class="s1">&#39;(&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">aFunction</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;)&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <p>I have since learned that actually using <code>new Function</code> to do the eval might be quite a good idea as the whole point of it is that it ignores the namespace around it, so here's my version two:</p>
-<div class="hll"><pre><span></span><span class="kd">function</span> <span class="nx">useNamespaceForFunction</span><span class="p">(</span><span class="nx">aNamespace</span><span class="p">,</span> <span class="nx">aFunction</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">namespacingCode</span> <span class="o">=</span> <span class="s2">&quot;with (aNamespace) { return (&quot;</span> <span class="o">+</span> <span class="nx">aFunction</span> <span class="o">+</span> <span class="s2">&quot;); }&quot;</span><span class="p">;</span>
-    <span class="c1">// using new Function instead of eval to prevent the current namespace leaking into the eval&lt;</span>
-    <span class="k">return</span> <span class="ow">new</span> <span class="nb">Function</span><span class="p">(</span><span class="s2">&quot;aNamespace&quot;</span><span class="p">,</span> <span class="nx">namespacingCode</span><span class="p">)(</span><span class="nx">aNamespace</span><span class="p">);</span>
+<div class="hll"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">useNamespaceForFunction</span><span class="p">(</span><span class="nx">aNamespace</span><span class="p">,</span><span class="w"> </span><span class="nx">aFunction</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">namespacingCode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;with (aNamespace) { return (&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">aFunction</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot;); }&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">// using new Function instead of eval to prevent the current namespace leaking into the eval&lt;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Function</span><span class="p">(</span><span class="s2">&quot;aNamespace&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">namespacingCode</span><span class="p">)(</span><span class="nx">aNamespace</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 <p>So, lets see what uses come up for this technique - I've seen some js code that does an Interpreter of sorts with this trick - but thats about it.</p>
@@ -149,7 +149,7 @@
     <footer class="container-fluid ">
       <ul class="nav">
   <li class="nav-item copyright">
-    <span class="nav-link">&copy; 2022 <a href="../../../../work/">Martin Häcker</a></span>
+    <span class="nav-link">&copy; 2024 <a href="../../../../work/">Martin Häcker</a></span>
   </li>
   
     

@@ -80,21 +80,21 @@
 <p>Aber wer bitte soll das Lesen? Und wieso wohl hat sich APL nicht durchgesetzt?</p>
 <p>Im GCC gibt es auch <a href="http://gcc.gnu.org/onlinedocs/gcc-3.3.1/gcc/Conditionals.html#Conditionals">eine Erweiterung</a> die den tertiären Operator erweitert <code>(test) ? ifTrueValue : ifFalseValue</code> so dass man den mitleren Operanden weglassen kann um bei dieser Form zu landen <code>aValue ?: ifValueEvaluatedToFalse</code>. Das ist für sich gesehen nun jetzt erst einmal blöde - andersherum ergibt sich daraus die schöne Möglichkeit einen "Oder" Operator zu haben.</p>
 <p>Das heißt: Muss man dieses Beispiel</p>
-<div class="hll"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">getImportantValue</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">somethingWhichGeneratesAStringOrNull</span><span class="p">();</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="hll"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">getImportantValue</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">somethingWhichGeneratesAStringOrNull</span><span class="p">();</span>
+<span class="p">}</span>
 </pre></div>
 <p>erweitern, dass es nie null zurückgibt, sondern stattdessen immer mindestens einen leeren String, geht jetzt einfacher. Klassisch würde man das so machen müssen:</p>
-<div class="hll"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">getImportantValue</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="n">somethingWhichGeneratesAString</span><span class="p">();</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">value</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="hll"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">getImportantValue</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="n">somethingWhichGeneratesAString</span><span class="p">();</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">value</span><span class="p">;</span>
+<span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
 <p>Oder eben kürzer mit der Erweiterung:</p>
-<div class="hll"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">getImportantValue</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">somethingWhichGeneratesAString</span><span class="p">()</span><span class="w"> </span><span class="o">?:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="hll"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">getImportantValue</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">somethingWhichGeneratesAString</span><span class="p">()</span><span class="w"> </span><span class="o">?:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
 <p>Ist diese Vereinfachung beim Schreiben die größere Komplexität beim Lesen wert? Immerhin wird fast kein C-Coder dieses Konstrukt kennen und daher zuerst einmal überrascht sein wird.</p>
 <p>Vielleicht sollte man es dann also in ein Macro packen, das diese Funktion über den Namen dokumentiert, etwa</p>
@@ -136,7 +136,7 @@
     <footer class="container-fluid ">
       <ul class="nav">
   <li class="nav-item copyright">
-    <span class="nav-link">&copy; 2022 <a href="../../../../work/">Martin Häcker</a></span>
+    <span class="nav-link">&copy; 2024 <a href="../../../../work/">Martin Häcker</a></span>
   </li>
   
     

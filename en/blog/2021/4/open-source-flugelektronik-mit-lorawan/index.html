@@ -75,10 +75,10 @@
 <p><a href="https://github.com/lyusupov/SoftRF">SoftRF</a> ist vermutlich das bekannteste, da es mit günstiger Hardware eigentlich alle Standards unterstützt. <a href="https://de.aliexpress.com/item/4001286458852.html">Dieses</a> für in der Luft und und <a href="https://de.aliexpress.com/item/4000571051141.html">dieses</a> als Gegengerät am Boden und für Experimente - jeweils in der in Europa zugelassenen 868Mhz Variante - habe ich mir besorgt, da sie nur jeweils ~25€ Kosten.</p>
 <p>SoftRF kommt darauf sogar schon vorinstalliert, das ist wirklich sehr komfortabel.</p>
 <p>In Betrieb lassen sich die Geräte auch ganz gut nehmen, einfach via USB an den Rechner anschließen, bei dem einen geht dann ein WLAN auf über das man es Konfigurieren kann, bei dem anderen hat man direkten Zugriff über die serielle:</p>
-<div class="hll"><pre><span></span>$ pip install pyserial
-$ python -m serial.tools.list_ports
+<div class="hll"><pre><span></span>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>pyserial
+$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>serial.tools.list_ports
 <span class="o">[</span>...<span class="o">]</span>
-$ python -m serial.tools.miniterm /path/to/port
+$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>serial.tools.miniterm<span class="w"> </span>/path/to/port
 </pre></div>
 <p>Konfigurieren kann man das Gerät dann über eine Config-String, den man <a href="http://soaringweather.no-ip.info/SoftRF/settings.html">in diesem Web-Interface</a> generieren kann.</p>
 <p>Easy peasy.</p>
@@ -128,7 +128,7 @@ $ python -m serial.tools.miniterm /path/to/port
     <footer class="container-fluid ">
       <ul class="nav">
   <li class="nav-item copyright">
-    <span class="nav-link">&copy; 2022 <a href="../../../../work/">Martin Häcker</a></span>
+    <span class="nav-link">&copy; 2024 <a href="../../../../work/">Martin Häcker</a></span>
   </li>
   
     

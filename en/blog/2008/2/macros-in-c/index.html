@@ -77,32 +77,32 @@
 <p>Das macht vor allem in Objective-C mächtig Schwierigkeiten. Das hier zum Beispiel geht nicht.</p>
 <div class="hll"><pre><span></span><span class="cp">#define DO(argument) argument</span>
 
-<span class="n">DO</span><span class="p">([</span><span class="bp">NSString</span><span class="w"> </span><span class="n">stringWithFormat</span><span class="o">:</span><span class="s">@&quot;%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;asdf&quot;</span><span class="p">]);</span><span class="w"></span>
+<span class="n">DO</span><span class="p">([</span><span class="bp">NSString</span><span class="w"> </span><span class="n">stringWithFormat</span><span class="o">:</span><span class="s">@&quot;%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;asdf&quot;</span><span class="p">]);</span>
 </pre></div>
 <p>Der Compiler meckert hier über zu viele Kommas und denkt das ich das Makro mit zwei Argumenten aufrufen will. Gnah.</p>
 <p>Warum beschäftigt mich das eigentlich?</p>
 <p>Ich möchte gerne Macro's haben, die je nach Typ des Arguments etwas anderes machen. Für Unit-Tests z.B. möchte ich sagen:</p>
-<div class="hll"><pre><span></span><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">testOverloadedAssert</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="s">@&quot;barf&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;barf&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="s">&quot;bar&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;bar&quot;</span><span class="p">);</span><span class="w"></span>
+<div class="hll"><pre><span></span><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">testOverloadedAssert</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">);</span>
+<span class="w">    </span><span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="s">@&quot;barf&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;barf&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="s">&quot;bar&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;bar&quot;</span><span class="p">);</span>
 
 <span class="w">    </span><span class="c1">// These should fail in a sensible manner</span>
-<span class="w">    </span><span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="s">&quot;bar&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;bar&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mf">3.3</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="s">&quot;bar&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;bar&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mf">3.3</span><span class="p">);</span>
+<span class="p">}</span>
 </pre></div>
 <p>Das ist aber schon ein großes Problem. In C++ könnte man den ersten teil ja noch über überladene Funktionen lösen - das geht in reinem Objective-C aber schon mal nicht. Dazu kommt ja noch der zweite Teil - da kriegt man vielleicht noch Compiler-Fehlermeldungen, wenn der Compiler nicht auto-conversion von Parametern anwirft. :-/</p>
 <p>Dazu kommt, das ich C++ nicht mag und schon gar nicht in alle meine Tests eine zwingende Abhängigkeit auf C++ einfügen will.</p>
 <p>Will man dann aber noch weiter gehen, wird es endgültig schwierig. Hier ein paar Beispiele:</p>
-<div class="hll"><pre><span></span><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">testAdvancedAssert</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="mf">3.3</span><span class="p">,</span><span class="w"> </span><span class="mf">3.3</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span><span class="w"> </span><span class="cm">/* accuracy */</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="mf">3.3</span><span class="p">,</span><span class="w"> </span><span class="mf">3.3</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;important meta information&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;info contains: %@ in %s:%d&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">         </span><span class="s">@&quot;other info&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">__PRETTY_FUNCTION__</span><span class="p">,</span><span class="w"> </span><span class="n">__LINE__</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="hll"><pre><span></span><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">testAdvancedAssert</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="mf">3.3</span><span class="p">,</span><span class="w"> </span><span class="mf">3.3</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span><span class="w"> </span><span class="cm">/* accuracy */</span><span class="p">);</span>
+<span class="w">    </span><span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="mf">3.3</span><span class="p">,</span><span class="w"> </span><span class="mf">3.3</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;important meta information&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;info contains: %@ in %s:%d&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="s">@&quot;other info&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">__PRETTY_FUNCTION__</span><span class="p">,</span><span class="w"> </span><span class="n">__LINE__</span><span class="p">);</span>
+<span class="p">}</span>
 </pre></div>
 <p>In reinem C hätte man hier gar keine Möglichkeiten mehr etwas zu machen.</p>
 <p>Wie weit ich mit einer Lösung dennoch gekommen bin - morgen. :)</p>
@@ -137,7 +137,7 @@
     <footer class="container-fluid ">
       <ul class="nav">
   <li class="nav-item copyright">
-    <span class="nav-link">&copy; 2022 <a href="../../../../work/">Martin Häcker</a></span>
+    <span class="nav-link">&copy; 2024 <a href="../../../../work/">Martin Häcker</a></span>
   </li>
   
     

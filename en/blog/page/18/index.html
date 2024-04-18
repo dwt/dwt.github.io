@@ -57,6 +57,31 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/9/wie-definiert-man-glu-ck-haben/">
+        Wie definiert man &#34;Glück haben&#34;?
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-09-28">Sunday, September 28, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p><a href="http://www.picvi.com/2008/09/17/video-almost-unreal-on-the-edge/">Mein Vorschlag für diese Diskussion</a></p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/9/wie-definiert-man-glu-ck-haben/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/9/applicationen-in-den-appstore-zu-kriegen/">
         Applicationen in den AppStore zu kriegen...
         </a>
@@ -430,47 +455,6 @@
   </article>
 
   
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/9/kryptographie-saugt/">
-        Kryptographie saugt
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-09-01">Monday, September 1, 2008</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Und zwar gewaltig.</p>
-<p>Heute hab ich eine Menge Zeit darauf verbrannt unserem Online-Update-System auf den Zahn zu fühlen. Das arbeitet nämlich ganz hervorragend mit <a href="http://sparkle.andymatuschak.org/">Sparkle</a> um für unsere Applikation via <a href="http://connectedflow.com/appcasting/">Appcast</a> herunter zu laden, wenn eine neue Version ansteht. Und damit das auch schön sicher ist, nutzen wir ein kleines öffentlich/privates Schlüsselpärchen um das abzusichern.</p>
-<p>Nun ja, bis heute mittag - da hat es nämlich auf einmal aufgehört und konnte die heruntergeladenen Dateien nicht mehr validieren.</p>
-<p>Jetzt hatte ich natürlich das Problem, das ich an sich recht wenig von Crypto verstehe und erst recht wie man das von der shell aus einsetzt. Das wiederum hatte zur Folge, dass ich das nicht sofort auf der Shell nachvollziehen konnte und wir schon anfingen zu fürchten das vielleicht unsere Schlüssel abgelaufen sind.</p>
-<p>Gott sei dank war es aber doch was anderes - denn unser Proxy hatte fieser weise einfach eine alte Version des Appcasts gespeichert und stattdessen immer die ausgeliefert - was natürlich nicht funktionierte... Grumpf.</p>
-<p>Note to self: Nächstes mal gleich den ganzen Vorgang von Hand reproduzieren um zu sehen wo es schief läuft - und zwar angefangen von da wo das Programm anfängt. (Auch wenn in diesem Fall die Fehlermeldung wirklich eher auf einen OpenSSL Fehler hindeutete).</p>
-<p>Debuggen ist eben schwieriger als den Code zu schreiben. Ich vermute, weil man ihn dafür <strong><em>wirklich</em></strong> verstehen muss - inklusive aller Fehler die man in seinem eigenen Verständnis hat.</p>
-<p>P.S.: So Signiert und Validiert man ein File mit OpenSSL von der Kommandozeile:</p>
-<div class="hll"><pre><span></span><span class="c1"># base 64 encoding to ease textual transmission</span>
-openssl dgst -dss1 -sign dsa_private_key.pem Important.rtf <span class="p">|</span> openssl enc -base64 &gt; signature.sig
-<span class="c1"># and decode again</span>
-openssl enc -base64 -d &lt; signature.sig &gt; decoded.signature.sig
-<span class="c1"># and verify</span>
-openssl dgst -dss1 -verify dsa_public_key.pem -signature decoded.signature.sig Important.rtf
-</pre></div>
-<p>Einige Fallstricke: -dss1 und -sha1 erzeugen offenbar die gleichen Checksummen (man könnte also meinen das es der gleiche Algorithmus ist) die beiden digest modi werden aber in openssl offenbar unterschiedlich behandelt. Beim Signieren löst das verwenden von -sha1 auch schön eine Fehlermeldung aus - wenn man beim Überprüfen aber -sha1 zu verwenden versucht, dann erhält man nur den Hinweis dass die Verifikation gescheitert ist - an einem falschen public key. Seeehr hilfreich liebe Entwickler.</p>
-<p>Wie man ein Schlüsselpaar erzeugt und vieles mehr <a href="http://www.madboa.com/geek/openssl/">gibts hier</a>.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/9/kryptographie-saugt/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
   
   
     
@@ -490,7 +474,7 @@ openssl dgst -dss1 -verify dsa_public_key.pem -signature decoded.signature.sig I
     <footer class="container-fluid ">
       <ul class="nav">
   <li class="nav-item copyright">
-    <span class="nav-link">&copy; 2022 <a href="../../../work/">Martin Häcker</a></span>
+    <span class="nav-link">&copy; 2024 <a href="../../../work/">Martin Häcker</a></span>
   </li>
   
     

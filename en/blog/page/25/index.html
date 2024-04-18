@@ -57,6 +57,35 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/5/regeln/">
+        Regeln
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-05-18">Sunday, May 18, 2008</time>
+      </p>
+    </header>
+    
+    <section class="blog-post-body">
+      <p>haben immer einen Grund aus dem heraus sie entwickelt wurden. Nur leider wird dieser Grund viel zu oft beim Vermitteln der Regeln nicht mehr mitgereicht.</p>
+<p>So gibt es Programmierer die ihren Code nicht einrücken weil sie den Grund dafür nicht kennen oder verstehen und Politiker die z.B. am Patentsystem schrauben ohne zu verstehen was der Grund dafür eigentlich war.</p>
+<p>Und genau das ist ein Problem - jede Regel hat einen Sinn - und diesen Sinn kann man nur bewerten wenn man eben genau weiß warum sie eingeführt wurde.</p>
+<p>Denn wenn dieser Sinn nicht mehr erfüllt wird, dann muss man die Regel verändern.</p>
+<p>Und das fällt schwer - vor allem wenn es eine Gruppe von Menschen ist (sagen wir 40-100) die sich jetzt gerade an ein paar Regeln gewöhnt hat und noch nicht weiß wie ihre Zusammenarbeit unter den neuen Regeln aussehen wird.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/5/regeln/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/5/der-traum-vom-fliegen/">
         Der Traum vom Fliegen ...
         </a>
@@ -206,37 +235,37 @@
 <p>In C natürlich. Das Problem ist klar: Makros können ja beliebige Ersetzungen im Text vornehmen und dann mit vielen Makros aus C Pascal zu machen geht auch - aber das will man ja nicht, denn sonst hat man das gleiche Problem wie die <a href="http://minnie.tuhs.org/UnixTree/V7/usr/src/cmd/sh/mac.h.html">Bourne</a>-<a href="http://minnie.tuhs.org/UnixTree/V7/usr/src/cmd/sh/args.c.html">Shell</a> die irgendwann niemand mehr weiterentwickeln konnte.</p>
 <p>Klar.</p>
 <p>Andererseits nervt es wirklich unter Cocoa z.B. für jede Iteration über einen Array das hier zu schreiben:</p>
-<div class="hll"><pre><span></span><span class="bp">NSArray</span><span class="w"> </span><span class="o">*</span><span class="n">someStrings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="bp">NSArray</span><span class="w"> </span><span class="n">arrayWithObjects</span><span class="o">:</span><span class="s">@&quot;first&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;second&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;third&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;fourth&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">nil</span><span class="p">];</span><span class="w"></span>
+<div class="hll"><pre><span></span><span class="bp">NSArray</span><span class="w"> </span><span class="o">*</span><span class="n">someStrings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="bp">NSArray</span><span class="w"> </span><span class="n">arrayWithObjects</span><span class="o">:</span><span class="s">@&quot;first&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;second&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;third&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;fourth&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">nil</span><span class="p">];</span>
 
-<span class="bp">NSString</span><span class="w"> </span><span class="o">*</span><span class="n">eachString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">nil</span><span class="p">;</span><span class="w"></span>
-<span class="bp">NSEnumerator</span><span class="w"> </span><span class="o">*</span><span class="n">enumerator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">someStrings</span><span class="w"> </span><span class="n">objectEnumerator</span><span class="p">];</span><span class="w"></span>
+<span class="bp">NSString</span><span class="w"> </span><span class="o">*</span><span class="n">eachString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">nil</span><span class="p">;</span>
+<span class="bp">NSEnumerator</span><span class="w"> </span><span class="o">*</span><span class="n">enumerator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">someStrings</span><span class="w"> </span><span class="n">objectEnumerator</span><span class="p">];</span>
 
-<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">eachString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">enumerator</span><span class="w"> </span><span class="n">nextObject</span><span class="p">])</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;eachString is %@&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">eachString</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">eachString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">enumerator</span><span class="w"> </span><span class="n">nextObject</span><span class="p">])</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;eachString is %@&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">eachString</span><span class="p">);</span>
+<span class="p">}</span>
 </pre></div>
 <p>Das heißt, für eine Schleife (zwei Zeilen) ha man noch mal mindestens zwei weitere Zeilen nur für das Setup.</p>
 <p>Das nervt so sehr, das viele Leute das etwas kürzen:</p>
-<div class="hll"><pre><span></span><span class="bp">NSArray</span><span class="w"> </span><span class="o">*</span><span class="n">someStrings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="bp">NSArray</span><span class="w"> </span><span class="n">arrayWithObjects</span><span class="o">:</span><span class="s">@&quot;first&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;second&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;third&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;fourth&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">nil</span><span class="p">];</span><span class="w"></span>
+<div class="hll"><pre><span></span><span class="bp">NSArray</span><span class="w"> </span><span class="o">*</span><span class="n">someStrings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="bp">NSArray</span><span class="w"> </span><span class="n">arrayWithObjects</span><span class="o">:</span><span class="s">@&quot;first&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;second&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;third&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;fourth&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">nil</span><span class="p">];</span>
 
-<span class="kt">id</span><span class="w"> </span><span class="n">eachString</span><span class="p">,</span><span class="w"> </span><span class="n">enumerator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">someStrings</span><span class="w"> </span><span class="n">objectEnumerator</span><span class="p">];</span><span class="w"></span>
-<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">eachString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">enumerator</span><span class="w"> </span><span class="n">nextObject</span><span class="p">])</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;eachString is %@&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">eachString</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="kt">id</span><span class="w"> </span><span class="n">eachString</span><span class="p">,</span><span class="w"> </span><span class="n">enumerator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">someStrings</span><span class="w"> </span><span class="n">objectEnumerator</span><span class="p">];</span>
+<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">eachString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">enumerator</span><span class="w"> </span><span class="n">nextObject</span><span class="p">])</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;eachString is %@&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">eachString</span><span class="p">);</span>
+<span class="p">}</span>
 </pre></div>
 <p>Schon besser, aber man verliert die Typchecks (falls man die haben will) und man muss trotzdem noch eine langweilige Zeile schreiben, die immer gleich ist und sich nicht wirklich kürzen lässt.</p>
 <p>Jetzt kann man natürlich unter C schön ein Makro bauen, was das schöner macht - aber, siehe <a href="http://minnie.tuhs.org/UnixTree/V7/usr/src/cmd/sh/args.c.html">Bourne Shell</a>...</p>
 <p>Aber, mit <a href="http://en.wikipedia.org/wiki/Objective-C#Fast_enumeration">ObjC 2.0</a> gibt es das <code>for(String *each in someStrings)</code> konstrukt, das schon deutlich kürzer (und auch schneller - aber aus anderen Gründen) ist.</p>
 <p>Also, doch mal ein Makro. Nach reiflichem (2 Minuten) überlegen hab ich mich entschieden es erst einmal mit einer <code>for</code> Schleife zu probieren, da das bedeutet das der Scope der Variablen schön beschränkt ist.</p>
 <p>Ziel wäre es also, das hier schreiben zu können:</p>
-<div class="hll"><pre><span></span><span class="bp">NSArray</span><span class="w"> </span><span class="o">*</span><span class="n">someStrings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="bp">NSArray</span><span class="w"> </span><span class="n">arrayWithObjects</span><span class="o">:</span><span class="s">@&quot;first&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;second&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;third&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;fourth&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">nil</span><span class="p">];</span><span class="w"></span>
+<div class="hll"><pre><span></span><span class="bp">NSArray</span><span class="w"> </span><span class="o">*</span><span class="n">someStrings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="bp">NSArray</span><span class="w"> </span><span class="n">arrayWithObjects</span><span class="o">:</span><span class="s">@&quot;first&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;second&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;third&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;fourth&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">nil</span><span class="p">];</span>
 
-<span class="n">FOREACH</span><span class="p">(</span><span class="n">eachString</span><span class="p">,</span><span class="w"> </span><span class="n">someStrings</span><span class="p">)</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;eachString is %@&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">eachString</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="n">FOREACH</span><span class="p">(</span><span class="n">eachString</span><span class="p">,</span><span class="w"> </span><span class="n">someStrings</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;eachString is %@&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">eachString</span><span class="p">);</span>
+<span class="p">}</span>
 </pre></div>
 <p>Und das sähe dann so aus:</p>
 <div class="hll"><pre><span></span><span class="cp">#define FOREACH(each, collection) \</span>
@@ -393,43 +422,6 @@
   </article>
 
   
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/5/warum-jeder-u-berall-das-gleiche-passwort-verwendet/">
-        Warum jeder überall das gleiche Passwort verwendet …
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-05-04">Sunday, May 4, 2008</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>… wo doch jeder weiß wie unsicher das ist?</p>
-<p>Dabei ist dass Problem so klar: Niemand kann sich für jeden Account den man heute im Social Web anlegen muss eine neue Kombination aus Benutzername und Passwort merken.</p>
-<p>Und es gibt mehrere Lösungen:</p>
-<p>Microsoft (aber auch viele Andere) favorisiert Single-Sign-On - ein Server von Microsoft verwaltet die Benutzerdaten für alle Webseiten. Man meldet sich nur noch bei Microsoft an und alle anderen Sprechen nicht mehr mit einem selber, sondern nur noch mit Microsoft um festzustellen ob der der da rein will echt ist.</p>
-<p>Super, nur noch ein Passwort - aber auch ein Punkt an dem alles schief gehen kann. Denn man muss dem Anbieter (Microsoft) vertrauen.</p>
-<p>Apple hat eine Andere Lösung: <a href="http://en.wikipedia.org/wiki/Apple_Keychain">Keychain</a>. Ganz Apple Typisch komplett in das System integriert und nicht nur eine Lösung für Webseite, sondern für jedes Authentifizierungsproblem.</p>
-<p>Super, auch nur noch ein Passwort und keine zentrale Location der man Vertrauen muss (abgesehen von der Implementierung des Dienstes). Aber, wenn man mehrere Computer verwendet oder auch mal aus der Ferne auf eine Webseite zugreifen muss / möchte, hat man erst einmal verloren.</p>
-<p>Und da habe ich heute die perfekte Lösung gefunden: Ein Javascript Bookmarklet das folgendes tut: Es verbindet ein konstantes Geheimnis (Master Password) mit einem Datum das für jede Webseite variiert (die URL oder den Namen der Seite) und jagt das Ergebnis durch eine <a href="http://de.wikipedia.org/wiki/SHA-1">Kryptographische Hash-Funktion</a>.</p>
-<p>Das Ergebnis ist damit ein Passwort das für jede Webseite anders ist - aber das man sich nicht merken muss.</p>
-<p>Das <a href="http://supergenpass.com/">Bookmarklet gibt es hier</a>. <a href="http://www.xs4all.nl/~jlpoutre/BoT/Javascript/PasswordComposer/">Und natürlich gibt es dafür auch eine Greasemonkey verschönerte Version für Firefox Benutzer</a>. (Die Angenehmerweise auch auf dem iPhone funktioniert)</p>
-<p>Ich verwende auf dem iPhone dieses Bookmarklet (<a href="http://www.xs4all.nl/~jlpoutre/BoT/Javascript/PasswordComposer">Als Backup gespeichert</a>)
-<code>javascript:(function(){function%20hex_md5(s){%20return%20binl2hex(core_md5(str2binl(s),%20s.length%20*%208));}function%20core_md5(x,%20len){x[len%20%3E%3E%205]|=%200x80%20%3C%3C%20((len)%20%25%2032);x[(((len%20+%2064)%20%3E%3E%3E%209)%20%3C%3C%204)%20+%2014]%20=%20len;var%20a%20=%20%201732584193;var%20b%20=%20-271733879;var%20c%20=%20-1732584194;var%20d%20=%20%20271733878;for(var%20i%20=%200;i%20%3C%20x.length;i%20+=%2016){var%20olda%20=%20a;var%20oldb%20=%20b;var%20oldc%20=%20c;var%20oldd%20=%20d;a%20=%20md5_ff(a,%20b,%20c,%20d,%20x[i+%200],%207%20,%20-680876936);d%20=%20md5_ff(d,%20a,%20b,%20c,%20x[i+%201],%2012,%20-389564586);c%20=%20md5_ff(c,%20d,%20a,%20b,%20x[i+%202],%2017,%20%20606105819);b%20=%20md5_ff(b,%20c,%20d,%20a,%20x[i+%203],%2022,%20-1044525330);a%20=%20md5_ff(a,%20b,%20c,%20d,%20x[i+%204],%207%20,%20-176418897);d%20=%20md5_ff(d,%20a,%20b,%20c,%20x[i+%205],%2012,%20%201200080426);c%20=%20md5_ff(c,%20d,%20a,%20b,%20x[i+%206],%2017,%20-1473231341);b%20=%20md5_ff(b,%20c,%20d,%20a,%20x[i+%207],%2022,%20-45705983);a%20=%20md5_ff(a,%20b,%20c,%20d,%20x[i+%208],%207%20,%20%201770035416);d%20=%20md5_ff(d,%20a,%20b,%20c,%20x[i+%209],%2012,%20-1958414417);c%20=%20md5_ff(c,%20d,%20a,%20b,%20x[i+10],%2017,%20-42063);b%20=%20md5_ff(b,%20c,%20d,%20a,%20x[i+11],%2022,%20-1990404162);a%20=%20md5_ff(a,%20b,%20c,%20d,%20x[i+12],%207%20,%20%201804603682);d%20=%20md5_ff(d,%20a,%20b,%20c,%20x[i+13],%2012,%20-40341101);c%20=%20md5_ff(c,%20d,%20a,%20b,%20x[i+14],%2017,%20-1502002290);b%20=%20md5_ff(b,%20c,%20d,%20a,%20x[i+15],%2022,%20%201236535329);a%20=%20md5_gg(a,%20b,%20c,%20d,%20x[i+%201],%205%20,%20-165796510);d%20=%20md5_gg(d,%20a,%20b,%20c,%20x[i+%206],%209%20,%20-1069501632);c%20=%20md5_gg(c,%20d,%20a,%20b,%20x[i+11],%2014,%20%20643717713);b%20=%20md5_gg(b,%20c,%20d,%20a,%20x[i+%200],%2020,%20-373897302);a%20=%20md5_gg(a,%20b,%20c,%20d,%20x[i+%205],%205%20,%20-701558691);d%20=%20md5_gg(d,%20a,%20b,%20c,%20x[i+10],%209%20,%20%2038016083);c%20=%20md5_gg(c,%20d,%20a,%20b,%20x[i+15],%2014,%20-660478335);b%20=%20md5_gg(b,%20c,%20d,%20a,%20x[i+%204],%2020,%20-405537848);a%20=%20md5_gg(a,%20b,%20c,%20d,%20x[i+%209],%205%20,%20%20568446438);d%20=%20md5_gg(d,%20a,%20b,%20c,%20x[i+14],%209%20,%20-1019803690);c%20=%20md5_gg(c,%20d,%20a,%20b,%20x[i+%203],%2014,%20-187363961);b%20=%20md5_gg(b,%20c,%20d,%20a,%20x[i+%208],%2020,%20%201163531501);a%20=%20md5_gg(a,%20b,%20c,%20d,%20x[i+13],%205%20,%20-1444681467);d%20=%20md5_gg(d,%20a,%20b,%20c,%20x[i+%202],%209%20,%20-51403784);c%20=%20md5_gg(c,%20d,%20a,%20b,%20x[i+%207],%2014,%20%201735328473);b%20=%20md5_gg(b,%20c,%20d,%20a,%20x[i+12],%2020,%20-1926607734);a%20=%20md5_hh(a,%20b,%20c,%20d,%20x[i+%205],%204%20,%20-378558);d%20=%20md5_hh(d,%20a,%20b,%20c,%20x[i+%208],%2011,%20-2022574463);c%20=%20md5_hh(c,%20d,%20a,%20b,%20x[i+11],%2016,%20%201839030562);b%20=%20md5_hh(b,%20c,%20d,%20a,%20x[i+14],%2023,%20-35309556);a%20=%20md5_hh(a,%20b,%20c,%20d,%20x[i+%201],%204%20,%20-1530992060);d%20=%20md5_hh(d,%20a,%20b,%20c,%20x[i+%204],%2011,%20%201272893353);c%20=%20md5_hh(c,%20d,%20a,%20b,%20x[i+%207],%2016,%20-155497632);b%20=%20md5_hh(b,%20c,%20d,%20a,%20x[i+10],%2023,%20-1094730640);a%20=%20md5_hh(a,%20b,%20c,%20d,%20x[i+13],%204%20,%20%20681279174);d%20=%20md5_hh(d,%20a,%20b,%20c,%20x[i+%200],%2011,%20-358537222);c%20=%20md5_hh(c,%20d,%20a,%20b,%20x[i+%203],%2016,%20-722521979);b%20=%20md5_hh(b,%20c,%20d,%20a,%20x[i+%206],%2023,%20%2076029189);a%20=%20md5_hh(a,%20b,%20c,%20d,%20x[i+%209],%204%20,%20-640364487);d%20=%20md5_hh(d,%20a,%20b,%20c,%20x[i+12],%2011,%20-421815835);c%20=%20md5_hh(c,%20d,%20a,%20b,%20x[i+15],%2016,%20%20530742520);b%20=%20md5_hh(b,%20c,%20d,%20a,%20x[i+%202],%2023,%20-995338651);a%20=%20md5_ii(a,%20b,%20c,%20d,%20x[i+%200],%206%20,%20-198630844);d%20=%20md5_ii(d,%20a,%20b,%20c,%20x[i+%207],%2010,%20%201126891415);c%20=%20md5_ii(c,%20d,%20a,%20b,%20x[i+14],%2015,%20-1416354905);b%20=%20md5_ii(b,%20c,%20d,%20a,%20x[i+%205],%2021,%20-57434055);a%20=%20md5_ii(a,%20b,%20c,%20d,%20x[i+12],%206%20,%20%201700485571);d%20=%20md5_ii(d,%20a,%20b,%20c,%20x[i+%203],%2010,%20-1894986606);c%20=%20md5_ii(c,%20d,%20a,%20b,%20x[i+10],%2015,%20-1051523);b%20=%20md5_ii(b,%20c,%20d,%20a,%20x[i+%201],%2021,%20-2054922799);a%20=%20md5_ii(a,%20b,%20c,%20d,%20x[i+%208],%206%20,%20%201873313359);d%20=%20md5_ii(d,%20a,%20b,%20c,%20x[i+15],%2010,%20-30611744);c%20=%20md5_ii(c,%20d,%20a,%20b,%20x[i+%206],%2015,%20-1560198380);b%20=%20md5_ii(b,%20c,%20d,%20a,%20x[i+13],%2021,%20%201309151649);a%20=%20md5_ii(a,%20b,%20c,%20d,%20x[i+%204],%206%20,%20-145523070);d%20=%20md5_ii(d,%20a,%20b,%20c,%20x[i+11],%2010,%20-1120210379);c%20=%20md5_ii(c,%20d,%20a,%20b,%20x[i+%202],%2015,%20%20718787259);b%20=%20md5_ii(b,%20c,%20d,%20a,%20x[i+%209],%2021,%20-343485551);a%20=%20safe_add(a,%20olda);b%20=%20safe_add(b,%20oldb);c%20=%20safe_add(c,%20oldc);d%20=%20safe_add(d,%20oldd);}return%20Array(a,%20b,%20c,%20d);}function%20md5_cmn(q,%20a,%20b,%20x,%20s,%20t){return%20safe_add(bit_rol(safe_add(safe_add(a,%20q),%20safe_add(x,%20t)),%20s),b);}function%20md5_ff(a,%20b,%20c,%20d,%20x,%20s,%20t){return%20md5_cmn((b%20&amp;%20c)%20|%20((~b)%20&amp;%20d),%20a,%20b,%20x,%20s,%20t);}function%20md5_gg(a,%20b,%20c,%20d,%20x,%20s,%20t){return%20md5_cmn((b%20&amp;%20d)%20|%20(c%20&amp;%20(~d)),%20a,%20b,%20x,%20s,%20t);}function%20md5_hh(a,%20b,%20c,%20d,%20x,%20s,%20t){return%20md5_cmn(b%20^%20c%20^%20d,%20a,%20b,%20x,%20s,%20t);}function%20md5_ii(a,%20b,%20c,%20d,%20x,%20s,%20t){return%20md5_cmn(c%20^%20(b%20|%20(~d)),%20a,%20b,%20x,%20s,%20t);}function%20safe_add(x,%20y){var%20lsw%20=%20(x%20&amp;%200xFFFF)%20+%20(y%20&amp;%200xFFFF);var%20msw%20=%20(x%20%3E%3E%2016)%20+%20(y%20%3E%3E%2016)%20+%20(lsw%20%3E%3E%2016);return%20(msw%20%3C%3C%2016)%20|%20(lsw%20&amp;%200xFFFF);}function%20bit_rol(num,%20cnt){return%20(num%20%3C%3C%20cnt)%20|%20(num%20%3E%3E%3E%20(32%20-%20cnt));}function%20str2binl(str){var%20bin%20=%20Array();var%20mask%20=%20(1%20%3C%3C%208)%20-%201;for(var%20i%20=%200;%20i%20%3C%20str.length%20*%208;%20i%20+=%208)bin[i%3E%3E5]%20|=%20(str.charCodeAt(i%20/%208)%20&amp;%20mask)%20%3C%3C%20(i%20%25%2032);return%20bin;}function%20binl2hex(binarray){var%20hex_tab%20=%20%270123456789abcdef%27;var%20str%20=%20%27%27;for(var%20i%20=%200;%20i%20%3C%20binarray.length%20*%204;%20i++){str%20+=%20hex_tab.charAt((binarray[i%3E%3E2]%20%3E%3E%20((i%254)*8+4))%20&amp;%200xF)%20+%20hex_tab.charAt((binarray[i%3E%3E2]%20%3E%3E%20((i%254)*8))%20&amp;%200xF);}return%20str;}function%20mpwd_doIt(){var%20master=document.getElementById(%27masterpwd%27).value;if%20(master%20!=%20%27%27%20&amp;&amp;%20master%20!=%20null)%20{re%20=%20new%20RegExp(%27https*://([^/]+)%27);host%20=%20document.location.href.match(re)[1];var%20i=0,%20j=0,%20p=hex_md5(master+%27:%27+host).substr(0,8),%20F=document.forms;for(i=0;i%3CF.length;i++){E=F[i].elements;for(j=0;j%3CE.length;j++){D=E[j];if(D.type==%27password%27){D.value=p;D.focus();}if(D.type==%27text%27){if(D.name.toUpperCase().indexOf(%27PASSWORD%27)!=-1||D.name.toUpperCase().indexOf(%27PASSWD%27)!=-1){D.value=p;D.focus();</code>}}document.getElementsByTagName(%27body%27)[0].removeChild(document.getElementById(%27mpwd_panel%27));};function%20getPwdFld()%20{var%20L%20=%20document.getElementsByTagName(%27input%27);for%20(var%20i%20in%20L)%20{var%20nm%20=%20L[i].getAttribute(%22name%22)%20||%20%22%22;var%20tp%20=%20L[i].getAttribute(%22type%22)%20||%20%22%22;if%20((tp%20==%20%22password%22)%20||(tp%20==%20%22text%22%20&amp;&amp;%20nm.toLowerCase().substring(0,5)%20==%20%22passw%22))%20{return%20L[i];}}return%20null;}function%20panel()%20{var%20pwdTop%20=%200;var%20pwdLeft%20=%200;try%20{var%20obj%20=%20getPwdFld();if%20(obj.offsetParent)%20{while%20(obj.offsetParent)%20{pwdTop%20+=%20obj.offsetTop;pwdLeft%20+=%20obj.offsetLeft;obj%20=%20obj.offsetParent;}}}%20catch%20(e)%20{pwdTop%20=%2010;pwdLeft%20=%2010;}var%20div%20=%20document.createElement(%27div%27);div.style.padding=%274px%27;div.style.backgroundColor=%27yellow%27;div.style.border=%272px%20dotted%20red%27;div.style.position=%27absolute%27;div.style.top%20=%20pwdTop%20+%20%27px%27;div.style.left%20=%20pwdLeft%20+%20%27px%27;div.style.opacity=%27.9%27;div.setAttribute(%27id%27,%20%27mpwd_panel%27);div.appendChild(document.createTextNode(%27Master%20password:%20%27));var%20frm%20=%20document.createElement(%27form%27);frm.action=%27javascript:void(0);%27;div.appendChild(frm);var%20pwd%20=%20document.createElement(%27input%27);pwd.setAttribute(%27type%27,%27password%27);pwd.setAttribute(%27id%27,%27masterpwd%27);frm.appendChild(pwd);var%20ok%20=%20document.createElement(%27input%27);ok.setAttribute(%27type%27,%27submit%27);ok.setAttribute(%27value%27,%27OK%27);ok.onclick%20=%20mpwd_doIt;frm.appendChild(ok);document.getElementsByTagName(%27body%27)[0].appendChild(div);setTimeout(%22document.getElementById(%27masterpwd%27).focus();%22,%20333);};panel();})();
-}}}</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/5/warum-jeder-u-berall-das-gleiche-passwort-verwendet/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
   
   
     
@@ -449,7 +441,7 @@
     <footer class="container-fluid ">
       <ul class="nav">
   <li class="nav-item copyright">
-    <span class="nav-link">&copy; 2022 <a href="../../../work/">Martin Häcker</a></span>
+    <span class="nav-link">&copy; 2024 <a href="../../../work/">Martin Häcker</a></span>
   </li>
   
     

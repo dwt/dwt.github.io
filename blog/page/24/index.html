@@ -57,6 +57,110 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/5/fonelink-2-0/">
+        FoneLink 2.0
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-05-30">Freitag, 30. Mai 2008</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Yay!</p>
+<p>Nachdem wir das Innenleben der Software fast komplett ausgetauscht haben ist <a href="http://www.novamedia.de/d_pages/d_produkte_mac_fl.html">endlich die Version 2.0</a> fertig geworden.</p>
+<p>Was ein Akt.</p>
+<p>Von dem was die Software ausmacht, ist wirklich kein Stein mehr so gelassen worden wie er war.</p>
+<p>Jede operation wurde Asyncron gemacht, alles in ein Konzept von Aktionen gepresst (und das war manchmal nicht einfach) die gescheduled werden und (wenn es das Telefon erlaubt) sogar parallel ausgeführt werden können.</p>
+<p>Mein Hauptteil daran war das Datenmodell das den synchronen Zugriff auf das Dateisystem des Handies erlaubt - intern aber alle Operationen Asynchron abarbeitet.</p>
+<p>Was gar nicht so einfach zu verkapseln war. (Dementsprechend sind die Unit Tests auch fast die noch mal halb so viel Code wie der eigentliche Code).</p>
+<p>Das Design für das ich mich letztendlich entschieden habe ist recht simpel: Jeder Dateisystem-Knoten kann einen von mehreren Zuständen haben:</p>
+<ol>
+<li><strong>Out Of Date</strong> -&gt; Der Zustand muss mit dem Handy abgeglichen werden</li>
+<li>"Up To Date" -&gt; nichts zu tun, die aktuellen Daten sind da</li>
+<li><strong>Update In Progress</strong>-&gt; Die Daten werden gerade Aktualisiert oder ein anderer Job (Meist mit Progress-Anzeige) läuft mit Bezug auf diesen Knoten.</li>
+</ol>
+<p>Jobs können zum Beispiel das Kopieren auf oder von dem Handy sein.</p>
+<p>Dazu kommt dann natürlich noch etwas Intelligenz die diese Jobs automatisch anwirft wenn es Sinn macht (Verzeichnisse Aktualisieren wenn die GUI sie anzeigt) und unnötiges Kopieren vermeidet (Es gibt einen Cache auf der Festplatte - wird eine Datei einmal vom Handy Kopiert und dann nicht mehr Verändert wird die Kopierte ab da für Operationen verwendet.) Und nicht zu vergessen: Versionierte Backup und Restores gibt es natürlich auch noch.</p>
+<p>Ach ja und Rasend Schnell sollte das natürlich auch sein.</p>
+<p>War nicht leicht - aber jetzt läuft es rock-solid. Und über die Implementierung erzähle ich später mal mehr.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/5/fonelink-2-0/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/5/spaces-in-the-path/">
+        Spaces in the path
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-05-29">Donnerstag, 29. Mai 2008</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>are not allowed on UNIX.</p>
+<p>Damn.</p>
+<p>Um das klarer zu machen: Ich will ein Skript schreiben, bei dem oben im <a href="http://en.wikipedia.org/wiki/Shebang_(Unix">shebang</a>) hartcodiert ein Pfad zum interpreter steht.</p>
+<p>So weit so gut. ABER. Dieser Interpreter liegt in einem Verzeichnis - und dieses Verzeichnis hat ein Leerzeichen im Namen.</p>
+<p>Doh.</p>
+<p>Die Regeln sagen nämlich:</p>
+<pre><code>The initial line of a script file must begin with #! as the
+first two bytes, followed by zero or more spaces, followed by
+interpreter or interpreter argument.  One or more spaces or tabs
+must separate interpreter and argument.  The first line should
+end with either a new-line or null character.
+</code></pre>
+<p>Und da hält sich auch der Mac OS X Kernel genau daran.</p>
+<p><a href="http://www.in-ulm.de/~mascheck/various/shebang/">Ich bin auch nicht der erste der darüber gestolpert ist.</a> Hallo Felix. :-)</p>
+<p>Das Blöde daran: Die Implementierungen erlauben weder ein Escapen, noch ein "In Anführungszeichen Setzen" des Interpreters.</p>
+<p>Hrmpf.</p>
+<p>Nach einigem Nachdenken sind mir letztlich nur zwei Lösungsmöglichkeiten aufgefallen:</p>
+<p>1) Das Programm in zwei Dateien aufsplitten - die erste startet mit /bin/sh im shebang und dann ganz normal im 'body' den normalen Interpreter mit den normalen Mitteln der Shell (die auch quotes und escapen erlauben).</p>
+<p>2) Wenn das Programm ein File bleiben soll / muss, kann ein <a href="http://en.wikipedia.org/wiki/Polyglot_(computing">Polyglot</a>) das Problem lösen.</p>
+<p>Das sah bei mir dann so aus:</p>
+<div class="hll"><pre><span></span><span class="ch">#!/bin/sh</span>
+<span class="c1"># Solves the problem that shebang lines can&#39;t contain spaces </span>
+<span class="c1"># (even escaped or quoted) in the interpreter path via a polyglot</span>
+<span class="s2">&quot;&quot;&quot;false&quot;</span>
+<span class="nb">exec</span><span class="w"> </span>/Users/dwt/Archiv/Code/Aktive<span class="se">\ </span>Projekte/Trac/env-trac-0.11/bin/python<span class="w"> </span><span class="nv">$0</span><span class="w"> </span><span class="nv">$@</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="s2">import sys</span>
+<span class="s2">print sys.argv</span>
+</pre></div>
+<p>Das funktioniert so:</p>
+<ul>
+<li>wird die Datei gestartet, wird sie mit der Bourne Shell (oder einer der Nachkommen) ausgeführt</li>
+<li>in der Zeile <code>"""false"</code> maskiere ich mit Hilfe des Kommandos "false" den Beginn eines Python Doc-Strings / Kommentars / Multiline-Strings.</li>
+<li>Danach wird mit "exec" die Datei nochmal ausgeführt - diesmal mit dem richtigen Interpreter.</li>
+<li>Der überspringt diesen Teil dann weil für ihn der Start komplett im Kommentar / ... / ... verschwindet.</li>
+</ul>
+<p>Einerseits finde ich es cool das ich diesen Workaround gefunden habe - andererseits ist das natürlich ein totaler Hack. Insofern bin ich eher dagegen.</p>
+<p>Was ich jetzt damit Tue weiß ich jedenfalls noch nicht.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/5/spaces-in-the-path/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/5/liquid-democracy/">
         Liquid Democracy
         </a>
@@ -65,7 +169,7 @@
         written by Martin Häcker on <time datetime="2008-05-28">Mittwoch, 28. Mai 2008</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Heute hat mich Bernd auf diesen coolen Wikipedia-Artikel hingewiesen: <a href="http://en.wikipedia.org/wiki/Proxy_voting">Proxy Voting</a>. Dort wird das was wir uns bei der Piratenpartei Berlin als Liquid Democracy vorstellen sehr schön beschrieben - insbesondere auch mit vielen Beispielen wo das schon angewendet wird.</p>
 <p>Spannend finde ich auch das ein paar Leute wohl gleich versucht haben das in der Wikipedia einzuführen - erst mal ohne Erfolg.</p>
@@ -92,7 +196,7 @@
         written by Martin Häcker on <time datetime="2008-05-25">Sonntag, 25. Mai 2008</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Since I haven't found this info anywhere in the Blogosphere and had to painfully gather it through a long debugging stare, I'm posting it here:</p>
 <p>If you want do debug Unit Tests in Xcode 3.1 you have to do the usual, that is:</p>
@@ -132,7 +236,7 @@
         written by Martin Häcker on <time datetime="2008-05-24">Samstag, 24. Mai 2008</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>.. bin ich mal wieder in <a href="http://c2.com/cgi/wiki?WeirdErrorMessages">Wards Wiki gestolpert</a>.</p>
 <p>Lovely. :-)</p>
@@ -158,7 +262,7 @@
         written by Martin Häcker on <time datetime="2008-05-24">Samstag, 24. Mai 2008</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Eines meiner Lieblingszitate über Objektorientierung kommt von <a href="http://c2.com/cgi/wiki?WardCunningham">Ward Cunningham</a>: "Jedes Objekt ist eine kleine Sprache".</p>
 <p>Ich verstehe das so das man mit jedem Objekt das man entwirft eine kleine Sprache schreibt. Eine Sprache die es einfach macht die lösung für ein spezifisches Problem darzustellen.</p>
@@ -191,7 +295,7 @@
         written by Martin Häcker on <time datetime="2008-05-23">Freitag, 23. Mai 2008</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Heute habe ich mir mit <a href="http://www.felix-schwarz.name/Hauptseite">Felix</a> den Template Teil des Blogs, an dem wir gerade schrauben, angeschaut. Ziel war es eine Blog-Posting Seite zu bauen die möglichst einfach zu warten ist und gleichzeitig möglichst alle Features bietet die auch die <a href="http://www.hosted-projects.com/trac/TracDemo/Demo/wiki/WikiStart?action=edit">Standard Wiki-Editier-Seite</a> von <a href="http://trac.edgewall.org/">Trac</a> bietet.</p>
 <p>Das geht überraschenderweise sogar ganz gut. Denn: Trac ab 0.11 verwendet Genshi als Template-Sprache und Genshi wiederum ist XML mit <a href="http://de.wikipedia.org/wiki/XPath">XPath</a> allüren.</p>
@@ -247,7 +351,7 @@
         written by Martin Häcker on <time datetime="2008-05-19">Montag, 19. Mai 2008</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p><a href="http://video.google.com/videoplay?docid=3063604376858291792">.. gibts hier zu sehen.</a></p>
 <p>GRANDIOS.</p>
@@ -273,7 +377,7 @@
         written by Martin Häcker on <time datetime="2008-05-19">Montag, 19. Mai 2008</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Boah war ich gestresst von der Versammlung - aber zumindest ist das Ergebnis zufrieden stellend - die wichtigsten Änderungen zur Satzung sind durchgekommen: <a href="http://wiki.piratenpartei.de/Neue_Finanzordnung#Bundesfinanzordnung_-_Vorschlag_von_Sebastian_Sch.C3.A4fer">Die neue Finanzordnung</a> und <a href="http://wiki.piratenpartei.de/Bundessatzung/%C3%84nderungsantr%C3%A4ge/Bundesparteitag_2008#.C2.A7_9b_-_Der_.28dezentrale.29_Bundesparteitag">die Regelung zum dezentralen Parteitag</a>.</p>
 <p>Sonst war aber leider nicht viel los - die Tatsache das so viele Piraten auf einem Fleck saßen konnte nicht genutzt werden - ausser um über GO-Anträge zu streiten.</p>
@@ -301,7 +405,7 @@
         written by Martin Häcker on <time datetime="2008-05-18">Sonntag, 18. Mai 2008</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>denn sie hat 804 Mitglieder.</p>
 <p>Also im letzten Jahr etwas mehr als ein Mitglied pro Tag.</p>
@@ -310,71 +414,6 @@
     
       <footer>
         <a href="../../2008/5/die-piratenpartei-ist-gross/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/5/parteitagswahnsinn/">
-        Parteitagswahnsinn
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-05-18">Sonntag, 18. Mai 2008</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p><a href="http://de.wikipedia.org/wiki/Gesch%C3%A4ftsordnung#Antrag_zur_Gesch.C3.A4ftsordnung">GO Antrag</a> auf:</p>
-<ul>
-<li>Ende der Diskussion und Beschlussfassung -&gt; Angenommen</li>
-<li>Großer Protest des noch-Vorsitzenden</li>
-<li>Daraufhin sein GO Antrag keine weiteren GO-Anträge auf Ende der Diskussion und Beschlussfassung zu stellen -&gt; der wurde Angenommen</li>
-<li>Daraufhin der Verweigerung des Versammlungsleiters die restlichen Diskutanten noch reden zu lassen, weil der Antrag auf Ende der Diskussion vor dem GO Antrag der das verhindern möchte beschlossen wurde</li>
-<li>Daraufhin der GO Antrag die Diskussion wieder zu eröffnen</li>
-<li>Und dann ging die Diskussion weiter</li>
-<li>Viele viele GO Anträge später...</li>
-<li>Und dann gab es GO Anträge die Sitzung auf morgen zu Vertagen</li>
-</ul>
-<p>ARGHHHHHHH</p>
-<p>Interessante Begriffe: <a href="http://de.wikipedia.org/wiki/Filibuster">Filibuster</a></p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/5/parteitagswahnsinn/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/5/piratenpartei-treibt-dollarkurs-in-die-ho-he/">
-        Piratenpartei treibt Dollarkurs in die Höhe
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-05-18">Sonntag, 18. Mai 2008</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>"Nur haarscharf ist das amerikanische Volk heute der Dollarkatastrophe vorbeigeschrammt"  so Winfried Engelke.</p>
-<p>Engelke hatte in einem Akt heroischer Selbstaufopferung bei der Versteigerung des letzten und einzigen Dollars in der Piraten Barkasse (nein, nicht <a href="http://de.wikipedia.org/wiki/Barkasse">diese</a>) den Preis auf die Spitze getrieben und ihn für astronomische 20 € erworben.</p>
-<p>"Dies ist der Beginn einer neuen Ära" mit diesen Worten leitete Engelke die Tradition des immer wieder versteigerns dieses Dollars zu jedem Parteitag ein.</p>
-<p>Wir sind begeistert.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/5/piratenpartei-treibt-dollarkurs-in-die-ho-he/">weiterlesen…</a>
       </footer>
     
   </article>

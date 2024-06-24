@@ -69,7 +69,7 @@
         written by Martin Häcker on <time datetime="2011-11-18">Friday, November 18, 2011</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>If you should ever stumble upon this bug, consider yourself very lucky that I have found the solution to this already, because it took me <em>AGES</em> to figure this out. No shit.</p>
 <p>So here's the problem: We used a self signed certificate on on of our servers and curl and all tools relying on curl just couldn't connect to this server at all (with certificate validation). Despite the fact that the root certificate that signed the server certificate was happily in my keychain and marked as trusted.</p>

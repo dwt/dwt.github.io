@@ -69,16 +69,16 @@
         written by Martin Häcker on <time datetime="2008-10-04">Samstag, 4. Oktober 2008</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>... without needing to care which constructor to use this time to get it right.</p>
 <p>Well, I was offended by this just long enough, so I sat down and wrote a macro that allows this:</p>
 <div class="hll"><pre><span></span><span class="c1">//  Use like this:</span>
-<span class="w">    </span><span class="kt">id</span><span class="w"> </span><span class="n">dict</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="bp">NSDictionary</span><span class="w"> </span><span class="n">dictionary</span><span class="p">];</span><span class="w"></span>
-<span class="w">    </span><span class="bp">NSNumber</span><span class="w"> </span><span class="o">*</span><span class="n">ten</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NMMakeNumber</span><span class="p">(</span><span class="mf">10.0f</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">[</span><span class="n">dict</span><span class="w"> </span><span class="n">setObject</span><span class="o">:</span><span class="n">ten</span><span class="w"> </span><span class="n">forKey</span><span class="o">:</span><span class="s">@&quot;numberOfFingers&quot;</span><span class="p">];</span><span class="w"></span>
-<span class="w">    </span><span class="p">[</span><span class="n">dict</span><span class="w"> </span><span class="n">setObject</span><span class="o">:</span><span class="n">NMMakeNumber</span><span class="p">(</span><span class="mi">23</span><span class="p">)</span><span class="w"> </span><span class="n">forKey</span><span class="o">:</span><span class="s">@&quot;fnord&quot;</span><span class="p">];</span><span class="w"></span>
-<span class="w">    </span><span class="p">[</span><span class="n">dict</span><span class="w"> </span><span class="n">setObject</span><span class="o">:</span><span class="n">NMMakeNumber</span><span class="p">(</span><span class="nb">YES</span><span class="p">)</span><span class="w"> </span><span class="n">forKey</span><span class="o">:</span><span class="s">@&quot;wantFries&quot;</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="kt">id</span><span class="w"> </span><span class="n">dict</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="bp">NSDictionary</span><span class="w"> </span><span class="n">dictionary</span><span class="p">];</span>
+<span class="w">    </span><span class="bp">NSNumber</span><span class="w"> </span><span class="o">*</span><span class="n">ten</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NMMakeNumber</span><span class="p">(</span><span class="mf">10.0f</span><span class="p">);</span>
+<span class="w">    </span><span class="p">[</span><span class="n">dict</span><span class="w"> </span><span class="n">setObject</span><span class="o">:</span><span class="n">ten</span><span class="w"> </span><span class="n">forKey</span><span class="o">:</span><span class="s">@&quot;numberOfFingers&quot;</span><span class="p">];</span>
+<span class="w">    </span><span class="p">[</span><span class="n">dict</span><span class="w"> </span><span class="n">setObject</span><span class="o">:</span><span class="n">NMMakeNumber</span><span class="p">(</span><span class="mi">23</span><span class="p">)</span><span class="w"> </span><span class="n">forKey</span><span class="o">:</span><span class="s">@&quot;fnord&quot;</span><span class="p">];</span>
+<span class="w">    </span><span class="p">[</span><span class="n">dict</span><span class="w"> </span><span class="n">setObject</span><span class="o">:</span><span class="n">NMMakeNumber</span><span class="p">(</span><span class="nb">YES</span><span class="p">)</span><span class="w"> </span><span class="n">forKey</span><span class="o">:</span><span class="s">@&quot;wantFries&quot;</span><span class="p">];</span>
 </pre></div>
 <p>I'ts almost the way <a href="http://en.wikipedia.org/wiki/Object_type#Autoboxing">Autoboxing</a> works in <a href="http://java.sun.com/j2se/1.5.0/docs/guide/language/autoboxing.html">Java</a> or C#.</p>
 <p>This quite eases the pain of creating NSNumbers correctly for me, because it means I don't have to repeat the type of what I am working with quite as often.</p>
@@ -115,7 +115,7 @@
     <footer class="container-fluid ">
       <ul class="nav">
   <li class="nav-item copyright">
-    <span class="nav-link">&copy; 2022 <a href="../../../../work/">Martin Häcker</a></span>
+    <span class="nav-link">&copy; 2024 <a href="../../../../work/">Martin Häcker</a></span>
   </li>
   
     

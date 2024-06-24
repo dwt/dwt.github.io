@@ -57,6 +57,90 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2009/3/wie-funktioniert-ein-bailout/">
+        Wie funktioniert ein Bailout
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-03-07">Saturday, March 7, 2009</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p><a href="http://www.24hgold.com/english/contributor.aspx?contributor=Sign%C3%A9%20V%C3%A9ner&amp;article=1881522770G10020">Anschaulich in Bildern erklärt.</a></p>
+<p><a href="http://blog.fefe.de/?ts=b751d742">via</a></p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/3/wie-funktioniert-ein-bailout/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2009/3/cappucino-cocoa/">
+        Cappucino != Cocoa
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-03-05">Thursday, March 5, 2009</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Tja, also nach längerer Neugierde habe ich mich mal mit <a href="http://cappuccino.org/">Cappucino</a> auseinander gesetzt und ein wenig damit Programmiert.</p>
+<p>Und das hat für mich als Cocoa Programmierer eine Menge Spaß gemacht.</p>
+<p>Erst mal ein paar Kleinigkeiten:</p>
+<ul>
+<li>Der Java-Script Parser von Safari saugt. Er sagt einem nie wo der Fehler jetzt genau aufgetreten ist. :-( Unbedingt mit Firefox und Firebug entwickeln!</li>
+<li>Wenn man sich den git tip of the tree auscheckt kriegt man weit mehr Klassen als in der offiziellen Dokumentation erwähnt sind. Insbesondere funktioniert das nib2cib tool auch ein wenig besser - und das spart unmengen von Zeit.<ul>
+<li>Allerdings funktioniert nib2cib auch nicht soo gut. Viele Klassen die es können könnte gehen damit nicht. NSScrollView zum Beispiel.</li>
+</ul>
+</li>
+<li>Wenn man sein eigenes Objective-J kompilieren will darf man keine spaces im Pfad haben. (arrrrghhh!!!!!)</li>
+<li>Man kann (noch) nicht den Code so ohne weiteres in Unterverzeichnisse auslagern. Das macht die Projekte unübersichtlich - aber angeblich soll das bald gefixt sein.</li>
+<li>nib2cib darf man nie mit mehr als einem Filenamen aufrufen. Sonst schreibt es nämlich einfach in das zweite Argument den output hinein.<ul>
+<li>Wo ich gerade darüber nachdenke: das geht eigentlich mit kaum einem objective-j tool ojtest zum beispiel... Dabei ist der Startup von Rhino immer das langsamste daran. :-(</li>
+</ul>
+</li>
+<li>Und man muss einiges an Umgebungsvariablen setzen. Am besten macht man sich ein ein shell script was diese dinger setzt und dann wieder eine shell exec'd. Damit hat man dann gleich eine Arbeitsumgebung für Cappucino ohne alles irgendwohin in standard-Betriebsystem-Locations installieren zu müssen.</li>
+</ul>
+<div class="hll"><pre><span></span><span class="ch">#!/bin/sh</span>
+
+<span class="nv">PROJECT_DIR</span><span class="o">=</span><span class="s2">&quot;/path/to/the/cappucino/sources/but/without/spaces/cappuccino&quot;</span>
+
+<span class="c1"># you can move this elsewhere to keep things separate</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">STEAM_BUILD</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">PROJECT_DIR</span><span class="si">}</span><span class="s2">/build&quot;</span>
+<span class="nv">TOOLS_DIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">STEAM_BUILD</span><span class="si">}</span><span class="s2">/Cappuccino/Tools/objj&quot;</span>
+<span class="nv">NIBTOOLS_DIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">PROJECT_DIR</span><span class="si">}</span><span class="s2">/Tools/objj&quot;</span>
+
+<span class="nb">export</span><span class="w"> </span><span class="nv">OBJJ_HOME</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">TOOLS_DIR</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">PATH</span><span class="si">}</span><span class="s2">:</span><span class="si">${</span><span class="nv">TOOLS_DIR</span><span class="si">}</span><span class="s2">/bin:</span><span class="si">${</span><span class="nv">NIBTOOLS_DIR</span><span class="si">}</span><span class="s2">/bin&quot;</span>
+<span class="s2">&quot;</span><span class="si">${</span><span class="nv">SHELL</span><span class="si">}</span><span class="s2">&quot;</span>
+</pre></div>
+<p>Damit kann man immerhin die ganzen objj tools (ojtest, nib2cib, etc) direkt benutzen.</p>
+<p>Cappucino selber benutzt sich tatsächlich ziemlich wie eine recht alte Version von Cocoa. Erstmal keine Bindings und entsprechende Controller und !CPBundle ist reichlich underpowered - Lokalisierter Resourcen-Lookup ist damit erst mal noch nicht drin.</p>
+<p>Die Tools sind natürlich nicht so toll. Insebesondere fehlt ein vernünftiger Ersatz für Interface Builder.</p>
+<p>Aber ansonsten rockt <a href="http://cappuccino.org/">Cappuccino</a> schon gewaltig. Jedem Cocoa-Programmierer sei also eine Beschäftigung damit schwer ans Herz gelegt.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/3/cappucino-cocoa/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2009/3/gehackt/">
         Gehackt
         </a>
@@ -65,7 +149,7 @@
         written by Martin Häcker on <time datetime="2009-03-01">Sunday, March 1, 2009</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Ich bin ja ganz erstaunt wie viel spaß es macht Web-Software zu hacken. Bisher habe ich das ja immer vor mir hergeschoben, dass ich es später machen werde...</p>
 <p>Nun ja, jetzt ist später, ich habe mich das erste mal erfolgreich per SQL-Injection durch ein Login-Formular gehackt. Und es fühlt sich großartig an.</p>
@@ -94,7 +178,7 @@
         written by Martin Häcker on <time datetime="2009-02-25">Wednesday, February 25, 2009</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Nach nicht einmal 48 Stunden war der neue Akku da.</p>
 <p>Puh.</p>
@@ -122,7 +206,7 @@
         written by Martin Häcker on <time datetime="2009-02-23">Monday, February 23, 2009</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Seit einem Monat habe ich mich gewundert dass meine Maustaste anfängt zu prellen.</p>
 <p>Vor einer Woche habe ich mich gewundert, weil mein Notebook einfach ausgegangen ist, obwohl eigentlich noch eine Stunde Batterie-Laufzeit hätte sein soll.</p>
@@ -156,7 +240,7 @@
         written by Martin Häcker on <time datetime="2009-02-21">Saturday, February 21, 2009</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Vor einiger Zeit bin ich in der <a href="http://www.heise.de/ct/">c't</a> auf einen Webseitenhinweis gestolpert - <a href="http://phlow.net/">das Phlow Magazin</a>. Ein c't Schreiberling der über und mit Musik schreiben wollte.</p>
 <p><a href="http://phlow-magazine.com/play/">Und es macht immer wieder spaß dort mal reinzuhören.</a></p>
@@ -182,7 +266,7 @@
         written by Martin Häcker on <time datetime="2009-02-19">Thursday, February 19, 2009</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Eigentlich dachte ich ja ich hätte das schon gebloggt - aber ich habs nicht wiedergefunden. (Vielleicht sollte ich nochmal mit google suchen?)</p>
 <p>Ah well.</p>
@@ -236,7 +320,7 @@ otool<span class="w"> </span>-L<span class="w"> </span>XcodeSubversionPlugin.new
         written by Martin Häcker on <time datetime="2009-02-18">Wednesday, February 18, 2009</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p><a href="http://radar.oreilly.com/nat/">Nat Torkington</a> (der Organisator der <a href="http://en.oreilly.com/oscon2009">Oscon</a> meint dass man das am besten anhand einer Therapiesitzung erklären kann.</p>
 <p>Einer Therapiesitzung, die von "Mon and Pop Business" besucht wird, die einfach nicht mehr verstehen was ihre Kinder (Open Source) tun und was sie bewegt.</p>
@@ -264,7 +348,7 @@ otool<span class="w"> </span>-L<span class="w"> </span>XcodeSubversionPlugin.new
         written by Martin Häcker on <time datetime="2009-02-15">Sunday, February 15, 2009</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Gestern habe ich das erste mal als Podiant (wie sagt man das?) an <a href="http://berlin.cafebabel.com/de/post/2009/02/08/%5BEU-Debate%5D-EU-Telekom-Gesetzespaket%3A-Urheber-gegen-Burgerrechte">einer Podiumsdiskussion teilgenommen</a>.</p>
 <p>Und es war gar nicht so schlecht! Das Publikum hat gut reagiert, es wurde auch mal gelacht und ich habe alle Punkte der Piratenpartei untergebracht die ich unterbringen wollte.</p>
@@ -295,7 +379,7 @@ otool<span class="w"> </span>-L<span class="w"> </span>XcodeSubversionPlugin.new
         written by Martin Häcker on <time datetime="2009-02-15">Sunday, February 15, 2009</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p><img src="../../2009/2/windows-vista-usability-improvements/Shutdown.png" alt="Image"></p>
 <p><a href="http://thedailywtf.com/Articles/Somewhat-Obsolete.aspx">via</a></p>
@@ -304,96 +388,6 @@ otool<span class="w"> </span>-L<span class="w"> </span>XcodeSubversionPlugin.new
     
       <footer>
         <a href="../../2009/2/windows-vista-usability-improvements/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2009/2/warum-setzt-sun-auf-open-source/">
-        Warum setzt Sun auf Open Source?
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2009-02-11">Wednesday, February 11, 2009</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Neulich habe ich einen <a href="http://twit.tv/floss39">spannenden Pocast mit einem Interview von Simon Phipps</a> gehört. Das Thema: Warum setzt Sun so auf Open Source wie sie es tun?</p>
-<p>Das ganze Interview war spannend - vor allem weil Simon neben dem Marketting-Speak von Sun auch tatsächlich etwas interessantes zu seinen Ansichten über die Gesellschaft gesagt hat. Und das finde ich "spot on".</p>
-<p>Hier ein paar ausschnitte.</p>
-<hr>
-<blockquote><p>Why should a company like Sun be at all concerned about open source?</p>
-</blockquote>
-<p>The key thought is anchored in looking at thrends in society. If you look at whats happening in societies around the world, ever since the internet became indemic, there has been a topological shift in the structure of society. Society used to be structured on a hub and spoke basis. With people controlling communications and rare resources at the hub and citizens and employees and consumers at the spokes.</p>
-<p>What the pervasive nature of the internet made happen, was that the topology of society gradually changed from hub and spoke to mesh. As that's happened, the way that the business interests are being conducted has gradually migrated from a world of secrecy giving confidence and security to a world with transparency with privacy giving confidence and security.</p>
-<p>We have looked at that trend - and we are absolutely convinced that if we are going to be a leading technology company in the 21st century, we have to adapt the company to live in that meshed society and to fit in with the emerging norm of transparency with privacy.</p>
-<blockquote><p>Do other companies see the world as you do?</p>
-</blockquote>
-<p>I think that it is pretty slow spreading. One of the problems that you have as a business is that you get trapped in what I call the success trap. There's a book from Richard Dawkins called "Climbing Mountain Probable" where he talks about the success trap - how organisms can only evolve to a pinacle of quality. And they can never evolve to a higher pinacle if the route to that higher pinacle if the route to that higher pinacle involves degrading the organism. They can never go down to a valley to reach a higher peak. And it's the same with businesses. A business that is successfull and profitable, cannot afford to become unsuccessfull and unprofitable in order to become better.</p>
-<p>Companies have to exploit their fallow periods. IBM did this very successfully by using it's failure to reinvent itself. I believe that that is what Sun has been doing at the beginning of this decade as well. It was using a period of failure and unprofitability to transform itself. Other companies which did not have this blessing of failure (which is a funny word - but still true), will indeed find themselves in a really tough place as we move into the society that is based on a mesh culture and that values transparency with privacy.</p>
-<p>You could look at the dilemma that the music industry has got. Still making lots of money, a lot of that money is based on a paranoia around keeping secrets and keeping control. The're going to have a hell of a time transforming into an industry for the networked society. Guess what: We're beginning to see the symptoms of that as they attacked their customers and as they try and protect outdated business models.</p>
-<p>...</p>
-<p>This is what absolutely fascinates me. I think that what we're seing here is a meta-effect in action. I think that by introducing the web browser and providing a really good reason why the world wanted to get wired, Tim Berners Lee has triggered an epochal change in the structure of society. And that's going to work itself out in all sorts of ways.</p>
-<p>...</p>
-<p>I was having a conversation with a customer a little bit earlier on, talking to them about the stages that businesses go through as they become open source businesses. I definitely see an evolutionary cycle in becoming an open source business.</p>
-<blockquote><p>So the first step is to make it free as in beer. No charge.</p>
-</blockquote>
-<p>I think there's a stage before there. The Instinct to keep secrets is so strong in most software companies that the first stage that they go through is the willingness to collaborate with their friends and partners. That's Microsoft shared source for example. Every business that has depended on secret software and secret source goes through that first stage of wanting to open up but retain control and boundaries.</p>
-<p>They then go on to a stage where they realize that they can be completely open but under the terms of a license. That's the stage where companies are busy nitpicking over every line in every license and are trying to work out the perfect licenses. It's that stage of maturity that lead to license proliferation at OSI and it was inevitable in my view.</p>
-<p>The stage beyond there is where they begin to realize that code is king. And that the license doesn't matter so much as long as the code gets written and gets written fast and well.</p>
-<p>And then there's a stage beyond that, where people begin to realize that community is king and that actually you don't have to write all the code and you don't have to control all the code. It's actually the community where all the benefits that make you successful are gonna come from.</p>
-<p>I see businesses gradually moving along that maturity timescale. Going through each of the phases and believing that it's the endpoint. It may be that there's a point on after communities that I haven't seen yet.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2009/2/warum-setzt-sun-auf-open-source/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2009/2/endlich-und-in-ubuntu/">
-        Endlich @ und € in Ubuntu
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2009-02-10">Tuesday, February 10, 2009</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Schon länger betreibe ich ein <a href="http://www.ubuntu.com/">Ubuntu</a> in <a href="http://www.virtualbox.org/">VirtualBox</a> - einfach weil es geht und man es dann doch irgendwann braucht wenn man keine Zeit hat es einzurichten.</p>
-<p>Und das ist geil.</p>
-<p>Die Geschwindigkeit ist ok (man muss nur die Guest-Aditions installieren) und im Nahtlosen Modus kann man die Ubuntu Fenster einfach eingebettet in den normalen Desktop benutzen</p>
-<p>Nice. Wenn da nicht der ärger mit @ und € wäre - ausgerechnet die gehen nämlich per default nicht.</p>
-<p>Fear no more, ich hab es hingekriegt. (Ubuntu Gnome Default Desktop 8.11)</p>
-<ul>
-<li>Menü System -&gt; Einstellungen -&gt; Tastatur</li>
-<li>Zweiter Reiter ("Belegungen")</li>
-<li>Tastatur: Apple, Apple (oben wie unten, das korrekte "MacBook/MacBook Pro (intl)" ließ sich nicht auswählen)</li>
-<li>Belegung "Germany Macintosh" war schon ausgewählt</li>
-<li>Weiter gehts bei "Other Options" darunter</li>
-<li>In dem Fenster was dann aufgeht dann "Third level choosers" aufklappen und</li>
-<li>"Press any of Alt keys to choose 3rd level" auswählen</li>
-</ul>
-<p>Yay!</p>
-<p>Jetzt muss ich nur noch herausfinden wie man Controll und Command austauscht, damit die Tastatur Shortcuts vernünftig funktionieren...</p>
-<p><a href="http://forums.virtualbox.org/viewtopic.php?t=13405">via</a></p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2009/2/endlich-und-in-ubuntu/">weiterlesen…</a>
       </footer>
     
   </article>

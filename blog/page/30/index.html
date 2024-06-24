@@ -57,6 +57,68 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/3/warum-entwickeln-immer-noch-so-viele-leute-ohne-unittests/">
+        Warum entwickeln immer noch so viele Leute ohne UnitTests?
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-03-16">Sonntag, 16. März 2008</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Weiß ich nicht, aber ich weiß, was für Folgen es hat.</p>
+<p>Wenn man ohne Tests entwickelt, dann hat man beim Schreiben von z.B. einer Klasse immer den vollen Zugriff auf das gesamte System - und es ist ständig verlockend, nur eben dieses andere Subsystem aufzurufen oder es in die klasse als Instanzvariable einzubinden. Da man kein Korrektiv hat, sind die Folgen dieser Handlungen fast unsichtbar. Die Abhängigkeiten im System nehmen immer weiter zu - und die Architetkur immer weiter ab. :/</p>
+<p>Als Testgetriebener Entwickler muss man sich, um den Code in einer Testsuite überhaupt laufen lassen zu können maximal vom Rest des Systems abkapseln. Das bedeutet das man sich bei jeder Abhängigkeit die man dazu nimmt genau überlegt, ob man sie wirklich braucht, ob man sie erreichen kann, indem man einen Parameter übergibt, oder indem man ein Protokoll einführt das die Kommunikation dieser zweier Systembestandteile klärt. Immer macht man sich über die Grenzen der Komponente Gedanken und wie die Kommunikation darüber hinaus abläuft.</p>
+<p>Man macht eben nicht einfach nur einen Konstruktorparameter über den dann als globale Variable alles zugänglich ist - den man im Test aber niemals instanziiert bekommt.</p>
+<p>Diese Tatsache macht für mich einen der größten Unterschiede zwischen Testgetrieben entwickeltem Code und sonstigem Code aus.</p>
+<p>Es ist unglaublich schwierig (auf anhieb) Code zu schreiben der Wiederbenutzbar ist und wenig Abhängigkeiten besitzt - wenn man Code testgetrieben entwickelt bekommt man aber unheimlich viel davon umsonst.</p>
+<p>Alleine deswegen darf es heute eigentlich keine Ausrede mehr Geben ohne Tests zu entwickeln.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/3/warum-entwickeln-immer-noch-so-viele-leute-ohne-unittests/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/3/die-provider-sollen-gefa-lligst-p2p-verhindern/">
+        Die Provider sollen gefälligst P2P verhindern!
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-03-15">Samstag, 15. März 2008</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p><a href="http://www.spiegel.de/netzwelt/web/0,1518,541357,00.html">Fodert Dieter Gorny</a>, Cheff des Bundesverbands der Musikindustrie. Klar.</p>
+<p>Spannend finde ich aber das er vorgibt, aus der letztlich erschienen Brennerstudie wäre ersichtlich das sich illegale Downloads um die Hälfte reduziert haben.</p>
+<p>Nämlich von 600 Millionen auf 300 Millionen.</p>
+<p>Da würde ich doch schon mal gerne die Studie sehen, Herr Bundesverband. Und was da genau gefragt wurde. "Wie viele illegale Downloads haben sie im letzten Jahr gemacht?" oder "Sind sie sich im klaren darüber das das herunterladen von Musik aus dem Internet illegal ist?" und direkt danach "Wie viele Musikstücke haben sie im letzten Jahr heruntergeladen?"</p>
+<p>Vielleicht taugt die Studie ja auch und die Leute sind dazu übergegangen Fernsehserien etc. herunter zu laden. Jedenfalls weiß ich nichts darüber das sich die verbrauchte Bandbreite oder der Anteil der P2P-Dienste an der Gesamtbandbreite irgendwie verringert hätte.</p>
+<p>Wirklich schade, das man in der Politik nicht seine Quellen offen legen muss, wie in der Forschung. :-/</p>
+<p>Transparenz ist doch was feines.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/3/die-provider-sollen-gefa-lligst-p2p-verhindern/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/3/unittests-auf-ein-tracplugin/">
         UnitTests auf ein TracPlugin...
         </a>
@@ -65,7 +127,7 @@
         written by Martin Häcker on <time datetime="2008-03-14">Freitag, 14. März 2008</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>... sind eine schöne Sache. Wenn man sie denn hinkriegt.</p>
 <p>Da wäre zuerst der einfache Fall: Was macht man um eine Wiki-Seite zu erzeugen und zu laden?</p>
@@ -161,7 +223,7 @@
         written by Martin Häcker on <time datetime="2008-03-13">Donnerstag, 13. März 2008</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Dafür bin ich nämlich viel zu betrunken.</p>
 <p>Schließlich hat die Friedrich Ebert Stiftung heute den Wein bezahlt, den ich abgegriffen habe, während ich meine Freundin von einer Veranstaltung dort abgeholt habe.</p>
@@ -192,7 +254,7 @@
         written by Martin Häcker on <time datetime="2008-03-12">Mittwoch, 12. März 2008</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Das Spannendste an der Piratenpartei sind die, die dabei mitmachen.</p>
 <p>Zum Beispiel RKA. Mir ist ein Rätsel, wie er die ganzen Dinge, die er tut, in seine Zeit einsortiert.</p>
@@ -227,7 +289,7 @@
         written by Martin Häcker on <time datetime="2008-03-11">Dienstag, 11. März 2008</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>dass Betreiber von Geschäften so überwachungsgeil macht?</p>
 <p>Zum Beispiel <a href="http://www.computerwoche.de/knowledge_center/it_security/1857989/">dieser Eigentümer einer Diskothek</a>. Der erstellt über jeden seiner Besucher ein komplettes Persönlichkeitsprofil, inclusive wann sie bei welcher Bedienung wie viel von welchen Getränken gekauft haben. Und natürlich von wann bis wann sie anwesend waren, woher sie kommen, welche Telefonnummer sie haben, etc.</p>
@@ -258,7 +320,7 @@
         written by Martin Häcker on <time datetime="2008-03-10">Montag, 10. März 2008</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>"You can only connect the dots looking backwards, never looking forward." -- Steve Jobs</p>
 <p>Sagt er <a href="http://video.google.com/videoplay?docid=-204609026222503944">hier</a>.</p>
@@ -285,7 +347,7 @@
         written by Martin Häcker on <time datetime="2008-03-09">Sonntag, 9. März 2008</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Über meinem Schreibtisch hängt schon seit zwei Jahren ein Zettel. Darauf habe ich damals geschrieben:</p>
 <p>Eine Revolution: Computer
@@ -327,7 +389,7 @@ Zwei Revolutionen, eine Idee</p>
         written by Martin Häcker on <time datetime="2008-03-08">Samstag, 8. März 2008</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Ob Ikea wohl bald pleite geht?</p>
 <p>So jedenfalls <a href="http://www.freitag.de/2008/09/08091801.php">malt Freitag</a> die Zukunft in der jeder Zuhause einen 3D-Drucker stehen hat, der fast beliebige Altagsgegenstände (inklusive Elektronik) herstellen kann.</p>
@@ -359,7 +421,7 @@ Zwei Revolutionen, eine Idee</p>
         written by Martin Häcker on <time datetime="2008-03-07">Freitag, 7. März 2008</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p><a href="http://www.heise.de/extras/streaming/heise_mp.swf?xml=teil_1_vp6_512k&amp;vol=80&amp;SWFHomePath=/extras/streaming/">Gab es bei Heise</a> zum Thema Filesharing.</p>
 <p>Vertreten sind die Gegner und Befürworter von Filesharing.</p>
@@ -370,73 +432,6 @@ Zwei Revolutionen, eine Idee</p>
     
       <footer>
         <a href="../../2008/3/scho-ne-podiumsdiskussion/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/3/piraten-aus-mangel-an-auswahl/">
-        Piraten aus &#34;Mangel an Auswahl&#34;
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-03-05">Mittwoch, 5. März 2008</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p><a href="http://torrentfreak.com/piracy-is-caused-by-poor-choice-080305/">Torrentfreak</a> schrieb heute über <a href="http://www.entertainmentmediaresearch.com/reports/DigitalEntertainmentSurvey2008_FullReport.pdf">eine Studie</a> der <del><a href="http://www.wiggin.co.uk/gaming.asp">Wiggin LLP</a></del> <a href="http://www.wiggin.co.uk/index.asp">Wiggin LLP</a>.</p>
-<p>In der graphisch anspruchsvollen Studie stellt die Firma fest (unklar ist mir noch, wer sie Bezahlt hat) das das eingeschränkte Angebot einer der wichtigsten Gründe ist wieso Leute zu Piraten werden.</p>
-<p>Ahem.</p>
-<p>Na gut, ich finde es ja richtig wenn sich die Entertainement Industrie endlich auf ihren Hosenboden setzt und alle Inhalte (ja, auch die Alten) im Netz verkauft.</p>
-<p>ABER</p>
-<p>Ich vermisse hier ein ganz wesentliches Argument: Filesharing machen zuallererst die Leute die Zeit haben, aber wenig Geld. Diese Leute (Jugendliche &amp; Studenten z.B.) waren und sind aber ein ganz wesentlicher Markt für die Entertainment Branche.</p>
-<p>Davon abgesehen bin ich als Pirat natürlich noch der festen Überzeugung, das unser Land mehr freie Kultur braucht und auch bekommen wird.</p>
-<p>Dazu aber später mehr.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/3/piraten-aus-mangel-an-auswahl/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/3/sauberes-programmieren/">
-        Sauberes Programmieren
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-03-04">Dienstag, 4. März 2008</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>(zu <a href="http://musicbrainz.org/track/127f318a-28d3-49be-b5f6-be55f4d596b9.html">Return to Innocence von Enigma</a>)</p>
-<p>Es ist wirklich erstaunlich wie viel schwieriger es ist saubere Programme zu schreiben wenn mehr Leute an der Konstruktion beteiligt sind.</p>
-<p>Nehmen wir zum Beispiel drei Leute. Einer hat vorher viel C++ progirammiert. Ganz selbstverständlich ist für ihn das Paradigma geworden, das man Accessoren <code>-getVar</code> und Mutatoren <code>-setVar:aValue</code> nennt.</p>
-<p>Und schon mischt sich im System der Namens-Salat. Und das ist noch keine große Sache. Von sich aus besteht keinerlei Einheitlichkeit, wie wer seine Variablen und Funktionen nennt. Wie z.B. heißt eine Klassenmethode zum erstellen eines Objekts? <code>-classname:instanceVarName with:anotherInstanceVarname</code> oder <code>-intentionWithNamedThing:aTypeDescription withAnotherNamedThing:aTypeDescription</code></p>
-<p>Wie geht man mit Prefixen um? Was will man mit Instanzvariablen tun? Wann verwendet man (sinnvollerweise Accessoren und wann direkten Zugriff auf Variablen?</p>
-<p>Die Summe dieser kleinen Entscheidungen macht so viel von der (<a href="http://c2.com/xp/CodeSmell.html">olfaktorischen?</a>) Sauberheit eines Programms aus, das man sich (eigentlich) nicht leisten kann sie dem Zufall zu überlassen.</p>
-<p>Aber der Overhead das alles vorher festzulegen oder auch nur zu kommunizieren ist gewaltig. Vor allem wenn man weder Refaktoring-Werkzeuge hat die einem die Änderungen erleichtern, noch Unit-Tests die einem die Änderungen absichern, noch Reviews / Pair-Programming die einen zu der Entscheidung helfen was geändert werden soll.</p>
-<p>Was tun?</p>
-<p>Erleichterung finde ich in der Tatsache, das tatsächlich viele kleinen Entscheidungen kaum oder keine Rolle spielen. Wo die Klammern gesetzt werden, oder wie weit eingerückt wird ist egal. Man überließt diese Unterschiede einfach.</p>
-<p>Dazu kommt die Aussage aus dem <a href="http://www.laputan.org/mud/mud.html">Big Ball of Mud</a> Paper: Ein Dreckball mag besser sein als gar keine Software.</p>
-<p>Ist Sauberkeit also doch überschätzt?</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/3/sauberes-programmieren/">weiterlesen…</a>
       </footer>
     
   </article>

@@ -57,6 +57,74 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2009/1/scriptdir/">
+        Scriptdir
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-01-29">Donnerstag, 29. Januar 2009</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Ich habe immer wieder das Problem, dass ich in Shell-Scripten den absoluten Pfad zum eigenen Script, oder zumindest den Ordner in dem das Script liegt benötige.</p>
+<p>Dieses Problem hat viele Lösungen - die allermeisten kommen aber entweder nicht mit Leerzeichen in diesem Pfad klar, oder versagen wenn man das Script über verschiedene Kombinationen von absoluten und relativen Pfaden aufruft.</p>
+<p>Meine gegenwärtige Lösung ist das hier:</p>
+<div class="hll"><pre><span></span><span class="nv">SCRIPTDIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span><span class="nb">cd</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>dirname<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$0</span><span class="s2">&quot;</span><span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">pwd</span><span class="k">)</span><span class="s2">&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="nv">$SCRIPTDIR</span>
+</pre></div>
+<p>Damit bin ich zwar auch überhaupt nicht glücklich, aber immerhin scheint es zu funktionieren. :/</p>
+<p>Insbesondere ist das Quoting extra funky. Unter MacOS X scheint es aber zu gehen (d.h. die Bash frisst das korrekt)</p>
+<p>Hat da vielleicht jemand eine bessere Idee?</p>
+<p><strong><em>Update:</em></strong> Florian hatte die großartige Idee doch einfach mal in gut benutzte Shell-Programme wie den Wrapper für OpenOffice zu schauen.  Und siehe da:</p>
+<div class="hll"><pre><span></span><span class="c1"># cat /usr/lib64/openoffice/program/swriter</span>
+<span class="c1">#!/bin/sh</span>
+
+<span class="nv">cmd</span><span class="o">=</span><span class="sb">`</span>dirname<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$0</span><span class="s2">&quot;</span><span class="sb">`</span>/soffice
+<span class="nb">exec</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$cmd</span><span class="s2">&quot;</span><span class="w"> </span>-writer<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span>
+</pre></div>
+<p>funktioniert großartig. Man kriegt zwar nur den relativen Pfad - aber das reicht ja in aller Regel.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/1/scriptdir/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2009/1/der-neue-trend-unfactoring/">
+        Der neue Trend: Unfactoring
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-01-24">Samstag, 24. Januar 2009</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Unfactoring is nicht einfach. Man muss es immer wieder üben.</p>
+<p><a href="http://www.bestechvideos.com/2008/12/08/rubyconf-2008-unfactoring-from-patterns">Hier ein Schulungsvideo von der RubyConf08</a>.</p>
+<p>Highly advised! ;)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/1/der-neue-trend-unfactoring/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2009/1/svn-revision-number-in-der-about-box-verfu-gbar-machen/">
         SVN Revision Number in der About Box verfügbar machen
         </a>
@@ -65,7 +133,7 @@
         written by Martin Häcker on <time datetime="2009-01-24">Samstag, 24. Januar 2009</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Das wollte ich tun, aber <a href="http://www.red-sweater.com/blog/23/automatic-build-sub-versioning-in-xcode">die bestehenden Lösungen</a> fand ich alle nicht so toll.</p>
 <p>Well, also noch mal.</p>
@@ -137,7 +205,7 @@
         written by Martin Häcker on <time datetime="2009-01-24">Samstag, 24. Januar 2009</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>... im Schlüsselbund, dann möglicherweise deswegen weil man gerade <a href="http://www.macupdate.com/info.php/id/20192/service-scrubber">Services Scrubber</a> verwendet hat um sein Services-Menü aufzäumen.</p>
 <p>Und das funktioniert indem es die Info.plist eines Programms manipuliert.</p>
@@ -166,7 +234,7 @@
         written by Martin Häcker on <time datetime="2009-01-22">Donnerstag, 22. Januar 2009</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p><a href="http://www.youtube.com/watch?v=eb_R1-PqRrw">Mit einer sehr schönen Analogie (youtube)</a></p>
 <p>Sehr sehenswert.</p>
@@ -192,7 +260,7 @@
         written by Martin Häcker on <time datetime="2009-01-18">Sonntag, 18. Januar 2009</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Heute war ich Brunchen mit Bekannten - insbesondere war da auch ein Blinder dabei, der Linux benutzt und versucht von Windows wegzukommen.</p>
 <p>Das war spannend. Zuerst einmal, dass Computerbenutzung für Blinde ein riesen Problem ist. Die bekommen von irgendwelchen Firmen für irrsinnig viel Geld Windows-Computer verkauft, die dann vielleicht auch funktionieren - für die sie aber 5000 € jährlich bezahlen müssen. (Ob die Zahl jetzt stimmt sei mal dahingestellt - Fakt ist, es ist teuer).</p>
@@ -232,7 +300,7 @@
         written by Martin Häcker on <time datetime="2009-01-18">Sonntag, 18. Januar 2009</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Ein langer Traum ist in Erfüllung gegangen - alle Versionskontrollsysteme (<a href="http://www.selenic.com/mercurial/wiki/">hg</a>, <a href="http://bazaar-vcs.org/">bzr</a>, <a href="http://git-scm.com/">git</a> und natürlich <a href="http://subversion.tigris.org/">svn</a>) unterstützen endlich das Reden mit einem Subversion-Server.</p>
 <p>Das bedeutet, man kann jetzt SVN als Lingua Franca mit allen verteilten Versionskontrollsystemen einsetzen um einen gemeinsamen Server zu haben von dem alle pullen und pushen können. Oder kurz gesagt: Wenn man SVN als Server hat, kann jeder benutzen was ihm persönlich am meisten liegt.</p>
@@ -284,7 +352,7 @@
         written by Martin Häcker on <time datetime="2009-01-17">Samstag, 17. Januar 2009</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p><a href="http://vimeo.com/user496766/videos/sort:oldest">Per Video</a>.</p>
 <p>Groooßartig. :-D</p>
@@ -310,7 +378,7 @@
         written by Martin Häcker on <time datetime="2009-01-17">Samstag, 17. Januar 2009</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Endlich hab ich mal eine <a href="http://thread.gmane.org/gmane.comp.version-control.git/32452/focus=32610">ordentliche Quelle gefunden</a> wofür <a href="http://git.or.cz/gitwiki/WhatIsTheIndex">der Index</a> bei <a href="http://git-scm.com/">GIT</a> gut ist.</p>
 <p>Kurz erklärt: Der Index ist eine Vorstufe für jeden Commit. Man comittet zuerst in den index mit <code>git add some_file</code> und comitted dann den index ins repository mit <code>git commit</code>. Es sei denn man sagt <code>git commit some_file</code> in dem fall wird es direkt comitted, oder man wählt eines der anderen kommandos die irgend etwas merkwürdiges mit dem index anstellen, dann weiß man in der Regel gar nicht mehr was Sache ist.</p>
@@ -366,7 +434,7 @@
         written by Martin Häcker on <time datetime="2009-01-14">Mittwoch, 14. Januar 2009</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Heute waren zwei Politikwissenschaftler bei der Piratenpartei zu Gast - und sie sind durch <a href="http://wiki.piratenpartei.de/Liquid_Democracy">Liquid Democracy</a> (<a href="http://de.wikipedia.org/wiki/Delegated_Voting">wikipedia</a>) auf uns aufmerksam geworden.</p>
 <p>Yay.</p>
@@ -379,59 +447,6 @@
     
       <footer>
         <a href="../../2009/1/liquid-democracy-und-politikwissenschaftler/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2009/1/no-software-is-free-and-spreading-that-misconception-is-harmful/">
-        No software is free and spreading that misconception is harmful.
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2009-01-12">Montag, 12. Januar 2009</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Da hat eine Lehrerin in Amerika doch tatsächlich ihren heiligen Eifer entdeckt und muss ihre Schüler davor schützen freie Software zu benutzen. Daraufhin hat sie die Linux-CDs eines Schülers konfisziert und klagte dann per e-mail den Projektleiter des Linux-Projekts an. <a href="http://linuxlock.blogspot.com/2008/12/linux-stop-holding-our-kids-back.html">Weil es Software die Umsonst ist nicht geben kann und darf.</a></p>
-<p>Unglaublich. Peinlich.</p>
-<p>Und das wird immer schlimmer je weiter man ließt. <a href="http://www.gulli.com/news/lehrerin-open-source-schadet-2008-12-11/">via</a></p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2009/1/no-software-is-free-and-spreading-that-misconception-is-harmful/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2009/1/software-literacy/">
-        Software Literacy
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2009-01-08">Donnerstag, 8. Januar 2009</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>The ability to “read” a medium means you can access materials and tools created by others. The ability to “write” in a medium means you can generate materials and tools for others. You must have both to be literate. In print writing, the tools you generate are rhetorical; they demonstrate and convince. In computer writing, the tools you generate are processes; they simulate and decide.</p>
-<p>-- Alan Key</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2009/1/software-literacy/">weiterlesen…</a>
       </footer>
     
   </article>

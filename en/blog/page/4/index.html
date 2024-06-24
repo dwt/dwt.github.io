@@ -57,6 +57,77 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2010/3/jquery-editinplace/">
+        jQuery editInPlace
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2010-03-26">Friday, March 26, 2010</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Well, I just finished some major reworking of that jQuery plugin, so now it has [browser:/open-source/jquery-edit-in-place/trunk/spec/unit/spec.js a real testsuite] and conforms to the <a href="http://docs.jquery.com/Plugins/Authoring">jQuery Plugin Guidelines</a> and doesn't pollute the core prototypes (of String) anymore.</p>
+<p>There are a few new features, most prominent the ability to define a class to apply for the hover effect (so you can style the hover in css instead of having to hand in the colors directly and more control over the way errors are presented so it is easier to embed into bigger applications.</p>
+<p>So enjoy <a href="http://jquery-in-place-editor.googlecode.com/svn/trunk/demo/index.html">the demo</a>  and <a href="http://code.google.com/p/jquery-in-place-editor/downloads/list">the download</a> while they are hot, and keep a bookmark to <a href="http://code.google.com/p/jquery-in-place-editor/">the project homepage</a>. :)</p>
+<p>Stuff I'd like to note:</p>
+<ul>
+<li><a href="http://visionmedia.github.com/jspec/">JSpec</a> rocks, writing tests with it is a breeze. The DOM Testrunner they have could use some work though to become even more usefull</li>
+<li>Writing the tests with no dom insertion is a <em>great</em> technique to get a fast testsuite where you can almost guarantee that it has no test-ordering issues.</li>
+<li>jQuery allows you to almost completely drive the interaction with the editor as a user would, making it almost like an acceptance test (and with very little dependency on the internal working of the editor.</li>
+<li>Refactoring JavaScript Code is hard if you don't have a testsuite. My Advice: Break it down into smaller bits. I found it incredibly hard to refactor larger pieces of the code, as not having a testsuite means there's no way you know what still works. :/</li>
+</ul>
+
+    </section>
+    
+      <footer>
+        <a href="../../2010/3/jquery-editinplace/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2010/2/wo-findet-innovation-beim-lehren-statt/">
+        Wo findet Innovation beim Lehren statt?
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2010-02-14">Sunday, February 14, 2010</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Früher mal dachte ich, dass das ja in den Universitäten sein muss. Schließlich ist da alles auf einem fleck. Forscher und Lehrer und Schüler.</p>
+<p>Optimale Bedingungen eigentlich - nur dass dort an der Lehre überhaupt nicht geforscht wurde. Schließlich war das ja nur ein Anhängsel das Zeit kostet. Kein Forschungsgebiet.</p>
+<p>In der Schule natürlich sowieso nicht und danach?</p>
+<p>Im Beruf?</p>
+<p>Ich bin natürlich mein eigenes Forschungssubjekt, weil ich weiter lerne und das beobachte. Und für mich selber ist es natürlich so dass ich ständig mit Innovationen habe, durch meine Möglichkeit das Netz zu verwenden.</p>
+<p>Aber ab und an trifft man auf etwas großartiges. In einem <a href="http://itc.conversationsnetwork.org/shows/detail4386.html">Interview von John Udell</a> bin ich auf die <a href="http://khanacademy.org/">Khan Academy</a> gestoßen.</p>
+<p>Das ist ein Mensch der seine Erfüllung darin findet dass er kurze Videos (~10 Minuten lang) aufnimmt in denen er eine Sache - ein Konzept aus Mathematik, Physik, Chemie, Finanzen und vielen weiteren Themen.</p>
+<p>Und die sind gut!</p>
+<p>Ausserdem hat er <a href="http://khanexercises.appspot.com/">eine Software online gestellt</a> die ein sehr spannendes Konzept verfolgt: Wissen ist dort als Graph aufgestellt - von einfachster Addition bis zu relativ komplexen Themen. (Aber viel weniger als als Video verfügbar ist).</p>
+<p>Der Clou: Man fängt bei einfacher Addition an  und kriegt die nächst-Schwierigeren Aufgaben erst wenn man 10 Aufgaben aus einem Wissensgebiet erfolgreich direkt hintereinander gelöst hat.</p>
+<p>Dazu gibt es jeweils den ganzen Lösungsweg plus einen Link auf das dazugehörige Video wenn man es noch mal im Detail braucht.</p>
+<p>Das führt dazu dass Kinder gerade bei Mathe ihre Lücken auffüllen können die sie irgendwo im Verständnis haben. Und das finde ich Großartig - denn das ist eines der größten Probleme von Großgruppen-Lernen. Wenn ein Thema vorbei ist, dann ist es vorbei - egal ob man es verstanden hat oder nicht.</p>
+<p>Verdammt schade dass es noch soo lange dauern wird bis solche Konzepte auch in der "Offiziellen" Lehre angekommen sind.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2010/2/wo-findet-innovation-beim-lehren-statt/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2010/2/gletscher-ru-ckzug/">
         Gletscher Rückzug
         </a>
@@ -65,7 +136,7 @@
         written by Martin Häcker on <time datetime="2010-02-08">Monday, February 8, 2010</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Klima-Veränderung ist ein schwer zugängliches Thema.</p>
 <p>Aber auch Sau-Wichtig. Und daher finde ich es grandios was James Balog für eine Arbeit gemacht hat um den Gletscher-Rückzug zu dokumentieren. Mit knapp 30 Zeitraffer-Kammeras macht er über Jahre Hinweg jede Stunde ein Bild von vielen Gletschern und daraus dann einen Film.</p>
@@ -97,7 +168,7 @@
         written by Martin Häcker on <time datetime="2010-01-31">Sunday, January 31, 2010</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>:) Einer meiner Lieblingspodcasts hat es jetzt auf die 100. Ausgabe gebracht.</p>
 <p>Und da muss ich doch mal gratulieren. Vor allem weil ich bei der Quiz-Show über Programmiersprachen und deren Verbreitung absolut herzhaft gelacht habe. :-)</p>
@@ -125,7 +196,7 @@
         written by Martin Häcker on <time datetime="2010-01-28">Thursday, January 28, 2010</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Das ist ein steinalter <a href="http://alistair.cockburn.us/Software+development+as+a+cooperative+game">Vortrag von Alistair Cockburn</a> (gesprochen Co-Burn) in dem er darlegt wieso er findet das das eine sehr gute Sichtweise auf Softwareprojekte ist.</p>
 <p>Der Vortrag ist schon 10 Jahre alt - und trotzdem finde ich ihn sehr Aktuell.</p>
@@ -152,7 +223,7 @@
         written by Martin Häcker on <time datetime="2010-01-15">Friday, January 15, 2010</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <div class="hll"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">b</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
 <span class="n">a</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;foo&#39;</span><span class="p">]</span>
@@ -188,7 +259,7 @@
         written by Martin Häcker on <time datetime="2010-01-13">Wednesday, January 13, 2010</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Das höchste Ziel in der Physik ist alle Kräfte durch eine Formel auszudrücken bzw. sie in Beziehung zueinander zu setzen. Maxwell zum Beispiel gelang das für elektrische und magnetische Felder - und dafür ist er noch heute berühmt.</p>
 <p>In der Software-Entwicklung gibt es so etwas bisher nicht. Klar, es gibt Daumenregeln, so wie:</p>
@@ -226,7 +297,7 @@
         written by Martin Häcker on <time datetime="2010-01-13">Wednesday, January 13, 2010</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Klassenobjekte sind special - daher hat man im boddy einer klasse keinen Zugriff auf das klassenobjekt.</p>
 <p>Weil, self ist ja auch nicht automatisch und man muss es in Methoden immer als explizites Argument hinschreiben, und so etwas gibt es ja bei Klassen nicht, denn das sind ja keine Methoden und daher kann man halt das Klassenobjekt nicht referenzieren im body.</p>
@@ -261,7 +332,7 @@
         written by Martin Häcker on <time datetime="2010-01-11">Monday, January 11, 2010</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Eine Sache die mich bei Python immer wieder ärgert ist die Tatsache dass Standardwerte für Methodenargumente zur Parsezeit festgelegt werden anstatt zur Aufrufzeit.</p>
 <p>Das ist total doof, denn dadurch teilen sich alle aufrufe der Funktion den gleichen default-wert - was zwar schön schnell sein mag, aber trotzdem in fast allen Fällen nur bei nicht veränderbaren Objekten (so wie Integer und Strings) Sinn ergibt.</p>
@@ -305,7 +376,7 @@
         written by Martin Häcker on <time datetime="2010-01-10">Sunday, January 10, 2010</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Ein Vortrag von der <a href="http://goruco2009.confreaks.com/30-may-2009-15-40-solid-object-oriented-design-sandi-metz.html">GORUCO</a> - sehr zu empfehlen.</p>
 <p>Besonders gefallen hat mir ihr Fazit dass man mehr als nur <a href="http://en.wikipedia.org/wiki/Don&#39;t_repeat_yourself">DRY</a> als Prinzip beim Refactoring anwenden soll um bei gutem Code anzukommen.</p>
@@ -323,75 +394,6 @@
     
       <footer>
         <a href="../../2010/1/solid-object-oriented-design/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2010/1/here-be-electric-dragons/">
-        Here be electric dragons
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2010-01-08">Friday, January 8, 2010</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Ich vertrete ja schon länger den Punkt dass ein Grundeinkommen eine Notwendigkeit sein wird in einer Gesellschaft in der Maschinen uns alle physischen Arbeiten abnehmen können.</p>
-<p>Well, jetzt habe ich endlich jemanden gefunden der dieses Argument auch vertritt.</p>
-<p>Auf dem 26C3 im Vortrag <a href="http://events.ccc.de/congress/2009/Fahrplan/events/3452.en.html">Here be electric dragons</a></p>
-<p>Sehr sehenswert!</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2010/1/here-be-electric-dragons/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2010/1/method-argument-naming-confusion/">
-        Method argument naming confusion
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2010-01-08">Friday, January 8, 2010</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Schon seit einigen Wochen bin ich am grübeln, nach welcher Regel ich in Python meine variablen für Methoden-Argumente benennen soll. Das ist erstaunlicherweise gar nicht so klar.</p>
-<p>Hier mal das Problem: In Objective-C ist alles sehr klar und einfach (von Smalltalk kommend). Jede Methoden-Deklaration besteht abwechselnd aus einem Teil Methodennamen und dann einer Variablen. Hier mal ein Beispiel:</p>
-<div class="hll"><pre><span></span><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">setValue:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">aValue</span><span class="w"> </span><span class="nf">forKey:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">aKey</span>
-</pre></div>
-<p>Das hat den großen Vorteil dass man den Methodennamen benutzen kann um Stück für Stück die Argumente zu dokumentieren. Verwendet wird das so, dass das Stück Methodennamen das vor einem Argument kommt die Rolle beschreibt die das Argument spielen wird, während der Name der Variablen eher generisch ist und sich eher am Typ orientiert. Dazu kommt natürlich das man die Typen auch explizit auszeichnen kann, was die notwendigkeit für die Typ-Annotation im Namen der Variablen im vergleich zu Smalltalk oder Python noch mal vermindert und man kann ihn ganz der Rolle hingeben die die Variable in der Methode spielen wird - versehen mit dem a/an/some/etc. prefix der Argumente (als generische Instanzen von etwas) von den lokalen und instanz-variablen unterscheidet.</p>
-<p>In Python geht das so nicht. Man kann versuchen das auf zwei wegen anzunähern:</p>
-<div class="hll"><pre><span></span><span class="k">def</span> <span class="nf">set_value_for_key</span><span class="p">(</span><span class="n">a_value</span><span class="p">,</span> <span class="n">a_key</span><span class="p">):</span> <span class="k">pass</span>
-<span class="c1"># benutze als: some_dict.set_value_for_key(&#39;value&#39;, &#39;key&#39;)</span>
-</pre></div>
-<p>Das hat den Vorteil das man die Argumente mehr oder weniger benennen kann wie man möchte, aber den Nachteil das die Dokumentation der argumente nicht mit diesen zusammen ist. Das hat schon mal den unangenehmen seiteneffekt das es sehr viel schlechter auf mehrere Argumente skaliert und damit sehr fix mehr extra-dokumentation nötig macht.</p>
-<p>Der andere Weg wäre so:</p>
-<div class="hll"><pre><span></span><span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">for_key</span><span class="p">):</span> <span class="k">pass</span>
-<span class="c1">#benutze als: some_dict.set(value=&#39;value&#39;, for_key=&#39;key&#39;)</span>
-</pre></div>
-<p>Das hat den Vorteil dass der MethodenNamen von der Dokumentationshürde befreit ist - und damit Kurz wird.  Auf der anderen Seite sind die Argument-Namen jetzt effektiv teil des Methoden-Namens und damit kann man sie nicht mehr so gut benutzen um den Typ der Argumente zu dokumentieren.</p>
-<p>:-(</p>
-<p>Das ist der Grund wieso ich die Objective-C / Smalltalk Syntax so gerne mag, weil es darin so einfach ist selbstdokumentierenden Code von hoher qualität zu schreiben.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2010/1/method-argument-naming-confusion/">weiterlesen…</a>
       </footer>
     
   </article>

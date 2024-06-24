@@ -57,6 +57,74 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2007/8/vlc-compilieren/">
+        VLC Compilieren
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2007-08-23">Thursday, August 23, 2007</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Hab ich eigentlich schon über VLC gelästert? Wieso überrascht mich das im Nachhinein überhaupt nicht mehr, dass die Mac-Oberfläche immer noch so viele Bugs enthält, die eigentlich so einfach zu fixen wären?</p>
+<p>Na?</p>
+<p>Will ich doch mal aufzählen. Wenn man VLC (auf dem Mac - soweit ich das sehe ist das auf anderen Plattformen aber das gleiche) kompilieren will, dann...</p>
+<ul>
+<li>Muss man zuerst eine obskure Wiki-Seite im VLC-Wiki finden, die überhaupt beschreibt wie man das macht. Denn: man muss zuerst Fink deaktivieren. Anstatt in ihrem Build-Script einen Check dafür zu haben, steht das aber nur irgendwo auf der Wiki-Seite. Das hat mich schon mal 3 Stunden gekostet.</li>
+<li>Dann beginnt VLC damit, sich eine komplette Runde der Autotools zu bauen. Mir ist ja nicht klar, was sich die Entwickler dabei gedacht haben, aber offenbar funktioniert ihr Build-System nur mit einer ganz speziellen Version von Autotools und mit nichts anderem. Und damit das ganze Spaßig wird, haben sie sich eine ganz eigene kleine, schlecht funktionierende, buggy Version von Fink implementiert. Große Klasse, Jungs!</li>
+<li>Damit aber noch nicht genug, denn selbst wenn man das alles zum Kompilieren überreden kann (was einiges an Händchenhalten erfordert) - produziert das Build-Script immer noch keine funktionsfähige binary.</li>
+</ul>
+<p>Nun, man könnte jetzt einwenden, dass funktionierende Software sowieso überbewertet ist und all sowas. ABER ich hab nach zwei Tagen nur dem Build-Script beide Händchen halten und am Schluss doch keine funktionierende Software erhalten einfach die Nase voll.</p>
+<p>Soll doch jemand anderes deren Bugs fixen.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2007/8/vlc-compilieren/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2007/7/screenlight/">
+        ScreenLight
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2007-07-24">Tuesday, July 24, 2007</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p><img src="../../2007/7/screenlight/screenlight.png" alt="Image">
+Ever wondered how useful it would be to always have a Flashlight with you?</p>
+<p>Well, stop wondering, because you have! That is, you do if you have a mobile phone with you that has a screen that is perfectly capable of displaying pure white at maximum brightness and is programmable in Java.</p>
+<p>There you have it, a ScreenLight!</p>
+<ul>
+<li><a href="http://dwt.schwarz-online.org/software/ScreenLight.jar">download</a></li>
+<li><a href="http://dwt.schwarz-online.org/software/ScreenLight.tar.gz">download source</a></li>
+</ul>
+<p><strong>To install, just send the jar-file to your phone via Bluetooth file transfer (or whatever method you prefer), after that the phone should ask you where you want to install the app (for me that is in "Games" or in "Applications"). Thats it! </strong></p>
+<p>Many thanks to prom who showed me how to do this!</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2007/7/screenlight/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2007/7/tanguera/">
         ! Tanguera
         </a>
@@ -65,7 +133,7 @@
         written by Martin Häcker on <time datetime="2007-07-19">Thursday, July 19, 2007</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Wie soll ich sagen - ich wollte meine Freundin zum Geburtstag ausführen, wir tanzen sehr gerne zusammen und in Berlin findet ausgerechnet zu ihrem Geburtstag eine Tanzshow erster Güte statt. <a href="http://www.tanguera.com/">Tanguera</a>, in der <a href="http://www.staatsoper-berlin.de/spielplan/detailansicht.php?id_event_date=0&amp;id_event_cluster=61843&amp;id_language=1&amp;bereich=spielplan&amp;aktiv=special">Staatsoper Berlin</a>, was man als Laie doch als Qualitätssiegel auffasst. (<a href="http://www.berlin.de/kultur-und-tickets/events/tanguera_musical.php">Die Presse offenbar auch</a>.)</p>
 <p>Nun, dieser letzte Punkt ist offenbar leider problematisch. Denn: So gut war die Show nämlich nicht. Genau genommen war sie sogar überhaupt nicht gut. Leider.</p>
@@ -104,7 +172,7 @@
         written by Martin Häcker on <time datetime="2007-04-04">Wednesday, April 4, 2007</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p><a href="http://developer.apple.com/wwdc/sessions/">Die detaillierte Beschreibung der WWDC Sessions</a> ist heute online gegangen und man findet darin interessante Details zu bisher unveröffentlichten neuen Features von Leopard.</p>
 <ul>
@@ -137,7 +205,7 @@
         written by Martin Häcker on <time datetime="2007-03-18">Sunday, March 18, 2007</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Nach langer, langer Arbeit habe ich jetzt meine Diplomarbeit abgegeben. Puah. Für mich war es neben einer riesigen Anstrengung auch eine sehr befriedigende Tätigkeit, zu sehen das ich in der Lage bin ein Thema so umfassend zu behandeln. Nebenbei habe ich und mein Mitschreiber in der Arbeit auch eine ganze Menge experimentiert und ausprobiert wie sich Wiki-Technologie und <a href="http://gobby.0x539.de/trac/">Kollaborative Editoren</a> zum Schreiben von Wissenschaftlichen Arbeiten eignen. Dazu und wie wir dabei auftretende Probleme gelöst haben später mehr. :)</p>
 <p>Angefertigt habe ich die Diplomarbeit im <a href="http://ig.cs.tu-berlin.de/">Fachbereich Informatik und Gesellschaft der TU-Berlin</a> mit <a href="http://www.shearer.de/infos.php?d=members">Andreas Janson</a> zusammen.</p>
@@ -175,7 +243,7 @@ Es bleibt daher nur ein logischer Schluss - die Vorteile des Filesharings schnel
         written by Martin Häcker on <time datetime="2007-03-13">Tuesday, March 13, 2007</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <ul>
 <li>Web 1.0 was about reading, Web 2.0 is about writing<ul>
@@ -219,7 +287,7 @@ Es bleibt daher nur ein logischer Schluss - die Vorteile des Filesharings schnel
         written by Martin Häcker on <time datetime="2007-03-13">Tuesday, March 13, 2007</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>...<a href="http://pfeifferreport.com/trends/trend_vistauif.html">kommt sowas raus:</a></p>
 <blockquote><p>Problem Area 3: Mouse precision</p>
@@ -250,7 +318,7 @@ Es bleibt daher nur ein logischer Schluss - die Vorteile des Filesharings schnel
         written by Martin Häcker on <time datetime="2007-03-09">Friday, March 9, 2007</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p><a href="http://www.defectivebydesign.org/actions/open_letter/steve_jobs">Sagt sich jedenfalls die FSF</a>.</p>
 <p>Gefordert wird unter anderem, dass unabhängige Künstler ihre Musik im iTunes Store auch ohne DRM anbieten können.</p>
@@ -278,7 +346,7 @@ Es bleibt daher nur ein logischer Schluss - die Vorteile des Filesharings schnel
         written by Martin Häcker on <time datetime="2007-03-08">Thursday, March 8, 2007</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Zuerst mal eine gute Absteige, vor allem für Wohlhabende Menschen, wozu bekanntlich auch oft Geheimnisträger gehören.</p>
 <p>Als kleine Handlungsanweisung gibt es daher als Service vom CCC diesen Vortrag des 23C3: <a href="http://wwwcip.cs.fau.de/23c3/official/video/23C3-1505-de-gaeste_ueberwachung.m4v">"Gäste-Überwachung in Hotels durch staatliche und private Schnüffler"</a></p>
@@ -305,7 +373,7 @@ Es bleibt daher nur ein logischer Schluss - die Vorteile des Filesharings schnel
         written by Martin Häcker on <time datetime="2007-03-05">Monday, March 5, 2007</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Man sollte beachten das 'localhost' nicht gleich '127.0.0.1' ist. (mysql via <a href="http://fink.sf.net/">Fink</a>)</p>
 <p>Da wären sie nicht drauf gekommen? Tja, ich auch nicht.</p>
@@ -316,69 +384,6 @@ Es bleibt daher nur ein logischer Schluss - die Vorteile des Filesharings schnel
     
       <footer>
         <a href="../../2007/3/probleme-beim-installieren-von-wordpress-unter-mac-os-x/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2007/3/ego-striptease/">
-        Ego-Striptease?
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2007-03-02">Friday, March 2, 2007</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>In der Diskussion um den <a href="http://de.wikipedia.org/wiki/Bundestrojaner">Bundestrojaner</a> finde ich die Frage der definition der Privatsphäre am wichtigsten. (Das ist auch die Abschlussfrage meiner Diplomarbeit, aber dazu später mehr)</p>
-<p><a href="http://www.heise.de/tp/r4/artikel/24/24697/1.html">Gerade hat ja ein Gericht in den USA entschieden, das alles was über das Internet transportiert ist, oder auf einem am Internet angeschlossenen PC steht, sowieso nicht privat sein kann.</a></p>
-<p>Das finde ich fürchterlich, aber immerhin erkennt das Gericht korrekt, das die neue Technik auch eine neue Definition des Begriffs 'Privatsphäre' erfordert.</p>
-<p>Klar  ist, das immer mehr Menschen einen immer mehr Daten über sich in einer Form preisgeben, die mit einfachsten Mitteln via Google ermittelt werden kann. (<a href="http://wwwcip.cs.fau.de/23c3/official/video/23C3-1494-de-ego_striptease.m4v">Auf dem 23C3 gab es einen schönen Vortrag zu Profiling und diesen Fragen.</a>)</p>
-<p>Was wird also aus Privatsphäre? Die Vergangenheit hat jedenfalls klar gezeigt, das man nicht vorhersehen kann welche Daten, die man heute erzeugt, morgen überall frei zugänglich sind. Usenet Posting waren früher "relativ" privat, bis Google die Archive online gestellt hat. <a href="http://www.gregsadetsky.com/aol-data/">Suchen bei Suchmaschinen waren relativ privat, bis ein Bruchteil der Suchdaten von Yahoo (pseudonymisiert) veröffentlicht wurde.</a> Foren, Mailinglisten, Blogs, del.icio.us, Flickr, studiVZ, Xing, whois - alles verfügbar.</p>
-<p>Was mir dabei fehlt ist die Diskussion was denn Privatsphäre ausmacht? Was kann Privatsphäre sein? Wie kann man Privatsphäre für sich reklamieren?</p>
-<p>Offensichtlich ist die einfache Antwort: "Ja die leute müssen sich des Problems halt bewust werden, nicht ausreichend, da eben <a href="http://www.eu.socialtext.net/codev2/index.cgi?what_things_regulate">Regulierung auch in der Architektur der Werkzeuge liegt.</a> Soziale Netzwerke werden Nützlicher wenn man diese Daten preis gibt.</p>
-<p>Zudem wissen wir nicht was die Zukunft bringt, <a href="http://www.itconversations.com/shows/detail375.html">Jamais Cascios Participatory Panopticon</a> ist für mich als Zusammenfassung sehr wahrscheinlich, aber ob das eben Gut ist, oder schlecht? Who knows. Vielleicht wird unsere Gesellschaft dadurch "Ehrlicher", weil man jede Lüge sowieso sofort enttarnen könnte, vielleicht straft unsere Gesellschaft dadurch aber auch abweichenden Meinungen ab.</p>
-<p>In jedem Fall hätte eine Diktatur im vergleich zu früher unheimliche neue Mittel, andererseits, vielleicht auch eine Gegenöffentlichkeit die nicht mehr unterdrückbar ist?</p>
-<p>Klar ist das Wir als Informatiker hier und jetzt die Aufgabe haben, die Systeme so zu gestalten, das diese Daten nicht einfach für eine Diktatur zur Verfügung stehen bzw. zur Verfügung stehen werden. Für die Zukunft muss die Diskussion geführt werden, was Privatsphäre bedeutet und wie jeder einzelne in die Lage versetzt werden kann diese zu schützen.</p>
-<p>Und das ist schon für sich eine fast unlösbare Aufgabe.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2007/3/ego-striptease/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2007/3/satire/">
-        Satire
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2007-03-01">Thursday, March 1, 2007</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Prophezeiung? =
-Eigentlich wollte ich mich ja mit [ftp://dewy.fem.tu-ilmenau.de/CCC/23C3/video/23C3-1698-en-culture_jamming.m4v Culture Jamming beschäftigen], bin dabei aber völlig auf einer Kleinigkeit hängen geblieben:</p>
-<p>Das amerikanische Satiremagazin "The Onion" hatte 2001, zu Bushs Wahl, den schönen Artikel <a href="http://www.theonion.com/content/node/28784">Bush: 'Our Long National Nightmare Of Peace And Prosperity Is Finally Over'</a> geschrieben. Der Artikel zieht wie es sich für ein Satiremagazin gehört voll vom Leder.</p>
-<p><a href="http://www.godlessgeeks.com/BushNightmare.htm">Konnte ja keiner Wissen das Bush das direkt als Regierungserklärung verwendet. :(</a> (Jemand hat den Artikel mit Links auf all die tatsächlichen Ereignisse hinterlegt)</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2007/3/satire/">weiterlesen…</a>
       </footer>
     
   </article>

@@ -69,27 +69,27 @@
         written by Martin Häcker on <time datetime="2008-04-26">Samstag, 26. April 2008</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Oder: Wieso mich die Lisp Syntax so stört.</p>
 <p>In meiner Freizeit beschäftige ich mich gerade mit dem Buch <a href="http://gigamonkeys.com/book/">Practical Common Lisp</a>.</p>
 <p>Das Buch gefällt mir auch ganz gut - vielleicht abgesehen davon das er 'loop etwas zu häufig verwendet - ohne es zu erklären - was den Code gerade am Anfang reichlich magisch macht.</p>
 <p>Aber: Worum es mir eigentlich geht, ist die Syntax von Lips. Nicht die Klammern, nicht die Einrückung, nicht die Art wie man es schreibt, sondern schlicht die Reihenfolge.</p>
 <p>Weil: in Lisp ist erst einmal alles auf Funktionen abgebildet. Und das hat Vorteile aber eben auch einen gravierenden Nachteil: Jede Funktion muss immer als erstes in einem Funktionsaufruf Tupel stehen.</p>
-<div class="hll"><pre><span></span><span class="p">(</span><span class="nv">funktion</span> <span class="nv">argument-eins</span> <span class="nv">argument-zwei</span><span class="p">)</span>
+<div class="hll"><pre><span></span><span class="p">(</span><span class="nv">funktion</span><span class="w"> </span><span class="nv">argument-eins</span><span class="w"> </span><span class="nv">argument-zwei</span><span class="p">)</span>
 </pre></div>
 <p>Das ist ein Problem, weil man bei verschachtelten Funktionsaufrufen (auch schon bei nur sehr wenigen Ebenen) sehr schnell den Überblick verliert welcher Funktionsaufruf zu welchem argument gehört.</p>
-<div class="hll"><pre><span></span><span class="p">(</span><span class="nv">funktion</span> <span class="p">(</span><span class="nv">funktion-zwei</span> <span class="nv">argument-eins</span> <span class="p">(</span><span class="nv">funktion-drei</span> <span class="nv">argument-eins</span> <span class="nv">argument-zwei</span><span class="p">))</span> <span class="nv">argument-zwei</span><span class="p">)</span>
+<div class="hll"><pre><span></span><span class="p">(</span><span class="nv">funktion</span><span class="w"> </span><span class="p">(</span><span class="nv">funktion-zwei</span><span class="w"> </span><span class="nv">argument-eins</span><span class="w"> </span><span class="p">(</span><span class="nv">funktion-drei</span><span class="w"> </span><span class="nv">argument-eins</span><span class="w"> </span><span class="nv">argument-zwei</span><span class="p">))</span><span class="w"> </span><span class="nv">argument-zwei</span><span class="p">)</span>
 </pre></div>
 <p>Das kann man jetzt natürlich auch als Feature sehen, weil man gezwungen wird seinen Code vernünftig einzurücken und keine zu langen Funktionen zu schreiben</p>
-<div class="hll"><pre><span></span><span class="p">(</span><span class="nv">funktion</span> <span class="p">(</span><span class="nv">funktion-zwei</span> <span class="nv">argument-eins</span>
-                     <span class="p">(</span><span class="nv">funktion-drei</span> <span class="nv">argument-eins</span> <span class="nv">argument-zwei</span><span class="p">))</span> 
-        <span class="nv">argument-zwei</span><span class="p">)</span>
+<div class="hll"><pre><span></span><span class="p">(</span><span class="nv">funktion</span><span class="w"> </span><span class="p">(</span><span class="nv">funktion-zwei</span><span class="w"> </span><span class="nv">argument-eins</span>
+<span class="w">                     </span><span class="p">(</span><span class="nv">funktion-drei</span><span class="w"> </span><span class="nv">argument-eins</span><span class="w"> </span><span class="nv">argument-zwei</span><span class="p">))</span><span class="w"> </span>
+<span class="w">        </span><span class="nv">argument-zwei</span><span class="p">)</span>
 </pre></div>
 <p>Das hilft, aber eben nur so weit. Vor allem weil man beim Lesen von Code immer eine interne herumdrehung machen muss um den Code korrekt zu lesen.</p>
-<div class="hll"><pre><span></span><span class="p">(</span><span class="nb">defparameter</span> <span class="nv">a-list</span> <span class="p">(</span><span class="nb">list</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span><span class="p">))</span>
+<div class="hll"><pre><span></span><span class="p">(</span><span class="nb">defparameter</span><span class="w"> </span><span class="nv">a-list</span><span class="w"> </span><span class="p">(</span><span class="nb">list</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="p">))</span>
 
-<span class="p">(</span><span class="nb">car</span> <span class="p">(</span><span class="nb">cdr</span> <span class="p">(</span><span class="nb">cdr</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">a-list</span><span class="p">))))</span>
+<span class="p">(</span><span class="nb">car</span><span class="w"> </span><span class="p">(</span><span class="nb">cdr</span><span class="w"> </span><span class="p">(</span><span class="nb">cdr</span><span class="w"> </span><span class="p">(</span><span class="nb">cdr</span><span class="w"> </span><span class="nv">a-list</span><span class="p">))))</span>
 </pre></div>
 <p>Soll (wenn (ich) (mich nicht verschrieben) habe) 5 ergeben.</p>
 <p>Aber man muss es von innen nach aussen lesen, damit man es richtig versteht.</p>
@@ -133,7 +133,7 @@
     <footer class="container-fluid ">
       <ul class="nav">
   <li class="nav-item copyright">
-    <span class="nav-link">&copy; 2022 <a href="../../../../work/">Martin Häcker</a></span>
+    <span class="nav-link">&copy; 2024 <a href="../../../../work/">Martin Häcker</a></span>
   </li>
   
     

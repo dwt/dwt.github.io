@@ -57,6 +57,87 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2006/2/unterdokumentierte-design-patterns/">
+        Unterdokumentierte Design Patterns
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2006-02-06">Monday, February 6, 2006</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Eine Frage die mich schon länger beschäftigt, ist das Finden von Design Patterns in Funktionalen Sprachen. Lange Zeit schien es mir so, als gäbe es da gar nichts, auch viele Programmierer, die in diesen Sprachen arbeiten, konnten mit dem Begriff nichts anfangen. Dabei gibt es meiner Meinung nach eine Menge, das man von funktionalen Sprachen lernen kann - und einiges, das schon gelernt wurde.</p>
+<p>Einige Design Patterns, die ich seitdem gefunden habe, sind:</p>
+<ul>
+<li>[wiki:BlogEntries/2006-02-23 Funktionen] als voll berechtigte Datentypen, d.h. man kann sie als Argument oder Rückgabewert in der Programmiersprache verwenden</li>
+<li>Die Verwendung von Lambda-Ausdrücken (anonymen Funktionen)<ul>
+<li>Für Iteration, als Callback, für Fehlerbehandlung, Kontrollfluss...</li>
+</ul>
+</li>
+<li>Higher Order Funktionen - Funktionen als Argument und Rückgabewert von Funktionen</li>
+<li>Currying zum teilweisen Anwenden von Funktionen (vor allem in Zusammenhang mit anonymen Funktionen interessant)</li>
+<li>Funktionen zur Kombination von Funktionen zu größeren Einheiten (sehr schön z.B. in Parsern)</li>
+<li><a href="http://www.linuxjournal.com/article/8850">Monaden</a>, zum sicheren Einbetten von Seiteneffekten in puren funktionalen Sprachen</li>
+<li><a href="http://en.wikipedia.org/wiki/Arrows_in_functional_programming">Arrows</a>, für sichere Nebenläufigkeit in puren funktionalen Sprachen</li>
+<li>Unendliche Listen als Fassung von Reihen von Zahlen / Ereignissen. (Aktionen des Benutzers, Zufallszahlen, stetig genauer werdende Berechnungen einer Zahl...)</li>
+<li>Continuations: Ein Konstrukt mit dem sich z.B. Exceptions und Coroutinen implementieren lassen</li>
+<li>Coroutinen: Am einfachsten als eine Art Ultraleicht-Thread zu verstehen</li>
+</ul>
+<p>Einige dieser Design Patterns werden auch in anderen Sprachen intensiv genutzt. Die Lambda-Abstraktion zum Beispiel spielt eine zentrale Rolle in Java, wenn man dort GUIs baut, da sie der ideale Callback sind. Also im Beispiel:</p>
+<div class="hll"><pre><span></span><span class="n">JButton</span><span class="w"> </span><span class="n">button</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">JButton</span><span class="p">(</span><span class="s">&quot;Titel&quot;</span><span class="p">);</span>
+<span class="n">button</span><span class="p">.</span><span class="na">addActionListener</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">ActionListener</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">actionPerformed</span><span class="p">(</span><span class="n">java</span><span class="p">.</span><span class="na">awt</span><span class="p">.</span><span class="na">event</span><span class="p">.</span><span class="na">ActionEvent</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// this is a lambda</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>Gibt es noch mehr dieser Design Patterns? Funktionale Sprachen werden doch von jeder Menge Menschen benutzt...</p>
+<p>Sind die irgendwo dokumentiert? Wenn nicht, dann muss ich mich wohl ranhalten und mein Verständnis selber aufschreiben.</p>
+<p>Außerdem haben hochintegrierte Sprachen wie Lisp, Scheme, Smalltalk und Ruby noch ein weiteres Pattern, da sie sich besonders gut (oder überhaupt?) dazu eignen, Domänenspezifischen Subsprachen (DSL), also Sprachen die direkt in der Implementierungssprache eingebettet sind, zu formulieren. In Lisp bzw. Scheme ist das sogar die bevorzugte Vorgehensweise!</p>
+<p>Mir ist allerdings noch nicht klar, welches Kriterium eine Sprache in die Lage versetzt, diese Integrierten DSLs besonders gut umzusetzen. Bisher dachte ich immer, dass dazu eine in ihrer Übersimplifizierung geniale Sprachdefinition - wie in Lisp und Smalltalk - notwendig ist, aber gerade das Beispiel von Ruby scheint dem zu widersprechen.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2006/2/unterdokumentierte-design-patterns/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2006/2/preisfrage/">
+        Preisfrage
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2006-02-04">Saturday, February 4, 2006</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Man hat 8 Billiard-Kugeln, von denen man weiß das eine schwerer ist als die Anderen. Desweiteren hat man eine Balkenwage mit der man zwei mal Wiegen, also zwei Gewichte vergleichen, darf.</p>
+<p>Lässt sich unter diesen Vorraussetzungen herausfinden welche Kugel die schwerere ist?</p>
+<p>Viel spaß beim Raten. :)</p>
+<p>Oh, and by the way: <a href="http://www.againsttcpa.com/">TCPA</a> ist immer noch doof: <a href="http://dwt.schwarz-online.org/blog-attachments/trusted-computing/trusted-computing.mp4">Erklärender Film</a></p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2006/2/preisfrage/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2006/1/ober-und-unterton-oder-kehlgesang/">
         Ober- und Unterton- oder Kehlgesang
         </a>
@@ -65,7 +146,7 @@
         written by Martin Häcker on <time datetime="2006-01-29">Sunday, January 29, 2006</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Was es alles gibt! Ich bin fasziniert wozu die Menschliche Stimme so alles in der Lage ist. Obertongesänge kannte ich auch schon länger, aber die zweite Variante, Untertongesänge, wie sie hauptsächlich in <a href="http://de.wikipedia.org/wiki/Tuva">Tuva</a> vorkommt war mir neu.</p>
 <p>Viel sagen will ich dazu eigentlich gar nicht, das muss man mal gehört haben:</p>
@@ -103,7 +184,7 @@
         written by Martin Häcker on <time datetime="2006-01-16">Monday, January 16, 2006</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p><img src="../../2006/1/pra-sentieren-wie-die-meister/powerfull_and_promiscuous.jpg" alt="Image">
 Wieder mal ist ein Wochenende dafür drauf gegangen mich selbst über Präsentationstechniken fortzubilden.</p>
@@ -139,7 +220,7 @@ Wieder mal ist ein Wochenende dafür drauf gegangen mich selbst über Präsentat
         written by Martin Häcker on <time datetime="2005-12-18">Sunday, December 18, 2005</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Die Entwicklung unserer Welt, in Zahlen, ist eine komplizierte und unverständliche Materie.</p>
 <p>Denkste.</p>
@@ -167,7 +248,7 @@ Wieder mal ist ein Wochenende dafür drauf gegangen mich selbst über Präsentat
         written by Martin Häcker on <time datetime="2005-12-18">Sunday, December 18, 2005</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Einerseits <a href="http://nobelprize.org/literature/laureates/2005/pinter-lecture.html">ernsthaft</a>, <a href="http://itconversations.com/shows/detail840.html">lustig</a> andererseits.</p>
 <ul>
@@ -198,7 +279,7 @@ Wieder mal ist ein Wochenende dafür drauf gegangen mich selbst über Präsentat
         written by Martin Häcker on <time datetime="2005-12-17">Saturday, December 17, 2005</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p><img src="../../2005/12/oblique-strategies-1-2/oblique-strategies.png" alt="Image">
 I just released a new  version of the <a href="http://www.rtqe.net/ObliqueStrategies/">Oblique Strategies</a> from Brian Eno and Peter Schmidt.</p>
@@ -234,7 +315,7 @@ I just released a new  version of the <a href="http://www.rtqe.net/ObliqueStrate
         written by Martin Häcker on <time datetime="2005-12-06">Tuesday, December 6, 2005</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>So, nochmal die Ankündigung, diesmal mit <a href="http://dwt.schwarz-online.org/publications/Zukunft%20unplugged%20gibts%20nicht%20mehr.pdf">mp3</a>. (Und mit herzlichem Dank an Ria für die Nachbearbeitung!)</p>
 <h3>Hier nochmal die Ankündigung</h3>
@@ -262,7 +343,7 @@ I just released a new  version of the <a href="http://www.rtqe.net/ObliqueStrate
         written by Martin Häcker on <time datetime="2005-12-03">Saturday, December 3, 2005</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>In der Reihe "Venture Campus" gab es gestern eine Vorlesung über Patente und insbesondere Softwarepatente.</p>
 <p>Was soll ich sagen: <strong>KOTZ</strong></p>
@@ -305,7 +386,7 @@ Ach ja, und dann kann man noch dank dem internationalen PCT-Abkommen dieses pate
         written by Martin Häcker on <time datetime="2005-11-24">Thursday, November 24, 2005</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p><img src="../../2005/11/kochen-mit-dem-ro-mertopf/romertopf.jpg" alt="Image">
 Hmmmm... Sehr lecker.</p>
@@ -327,79 +408,6 @@ Hmmmm... Sehr lecker.</p>
     
       <footer>
         <a href="../../2005/11/kochen-mit-dem-ro-mertopf/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2005/11/firma-gru-nden/">
-        Firma Gründen
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2005-11-23">Wednesday, November 23, 2005</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Gerade höre ich in der Universität die Veranstaltung <a href="http://www.tim.tu-berlin.de/vc/">Venture Campus</a>. An sich ein tolles Konzept - aber mit der Zeit wundert man sich schon ob das ganze System der deutschen Rechtslage nicht den einzigen Zweck verfolgt es möglichst schwierig zu machen das man ein Unternehmen gründet.</p>
-<p>Alleine die ganzen Fußangeln die man gestellt bekommt wenn man versucht Geld von Investoren zu bekommen:</p>
-<ul>
-<li>Karibikregelungen: jeder Vertrag mit Venture Kapitalisten enthält einen Default in dem festgelegt ist das sie jederzeit den Firmengründer aus der Firma "kanten" können. Ohne Grund.</li>
-<li>Drag Along: Wann immer der Kapitalgeber will muss die Firma verkauft werden - oft sogar mit ihnen als Verhandlungsführer.</li>
-<li>Due Dilligence: Wenn die Verhandlung schief geht (mit dem Kapitalgeber), muss man die Kosten für die Verhandlung voll selbst übernehmen. Oh, und natürlich setzt der Kapitalgeber fest was die genauen Kosten waren...</li>
-<li>Catch Up: Alle Verträge enthalten Klauseln dass der Kapitalgeber zuerst bedient wird wenn nach einigen Jahren (meist etwa 5) die Abrechnung statt findet. Logischerweise stehen dann da sofort sachen drinnen die dem Geldgeber ermöglichen das dreifache seiner Einlage zu erhalten. Lustigerweise führt das dann immer dazu das der Geldgeber für ein viertel Einsatz sofort die Hälfte des Firmenwertes erhält. Oder sogar noch mehr...</li>
-</ul>
-<p><em>Kopfschüttel</em> Da fragt man sich wirklich was das für ein Land ist in dem wir hier leben... Ich mein, ist das gewollt das man keine Firmen gründet? Das man kein Riesiko eingeht? Im moment hab ich jedenfalls erst mal echt die Lust verloren eine Firma mit Fremdkapital zu gründen.</p>
-<h2>Was können Unternehmen von Open Source lernen?</h2>
-<p><a href="http://www.itconversations.com/shows/detail657.html">Paul Graham</a> ist da der Meinung, dass Menschen härter und besser arbeiten, wenn sie etwas tun was sie gern tun.</p>
-<p>Klingt trivial, aber die Unterscheidung zwischen "Professionell" und "Amateur" ist doch sehr tief in unserem Denken verankert. Dementsprechend werten wir Amateure auch gleich so als könnten sie per se alles schlechter - schließlich werden sie meist nicht dafür bezahlt!</p>
-<p>Trotzdem sieht man in der Open Source- und der Blog-Welt immer mehr das das nicht stimmt. Für jeden Artikel den ich in einer Zeitung lese, lese ich ein Vielfaches an Artikeln von Irgendjemand. Und genauso für Software. Für jede Software die ich verwende, verwende ich ein Vielfaches an Software das Open Source ist.</p>
-<p>Nun bin ich natürlich kaum repräsentativ - aber jeder der deswegen, oder weil es auch Software und Blogs gibt die nicht so gut sind, die Open Source-, genau wie die Blog-Gemeinde abtut, verpasst den Punkt:</p>
-<p>Es geht mit dem Internet schließlich nicht mehr darum das es viele "Anbieter" gibt die nicht so gut sind, sondern darum das es auch ein Paar gibt die exorbitant gut sind - und die können andere Menschen mit dem Internet endlich erreichen.</p>
-<p>Well, genaueres hört man <a href="http://www.itconversations.com/shows/detail657.html">im Vortrag von Paul Graham</a>.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2005/11/firma-gru-nden/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2005/11/material-zum-vortrag-soziale-innovation-in-der-informationsgesellschaft/">
-        Material zum Vortrag &#34;Soziale Innovation in der Informationsgesellschaft&#34;
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2005-11-22">Tuesday, November 22, 2005</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p><img src="../../2005/11/material-zum-vortrag-soziale-innovation-in-der-informationsgesellschaft/Tatort_Zukunft_Robert_Jungk.jpg" alt="Image">
-Anlässlich der Tagung <a href="http://www.gemeinsinn-werkstatt.de/portal/index.php?option=com_content&amp;task=view&amp;id=109&amp;Itemid=43">Tatort Zukunft - klären, stärken, handeln</a> in <a href="http://www.ev-akademie-boll.de/">Bad Boll</a> habe ich einen Vortrag gehalten, der die Zentrale Neuerung der Informationsgesellschaft gegenüber allem was vorher war vermitteln sollte. Da die Beteiligten alle sehr begeistert waren, hat es wohl durchaus geklappt. :)
-<a href="http://dwt.schwarz-online.org/publications/Zukunft%20unplugged%20gibts%20nicht%20mehr.pdf">Folien</a> - <a href="http://dwt.schwarz-online.org/publications/Zukunft%20unplugged%20gibts%20nicht%20mehr%20(mit%20Notizen">Folien mit Notitzen</a>.pdf)</p>
-<p>Was noch fehlt ist das mp3 von dem Vortrag, das liefere ich nach, sobald die Freundin meines Mitbewohners mit der Aufarbeitung fertig ist, sprich - man auch die Kommentare der Teilnehmer gut ohne Kopfhörer verstehen kann.</p>
-<h2>Cocoa Development Blogs</h2>
-<p>Im <a href="http://www.cocoadev.com/index.pl?CocoaDevBulletinBoard">CocoaDevBulletinBoard</a> wurde Vorgeschlagen einen gemeinsamen Blog für all things Cocoa Development einzurichten. Die Idee finde ich zwar gut, aber das die Umsetzung funktioniert glaube ich nicht.</p>
-<p>Daher bin ich absolut für den Gegenvorschlag von <a href="http://gusmueller.com/blog/">Gus Muller</a>: Einfach jedes Posting das dazu gehört bei del.icio.us mit dem tag <code>cocoadevblog</code> markieren.</p>
-<p>Yup!</p>
-<p><a href="http://del.icio.us/tag/cocoadevblog">Hier gehts zu den del.icio.us Einträgen</a></p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2005/11/material-zum-vortrag-soziale-innovation-in-der-informationsgesellschaft/">weiterlesen…</a>
       </footer>
     
   </article>

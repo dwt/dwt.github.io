@@ -57,6 +57,94 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2009/11/wieso-blo-cke-keine-echten-funktionen-sein-sollten/">
+        Wieso Blöcke keine echten Funktionen sein sollten
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-11-04">Wednesday, November 4, 2009</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Zu <a href="http://www.youtube.com/watch?v=hJRV50_tJ0E">"Ergie" von Rainer von Vielen</a></p>
+<p>In meiner Freizeit beschäftige ich mich gerade viel mit Ruby - sowohl <a href="http://www.amazon.com/Ruby-Way-Second-Techniques-Programming/dp/0672328844">The Ruby Way</a>, als auch <a href="http://oreilly.com/catalog/9780596516178">The Ruby Programming Language</a> sind dafür gute Bücher.</p>
+<p>Und ich muss sagen, das Ruby ist nicht unspannend. Zwar gibt es auch einiges dass ich ganz schön eklig finde (z.B. das Flip-Flop Statement, oder dass so viel mit globalen Variablen gearbeitet wird, oder dass viele Sachen so komplex sind.</p>
+<p>Aber darum gehts hier gar nicht. Mir geht es hier um die Erkenntnis wieso und unter welchen umständen man Blöcke als etwas anderes sehen möchte als anonyme Funktionen.</p>
+<p>Das dauert nämlich bis man das merkt.</p>
+<p>Zuerst einmal die Konfusion: Ruby hat eine Syntax für Methoden</p>
+<div class="hll"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">method</span><span class="p">(</span><span class="n">positional_argument</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">all_other_arguments</span><span class="p">)</span>
+<span class="w">  </span><span class="c1"># some body</span>
+<span class="k">end</span>
+</pre></div>
+<p>und eine für Blöcke</p>
+<div class="hll"><pre><span></span><span class="mi">10</span><span class="o">.</span><span class="n">times</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">|</span><span class="n">positonal_argument</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">all_other_arguments</span><span class="o">|</span>
+<span class="w">  </span><span class="c1"># some body</span>
+<span class="k">end</span>
+</pre></div>
+<p>Wieso der Unterschied? Wieso macht man Blöcke nicht einfach zu normalen Funktionen die man dann auch gleich mit <code>()</code> aufrufen kann anstatt immer ein <code>a_block.call()</code> verwenden zu müssen?</p>
+<p>Echte Lambdas gibt es ja noch zusätzlich in Ruby.</p>
+<p>Well, den Unterschied in der Syntax verstehe ich immer noch nicht. Aber dahinter steht der Grund dass Blöcke eine andere Aufgabe haben als Methoden - der Punkt ist nämlich dass man sie gerne als Teil der sie lexikalisch umgebenden Methode betrachten möchte damit man sie nutzen kann um mit ihnen Kontrollstrukturen zu implementieren. Hier mal ein Beispiel:</p>
+<div class="hll"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">find</span><span class="p">(</span><span class="n">needle</span><span class="p">,</span><span class="w"> </span><span class="n">haystack</span><span class="p">)</span>
+<span class="w">  </span><span class="n">haystack</span><span class="o">.</span><span class="n">each</span><span class="o">.</span><span class="n">with_index</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">|</span><span class="n">index</span><span class="p">,</span><span class="w"> </span><span class="n">element</span><span class="o">|</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">element</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">needle</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">index</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">  </span><span class="k">end</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="kp">nil</span>
+<span class="k">end</span>
+</pre></div>
+<p>(Also als Python Programmierer muss ich ja sagen dass die <code>end</code> statements ganz schön auf die Nerven gehen. Doppelte Zeilenanzahl für null zusätzliche Information oder Nützlichkeit. But I digress.)</p>
+<p>Das spannende daran ist die Zeile <code>return index</code>. Seht ihr was daran besonders ist? Ich Puzzle es mal auseinander als wäre der Block eine funktion, dann wird es klar.</p>
+<p>find ruft einen iterator auf dem haystack auf, d.h. übergibt ihm eine Funktion die das richtige Element findet. Diese Funktion erhällt ein Element aus dem haystack und einen index und gibt diesen index zurück wenn das element das gesuchte ist.</p>
+<p>Und da ist das Problem: Damit <code>find</code> funktioniert muss <code>return index</code> find verlassen und nicht nur die iterator-funktion.</p>
+<p>Das ist der Grund wieso man Blöcke als etwas anderes als Funktionen/Methoden betrachten muss wenn man sie nutzen will um damit Kontrollstrukturen implementieren zu können und ihre volle Nützlichkeit für Abstraktionen verwenden zu können.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/11/wieso-blo-cke-keine-echten-funktionen-sein-sollten/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2009/10/worin-liegt-der-erfolg-von-ruby-on-rails/">
+        Worin liegt der Erfolg von &#34;Ruby on Rails&#34;
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-10-24">Saturday, October 24, 2009</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Liegt es vielleicht wie <a href="http://stackoverflow.com/questions/1099305/why-is-ruby-more-suitable-for-rails-than-python/1099367#1099367">auf Stackoverflow angekündigt</a> an der Sprache?</p>
+<p>Jedenfalls fand ich den ersten Kommentar hervorragend.</p>
+<pre><code>"Python on Pails" just doesn't have the same feel to it... – ephemient
+  @Ephemient: I believe it would be Python on Planes. – Jimmy
+  @Jimmy: Who needs planes? import antigravity ;-) xkcd.com/353 – Vinay Sajip
+  Is there a Java in Jails? – Nosredna
+</code></pre>
+<p><em>lol</em> Eindeutig, die Sprache ist schuld.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/10/worin-liegt-der-erfolg-von-ruby-on-rails/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2009/10/playing-with-javascript-variable-lookup/">
         Playing with JavaScript variable lookup
         </a>
@@ -65,7 +153,7 @@
         written by Martin Häcker on <time datetime="2009-10-17">Saturday, October 17, 2009</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>I am always amazed at the very nice features of JavaScript on the one hand and the very, very bad features of it on the other side.</p>
 <p>Here's something I learned the other week that I find quite interesting: <code>eval</code> vs. <code>new Function</code>. Here's what I wanted to achieve: I was looking for a way to do some meta-programming with JavaScrip, specifically prevent the problem that any variable you assign to but don't declare ends up as a member of the global object.</p>
@@ -136,7 +224,7 @@
         written by Martin Häcker on <time datetime="2009-10-14">Wednesday, October 14, 2009</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Python is a wonderfull language - except when it's not.</p>
 <p>For example calling a super-method is really, really hard. Here's an example:</p>
@@ -198,7 +286,7 @@
         written by Martin Häcker on <time datetime="2009-10-03">Saturday, October 3, 2009</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Die Welt hat ein <a href="http://www.welt.de/print-wams/article143848/Demokratie_ohne_Parteien.html?print=yes#reqdrucken">Interview mit Juli Zeh geführt</a>, in der sie darüber spricht, was sie gerade als staatstheoretisches Konzept ausarbeitet - und wie darin Parteien <strong>nicht</strong> vorkommen.</p>
 <p>Das ist spannend - insbesondere weil ich mich im Rahmen <a href="http://wiki.piratenpartei.de/BE:Liquid_Democracy_in_der_Piratenpartei">der Piratenpartei</a> und  <a href="http://liqd.de/">des Liquid Democracy e.V.</a> und eben auch privat seit Jahren mit genau diesem Thema beschäftige.</p>
@@ -236,7 +324,7 @@
         written by Martin Häcker on <time datetime="2009-09-28">Monday, September 28, 2009</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Yeehaw!</p>
 <p>Na wenn das nicht ein tolles erstes Bundestagswahlergebnis für die Piraten ist!</p>
@@ -265,7 +353,7 @@
         written by Martin Häcker on <time datetime="2009-09-26">Saturday, September 26, 2009</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>I've long had a fascination with SmallTalk style blocks in Objective-C. So much so, that I learned a lot about how C and GCC work when I implemented them on the primitive of GCCs nested functions myself.</p>
 <p>[browser:open-source/closures-in-objc/trunk Heres the Source]</p>
@@ -416,7 +504,7 @@
         written by Martin Häcker on <time datetime="2009-09-16">Wednesday, September 16, 2009</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Spannend - vor allem die diversen Analysen im Netz dazu.</p>
 <p><a href="http://www.piksa.info/blog/2009/09/13/aufruf-nach-polizeigewalt-bei-der-fsa09-informiert-die-medien/">Peter Piksa hat die beste Zusammenfassung der Ereignisse die ich kenne</a>.</p>
@@ -444,7 +532,7 @@
         written by Martin Häcker on <time datetime="2009-09-08">Tuesday, September 8, 2009</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>ist auch meine Sache.</p>
 <p><a href="http://live.piratenpartei.de/audio/gerhart-baum-rettet-die-grundrechte-im-interview-bei-cczwei">Und die von Gerhart Baum.</a> Der immerhin ein Innenminister war der tatsächlich Gesetze für Bürgerrechte gemacht hat.</p>
@@ -471,7 +559,7 @@
         written by Martin Häcker on <time datetime="2009-08-19">Wednesday, August 19, 2009</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Heute bin ich auf einen sehr interessanten Bug gestoßen - im IE natürlich. Genauer genommen im IE 8.</p>
 <p>Folgendes ist passiert: Wir hatten ein Problem mit dem Rendering einer Webapplikation - dort fehlte mal wieder ein Teil das eigentlich hätte da sein sollen. Stellt sich heraus, dass auf manchen der Rechner der IE 8 die Seite im IE 7 Kompatibilitätsmodus gerendert hat - ok wir hatten also eigentlich einen Bug mit dem IE 7 der das CSS nicht vertragen hat. Soweit so gut.</p>
@@ -496,64 +584,6 @@
     
       <footer>
         <a href="../../2009/8/ie-8-oh-ie-8-wa-rst-du-doch-kein-ie-7/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2009/8/ich-bleibe-dabei-dass-wir-oft-an-wahlkampfaussagen-gemessen-werden-ist-nicht-gerecht/">
-        Ich bleibe dabei: Daß wir oft an Wahlkampfaussagen gemessen werden, ist nicht gerecht.
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2009-08-17">Monday, August 17, 2009</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p><a href="http://www.faz.net/s/RubFC06D389EE76479E9E76425072B196C3/Doc~E75D7C9E1BAB44227916C3530595025BE~ATpl~Ecommon~Scontent.html">Franz Müntefering, SPD</a></p>
-<p><a href="https://berlin.piratenpartei.de/">Noch Fragen?</a></p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2009/8/ich-bleibe-dabei-dass-wir-oft-an-wahlkampfaussagen-gemessen-werden-ist-nicht-gerecht/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2009/7/neues-vom-grundeinkommen/">
-        Neues vom Grundeinkommen
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2009-07-23">Thursday, July 23, 2009</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Dazu gibt es ja viel zu wenige empirische Experimente - nur mehr oder weniger begründete Vermutungen von allen Seiten.</p>
-<p>Gerade deswegen finde ich es so ungemein wichtig dass diese Experimente jetzt beginnen, damit wir wissen was aus dieser Idee werden kann und wie man sie umsetzen kann dass es funktioniert.</p>
-<p>Schließlich wollen wir nicht dass wir alle wie die Maori-Indianer in ihren Reservaten enden, die zwar ein Grundeinkommen garantiert haben (da fühlt sich die US-Regierung offenbar doch sehr schuldig) aber die ohne eine kulturelle Identität nur vor sich hin vegitieren können.</p>
-<p>Was wir brauchen ist eine Lotterie an der sich alle Dörfer unter 10.000 Einwohner beteiligen können. Aus diesen Dörfern werden dann 3 Gewinner gezogen und denen 10 Jahre Lang ein Grundeinkommen bezahlt - in verschiedenen Höhen, in unterschiedlichen Ausprägungen. Natürlich mit wissenschaftlicher und psychologischer Betreuung.</p>
-<p>Dann wissen wir mehr.</p>
-<p>Und das coole ist, in Namibia hat <a href="http://www.bignam.org/">der Basic Income Grant (BIG)</a> 2008 so ein Projekt gestartet - mit halbjährigen Evaluierungszyklen.</p>
-<p>Und da kommen jetzt <a href="http://www.az.com.na/politik/weniger-armut-mit-100-dollar.74120.php">die ersten</a> <a href="http://womblog.de/2009/06/16/grundeinkommen-pilot-versuch-voller-erfolg/">Ergebnisse herein</a>.</p>
-<p><a href="http://blog.fefe.de/?ts=b49eb87b">via</a></p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2009/7/neues-vom-grundeinkommen/">weiterlesen…</a>
       </footer>
     
   </article>

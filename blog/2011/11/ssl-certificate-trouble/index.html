@@ -69,7 +69,7 @@
         written by Martin Häcker on <time datetime="2011-11-18">Freitag, 18. November 2011</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>If you should ever stumble upon this bug, consider yourself very lucky that I have found the solution to this already, because it took me <em>AGES</em> to figure this out. No shit.</p>
 <p>So here's the problem: We used a self signed certificate on on of our servers and curl and all tools relying on curl just couldn't connect to this server at all (with certificate validation). Despite the fact that the root certificate that signed the server certificate was happily in my keychain and marked as trusted.</p>
@@ -77,7 +77,7 @@
 <p>I converted the file with this command
 <code>openssl x509 -inform DER -in some.ser.ver.der -out some.serv.ver.pem</code></p>
 <p>Here's some of the error messages I got:</p>
-<div class="hll"><pre><span></span><span class="gp">% </span>curl -I https://some.serv.ver -v
+<div class="hll"><pre><span></span><span class="gp">% </span>curl<span class="w"> </span>-I<span class="w"> </span>https://some.serv.ver<span class="w"> </span>-v
 <span class="go">* About to connect() to some.serv.ver port 443 (#0)</span>
 <span class="go">*   Trying some.ip... connected</span>
 <span class="go">* Connected to some.ser.ver (some.ip) port 443 (#0)</span>
@@ -139,7 +139,7 @@
     <footer class="container-fluid ">
       <ul class="nav">
   <li class="nav-item copyright">
-    <span class="nav-link">&copy; 2022 <a href="../../../../work/">Martin Häcker</a></span>
+    <span class="nav-link">&copy; 2024 <a href="../../../../work/">Martin Häcker</a></span>
   </li>
   
     

@@ -69,14 +69,14 @@
         written by Martin Häcker on <time datetime="2008-08-25">Montag, 25. August 2008</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Erstaunlich aber wahr - viele Programmierer scheinen die Debugging-Möglichkeiten der Plattform ihrer Wahl nicht zu kennen.</p>
 <p>Cocoa zum Beispiel. Viele Programmierer wissen nicht wie man Speicherlöcher effektiv fängt.</p>
 <p>Well, nicht Leaks - da kann man ja mit <a href="http://developer.apple.com/documentation/DeveloperTools/Conceptual/InstrumentsUserGuide/Built-InInstruments/chapter_9_section_8.html">ObjectAlloc</a> draufhauen und dann das Programm fixen.</p>
 <p>Nein, viel problematischer als das sind die doppelten Befreiungen.</p>
-<div class="hll"><pre><span></span><span class="kt">id</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[[</span><span class="bp">NSString</span><span class="w"> </span><span class="n">alloc</span><span class="p">]</span><span class="w"> </span><span class="n">initWithFormat</span><span class="o">:</span><span class="s">@&quot;foo&quot;</span><span class="p">];</span><span class="w"></span>
-<span class="p">[</span><span class="n">foo</span><span class="w"> </span><span class="k">release</span><span class="p">];</span><span class="w"></span>
+<div class="hll"><pre><span></span><span class="kt">id</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[[</span><span class="bp">NSString</span><span class="w"> </span><span class="n">alloc</span><span class="p">]</span><span class="w"> </span><span class="n">initWithFormat</span><span class="o">:</span><span class="s">@&quot;foo&quot;</span><span class="p">];</span>
+<span class="p">[</span><span class="n">foo</span><span class="w"> </span><span class="k">release</span><span class="p">];</span>
 <span class="c1">// do something else</span>
 <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;foo is %d&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">foo</span><span class="w"> </span><span class="n">length</span><span class="p">]);</span><span class="w"> </span><span class="c1">// almost certainly bombs</span>
 </pre></div>
@@ -136,7 +136,7 @@ Call [2] [arg=16]: thread_a00ddfa0 |start | main | -[NSString initWithFormat:] |
     <footer class="container-fluid ">
       <ul class="nav">
   <li class="nav-item copyright">
-    <span class="nav-link">&copy; 2022 <a href="../../../../work/">Martin Häcker</a></span>
+    <span class="nav-link">&copy; 2024 <a href="../../../../work/">Martin Häcker</a></span>
   </li>
   
     

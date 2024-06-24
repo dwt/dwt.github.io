@@ -57,6 +57,66 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/7/kunst-und-programmierung-was-macht-apis-scho-n/">
+        Kunst und Programmierung: Was macht APIs schön?
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-07-24">Thursday, July 24, 2008</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Und wieder mal heißt es: Python/Trac oder Cocoa? Wer wird gewinnen?</p>
+<p>Erkundbarkeit der Frameworks ist mein nächstes Thema: Die Klassen die bestimmte Aufgaben haben sollen leicht zu finden sein.</p>
+<p>Das funktioniert bei Trac in der Regel sehr gut, da man in Python sehr schön über Packages hierarchische Namensräume definieren kann - ähnlich wie bei Java eben auch.</p>
+<p>Nur dass es dort etwas Taktvoller eingesetzt wurde.</p>
+<p>Das heißt es gibt trac.wiki trac.tickets trac.timeline etc. Wenn man den Code zu einem Feature sucht, kann man ihn auch schnell finden.</p>
+<p>Ganz im Gegensatz zur Standard Library von Python - da ist alles Kraut und Rüben - wenn man mal eben versucht alle Klassen die was mit String-Verarbeitung oder mit ein und Ausgabe zu tun haben, dann kann man ganz schön suchen - es gibt nicht einen Namensraum der überschaubar wäre und alles enthält.</p>
+<p>Cocoa ist da auch nicht vorbildlich - da gibt es gar keine Namensräume. Nur eine grobe unterteilung in <strong>Foundation</strong> für alles was keine GUI braucht und <strong>AppKit</strong> für alles was mit einer GUI zusammenhängt.</p>
+<p>Na immerhin etwas. Dazu kommt dass Apple fast alle neuen größeren Features als Framework verpackt die einen Aufgabenbereich verkapseln. CoreAudio für alles was mit Audio zu tun hat. CoreImage für ... Bilder, CoreVideo.... etc. Immerhin. Aber. Da alle Klassen zur Laufzeit dann doch in einem einzelnen Namensraum liegen, heißt dass das dann doch wieder jede Klasse einen Präfix bekommt, damit sie nicht mit Klassen von irgend jemand anderem zusammenstößt. Bäh. Man hat also NSArray statt Array und NSApplication statt Application und NMDeviceDatabaseEntry (NM für <a href="http://novamedia.de/">NovaMedia</a>). Also: Namensräume rocken - und Cocoa kann da deutlich weniger als Python.</p>
+<p>Hierarchische Namensräume sind gut, weil sie Übersicht schaffen - wenn man sie nicht nur zum Spaß einsetzt sondern tatsächlich verschiedene Bereiche getrennt bekommt.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/7/kunst-und-programmierung-was-macht-apis-scho-n/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/7/git-the-basics/">
+        Git the Basics
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-07-21">Monday, July 21, 2008</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p><a href="http://excess.org/article/2008/07/ogre-git-tutorial/">Da hab ich doch endlich eine schöne fundierte Einführung wie mann am besten mit Distributed Revision-Controll-Systemen arbeitet.</a></p>
+<p>Ok, sie ist komplett auf <a href="http://git.or.cz/">GIT</a> zugeschnitten, aber trotzdem sehr ordentlich. Vor allem erklärt er auch anschaulich wofür man die advanced features wie rebasing sinnvollerweise verwenden kann.</p>
+<p>Also alles in allem eine Empfehlung. :)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/7/git-the-basics/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/7/timemachine-auf-beliebigem-nas/">
         TimeMachine auf beliebigem NAS
         </a>
@@ -65,7 +125,7 @@
         written by Martin Häcker on <time datetime="2008-07-14">Monday, July 14, 2008</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Tja, nach anfänglichem [wiki:2008/07/12/22.30 Erfolg mit meinem NAS] muss ich leider doch geschlagen geben.</p>
 <p>Auch wenn alles zum Funktionieren zu bringen war, bricht jeder Backup auf den NAS so nach etwa 1-6 Gigabyte ab und ist nach dem zweiten Restart gar nicht mehr zum starten zu überreden (angeblich weil die Backup-Festplatte Schreibgeschützt ist.</p>
@@ -93,7 +153,7 @@
         written by Martin Häcker on <time datetime="2008-07-14">Monday, July 14, 2008</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Dachte ich mir zum letzten mal.</p>
 <p>Denn das kann XCode ja schließlich auch automatisieren, wenn man ein wenig in die Makros von Xcode reingreift.</p>
@@ -150,7 +210,7 @@
         written by Martin Häcker on <time datetime="2008-07-12">Saturday, July 12, 2008</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Backups übers WLAN auf ein NAS zu machen ist schick - aber <a href="http://www.apple.com/macosx/features/timemachine.html">TimeMachine</a> arbeitet ausschließlich mit <a href="http://www.apple.com/de/timecapsule/">Apple TimeCapsule</a></p>
 <p>Jetzt kriegt man aber auch schicke NAS mit anderthalb Terrabyte - nur das Ding zur Zusammenarbeit mit TimeMachine zu überreden ist schon etwas schwieriger - aber möglich.</p>
@@ -184,7 +244,7 @@
         written by Martin Häcker on <time datetime="2008-07-10">Thursday, July 10, 2008</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Mjam....</p>
 <p><a href="http://www.chefkoch.de/rezepte/836451188454161/Heringssalat.html">etwa so.</a></p>
@@ -210,7 +270,7 @@
         written by Martin Häcker on <time datetime="2008-07-06">Sunday, July 6, 2008</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>... der aktuelle Wissensstand auf die Studenten trifft, wie der D-Zug auf den auf dem Gleis liegenden.</p>
 <p>Oder?</p>
@@ -243,7 +303,7 @@
         written by Martin Häcker on <time datetime="2008-07-04">Friday, July 4, 2008</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Ist schön!</p>
 <p>Barfuß laufen den ganzen Tag, jeden tag zweimal im Meer Schwimmen gehen, in der Sonne liegen und lesen...</p>
@@ -275,7 +335,7 @@
         written by Martin Häcker on <time datetime="2008-06-21">Saturday, June 21, 2008</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Es gibt ja verschiedenste Frameworks die total toll sind um darauf aufbauend Webseiten-Entwicklung zu machen. <a href="http://turbogears.org/">TurboGears</a>, <a href="http://www.djangoproject.com/">Django</a>, <a href="http://www.rubyonrails.org/">Ruby On Rails</a>, etc.</p>
 <p>Und was muss ich feststellen? Ich treibe Webentwicklung in einem Framework, der es selber gar nicht sein will. <a href="http://trac.edgewall.org/">Trac</a>.</p>
@@ -308,7 +368,7 @@ Dauert also nicht mehr lange bis ich das hier fürs Bloggen einsetzen kann / wer
         written by Martin Häcker on <time datetime="2008-06-19">Thursday, June 19, 2008</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Gerade hat mich meine "Tarifberaterin" angerufen und mich darauf hingewiesen das ich meinen Vertrag erneuern könne.</p>
 <p>Auf meine Frage wie es denn da mit den iPhones aussieht erhielt ich dann eine überraschende Antwort:</p>
@@ -329,63 +389,6 @@ Dauert also nicht mehr lange bis ich das hier fürs Bloggen einsetzen kann / wer
     
       <footer>
         <a href="../../2008/6/iphones-bei-o2-germany/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/6/brainworks-in-presentation/">
-        Brainworks in presentation
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-06-14">Saturday, June 14, 2008</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p><a href="http://youtube.com/watch?v=DZ2vtQCESpk">Garr Raynolds spricht mal wieder</a>. <a href="http://www.presentationzen.com/">Seinen Blog</a> verfolge ich ja schon lange - und habe ihn noch nie sprechen hören.</p>
-<p>Daher war ich auch am Anfang etwas enttäuscht, da er (IMO) viel besser Schreibt als er spricht. Aber er kommt rein und hält letztlich eine sehr gute Präsentation - mit dem Thema wie man präsentieren soll (nach ihm).</p>
-<p><a href="http://youtube.com/watch?v=DZ2vtQCESpk">Den Vortrag kann ich daher nur empfehlen.</a></p>
-<p>p.s.: By the way: Durch den Vortrag bin ich auch auf <a href="http://www.brainrules.net/">Brain Rules</a> ein Buch von John Medina gestoßen, der aus der Sicht eines Molekularbiologen beschreibt was wir über das Gehirn wissen und wie wir uns demnach verhalten sollen.</p>
-<p>Good stuff. (Buch gerade bestellt)</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/6/brainworks-in-presentation/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/6/hacking-tracblog/">
-        Hacking TracBlog
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-06-14">Saturday, June 14, 2008</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Well, wir sind weiter gekommen. Man kann sogar schon posten.</p>
-<p>Vor allem aber, haben wir eine recht vollständige Testsuite. Und dazu gehören auch funktionale Tests <a href="http://twill.idyll.org/">mit Twill</a>.</p>
-<p>Die finde ich vom Ablauf her noch reichlich krude und aufwendig, aber ein Anfang ist gemacht.</p>
-<p><a href="http://xn--hcker-gra.net/cgi-bin/hgweb.cgi">Wer schon mal einen Blick werfen will, darf das gerne tun. :-)</a></p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/6/hacking-tracblog/">weiterlesen…</a>
       </footer>
     
   </article>

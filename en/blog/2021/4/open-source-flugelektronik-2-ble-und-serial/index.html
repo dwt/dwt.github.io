@@ -69,7 +69,7 @@
         written by Martin Häcker on <time datetime="2021-04-22">Thursday, April 22, 2021</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Langsam nähere ich mich meinen <a href="https://github.com/lyusupov/SoftRF">Soft-RF-Geräten</a> an. Ich kann jetzt auch über <a href="./">Bluetooth Low Energy (BLE)</a> mit dem Gerät reden. Das Python Framework <a href="https://pypi.org/project/bleak/">Bleak</a> war dabei unglaublich hilfreich, da ich fast den ganzen BLE-Code sehr plattform-neutral Scheiben kann. I.e. der Code ist zwar nur auf MacOS getestet, wird aber sehr wahrscheinlich auch unter Linux funktionieren. Der Code zu diesem Post liegt <a href="https://github.com/dwt/softrf-interfacing">auf github</a>.</p>
 <p>Wie läuft das jetzt? Zuerst braucht man einen BLE-Scanner, um die Adresse des Geräts zu finden. Bei mir sieht das so aus:</p>

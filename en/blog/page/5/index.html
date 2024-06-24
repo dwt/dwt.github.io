@@ -57,6 +57,75 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2010/1/here-be-electric-dragons/">
+        Here be electric dragons
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2010-01-08">Friday, January 8, 2010</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Ich vertrete ja schon länger den Punkt dass ein Grundeinkommen eine Notwendigkeit sein wird in einer Gesellschaft in der Maschinen uns alle physischen Arbeiten abnehmen können.</p>
+<p>Well, jetzt habe ich endlich jemanden gefunden der dieses Argument auch vertritt.</p>
+<p>Auf dem 26C3 im Vortrag <a href="http://events.ccc.de/congress/2009/Fahrplan/events/3452.en.html">Here be electric dragons</a></p>
+<p>Sehr sehenswert!</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2010/1/here-be-electric-dragons/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2010/1/method-argument-naming-confusion/">
+        Method argument naming confusion
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2010-01-08">Friday, January 8, 2010</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Schon seit einigen Wochen bin ich am grübeln, nach welcher Regel ich in Python meine variablen für Methoden-Argumente benennen soll. Das ist erstaunlicherweise gar nicht so klar.</p>
+<p>Hier mal das Problem: In Objective-C ist alles sehr klar und einfach (von Smalltalk kommend). Jede Methoden-Deklaration besteht abwechselnd aus einem Teil Methodennamen und dann einer Variablen. Hier mal ein Beispiel:</p>
+<div class="hll"><pre><span></span><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">setValue:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">aValue</span><span class="w"> </span><span class="nf">forKey:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">aKey</span>
+</pre></div>
+<p>Das hat den großen Vorteil dass man den Methodennamen benutzen kann um Stück für Stück die Argumente zu dokumentieren. Verwendet wird das so, dass das Stück Methodennamen das vor einem Argument kommt die Rolle beschreibt die das Argument spielen wird, während der Name der Variablen eher generisch ist und sich eher am Typ orientiert. Dazu kommt natürlich das man die Typen auch explizit auszeichnen kann, was die notwendigkeit für die Typ-Annotation im Namen der Variablen im vergleich zu Smalltalk oder Python noch mal vermindert und man kann ihn ganz der Rolle hingeben die die Variable in der Methode spielen wird - versehen mit dem a/an/some/etc. prefix der Argumente (als generische Instanzen von etwas) von den lokalen und instanz-variablen unterscheidet.</p>
+<p>In Python geht das so nicht. Man kann versuchen das auf zwei wegen anzunähern:</p>
+<div class="hll"><pre><span></span><span class="k">def</span> <span class="nf">set_value_for_key</span><span class="p">(</span><span class="n">a_value</span><span class="p">,</span> <span class="n">a_key</span><span class="p">):</span> <span class="k">pass</span>
+<span class="c1"># benutze als: some_dict.set_value_for_key(&#39;value&#39;, &#39;key&#39;)</span>
+</pre></div>
+<p>Das hat den Vorteil das man die Argumente mehr oder weniger benennen kann wie man möchte, aber den Nachteil das die Dokumentation der argumente nicht mit diesen zusammen ist. Das hat schon mal den unangenehmen seiteneffekt das es sehr viel schlechter auf mehrere Argumente skaliert und damit sehr fix mehr extra-dokumentation nötig macht.</p>
+<p>Der andere Weg wäre so:</p>
+<div class="hll"><pre><span></span><span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">for_key</span><span class="p">):</span> <span class="k">pass</span>
+<span class="c1">#benutze als: some_dict.set(value=&#39;value&#39;, for_key=&#39;key&#39;)</span>
+</pre></div>
+<p>Das hat den Vorteil dass der MethodenNamen von der Dokumentationshürde befreit ist - und damit Kurz wird.  Auf der anderen Seite sind die Argument-Namen jetzt effektiv teil des Methoden-Namens und damit kann man sie nicht mehr so gut benutzen um den Typ der Argumente zu dokumentieren.</p>
+<p>:-(</p>
+<p>Das ist der Grund wieso ich die Objective-C / Smalltalk Syntax so gerne mag, weil es darin so einfach ist selbstdokumentierenden Code von hoher qualität zu schreiben.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2010/1/method-argument-naming-confusion/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2009/12/python-saug-punkte/">
         Python Saug-Punkte
         </a>
@@ -65,7 +134,7 @@
         written by Martin Häcker on <time datetime="2009-12-23">Wednesday, December 23, 2009</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Viele standard-funktionen und module in python haben zu kurze namen.</p>
 <p>Das ist deshalb ein Problem weil, man diese Namen nicht für lokale Variablen verwenden kann bzw. ungewollt eine Standardfunktion überschreibt.</p>
@@ -97,7 +166,7 @@
         written by Martin Häcker on <time datetime="2009-12-12">Saturday, December 12, 2009</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Well, it's all too easy apparently. We stumbled upon the problem when suddenly our web application crashed left and right on us in IE 7.</p>
 <p>I've since reduced the code involved and created a plugin to jQuery to make it easier to reproduce this.</p>
@@ -126,7 +195,7 @@
         written by Martin Häcker on <time datetime="2009-12-05">Saturday, December 5, 2009</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Endlich mal hab ich einen überblick gefunden wo die Entwicklung momentan hingeht.</p>
 <p><a href="http://mail.python.org/pipermail/python-dev/2009-October/092754.html">http://mail.python.org/pipermail/python-dev/2009-October/092754.html</a></p>
@@ -160,7 +229,7 @@
         written by Martin Häcker on <time datetime="2009-11-29">Sunday, November 29, 2009</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p><img src="http://wurstball.de/static/ircview/pictures/ba57e733f5f0157a130c99f7e648cb58.jpg" alt="Image"></p>
 <p><a href="http://wurstball.de/25017/">via</a></p>
@@ -186,7 +255,7 @@
         written by Martin Häcker on <time datetime="2009-11-18">Wednesday, November 18, 2009</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Meine Mutter hat diesen lesenswerten Text dazu geschrieben - und den möchte ich gerne (mit ihrer Erlaubnis) noch mehr Leuten zugänglich machen. Grund dafür ist diese Email die gerade mit diversen gut klingenden Arzt-Namen als Absender auch durch meine Inbox wandert</p>
 <hr>
@@ -254,7 +323,7 @@ sich die Viren nicht ausbreiten:</p>
         written by Martin Häcker on <time datetime="2009-11-14">Saturday, November 14, 2009</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Ich weiß ich bin etwas spät mich dazu auch zu äussern - aber jetzt wo die <a href="https://secure.wikimedia.de/spenden/list.php?datum=2009-11">Wikipedia wieder zu Spenden aufruft</a> möchte ich was dazu sagen wieso ich nicht spende.</p>
 <p>Das ist doch alles Kindergarten was in der Wikipedia gerade läuft.</p>
@@ -299,7 +368,7 @@ sich die Viren nicht ausbreiten:</p>
         written by Martin Häcker on <time datetime="2009-11-08">Sunday, November 8, 2009</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p><a href="http://www.sultan-hamam.de">Ahhhhhhhhhh</a></p>
 
@@ -324,7 +393,7 @@ sich die Viren nicht ausbreiten:</p>
         written by Martin Häcker on <time datetime="2009-11-05">Thursday, November 5, 2009</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Im vergleich zum Irak-Krieg? Oder alle Kinder dieser Welt für 5 Jahre zu ernähren?</p>
 <p><a href="http://www.informationisbeautiful.net/visualizations/the-billion-dollar-gram/">Hier wunderschön visualisiert</a>.</p>
@@ -335,94 +404,6 @@ sich die Viren nicht ausbreiten:</p>
     
       <footer>
         <a href="../../2009/11/wie-viel-kostet-die-finanzkriese/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2009/11/wieso-blo-cke-keine-echten-funktionen-sein-sollten/">
-        Wieso Blöcke keine echten Funktionen sein sollten
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2009-11-04">Wednesday, November 4, 2009</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Zu <a href="http://www.youtube.com/watch?v=hJRV50_tJ0E">"Ergie" von Rainer von Vielen</a></p>
-<p>In meiner Freizeit beschäftige ich mich gerade viel mit Ruby - sowohl <a href="http://www.amazon.com/Ruby-Way-Second-Techniques-Programming/dp/0672328844">The Ruby Way</a>, als auch <a href="http://oreilly.com/catalog/9780596516178">The Ruby Programming Language</a> sind dafür gute Bücher.</p>
-<p>Und ich muss sagen, das Ruby ist nicht unspannend. Zwar gibt es auch einiges dass ich ganz schön eklig finde (z.B. das Flip-Flop Statement, oder dass so viel mit globalen Variablen gearbeitet wird, oder dass viele Sachen so komplex sind.</p>
-<p>Aber darum gehts hier gar nicht. Mir geht es hier um die Erkenntnis wieso und unter welchen umständen man Blöcke als etwas anderes sehen möchte als anonyme Funktionen.</p>
-<p>Das dauert nämlich bis man das merkt.</p>
-<p>Zuerst einmal die Konfusion: Ruby hat eine Syntax für Methoden</p>
-<div class="hll"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">method</span><span class="p">(</span><span class="n">positional_argument</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">all_other_arguments</span><span class="p">)</span>
-<span class="w">  </span><span class="c1"># some body</span>
-<span class="k">end</span>
-</pre></div>
-<p>und eine für Blöcke</p>
-<div class="hll"><pre><span></span><span class="mi">10</span><span class="o">.</span><span class="n">times</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">|</span><span class="n">positonal_argument</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">all_other_arguments</span><span class="o">|</span>
-<span class="w">  </span><span class="c1"># some body</span>
-<span class="k">end</span>
-</pre></div>
-<p>Wieso der Unterschied? Wieso macht man Blöcke nicht einfach zu normalen Funktionen die man dann auch gleich mit <code>()</code> aufrufen kann anstatt immer ein <code>a_block.call()</code> verwenden zu müssen?</p>
-<p>Echte Lambdas gibt es ja noch zusätzlich in Ruby.</p>
-<p>Well, den Unterschied in der Syntax verstehe ich immer noch nicht. Aber dahinter steht der Grund dass Blöcke eine andere Aufgabe haben als Methoden - der Punkt ist nämlich dass man sie gerne als Teil der sie lexikalisch umgebenden Methode betrachten möchte damit man sie nutzen kann um mit ihnen Kontrollstrukturen zu implementieren. Hier mal ein Beispiel:</p>
-<div class="hll"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">find</span><span class="p">(</span><span class="n">needle</span><span class="p">,</span><span class="w"> </span><span class="n">haystack</span><span class="p">)</span>
-<span class="w">  </span><span class="n">haystack</span><span class="o">.</span><span class="n">each</span><span class="o">.</span><span class="n">with_index</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">|</span><span class="n">index</span><span class="p">,</span><span class="w"> </span><span class="n">element</span><span class="o">|</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">element</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">needle</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">index</span>
-<span class="w">    </span><span class="k">end</span>
-<span class="w">  </span><span class="k">end</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="kp">nil</span>
-<span class="k">end</span>
-</pre></div>
-<p>(Also als Python Programmierer muss ich ja sagen dass die <code>end</code> statements ganz schön auf die Nerven gehen. Doppelte Zeilenanzahl für null zusätzliche Information oder Nützlichkeit. But I digress.)</p>
-<p>Das spannende daran ist die Zeile <code>return index</code>. Seht ihr was daran besonders ist? Ich Puzzle es mal auseinander als wäre der Block eine funktion, dann wird es klar.</p>
-<p>find ruft einen iterator auf dem haystack auf, d.h. übergibt ihm eine Funktion die das richtige Element findet. Diese Funktion erhällt ein Element aus dem haystack und einen index und gibt diesen index zurück wenn das element das gesuchte ist.</p>
-<p>Und da ist das Problem: Damit <code>find</code> funktioniert muss <code>return index</code> find verlassen und nicht nur die iterator-funktion.</p>
-<p>Das ist der Grund wieso man Blöcke als etwas anderes als Funktionen/Methoden betrachten muss wenn man sie nutzen will um damit Kontrollstrukturen implementieren zu können und ihre volle Nützlichkeit für Abstraktionen verwenden zu können.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2009/11/wieso-blo-cke-keine-echten-funktionen-sein-sollten/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2009/10/worin-liegt-der-erfolg-von-ruby-on-rails/">
-        Worin liegt der Erfolg von &#34;Ruby on Rails&#34;
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2009-10-24">Saturday, October 24, 2009</time>
-      </p>
-    </header>
-    
-    <section class="blog-post-body">
-      <p>Liegt es vielleicht wie <a href="http://stackoverflow.com/questions/1099305/why-is-ruby-more-suitable-for-rails-than-python/1099367#1099367">auf Stackoverflow angekündigt</a> an der Sprache?</p>
-<p>Jedenfalls fand ich den ersten Kommentar hervorragend.</p>
-<pre><code>"Python on Pails" just doesn't have the same feel to it... – ephemient
-  @Ephemient: I believe it would be Python on Planes. – Jimmy
-  @Jimmy: Who needs planes? import antigravity ;-) xkcd.com/353 – Vinay Sajip
-  Is there a Java in Jails? – Nosredna
-</code></pre>
-<p><em>lol</em> Eindeutig, die Sprache ist schuld.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2009/10/worin-liegt-der-erfolg-von-ruby-on-rails/">weiterlesen…</a>
       </footer>
     
   </article>

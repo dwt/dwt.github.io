@@ -69,7 +69,7 @@
         written by Martin Häcker on <time datetime="2008-09-01">Montag, 1. September 2008</time>
       </p>
     </header>
-    
+
     <section class="blog-post-body">
       <p>Und zwar gewaltig.</p>
 <p>Heute hab ich eine Menge Zeit darauf verbrannt unserem Online-Update-System auf den Zahn zu fühlen. Das arbeitet nämlich ganz hervorragend mit <a href="http://sparkle.andymatuschak.org/">Sparkle</a> um für unsere Applikation via <a href="http://connectedflow.com/appcasting/">Appcast</a> herunter zu laden, wenn eine neue Version ansteht. Und damit das auch schön sicher ist, nutzen wir ein kleines öffentlich/privates Schlüsselpärchen um das abzusichern.</p>
@@ -80,11 +80,11 @@
 <p>Debuggen ist eben schwieriger als den Code zu schreiben. Ich vermute, weil man ihn dafür <strong><em>wirklich</em></strong> verstehen muss - inklusive aller Fehler die man in seinem eigenen Verständnis hat.</p>
 <p>P.S.: So Signiert und Validiert man ein File mit OpenSSL von der Kommandozeile:</p>
 <div class="hll"><pre><span></span><span class="c1"># base 64 encoding to ease textual transmission</span>
-openssl dgst -dss1 -sign dsa_private_key.pem Important.rtf <span class="p">|</span> openssl enc -base64 &gt; signature.sig
+openssl<span class="w"> </span>dgst<span class="w"> </span>-dss1<span class="w"> </span>-sign<span class="w"> </span>dsa_private_key.pem<span class="w"> </span>Important.rtf<span class="w"> </span><span class="p">|</span><span class="w"> </span>openssl<span class="w"> </span>enc<span class="w"> </span>-base64<span class="w"> </span>&gt;<span class="w"> </span>signature.sig
 <span class="c1"># and decode again</span>
-openssl enc -base64 -d &lt; signature.sig &gt; decoded.signature.sig
+openssl<span class="w"> </span>enc<span class="w"> </span>-base64<span class="w"> </span>-d<span class="w"> </span>&lt;<span class="w"> </span>signature.sig<span class="w"> </span>&gt;<span class="w"> </span>decoded.signature.sig
 <span class="c1"># and verify</span>
-openssl dgst -dss1 -verify dsa_public_key.pem -signature decoded.signature.sig Important.rtf
+openssl<span class="w"> </span>dgst<span class="w"> </span>-dss1<span class="w"> </span>-verify<span class="w"> </span>dsa_public_key.pem<span class="w"> </span>-signature<span class="w"> </span>decoded.signature.sig<span class="w"> </span>Important.rtf
 </pre></div>
 <p>Einige Fallstricke: -dss1 und -sha1 erzeugen offenbar die gleichen Checksummen (man könnte also meinen das es der gleiche Algorithmus ist) die beiden digest modi werden aber in openssl offenbar unterschiedlich behandelt. Beim Signieren löst das verwenden von -sha1 auch schön eine Fehlermeldung aus - wenn man beim Überprüfen aber -sha1 zu verwenden versucht, dann erhält man nur den Hinweis dass die Verifikation gescheitert ist - an einem falschen public key. Seeehr hilfreich liebe Entwickler.</p>
 <p>Wie man ein Schlüsselpaar erzeugt und vieles mehr <a href="http://www.madboa.com/geek/openssl/">gibts hier</a>.</p>
@@ -123,7 +123,7 @@ openssl dgst -dss1 -verify dsa_public_key.pem -signature decoded.signature.sig I
     <footer class="container-fluid ">
       <ul class="nav">
   <li class="nav-item copyright">
-    <span class="nav-link">&copy; 2022 <a href="../../../../work/">Martin Häcker</a></span>
+    <span class="nav-link">&copy; 2024 <a href="../../../../work/">Martin Häcker</a></span>
   </li>
   
     

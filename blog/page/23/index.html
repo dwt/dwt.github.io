@@ -57,39 +57,6 @@
   <article class="blog-post">
     <header>
       <h2>
-        <a href="../../2008/6/trac-die-webentwicklungsplattform/">
-        Trac, die Webentwicklungsplattform
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-06-21">Samstag, 21. Juni 2008</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>Es gibt ja verschiedenste Frameworks die total toll sind um darauf aufbauend Webseiten-Entwicklung zu machen. <a href="http://turbogears.org/">TurboGears</a>, <a href="http://www.djangoproject.com/">Django</a>, <a href="http://www.rubyonrails.org/">Ruby On Rails</a>, etc.</p>
-<p>Und was muss ich feststellen? Ich treibe Webentwicklung in einem Framework, der es selber gar nicht sein will. <a href="http://trac.edgewall.org/">Trac</a>.</p>
-<p>Irgendwie ist das eine Liebe und Hass-Beziehung. Einerseits finde ich das Prinzip gut und mir gefällt wie es umgesetzt ist. Andererseits kotzt mich der Code in Trac zum Teil gewaltig an.</p>
-<p>Sowas von Kompliziert. Bäh.</p>
-<p>Also wieso mache ich mir den Stress?</p>
-<p>Weil ich später auf der Benutzer-Seite nicht so viele verschiedene Tools einsetzen will. Ich will meinen Blog schreiben, im Wiki Arbeiten und meine Software verwalten - alles ohne extra Aufwand zu treiben, damit es sich integriert.</p>
-<p>Dabei ist es logisch betrachtet viel mehr Aufwand das alles in einem Tool zusammenzukriegen, als einfach ein paar gut geeignete Tools zusammenzuwerfen.</p>
-<p>Na mal schaun. Für's erste mach ich mal weiter mit dem Blog - immerhin kann man damit jetzt schon posten und kriegt sogar eine Fehlermeldung wenn man vergisst einen Titel zu vergeben. :-)
-Dauert also nicht mehr lange bis ich das hier fürs Bloggen einsetzen kann / werde.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/6/trac-die-webentwicklungsplattform/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
         <a href="../../2008/6/iphones-bei-o2-germany/">
         iPhones bei O2 Germany?
         </a>
@@ -373,6 +340,58 @@ Dauert also nicht mehr lange bis ich das hier fürs Bloggen einsetzen kann / wer
     
       <footer>
         <a href="../../2008/6/warum-kann-man/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/6/was-macht-dieser-code/">
+        Was macht dieser Code
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-06-03">Dienstag, 3. Juni 2008</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Aus dem <a href="http://svn.icculus.org/quake3/branches/1.34/code/qcommon/q_math.c?revision=2&amp;view=markup">Q3 Source Code</a>:</p>
+<div class="hll"><pre><span></span><span class="kt">float</span><span class="w"> </span><span class="nf">Q_rsqrt</span><span class="p">(</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kt">long</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">x2</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">threehalfs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.5F</span><span class="p">;</span>
+
+<span class="w">  </span><span class="n">x2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.5F</span><span class="p">;</span>
+<span class="w">  </span><span class="n">y</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">number</span><span class="p">;</span>
+<span class="w">  </span><span class="n">i</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&amp;</span><span class="n">y</span><span class="p">;</span><span class="w">  </span><span class="c1">// evil floating point bit level hacking</span>
+<span class="w">  </span><span class="n">i</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mh">0x5f3759df</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">);</span><span class="w"> </span><span class="c1">// what the fuck?</span>
+<span class="w">  </span><span class="n">y</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&amp;</span><span class="n">i</span><span class="p">;</span>
+<span class="w">  </span><span class="n">y</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">threehalfs</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"> </span><span class="c1">// 1st iteration</span>
+<span class="w">  </span><span class="c1">// y  = y * ( threehalfs - ( x2 * y * y ) ); // 2nd iteration, this can be removed</span>
+
+<span class="w">  </span><span class="cp">#ifndef Q3_VM</span>
+<span class="w">  </span><span class="cp">#ifdef __linux__</span>
+<span class="w">    </span><span class="n">assert</span><span class="p">(</span><span class="w"> </span><span class="o">!</span><span class="n">isnan</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"> </span><span class="c1">// bk010122 - FPE?</span>
+<span class="w">  </span><span class="cp">#endif</span>
+<span class="w">  </span><span class="cp">#endif</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<p>Was macht das und wieso funktioniert es?</p>
+<p>(Für all zu ungeduldige: <a href="http://www.codemaestro.com/reviews/9">Auflösung</a>)</p>
+<p>Was ich besonders spannend finde, ist <a href="http://www.beyond3d.com/content/articles/8/">die Geschichte mit der es entstanden ist.</a> (<a href="http://www.beyond3d.com/content/articles/15/">Und die Fortsetzung</a>)</p>
+<p>Total cool.</p>
+<p>(via: <a href="http://cdn2.libsyn.com/dsyates/040808uclug0010.mp3?nvb=20080603045220&amp;nva=20080604045220&amp;t=0bf41176cfbc595befe81">Einen Podcast von Ryan 'icculus' Gordon</a> [etwa ab min. 30])</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/6/was-macht-dieser-code/">weiterlesen…</a>
       </footer>
     
   </article>

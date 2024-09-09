@@ -57,33 +57,6 @@
   <article class="blog-post">
     <header>
       <h2>
-        <a href="../../2010/5/die-scho-nsten-testsuiten/">
-        Die schönsten Testsuiten
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2010-05-29">Saturday, May 29, 2010</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>Sowas wünsche ich mir auch mal für andere Programmiersprachen. Eine ständig aktuelle Hitliste der schönsten Testsuiten von Open Source software.</p>
-<p><a href="http://blog.plataformatec.com.br/2010/04/best-ruby-open-source-test-suites-awards/">Sowas hier</a> - aber systematisch und crowdsourced immer aktuell.</p>
-<p>Hach, man kann träumen. :-)</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2010/5/die-scho-nsten-testsuiten/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
         <a href="../../2010/4/klartra-umen/">
         Klarträumen
         </a>
@@ -379,6 +352,50 @@
     
       <footer>
         <a href="../../2010/1/python-saugpunkte-klassenobjekte/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2010/1/python-saug-punkte-contd/">
+        Python Saug Punkte contd.
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2010-01-11">Monday, January 11, 2010</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Eine Sache die mich bei Python immer wieder ärgert ist die Tatsache dass Standardwerte für Methodenargumente zur Parsezeit festgelegt werden anstatt zur Aufrufzeit.</p>
+<p>Das ist total doof, denn dadurch teilen sich alle aufrufe der Funktion den gleichen default-wert - was zwar schön schnell sein mag, aber trotzdem in fast allen Fällen nur bei nicht veränderbaren Objekten (so wie Integer und Strings) Sinn ergibt.</p>
+<p>So führt das dazu dass man in Python eine ganze Menge Workarounds braucht um mit default-argumenten zu arbeiten.</p>
+<p>Das wichtigste dabei ist der default typ None. Das ist der workaround für alle mutable-objekte, da man die in fast keinem Fall zwischen verschiedenen Methodenaufrufen teilen möchte. So sieht das aus:</p>
+<div class="hll"><pre><span></span><span class="k">def</span> <span class="nf">end_poll</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">end_time</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">end_time</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">end_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
+    <span class="c1"># work with end_time...</span>
+</pre></div>
+<p>Der Punkt hier ist dass man datetime.utcnow() nicht in das standard Argument hineinschreiben kann, da man sonst bei jedem Aufruf der Methode den gleichen Wert hätte: Die Parsezeit. Nicht sonderlich nützlich.</p>
+<p>Das hat zur Folge dass man:</p>
+<ul>
+<li>aus der Signatur nicht sehen was das Standardargument ist (utc/gmt oder vielleicht ewas ganz anderes?). Immerhin gibt es inzwischen immer mehr IDEs die diese Signatur beim aufrufen für autocompletion nutzen oder sie wenigstens anzeigen können.</li>
+<li>Man beim verwenden von Standardargumenten immer überlegen muss ob man dieses Argument jetzt in die Methodendefinition oder in den Body aufnehmen muss.</li>
+<li>für jedes Standardargument noch mal zwei extra Zeilen braucht. Das nervt vor allem deswegen weil man sich mit den standard Argumenten ja Zeilen sparen möchte. Das heißt die Kosten für Standard-Argumente steigen und man benutzt sie seltener.</li>
+<li>die default argumente noch mal separat dokumentieren muss, da ein dokumentations-extraktions-Werkzeug ja den Code nicht sieht, der das tatsächliche Standardargument setzt. Und natürlich hat man dann noch mal DRY verletzt da die Information jetzt zwei mal da steht.</li>
+<li>richtig fiese Bugs kriegt, weil viele Leute diese Probleme nicht kennen oder sie ab und an vergessen und mal ein <code>list()</code>, <code>dict()</code> oder <code>set()</code> als Standardwert nehmen was dan für viel Freude beim Debuggen sorgt.</li>
+</ul>
+<p>Also, know your Python und vorsicht mit Standardargumenten!</p>
+<p>Vielleicht kriegen wir ja irgendwann von unserem BDFL ein <code>from __future__ import runtime_standard_argument_evaluation</code>.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2010/1/python-saug-punkte-contd/">weiterlesen…</a>
       </footer>
     
   </article>

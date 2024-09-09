@@ -57,6 +57,92 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2009/1/the-git-index-considered-harmful/">
+        The Git Index considered harmful
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-01-17">Saturday, January 17, 2009</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Endlich hab ich mal eine <a href="http://thread.gmane.org/gmane.comp.version-control.git/32452/focus=32610">ordentliche Quelle gefunden</a> wofür <a href="http://git.or.cz/gitwiki/WhatIsTheIndex">der Index</a> bei <a href="http://git-scm.com/">GIT</a> gut ist.</p>
+<p>Kurz erklärt: Der Index ist eine Vorstufe für jeden Commit. Man comittet zuerst in den index mit <code>git add some_file</code> und comitted dann den index ins repository mit <code>git commit</code>. Es sei denn man sagt <code>git commit some_file</code> in dem fall wird es direkt comitted, oder man wählt eines der anderen kommandos die irgend etwas merkwürdiges mit dem index anstellen, dann weiß man in der Regel gar nicht mehr was Sache ist.</p>
+<p>Das hab ich nie verstanden - denn wieso noch mal eine Stufe mehr, wenn man doch sowieso lokal arbeitet und alles was man verbockt hat wieder verändern kann bevor man es pusht?</p>
+<p>Ah well. Es gibt offenbar drei Hauptgründe:</p>
+<ol>
+<li>Der Index hilft besser mit einer dirty workspace zu leben</li>
+<li>Der Index hilft noch mehr über einen commit nachzudenken und ihn zu verfeinern bevor man ihn macht</li>
+<li>Linux Torvalds hat den Index erfunden und will ihn behalten</li>
+</ol>
+<h3>Zu 1. Eine Dirty Workspace ist manchmal praktisch</h3>
+<p>Die Idee ist dass es Änderungen gibt die jeder in seinem lokalen Checkout hat aber niemand einchecken will. Z.B. die debug-flags, oder der andere Pfad in einem makefile. Es ist viel komfortabler jedes mal zu sagen was man committen will, als jedes mal daran zu denken was man nicht committen will. Ganz davon abgesehen dass man irgendwan nicht daran denkt das man etwas nicht machen wollte. Been there, done that.</p>
+<p>Dieses Problem hab ich auch ab und an. Zum Beispiel dieses komische File dass einen Build-Counter für den Build-Bot enthält. Eigentlich sollte das gar nicht in das repository. Aber dann war es doch drinnen. Und es nervte eigentlich nur, weil jeder lokale compile es erhöht hat. Und wenn es dann doch mal jemand comitted hat, gab es für jeden anderen natürlich einen konflikt. Sehr nervig. Oder der Debug-Flag, den man irgendwo tief in einem Framework einschalten musste. Den will ich natürlich auch nicht in einem Release haben.</p>
+<p>Ich finde allerdings dass der Index überhaupt keine gute Lösung für derartige Probleme ist. Wenn ich lokale changes habe die ich nicht committen will, dann würde ich die viel lieber als "ignore" markieren, als jedes mal alles andere zu committen.</p>
+<p>Ein bekannter formulierte das mal so, dass er oft code hat der den Code Testet den er comittet - und dass er den nicht im Repository haben will. Diese Variante des Arguments finde ich allerdings noch schrecklicher, weil ich in jedem Fall den Testcode auch im Repository haben will. Gerade. Damit ich später regressionstests durchführen kann. Automatisiert natürlich. Alleine der Gedanke dass der Testcode gleich wieder weggeworfen wird... <em>schauder</em></p>
+<h3>Zu 2. Erst noch mal drüber nachdenken ist eine gute Idee</h3>
+<p>Das finde ich ein wesentlich besseres Argument: Man soll sich über einen Commit Gedanken machen bevor man ihn tut. Und damit man das tut soll man genau auswählen was in ihn hinein kommt.</p>
+<p>Commendable.</p>
+<p>Allerdings nur wenn man nicht richtig darüber nachdenkt. Denn <code>git</code> ist ja ein distributed VCS. Das heißt, alle commits sind erst einmal lokal. Und kommandos die den letzten commit einfach rückgängig machen oder noch mal neu gibt es jede menge. Sogar um mehrere History-Schritte zurück zu kommen. (Und die braucht es sowieso, denn selbst mit Index macht man immer wieder Fehler.)</p>
+<p>Oops.</p>
+<p>Also bleibt übrig: der Index ist ein zusätzlicher Abstraktionsschritt der keinen Wert hinzufügt, sondern nur kompliziertere Bedienung erzeugt.</p>
+<p>Hm. Das heißt natürlich frei nach Occam, dass man den Index als überflüssiges Konzept 'über die klinge springen lassen' sollte.</p>
+<h3>Zu 3. Linus hats erfunden und will es behalten</h3>
+<p>Dass scheint mir der eigentliche Grund zu sein. Wie Torvalds es selber schon gesagt hat: <a href="http://lwn.net/Articles/246381/">"I have an ego the size of a small planet"</a>. Und daher wird es den Index auch weiter geben. Auch wenn es eine schlechte Idee ist. Und die git-Benutzer werden sich damit arrangieren, da niemand die Lust hat das wirklich auszufechten.</p>
+<p>Zumindest ist das meine Einschätzung.</p>
+<p>Schade eigentlich.</p>
+<p>Hier mein Vorschlag: Für alle Index-Liebhaber gibt es eine Option in ihrer <code>.gitrc</code> mit der sie den Index und wie er heute ist aktivieren können. Für alle anderen gibt es den vernünftigen default wert, der den Index einfach wie bei allen anderen Versionskontrollsystemen versteckt. Das macht man am besten so, dass bei einem Update, die .gitrc so verändert wird, dass alle die git updaten den index behalten und alle die git neu einrichten den index explizit aktivieren müssen. Dass sollte am wenigsten Geschrei erzeugen.</p>
+<p>Kommentare bitte per mail an spamfaenger ät gmx.de</p>
+<p><strong><em>Update:</em></strong> Es gibt noch viel mehr leute die mit der Git UI probleme haben. :)</p>
+<ul>
+<li><a href="http://www.freedesktop.org/wiki/Infrastructure/git/UIFlaws">Freedesktop - Git UI Flaws</a></li>
+<li><a href="http://blogs.gnome.org/newren/2007/12/08/limbo-why-users-are-more-error-prone-with-git-than-other-vcses/">Why users are more error-prone with git than other VCSes</a></li>
+</ul>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/1/the-git-index-considered-harmful/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2009/1/liquid-democracy-und-politikwissenschaftler/">
+        Liquid Democracy und Politikwissenschaftler
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-01-14">Wednesday, January 14, 2009</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Heute waren zwei Politikwissenschaftler bei der Piratenpartei zu Gast - und sie sind durch <a href="http://wiki.piratenpartei.de/Liquid_Democracy">Liquid Democracy</a> (<a href="http://de.wikipedia.org/wiki/Delegated_Voting">wikipedia</a>) auf uns aufmerksam geworden.</p>
+<p>Yay.</p>
+<p>Auf die Frage was sie an diesem Thema reizt kamen tolle Sätze: "Kein Politikwissenschaftler weiß eigentlich noch was er noch wählen soll.", "Die Linke nicht für die Außenpolitik, die FDP für die Freiheitsrechte, die SPD nicht für die Sozialpolitik...".</p>
+<p>Dem kann ich überhaupt nichts mehr hinzufügen. Keine Partei passt mir am Stück. Keine Partei kann ich mit gutem Gewissen wählen.</p>
+<p>Und das ist auch die Grund-Idee hinter einer flüssigen Demokratie: Die fließband-Produkte die man von Parteien bekommt sind es heute einfach nicht mehr.</p>
+<p>Nur die Alternative ist einfach noch nicht fertig. :-(</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/1/liquid-democracy-und-politikwissenschaftler/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2009/1/no-software-is-free-and-spreading-that-misconception-is-harmful/">
         No software is free and spreading that misconception is harmful.
         </a>
@@ -276,62 +362,6 @@
     
       <footer>
         <a href="../../2008/12/windows-fu-r-atom-u-boote/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/12/wer-hat-angst-vor-extremistischen-moslems/">
-        Wer hat Angst vor extremistischen Moslems?
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-12-14">Sunday, December 14, 2008</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>Na, hände hoch?</p>
-<p>Ich hab hier ein neues Angst ziel. Eines das viel näher ist! <em>grusel</em></p>
-<p><img src="../../2008/12/wer-hat-angst-vor-extremistischen-moslems/dancing.jpg" alt="Image"></p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/12/wer-hat-angst-vor-extremistischen-moslems/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/12/liblingsutilities-mehrere-zwischenablagen/">
-        Liblingsutilities: Mehrere Zwischenablagen
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-12-07">Sunday, December 7, 2008</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>Das ist ein eher unbekanntes Utility das mir aber unheimlich Zeit spart: <a href="http://www.macupdate.com/info.php/id/17465/pthpasteboard-pro">PTHPasteboard</a>.</p>
-<p>Unglaublich gut. Schnell und einfach so viele Zwischenablagen wie man will - die auch über Neustarts gesichert werden.</p>
-<p>Und das ganze für umsonst - wo alle anderen Clipboard-Applikationen (und davon gibt's viele) Geld kosten.</p>
-<p>Man kann natürlich auch für PTH-Pasteboard Geld bezahlen - aber nur wenn man noch fortgeschrittenere Features braucht.</p>
-<p>Unheimlich nützlich - sofort installieren und einen Tag bewust ausprobieren - schon kommt man nicht mehr ohne aus.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/12/liblingsutilities-mehrere-zwischenablagen/">weiterlesen…</a>
       </footer>
     
   </article>

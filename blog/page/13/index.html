@@ -57,6 +57,101 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2009/1/writing-code-that-doesn-t-suck/">
+        Writing Code that doesn&#39;t suck
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-01-30">Freitag, 30. Januar 2009</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p><a href="http://rubyconf2008.confreaks.com/writing-code-that-doesnt-suck.html">Und noch mal von den Confreaks</a>.</p>
+<p>Ausgezeichneter Vortrag von Yehuda Katz darüber was er für gute Tests hält und was nicht. Sein Argument: Am Ende will man Regression-Tests haben, da nur die wirklich nützlich sind beim Refactorieren. Nur die sind nützlich, weil dass die Tests sind die man behalten kann während man den Code neu faktoriert.</p>
+<p>Damit das geht muss der Code aber schon eine gute Faktorierung haben die man (ausschließlich?) über öffentliche Interfaces testen kann.</p>
+<p>Wohlgemerkt in dem Talk geht es nicht darum ob TDD gut oder schlecht ist - der Zweck ist einfach ein anderer. Ihm geht es um API-Stabilität und die Frage wie man Interfaces (nicht Implementierungen) über eine lange Entwicklung stabil hält.</p>
+<p>Spannend. Mir ist dabei eingefallen dass ich damals im ersten Buch über Test Driven Development einen Absatz gelesen habe in dem Stand dass man zuerst seine Tests schreiben soll um dann an diesen seinen Code zu schreiben und zu refaktorisieren. Und dass man danach den Code als Tests für die Tests verwenden kann um wiederum diese zu refaktorisieren.</p>
+<p>Gaudio. Ob das schon das ist was Yehuda meint? Ich vermute noch nicht ganz - aber es hört sich für mich nach etwas an was ich direkt tun kann - ich kann meine Tests betrachten und mir anschauen ob sie tatsächlich das testen was mich interessiert (das interface) und wenn dem nicht so ist, dann kann ich mir das Interface betrachten und die Tests tatsächlich refaktorieren.</p>
+<p>Yay, mehr Arbeit. :)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/1/writing-code-that-doesn-t-suck/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2009/1/landing-on-mars-with-squeak/">
+        Landing on Mars (with Squeak)
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-01-29">Donnerstag, 29. Januar 2009</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>I just started playing around with <a href="http://www.smallworks.com.ar/productos/Mars">Mars</a> which is a bridge from Squeak to Cocoa, which allows Squeak Programms to have a Cocoa GUI.</p>
+<p>Pretty nice - however not quite as easy to get installed if you are a SmallTalk newbie like me.</p>
+<p><a href="http://www.smallworks.com.ar/productos/Mars/Download">There are installation instructions on the Mars homepage</a> however I couldn't quite follow them, so I enhanced them a little and give you the rundown here:</p>
+<h2>Instructions</h2>
+<ul>
+<li>I downloaded the basic Image from <a href="http://ftp.squeak.org/3.10/Squeak3.10.2-7179-basic.zip">http://ftp.squeak.org/3.10/Squeak3.10.2-7179-basic.zip</a></li>
+<li>Got the Virtual Machine from ftp://ftp.smalltalkconsulting.com/experimental//Squeak%203.8.21beta1U.app.zip</li>
+<li>Installed basic developer tools by executing &lt;HTTPSocket httpFileIn: 'installer.pbwiki.com/f/LPF.st'.&gt; in a workspace window (select it and hit command-d)</li>
+<li>Then I ran<pre><code>Installer universe 
+ addPackage: 'OmniBrowser';
+ addPackage: 'OmniBrowser-Morphic';
+ addPackage: 'OmniBrowser-Standard';
+     addPackage: 'OmniBrowser-Refactory';
+ install.
+</code></pre>
+to get the basics and</li>
+<li>installed Mars by executing 
+```
+Installer wiresong project: 'ob'; install: 'OB-Monticello'.
+Installer lukas project: 'omnibrowser'; install: 'OB-Tools'.</li>
+</ul>
+<p>Installer ss project: 'Mars';
+    install: 'Mars';
+    install: 'OB-Mars'.</p>
+<pre><code>
+After that `OBMarsWorld execute.` replaces the menubar of Squeak with the Cocoa stuff.
+
+:) Have fun!
+
+Oh, and by the way, I just tried this with the dev image available from Damien Cassou at http://damiencassou.seasidehosting.st/Smalltalk/squeak-dev
+
+This image already has most stuff preloaded, so you can just run
+</code></pre>
+<p>Installer wiresong project: 'ob'; install: 'OB-Monticello'.
+Installer lukas project: 'omnibrowser'; install: 'OB-Tools'.</p>
+<p>Installer ss project: 'Mars';
+    install: 'Mars';
+    install: 'OB-Mars'.
+```</p>
+<p>to get Mars installed and then start it by running: <code>OBMarsWorld execute.</code></p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/1/landing-on-mars-with-squeak/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2009/1/scriptdir/">
         Scriptdir
         </a>
@@ -361,92 +456,6 @@
     
       <footer>
         <a href="../../2009/1/model-view-controller-endlich-mal-erkla-rt/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2009/1/the-git-index-considered-harmful/">
-        The Git Index considered harmful
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2009-01-17">Samstag, 17. Januar 2009</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>Endlich hab ich mal eine <a href="http://thread.gmane.org/gmane.comp.version-control.git/32452/focus=32610">ordentliche Quelle gefunden</a> wofür <a href="http://git.or.cz/gitwiki/WhatIsTheIndex">der Index</a> bei <a href="http://git-scm.com/">GIT</a> gut ist.</p>
-<p>Kurz erklärt: Der Index ist eine Vorstufe für jeden Commit. Man comittet zuerst in den index mit <code>git add some_file</code> und comitted dann den index ins repository mit <code>git commit</code>. Es sei denn man sagt <code>git commit some_file</code> in dem fall wird es direkt comitted, oder man wählt eines der anderen kommandos die irgend etwas merkwürdiges mit dem index anstellen, dann weiß man in der Regel gar nicht mehr was Sache ist.</p>
-<p>Das hab ich nie verstanden - denn wieso noch mal eine Stufe mehr, wenn man doch sowieso lokal arbeitet und alles was man verbockt hat wieder verändern kann bevor man es pusht?</p>
-<p>Ah well. Es gibt offenbar drei Hauptgründe:</p>
-<ol>
-<li>Der Index hilft besser mit einer dirty workspace zu leben</li>
-<li>Der Index hilft noch mehr über einen commit nachzudenken und ihn zu verfeinern bevor man ihn macht</li>
-<li>Linux Torvalds hat den Index erfunden und will ihn behalten</li>
-</ol>
-<h3>Zu 1. Eine Dirty Workspace ist manchmal praktisch</h3>
-<p>Die Idee ist dass es Änderungen gibt die jeder in seinem lokalen Checkout hat aber niemand einchecken will. Z.B. die debug-flags, oder der andere Pfad in einem makefile. Es ist viel komfortabler jedes mal zu sagen was man committen will, als jedes mal daran zu denken was man nicht committen will. Ganz davon abgesehen dass man irgendwan nicht daran denkt das man etwas nicht machen wollte. Been there, done that.</p>
-<p>Dieses Problem hab ich auch ab und an. Zum Beispiel dieses komische File dass einen Build-Counter für den Build-Bot enthält. Eigentlich sollte das gar nicht in das repository. Aber dann war es doch drinnen. Und es nervte eigentlich nur, weil jeder lokale compile es erhöht hat. Und wenn es dann doch mal jemand comitted hat, gab es für jeden anderen natürlich einen konflikt. Sehr nervig. Oder der Debug-Flag, den man irgendwo tief in einem Framework einschalten musste. Den will ich natürlich auch nicht in einem Release haben.</p>
-<p>Ich finde allerdings dass der Index überhaupt keine gute Lösung für derartige Probleme ist. Wenn ich lokale changes habe die ich nicht committen will, dann würde ich die viel lieber als "ignore" markieren, als jedes mal alles andere zu committen.</p>
-<p>Ein bekannter formulierte das mal so, dass er oft code hat der den Code Testet den er comittet - und dass er den nicht im Repository haben will. Diese Variante des Arguments finde ich allerdings noch schrecklicher, weil ich in jedem Fall den Testcode auch im Repository haben will. Gerade. Damit ich später regressionstests durchführen kann. Automatisiert natürlich. Alleine der Gedanke dass der Testcode gleich wieder weggeworfen wird... <em>schauder</em></p>
-<h3>Zu 2. Erst noch mal drüber nachdenken ist eine gute Idee</h3>
-<p>Das finde ich ein wesentlich besseres Argument: Man soll sich über einen Commit Gedanken machen bevor man ihn tut. Und damit man das tut soll man genau auswählen was in ihn hinein kommt.</p>
-<p>Commendable.</p>
-<p>Allerdings nur wenn man nicht richtig darüber nachdenkt. Denn <code>git</code> ist ja ein distributed VCS. Das heißt, alle commits sind erst einmal lokal. Und kommandos die den letzten commit einfach rückgängig machen oder noch mal neu gibt es jede menge. Sogar um mehrere History-Schritte zurück zu kommen. (Und die braucht es sowieso, denn selbst mit Index macht man immer wieder Fehler.)</p>
-<p>Oops.</p>
-<p>Also bleibt übrig: der Index ist ein zusätzlicher Abstraktionsschritt der keinen Wert hinzufügt, sondern nur kompliziertere Bedienung erzeugt.</p>
-<p>Hm. Das heißt natürlich frei nach Occam, dass man den Index als überflüssiges Konzept 'über die klinge springen lassen' sollte.</p>
-<h3>Zu 3. Linus hats erfunden und will es behalten</h3>
-<p>Dass scheint mir der eigentliche Grund zu sein. Wie Torvalds es selber schon gesagt hat: <a href="http://lwn.net/Articles/246381/">"I have an ego the size of a small planet"</a>. Und daher wird es den Index auch weiter geben. Auch wenn es eine schlechte Idee ist. Und die git-Benutzer werden sich damit arrangieren, da niemand die Lust hat das wirklich auszufechten.</p>
-<p>Zumindest ist das meine Einschätzung.</p>
-<p>Schade eigentlich.</p>
-<p>Hier mein Vorschlag: Für alle Index-Liebhaber gibt es eine Option in ihrer <code>.gitrc</code> mit der sie den Index und wie er heute ist aktivieren können. Für alle anderen gibt es den vernünftigen default wert, der den Index einfach wie bei allen anderen Versionskontrollsystemen versteckt. Das macht man am besten so, dass bei einem Update, die .gitrc so verändert wird, dass alle die git updaten den index behalten und alle die git neu einrichten den index explizit aktivieren müssen. Dass sollte am wenigsten Geschrei erzeugen.</p>
-<p>Kommentare bitte per mail an spamfaenger ät gmx.de</p>
-<p><strong><em>Update:</em></strong> Es gibt noch viel mehr leute die mit der Git UI probleme haben. :)</p>
-<ul>
-<li><a href="http://www.freedesktop.org/wiki/Infrastructure/git/UIFlaws">Freedesktop - Git UI Flaws</a></li>
-<li><a href="http://blogs.gnome.org/newren/2007/12/08/limbo-why-users-are-more-error-prone-with-git-than-other-vcses/">Why users are more error-prone with git than other VCSes</a></li>
-</ul>
-
-    </section>
-    
-      <footer>
-        <a href="../../2009/1/the-git-index-considered-harmful/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2009/1/liquid-democracy-und-politikwissenschaftler/">
-        Liquid Democracy und Politikwissenschaftler
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2009-01-14">Mittwoch, 14. Januar 2009</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>Heute waren zwei Politikwissenschaftler bei der Piratenpartei zu Gast - und sie sind durch <a href="http://wiki.piratenpartei.de/Liquid_Democracy">Liquid Democracy</a> (<a href="http://de.wikipedia.org/wiki/Delegated_Voting">wikipedia</a>) auf uns aufmerksam geworden.</p>
-<p>Yay.</p>
-<p>Auf die Frage was sie an diesem Thema reizt kamen tolle Sätze: "Kein Politikwissenschaftler weiß eigentlich noch was er noch wählen soll.", "Die Linke nicht für die Außenpolitik, die FDP für die Freiheitsrechte, die SPD nicht für die Sozialpolitik...".</p>
-<p>Dem kann ich überhaupt nichts mehr hinzufügen. Keine Partei passt mir am Stück. Keine Partei kann ich mit gutem Gewissen wählen.</p>
-<p>Und das ist auch die Grund-Idee hinter einer flüssigen Demokratie: Die fließband-Produkte die man von Parteien bekommt sind es heute einfach nicht mehr.</p>
-<p>Nur die Alternative ist einfach noch nicht fertig. :-(</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2009/1/liquid-democracy-und-politikwissenschaftler/">weiterlesen…</a>
       </footer>
     
   </article>

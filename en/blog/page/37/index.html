@@ -57,6 +57,61 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2007/2/wunderscho-ne-fraktale/">
+        Wunderschöne Fraktale
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2007-02-09">Friday, February 9, 2007</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p><img src="../../2007/2/wunderscho-ne-fraktale/Xaos_Screenshot.jpg" alt="Image">
+Endlich gibt es das Wunderbare Gnu Xaos mit einer schönen GUI für den Mac. Es ist der einzige mir bekannte Fraktalrenderer mit dem man in Echtzeit in das Fraktal hineinfliegen kann. (Übrigens auch mit einem Autopiloten....)</p>
+<p>Sooooo schön....</p>
+<p><a href="http://macupdate.com/info.php/id/23978">Gleich bei Macupdate. :)</a></p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2007/2/wunderscho-ne-fraktale/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2007/2/die-qualita-t-der-freien-medien/">
+        Die Qualität der freien Medien
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2007-02-06">Tuesday, February 6, 2007</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Wenn man die Nachrichten verfolgt, dann wird einem klar das jeden Tag irgendwo auf dieser Welt Krieg ist. Man bemerkt auch das die Chaosmeldungen nie abreißen und die Verluste hoch hoch und noch höher sind.</p>
+<p>Dabei verpassen unsere ach so qualitätsgeladenen Medien doch glatt den eigentlichen Punkt dessen was passiert: Die Kriege werden weniger und es sterben immer weniger Menschen dabei. <a href="http://www.humansecuritycentre.org/">Behauptet zumindest diese Studie.</a> (<a href="http://tedblog.typepad.com/tedblog/2007/01/what_are_you_op.html">via TedBlog</a>)</p>
+<p>Na wenn das kein Grund für einen leisen Optimismus ist?</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2007/2/die-qualita-t-der-freien-medien/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2007/2/milita-rische-logik/">
         Militärische Logik.....
         </a>
@@ -273,121 +328,6 @@ Just as an exercise I ripped the progress bar rendering code out of MPlayer and 
     
       <footer>
         <a href="../../2006/3/aspekt-orientiertes-programmieren/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2006/2/funktionen-als-voll-berechtigte-datentypen/">
-        Funktionen als voll berechtigte Datentypen
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2006-02-22">Wednesday, February 22, 2006</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>Funktionale Sprachen erhalten ihre Eleganz dadurch, dass sie die Programmierung mit Funktionen als Argumente und Rückgabewerte erlauben. Schön erklärt wird das im <a href="http://mitpress.mit.edu/sicp/full-text/book/book-Z-H-12.html#%25_sec_1.3">SICP</a>. Tatsächlich kann das so weit gehen, dass zum Beispiel in Lisp <a href="http://mitpress.mit.edu/sicp/full-text/book/book-Z-H-14.html#%25_idx_1460">gar kein Unterschied mehr zwischen Funktionen und beliebigen Daten gemacht wird</a>. Aber das ist zugegebenermaßen extrem.</p>
-<p>Für die Kürze nennt man diese Art zu programmieren auch gerne: "Higher-Order-Programmierung" und die entsprechenden Funktionen "Higher-Order-Funktionen".</p>
-<p>In der Imperativen Programmierung werden Funktionen als Argumente oder Rückgabetypen eher selten verwendet. In C gerade noch beim Standard-Algorithmus <strong>Binary-Search</strong></p>
-<div class="hll"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="o">*</span>
-<span class="nf">bsearch</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">base</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">nmemb</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">size</span><span class="p">,</span>
-<span class="w">         </span><span class="kt">int</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">compare</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">));</span>
-</pre></div>
-<p>bei dem die <strong>compare</strong>-Funktion genau so eine Higher-Order-Funktion ist. Danach ist es aber erstmal lange zappenduster, was Higher-Order-Programmierung angeht. (Hervorragende Programmierer nutzten dieses Design-Pattern aber schon immer - wenn es auch selten explizit genannt wurde)</p>
-<p>So kam es dann auch, dass manche objektorientierten Sprachen Objekte wie Knöpfe, Textfelder etc. hatten, die man ableiten konnte, um ihr Verhalten zu verändern. Java etwa erlaubt das noch heute:</p>
-<div class="hll"><pre><span></span><span class="c1">// Java</span>
-<span class="kd">class</span> <span class="nc">OKButtonForThatSpecificDialog</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">JButton</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">doClick</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Yay, I was clicked&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-<p>Zwei Probleme ergeben sich aus dieser Art zu programmieren:</p>
-<ul>
-<li>Erstens: jede Menge duplizierter Code, der größtenteils identisch ist. Damit erlebt man einen Alptraum, sobald man auch nur daran denkt, etwas Grundlegenderes an dem Programm zu ändern.</li>
-<li>Zweitens ist der Code, der tatsächlich die Kontrolle über das Programm ausführt, so in viele Dateien oder zumindest Klassen verstreut, also mitnichten an einer Stelle vereint und übersichtlich.</li>
-</ul>
-<p>Beide Probleme kann man mit dem oben beschriebenen Mechanismus der Higher-Order-Funktionen elegant lösen - und tatsächlich wird das auch gemacht. In <a href="http://www.martinfowler.com/bliki/InversionOfControl.html">Inversion of Controll (IOC)</a>-Frameworks etwa. Hier ruft man nicht mehr eine Funktion auf, um ein Ergebnis zu bekommen, sondern konfiguriert den Framework (Knöpfe, Textfelder, etc.) mit eigenen (Higher-Order)-Funktionen, die dieser aufruft, sobald ein Ergebnis oder Ereignis vorliegt.</p>
-<p>Absolut typisch für dieses Muster sind alle mir bekannten aktuell verwendeten GUI-Toolkits, die immer so funktionieren, dass man z.B. einen Knopf erzeugt, um danach mit einer (Higher-Order)-Funktion zu konfigurieren, was denn passieren soll, wenn auf ihn geklickt wird.</p>
-<div class="hll"><pre><span></span><span class="c1">// Java</span>
-<span class="n">JButton</span><span class="w"> </span><span class="n">button</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">JButton</span><span class="p">(</span><span class="s">&quot;Titel&quot;</span><span class="p">);</span>
-<span class="n">button</span><span class="p">.</span><span class="na">addActionListener</span><span class="p">(</span><span class="n">aClickResponder</span><span class="p">);</span>
-</pre></div>
-<div class="hll"><pre><span></span><span class="c1">// Obj-C</span>
-<span class="p">[</span><span class="n">aButton</span><span class="w"> </span><span class="n">setTarget</span><span class="o">:</span><span class="w"> </span><span class="nb">self</span><span class="p">];</span>
-<span class="p">[</span><span class="n">aButton</span><span class="w"> </span><span class="n">setAction</span><span class="o">:</span><span class="w"> </span><span class="k">@selector</span><span class="p">(</span><span class="n">respondToClick</span><span class="o">:</span><span class="p">)];</span>
-</pre></div>
-<p>Aber dieses Muster ist noch viel weiter verwendbar - in Objective-C gibt es eine Möglichkeit, auf alle Elemente eines Containers eine Methode <strong>doSomethingWithEachElement:</strong> anzuwenden, die ein Argument - das jeweilige Element - erhält.</p>
-<div class="hll"><pre><span></span><span class="c1">// Obj-C</span>
-<span class="p">[</span><span class="n">aList</span><span class="w"> </span><span class="n">makeObjectsPerformSelector</span><span class="o">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">doSomethingWithEachElement</span><span class="o">:</span><span class="p">)];</span>
-</pre></div>
-<p>Äquivalent läuft das in den GUI-Toolkits von Java, Cocoa, Gnome, KDE, WxWidgets...</p>
-<p>Fortgeschrittenere Sprachen und Toolkits verwenden dieses Design-Pattern auch noch an vielen weiteren Stellen. Besonders hervorzuheben ist dabei in letzter Zeit Ruby, wo nach diesem Muster nicht nur Iteration, sondern auch das Bearbeiten jeder Zeile in einer Datei, das Senden von Daten über einen Socket, ... verläuft.</p>
-<p>Am extremsten ist aber vielleicht die Sprache Smalltalk, wo es überhaupt keine normalen Kontrollstrukturen im Sinne von C/Java mehr gibt und diese Aufgabe komplett durch Higher-Order-Funktionen erledigt wird. Hier gibt es beispielsweise ein Boolean Objekt, das eine Methode <code>#ifTrue:ifFalse:</code> besitzt. Diese Methode bekommt dann zwei Callbacks übergeben und führt je nachdem, ob es das True- oder das False-Boolean ist, polymorph den jeweils anderen Callback aus. - Analog werden Schleifen, Exception-Handling... einfach alle Kontrollstrukturen definiert.</p>
-<p>Das nette daran: Damit kann man innerhalb der Sprache selber Kontrollstrukturen definieren. Schick, nicht?</p>
-<h2>Umsetzung</h2>
-<p>Um mit Higher-Order-Funktionen in Java / Obj-C zu programmieren, kann man z.B. so vorgehen:</p>
-<div class="hll"><pre><span></span><span class="c1">// Obj-C</span>
-<span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="n">setAction</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="kt">SEL</span><span class="p">)</span><span class="w"> </span><span class="n">aSelector</span><span class="w"> </span><span class="n">forTarget</span><span class="o">:</span><span class="w"> </span><span class="n">aTarget</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">action</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aSelector</span><span class="p">;</span>
-<span class="w">    </span><span class="n">target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aTarget</span><span class="p">;</span>
-<span class="w"> </span><span class="p">}</span>
-
-<span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="n">trigger</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">([</span><span class="n">target</span><span class="w"> </span><span class="n">respondsToSelector</span><span class="o">:</span><span class="w"> </span><span class="n">action</span><span class="p">])</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="p">[</span><span class="n">target</span><span class="w"> </span><span class="n">performSelector</span><span class="o">:</span><span class="w"> </span><span class="n">action</span><span class="p">];</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w"> </span><span class="p">}</span>
-</pre></div>
-<div class="hll"><pre><span></span><span class="c1">// Java</span>
-<span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setActionListener</span><span class="p">(</span><span class="n">ActionListener</span><span class="w"> </span><span class="n">listener</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="na">listener</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">listener</span><span class="p">;</span>
-<span class="w"> </span><span class="p">}</span>
-
-<span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">trigger</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">listener</span><span class="p">.</span><span class="na">actionPerformed</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
-<span class="w"> </span><span class="p">}</span>
-</pre></div>
-<p>Das wars - so einfach geht das.</p>
-<p>TODO: Auf [<a href="http://libsigc.sourceforge.net/libsigc2/docs/manual/html/ch02.html">http://libsigc.sourceforge.net/libsigc2/docs/manual/html/ch02.html</a>] verweisen und vergleichen wie Callbacks mit sowas und (beste C++ Callback Bibliothek) gehen. Vergleichen wie echte Lambdas das leichter machen können.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2006/2/funktionen-als-voll-berechtigte-datentypen/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2006/2/neue-religionen/">
-        Neue Religionen...
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2006-02-22">Wednesday, February 22, 2006</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>...sind sicherlich heute sehr selten.</p>
-<p><a href="http://www.heise.de/tp/r4/artikel/22/22047/1.html">Tja, denkt man. Leider.</a></p>
-<p>Wo ich gerade beim Thema sind... Jeder sollte <a href="http://www.nosoftwarepatents-award.com/vote200603/index.de.html">sein Softwarepatent des Monats wählen!</a></p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2006/2/neue-religionen/">weiterlesen…</a>
       </footer>
     
   </article>

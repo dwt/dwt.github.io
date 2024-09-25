@@ -57,6 +57,70 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/10/aus-einem-variablen-namen-einen-string-machen/">
+        Aus einem Variablen-Namen einen String machen
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-10-06">Montag, 6. Oktober 2008</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Braucht man manchmal für Bindings. Gleichzeitig will ich aber nicht überall die namen meiner Variablen als Strings hinterlegen - schon alleine damit ich beim Refactorn auch alle Namen erwische.</p>
+<p>Also den Macro-Prozessor zur Rettung:</p>
+<div class="hll"><pre><span></span><span class="cp">#define NSStringize(aVariableName) @#aVariableName</span>
+</pre></div>
+<h1>::</h1>
+<p>macht aus einer beliebigen expression einen String
+ @::
+  und das @ davor macht aus einem constanten c-string einen ObjC-NSString.</p>
+<p>Und das problem ist gelöst. :)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/10/aus-einem-variablen-namen-einen-string-machen/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../../2008/10/history_v2/">
+        _HiStOrY_V2_
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-10-05">Sonntag, 5. Oktober 2008</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Mit ein bisschen Hilfe von meinen Freunden...</p>
+<p>Heute hab ich mal wieder die aktuelle Version von <a href="http://bazaar-vcs.org/">Bazaar (1.7.1)</a> ausprobiert. Soweit ganz schnuckelig. Sogar der SVN Checkout von [svn://svn.adiumx.com/adium/trunk Adium] hat hervorragend geklappt.</p>
+<p>Ich muss sagen, beeindruckend.</p>
+<p>Nur mit dem Plugin <a href="http://bazaar-vcs.org/BzrTools">bzrtools</a> hatte ich Schwierigkeiten, denn die darin enthaltene shell (ein geiles feature) zu benutzen brachte bzr reproduzierbar zum Absturz. :-(</p>
+<p>Stellt sich mit hilfe von #bazaar und nach einigen Detours über den Python Debugger (nice!) und <a href="http://developer.apple.com/documentation/Darwin/Reference/ManPages/man1/dtruss.1m.html">dtruss</a> (nice!) heraus dass es an der libreadline liegt.</p>
+<p>Die hat sich nämlich geändert und erwartet inzwischen am Anfang eines History-Files als allererste Zeile diesen eintrag: <strong><em>_HiStOrY<em>V2</em></em></strong>.</p>
+<p>Na toll. Und ansonsten stürzt das Programm einfach ab. Also wer sich das ausgedacht hat, der gehört aber auch echt erschossen. Wenigstens die Fehlermeldung hätte vernünftig sein können. Grumpf.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/10/history_v2/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/10/ausnahmen-vs-regeln-in-der-usability/">
         Ausnahmen vs. Regeln in der Usability
         </a>
@@ -299,131 +363,6 @@
     
       <footer>
         <a href="../../2008/9/2008-09-13-13-40/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/9/sicherheit-und-parkha-user/">
-        Sicherheit und Parkhäuser
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-09-10">Mittwoch, 10. September 2008</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>Heute hatte ich das witzige Erlebnis dass wir in ein Parkhaus gefahren sind - und einfach keinen Parkplatz gefunden haben.</p>
-<p>Ok, soweit wars noch nicht spannend - aber was ich hoch-interessant fand, ist dass wir dann beim Rausfahren nicht zur Kasse gebeten wurden. Das macht Sinn, denn wer keinen Parkplatz findet, ist natürlich Dreifach angepisst wenn er dann dafür auch noch Zahlen muss. (Und vielleicht während dessen auch noch den Ausgang versperrt.. :)</p>
-<p>Ich halte es für sehr wahrscheinlich, dass jedes Parkhaus so funktioniert. Cool. Denn das bedeutet, dass man prinzipiell jedes Parkhaus umsonst benutzen kann - man muss sich nur unmittelbar vor dem herausfahren eine neue Marke besorgen.</p>
-<p>:)</p>
-<p>(Ok, das mag nicht soo leicht sein, aber im Prinzip...)</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/9/sicherheit-und-parkha-user/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/9/2008-09-05-19-08/">
-        2008/09/05/19.08
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-09-05">Freitag, 5. September 2008</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <h1>Python != Funktionales Programmieren</h1>
-<p>--- zumindest scheint es so.</p>
-<p>Das hier zum Beispiel:</p>
-<div class="hll"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
-<span class="c1"># encoding: utf-8</span>
-
-<span class="k">def</span> <span class="nf">counter_generator</span><span class="p">():</span>
-    <span class="n">current_value</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">def</span> <span class="nf">counter</span><span class="p">():</span>
-        <span class="n">current_value</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">return</span> <span class="n">current_value</span>
-    <span class="k">return</span> <span class="n">counter</span>
-
-<span class="kn">import</span> <span class="nn">unittest</span>
-<span class="k">class</span> <span class="nc">ClosureTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">test_counter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">counter_generator</span><span class="p">()())</span>
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
-</pre></div>
-<p>Wenn man das ausführt dann kriegt man den wenig aussagekräftigen Fehler <strong><em>UnboundLocalError: local variable 'current_value' referenced before assignment</em></strong>. Oder mit anderen Worten: "Wiebidde?"</p>
-<p>Kommentiert man <strong><em>current_value += 1</em></strong> aus, funktioniert das ganze (ok, bis auf den dann fehlschlagenden Testcase).</p>
-<p>Immerhin kommt man dem Problem dann auf die Spur (ich und Felix haben das leider erst herausgefunden nachdem wir auf #python nachgefragt haben...) Python kann nämlich seine Scopes nicht vernünftig. Das heißt, man kriegt keinen schreibenden Zugriff auf die Variablen eine Funktion weiter draußen - nur lesend. Nur dass die Fehlermeldung natürlich total mist ist.</p>
-<p>Grah.</p>
-<p>Interessanterweise geht diese Lösung auch nicht</p>
-<div class="hll"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
-<span class="c1"># encoding: utf-8</span>
-
-<span class="k">def</span> <span class="nf">counter_generator</span><span class="p">():</span>
-    <span class="n">workaround</span> <span class="o">=</span> <span class="nb">object</span><span class="p">()</span>
-    <span class="n">workaround</span><span class="o">.</span><span class="n">current_value</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">def</span> <span class="nf">counter</span><span class="p">():</span>
-        <span class="n">workaround</span><span class="o">.</span><span class="n">current_value</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">return</span> <span class="n">workaround</span><span class="o">.</span><span class="n">current_value</span>
-    <span class="k">return</span> <span class="n">counter</span>
-
-<span class="kn">import</span> <span class="nn">unittest</span>
-<span class="k">class</span> <span class="nc">ClosureTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">test_counter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">counter_generator</span><span class="p">()())</span>
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
-</pre></div>
-<p>Für hinweise wieso bin ich dankbar.</p>
-<p>Vielleicht kriegt Python dass ja irgendwann mal hin. In der Zwischenzeit hilft dieser Workaround:</p>
-<div class="hll"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
-<span class="c1"># encoding: utf-8</span>
-
-<span class="k">class</span> <span class="nc">AttributableDict</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute_name</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="n">attribute_name</span><span class="p">]</span>
-    <span class="k">def</span> <span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute_name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="bp">self</span><span class="p">[</span><span class="n">attribute_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-
-<span class="k">def</span> <span class="nf">counter_generator</span><span class="p">():</span>
-    <span class="n">workaround</span> <span class="o">=</span> <span class="n">AttributableDict</span><span class="p">()</span>
-    <span class="n">workaround</span><span class="o">.</span><span class="n">current_value</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">def</span> <span class="nf">counter</span><span class="p">():</span>
-        <span class="n">workaround</span><span class="o">.</span><span class="n">current_value</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">return</span> <span class="n">workaround</span><span class="o">.</span><span class="n">current_value</span>
-    <span class="k">return</span> <span class="n">counter</span>
-
-<span class="kn">import</span> <span class="nn">unittest</span>
-<span class="k">class</span> <span class="nc">ClosureTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">test_counter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">counter_generator</span><span class="p">()())</span>
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
-</pre></div>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/9/2008-09-05-19-08/">weiterlesen…</a>
       </footer>
     
   </article>

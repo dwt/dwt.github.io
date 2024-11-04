@@ -57,6 +57,64 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2021/4/open-source-flugelektronik-2-ble-und-serial/">
+        Open Source Flugelektronik 2 - BLE und Serial
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2021-04-22">Thursday, April 22, 2021</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Langsam nähere ich mich meinen <a href="https://github.com/lyusupov/SoftRF">Soft-RF-Geräten</a> an. Ich kann jetzt auch über <a href="../../2021/4/open-source-flugelektronik-2-ble-und-serial/">Bluetooth Low Energy (BLE)</a> mit dem Gerät reden. Das Python Framework <a href="https://pypi.org/project/bleak/">Bleak</a> war dabei unglaublich hilfreich, da ich fast den ganzen BLE-Code sehr plattform-neutral Scheiben kann. I.e. der Code ist zwar nur auf MacOS getestet, wird aber sehr wahrscheinlich auch unter Linux funktionieren. Der Code zu diesem Post liegt <a href="https://github.com/dwt/softrf-interfacing">auf github</a>.</p>
+<p>Wie läuft das jetzt? Zuerst braucht man einen BLE-Scanner, um die Adresse des Geräts zu finden. Bei mir sieht das so aus:</p>
+<pre><code>% ./ble_scanner.py
+........................................
+[...]
+0975FAB7-6F50-4B60-A0D8-9F11C817FB6D: SoftRF-f0c010-LE
+[...]
+</code></pre>
+<p>Mit dieser Adresse kann man dann reden um sich anzuschauen welche BLE-Services sie anbietet:</p>
+<pre><code>% ./ble_explore_device.py 0975FAB7-6F50-4B60-A0D8-9F11C817FB6D
+Connected: True
+[Service] 0000ffe0-0000-1000-8000-00805f9b34fb (Handle: 40): Vendor specific
+    [Characteristic] 0000ffe1-0000-1000-8000-00805f9b34fb (Handle: 41): Vendor specific (read,write-without-response,notify), Value: b',,,,,,,,,99.99,99.99'
+        [Descriptor] 00002901-0000-1000-8000-00805f9b34fb (Handle: 43): Characteristic User Description) | Value: b'HMSoft'
+        [Descriptor] 00002902-0000-1000-8000-00805f9b34fb (Handle: 44): Client Characteristic Configuration) | Value: b'\x00\x00'
+</code></pre>
+<p>Was heißt das? Das gerät bietet den Service <code>0000ffe0-*</code> an und darauf eine Characteristik <code>0000ffe1-*</code> die wiederum zwei Deskriptoren enthält. <code>00002901-*</code>und <code>00002902-*</code>. Nicht das ich BLE vollständig verstehe, aber zumindest weiß ich das ein Service der Grundsätzliche Behälter für alle BLE Interaktionen ist und eine Charactreristik einen lese und schreibbaren Wert darstellt. Deskriptoren können darin verschachtelt sein und sind entweder zusätzliche lese und schreibbare Werte oder haben einen technischen Sinn. In diesem Beispiel ist der zweite Descriptor notwendig um auf der Charakteristik nicht nur lesen und schreiben, sondern auch  Notify zu implementieren -&gt; und das braucht es für die Serielle Schnittstelle.</p>
+<p>Entscheidend ist hier die Service-Charakteristik <code>0000ffe1-0000-1000-8000-00805f9b34fb</code> Hier spielt die ganze Musik. Die Serielle Ausgabe des SoftRF kann man mittels Notify davon auslesen und man kann auf die Serielle Schnittstelle schreiben indem man darauf schreibt. Soweit so simpel. Und damit kriegt man auch schon ein sehr primitives UART hin:</p>
+<pre><code>% ./ble_uart.py 0975FAB7-6F50-4B60-A0D8-9F11C817FB6D
+Connected, start typing and press ENTER...
+0.00,0000.0000,N,00000.0000,E,0,00,100.0,0.0,M,0.0,M,,*5C
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+$PFLAU,0,0,0,1,0,,0,,,*4F
+$GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,000000.00,0000.0000,N,00000.0000,E,0,00,100.0,0.0,M,0.0,M,,*5C
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99$PFLAU,0,0,0,1,0,,0,,,*4F
+$GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,000000.00,0000.0000,N,00000.0000,E,0,00,100.0,0.0,M,0.0,M,,*5C
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+$PFLAU,0,0,0,1,0,,0,,,*4F
+$GPRMC,,V,,,,,,,,,,N*53
+</code></pre>
+<p>Yay!</p>
+<p>Nächste Tasks: das NMEA Encoding verstehen und mal schauen ob ich damit eine erste simple Visualisierung hinbekomme.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2021/4/open-source-flugelektronik-2-ble-und-serial/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2021/4/open-source-flugelektronik-mit-lorawan/">
         Open Source Flugelektronik mit Lora
         </a>
@@ -417,32 +475,6 @@ $<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span
     
       <footer>
         <a href="../../2011/11/ssl-certificate-trouble/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2011/7/mappei-stu-tzen-und-rechnungsstellung/">
-        Mappei Stützen und Rechnungsstellung
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2011-07-12">Tuesday, July 12, 2011</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>Gerade habe ich endlich für mein GTD-System ein super-Zubehör gefunden, <a href="http://classei.de/de/boxen/mappenstuetzen.html">Mappenstützen von Classei</a>. Der große Vorteil davon: Die Mappen stehen in den Boxen auch stabil wenn diese nicht voll sind - damit kann man seine GTD-Ablage viel entspannter aufbauen. :)</p>
-<p>Und noch ein witziges Detail: Classei gewährt 2% Skonto wenn man zügig bezahlt. Das bedeutet natürlich das sie eigentlich 2% mehr verlangen, wenn man nicht zügig bezahlt. Ich wette aber, dass das viele Leute dazu veranlasst schnell zu bezahlen. Und das finde ich einen schönen Trick. :-)</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2011/7/mappei-stu-tzen-und-rechnungsstellung/">weiterlesen…</a>
       </footer>
     
   </article>

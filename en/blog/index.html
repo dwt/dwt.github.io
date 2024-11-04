@@ -57,6 +57,41 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="2024/10/waehrend-dem-lernen-lernen-lernen-ki-nutzen/">
+        Wie kann KI beim Lernen mit Blooms-Taxonomie unterstützen?
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2024-10-10">Thursday, October 10, 2024</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p><img src="2024/9/waehrend-dem-lernen-lernen-lernen-blooms-taxonomie/bloom.jpeg" alt="Blooms Taxonomie"></p>
+<p>Nachem ich jetzt lange <a href="2024/10/waehrend-dem-lernen-lernen-lernen-blooms-taxonomie/">über Blooms Taxonomie</a> und <a href="2024/10/waehrend-dem-lernen-lernen-lernen-blooms-taxonomie-ebene-1-3/">was die Ebenen</a> <a href="2024/10/waehrend-dem-lernen-lernen-lernen-blooms-taxonomie-ebene-4-6/">im Detail bedeuten</a> geschrieben habe, kann ich jetzt <em>endlich</em> zu dem kommen, was mir eigentlich am Herzen liegt:</p>
+<p>Mein ganzes Leben lang haben andere die Ebenen von Blooms Taxonomie verwendet um zu beurteilen wie gut ich etwas verstanden habe - aber man kann diesen Spieß auch umdrehen, und das wissen um diese Ebenen des Verständnisses nutzen um selbst besser zu lernen! (Ehrlich gesagt, bin ich ziemlich angepisst das mir das nicht von Vorne herein genau dafür erklärt und beigebracht wurde)</p>
+<p>Wie funktioniert das? Wenn Mensch ohne Plan lernt, dann neigen wir dazu uns zunächst auf den unteren Ebenen zu bewegen. Denn das ist (vermeintlich) einfacher und erscheint logisch. Aber aus der Forschung wissen wir, dass sich von vorne herein auf Fragen der 4. und 5. Ebene (also Analysieren und Bewerten) zu konzentrieren, nicht nur schneller, sondern auch tieferes Verständnis bringt.</p>
+<p>Warum? Weil sich die Art und Weise verändert mit der wir uns mit dem Lern-Material beschäftigen. Auswendig Lernen ist ja nicht verzichtbar. Man muss sich die Fakten ja merken. Aber das passiert auch, wenn man sie Analysiert und Bewertet - ABER - wir kriegen die Analyse und Bewertung gratis dazu. (Wohlgemerkt, für etwas mehr Kognitive Anstrengung, aber Entspannung ist ja nicht das Ziel.)</p>
+<p>Und das ist der Clou. Gleicher Zeiteinsatz, aber tieferes Verständnis.</p>
+<p>🤯</p>
+<p>Jetzt ist natürlich nicht jeder mit der Fähigkeit geboren, sich selbst einfach so Fragen auf der 4. und 5. Ebene zu stellen. Aber das ist auch gar nicht nötig. Denn KI kann dabei prima helfen.</p>
+<p>Chat-GPT hat ein sehr gutes Verständnis von Blooms-Modell und kann endlos fragen auf Bloom Level 4 und 5 zu jedem Thema generieren. Die sind nicht immer perfekt, es reicht aber, um sich darauf einzustimmnen wie solche Fragen aussehen und effizient selbst zu solchen Fragen zu kommen.</p>
+<p>Und das ist für mich ein gamechanger, und super sinnvoller Einsatz von KI.</p>
+<p>Hier mal ein Auszug aus einem <a href="2024/10/waehrend-dem-lernen-lernen-lernen-ki-nutzen/Python-Lernen-mit-Fragen.pdf">Chat mit Chat-GPT</a>. Das ist sicher nicht perfekt, aber ein starker Anfang. Chapeau, Chat-GPT!</p>
+
+    </section>
+    
+      <footer>
+        <a href="2024/10/waehrend-dem-lernen-lernen-lernen-ki-nutzen/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="2024/9/waehrend-dem-lernen-lernen-lernen-blooms-taxonomie-ebene-4-6/">
         Was ist blooms taxonomie? Die &#39;wichtigsten&#39; oberen Ebenen
         </a>
@@ -412,64 +447,6 @@ Additionally, Musk restated that he believes everyone should be a chief engineer
     
       <footer>
         <a href="2021/5/was-sagt-mir-ein-covid-schnelltest-ergebnis/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="2021/4/open-source-flugelektronik-2-ble-und-serial/">
-        Open Source Flugelektronik 2 - BLE und Serial
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2021-04-22">Thursday, April 22, 2021</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>Langsam nähere ich mich meinen <a href="https://github.com/lyusupov/SoftRF">Soft-RF-Geräten</a> an. Ich kann jetzt auch über <a href="2021/4/open-source-flugelektronik-2-ble-und-serial/">Bluetooth Low Energy (BLE)</a> mit dem Gerät reden. Das Python Framework <a href="https://pypi.org/project/bleak/">Bleak</a> war dabei unglaublich hilfreich, da ich fast den ganzen BLE-Code sehr plattform-neutral Scheiben kann. I.e. der Code ist zwar nur auf MacOS getestet, wird aber sehr wahrscheinlich auch unter Linux funktionieren. Der Code zu diesem Post liegt <a href="https://github.com/dwt/softrf-interfacing">auf github</a>.</p>
-<p>Wie läuft das jetzt? Zuerst braucht man einen BLE-Scanner, um die Adresse des Geräts zu finden. Bei mir sieht das so aus:</p>
-<pre><code>% ./ble_scanner.py
-........................................
-[...]
-0975FAB7-6F50-4B60-A0D8-9F11C817FB6D: SoftRF-f0c010-LE
-[...]
-</code></pre>
-<p>Mit dieser Adresse kann man dann reden um sich anzuschauen welche BLE-Services sie anbietet:</p>
-<pre><code>% ./ble_explore_device.py 0975FAB7-6F50-4B60-A0D8-9F11C817FB6D
-Connected: True
-[Service] 0000ffe0-0000-1000-8000-00805f9b34fb (Handle: 40): Vendor specific
-    [Characteristic] 0000ffe1-0000-1000-8000-00805f9b34fb (Handle: 41): Vendor specific (read,write-without-response,notify), Value: b',,,,,,,,,99.99,99.99'
-        [Descriptor] 00002901-0000-1000-8000-00805f9b34fb (Handle: 43): Characteristic User Description) | Value: b'HMSoft'
-        [Descriptor] 00002902-0000-1000-8000-00805f9b34fb (Handle: 44): Client Characteristic Configuration) | Value: b'\x00\x00'
-</code></pre>
-<p>Was heißt das? Das gerät bietet den Service <code>0000ffe0-*</code> an und darauf eine Characteristik <code>0000ffe1-*</code> die wiederum zwei Deskriptoren enthält. <code>00002901-*</code>und <code>00002902-*</code>. Nicht das ich BLE vollständig verstehe, aber zumindest weiß ich das ein Service der Grundsätzliche Behälter für alle BLE Interaktionen ist und eine Charactreristik einen lese und schreibbaren Wert darstellt. Deskriptoren können darin verschachtelt sein und sind entweder zusätzliche lese und schreibbare Werte oder haben einen technischen Sinn. In diesem Beispiel ist der zweite Descriptor notwendig um auf der Charakteristik nicht nur lesen und schreiben, sondern auch  Notify zu implementieren -&gt; und das braucht es für die Serielle Schnittstelle.</p>
-<p>Entscheidend ist hier die Service-Charakteristik <code>0000ffe1-0000-1000-8000-00805f9b34fb</code> Hier spielt die ganze Musik. Die Serielle Ausgabe des SoftRF kann man mittels Notify davon auslesen und man kann auf die Serielle Schnittstelle schreiben indem man darauf schreibt. Soweit so simpel. Und damit kriegt man auch schon ein sehr primitives UART hin:</p>
-<pre><code>% ./ble_uart.py 0975FAB7-6F50-4B60-A0D8-9F11C817FB6D
-Connected, start typing and press ENTER...
-0.00,0000.0000,N,00000.0000,E,0,00,100.0,0.0,M,0.0,M,,*5C
-$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
-$PFLAU,0,0,0,1,0,,0,,,*4F
-$GPRMC,,V,,,,,,,,,,N*53
-$GPGGA,000000.00,0000.0000,N,00000.0000,E,0,00,100.0,0.0,M,0.0,M,,*5C
-$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99$PFLAU,0,0,0,1,0,,0,,,*4F
-$GPRMC,,V,,,,,,,,,,N*53
-$GPGGA,000000.00,0000.0000,N,00000.0000,E,0,00,100.0,0.0,M,0.0,M,,*5C
-$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
-$PFLAU,0,0,0,1,0,,0,,,*4F
-$GPRMC,,V,,,,,,,,,,N*53
-</code></pre>
-<p>Yay!</p>
-<p>Nächste Tasks: das NMEA Encoding verstehen und mal schauen ob ich damit eine erste simple Visualisierung hinbekomme.</p>
-
-    </section>
-    
-      <footer>
-        <a href="2021/4/open-source-flugelektronik-2-ble-und-serial/">weiterlesen…</a>
       </footer>
     
   </article>

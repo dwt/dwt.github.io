@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Martin Häckers Blog - Software, Go / Baduk / Weiqi, Liquid Democracy</title><link href="https://h%C3%A4cker.net/en/blog/" rel="alternate"></link><link href="https://h%C3%A4cker.net/blog/feed.xml" rel="self"></link><id>urn:uuid:d0d51cf8-c6be-310d-a416-bf22c1661ce7</id><updated>2024-09-06T00:00:00Z</updated><author><name></name></author><entry><title>Was ist blooms taxonomie? Die ersten Ebenen</title><link href="https://h%C3%A4cker.net/blog/2024/9/waehrend-dem-lernen-lernen-lernen-blooms-taxonomie-ebene-1-3/" rel="alternate"></link><updated>2024-09-06T00:00:00Z</updated><author><name>Martin Häcker</name></author><id>urn:uuid:90ee80db-7da6-30e8-8cb3-bb622b8c9b9a</id><content type="html">&lt;p&gt;&lt;img src="../waehrend-dem-lernen-lernen-lernen-blooms-taxonomie/bloom.jpeg" alt="Blooms Taxonomie"&gt;&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Martin Häckers Blog - Software, Go / Baduk / Weiqi, Liquid Democracy</title><link href="https://h%C3%A4cker.net/en/blog/" rel="alternate"></link><link href="https://h%C3%A4cker.net/blog/feed.xml" rel="self"></link><id>urn:uuid:d0d51cf8-c6be-310d-a416-bf22c1661ce7</id><updated>2024-10-10T00:00:00Z</updated><author><name></name></author><entry><title>Wie kann KI beim Lernen mit Blooms-Taxonomie unterstützen?</title><link href="https://h%C3%A4cker.net/blog/2024/10/waehrend-dem-lernen-lernen-lernen-ki-nutzen/" rel="alternate"></link><updated>2024-10-10T00:00:00Z</updated><author><name>Martin Häcker</name></author><id>urn:uuid:68515a67-2a92-3da0-91bc-ea993656dd17</id><content type="html">&lt;p&gt;&lt;img src="../../9/waehrend-dem-lernen-lernen-lernen-blooms-taxonomie/bloom.jpeg" alt="Blooms Taxonomie"&gt;&lt;/p&gt;
+&lt;p&gt;Nachem ich jetzt lange &lt;a href="../waehrend-dem-lernen-lernen-lernen-blooms-taxonomie/"&gt;über Blooms Taxonomie&lt;/a&gt; und &lt;a href="../waehrend-dem-lernen-lernen-lernen-blooms-taxonomie-ebene-1-3/"&gt;was die Ebenen&lt;/a&gt; &lt;a href="../waehrend-dem-lernen-lernen-lernen-blooms-taxonomie-ebene-4-6/"&gt;im Detail bedeuten&lt;/a&gt; geschrieben habe, kann ich jetzt &lt;em&gt;endlich&lt;/em&gt; zu dem kommen, was mir eigentlich am Herzen liegt:&lt;/p&gt;
+&lt;p&gt;Mein ganzes Leben lang haben andere die Ebenen von Blooms Taxonomie verwendet um zu beurteilen wie gut ich etwas verstanden habe - aber man kann diesen Spieß auch umdrehen, und das wissen um diese Ebenen des Verständnisses nutzen um selbst besser zu lernen! (Ehrlich gesagt, bin ich ziemlich angepisst das mir das nicht von Vorne herein genau dafür erklärt und beigebracht wurde)&lt;/p&gt;
+&lt;p&gt;Wie funktioniert das? Wenn Mensch ohne Plan lernt, dann neigen wir dazu uns zunächst auf den unteren Ebenen zu bewegen. Denn das ist (vermeintlich) einfacher und erscheint logisch. Aber aus der Forschung wissen wir, dass sich von vorne herein auf Fragen der 4. und 5. Ebene (also Analysieren und Bewerten) zu konzentrieren, nicht nur schneller, sondern auch tieferes Verständnis bringt.&lt;/p&gt;
+&lt;p&gt;Warum? Weil sich die Art und Weise verändert mit der wir uns mit dem Lern-Material beschäftigen. Auswendig Lernen ist ja nicht verzichtbar. Man muss sich die Fakten ja merken. Aber das passiert auch, wenn man sie Analysiert und Bewertet - ABER - wir kriegen die Analyse und Bewertung gratis dazu. (Wohlgemerkt, für etwas mehr Kognitive Anstrengung, aber Entspannung ist ja nicht das Ziel.)&lt;/p&gt;
+&lt;p&gt;Und das ist der Clou. Gleicher Zeiteinsatz, aber tieferes Verständnis.&lt;/p&gt;
+&lt;p&gt;🤯&lt;/p&gt;
+&lt;p&gt;Jetzt ist natürlich nicht jeder mit der Fähigkeit geboren, sich selbst einfach so Fragen auf der 4. und 5. Ebene zu stellen. Aber das ist auch gar nicht nötig. Denn KI kann dabei prima helfen.&lt;/p&gt;
+&lt;p&gt;Chat-GPT hat ein sehr gutes Verständnis von Blooms-Modell und kann endlos fragen auf Bloom Level 4 und 5 zu jedem Thema generieren. Die sind nicht immer perfekt, es reicht aber, um sich darauf einzustimmnen wie solche Fragen aussehen und effizient selbst zu solchen Fragen zu kommen.&lt;/p&gt;
+&lt;p&gt;Und das ist für mich ein gamechanger, und super sinnvoller Einsatz von KI.&lt;/p&gt;
+&lt;p&gt;Hier mal ein Auszug aus einem &lt;a href="Python-Lernen-mit-Fragen.pdf"&gt;Chat mit Chat-GPT&lt;/a&gt;. Das ist sicher nicht perfekt, aber ein starker Anfang. Chapeau, Chat-GPT!&lt;/p&gt;
+</content></entry><entry><title>Was ist blooms taxonomie? Die ersten Ebenen</title><link href="https://h%C3%A4cker.net/blog/2024/9/waehrend-dem-lernen-lernen-lernen-blooms-taxonomie-ebene-1-3/" rel="alternate"></link><updated>2024-09-06T00:00:00Z</updated><author><name>Martin Häcker</name></author><id>urn:uuid:90ee80db-7da6-30e8-8cb3-bb622b8c9b9a</id><content type="html">&lt;p&gt;&lt;img src="../waehrend-dem-lernen-lernen-lernen-blooms-taxonomie/bloom.jpeg" alt="Blooms Taxonomie"&gt;&lt;/p&gt;
 &lt;p&gt;In &lt;a href="../waehrend-dem-lernen-lernen-lernen-blooms-taxonomie/"&gt;meinem letzten Blog-Post habe ich mich mit Blooms Taxonomie beschäftigt&lt;/a&gt;. Mir hat dieses Modell viele Gedankenanstöße darüber gegeben, wie ich lerne. Ich habe die sechs Ebenen von Blooms Taxonomie vorgestellt und ihre Anwendung sehr knapp diskutiert. Heute möchte ich diese Ebenen vertiefen und anhand von Beispielen auf die Unterschiede zwischen den Ebenen eingehen sowie die jeweiligen Lernziele beleuchten. Mein Ziel ist es, mir und anderen, die Anwendung von Blooms Taxonomie in beim Lernen zu veranschaulichen. Los gehts!&lt;/p&gt;
 &lt;h2&gt;Die Ebenen von &lt;a href="https://de.wikipedia.org/wiki/Blooms_Taxonomie"&gt;Blooms Taxonomie&lt;/a&gt;:&lt;/h2&gt;
 &lt;h3&gt;1. Wissen&lt;/h3&gt;
@@ -584,48 +595,4 @@ $&lt;span class="w"&gt; &lt;/span&gt;python&lt;span class="w"&gt; &lt;/span&gt;-
 &lt;p&gt;Und noch mehr. Aber das find ich schon mal am wichtigsten. :)&lt;/p&gt;
 </content></entry><entry><title>Flagge zeigen</title><link href="https://h%C3%A4cker.net/blog/2009/11/flagge-zeigen/" rel="alternate"></link><updated>2009-11-29T00:00:00Z</updated><author><name>Martin Häcker</name></author><id>urn:uuid:d430ecd8-0ea6-3884-a763-e7e0458f184e</id><content type="html">&lt;p&gt;&lt;img src="http://wurstball.de/static/ircview/pictures/ba57e733f5f0157a130c99f7e648cb58.jpg" alt="Image"&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://wurstball.de/25017/"&gt;via&lt;/a&gt;&lt;/p&gt;
-</content></entry><entry><title>Zur Schweinegrippe</title><link href="https://h%C3%A4cker.net/blog/2009/11/zur-schweinegrippe/" rel="alternate"></link><updated>2009-11-18T00:00:00Z</updated><author><name>Martin Häcker</name></author><id>urn:uuid:55ab626a-3160-3938-9114-38034679fcce</id><content type="html">&lt;p&gt;Meine Mutter hat diesen lesenswerten Text dazu geschrieben - und den möchte ich gerne (mit ihrer Erlaubnis) noch mehr Leuten zugänglich machen. Grund dafür ist diese Email die gerade mit diversen gut klingenden Arzt-Namen als Absender auch durch meine Inbox wandert&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;Für alle, die überlegen sich impfen zu lassen :&lt;/p&gt;
-&lt;p&gt;Die beiden Impfstoffe gegen die so genannte Schweinegrippe &lt;em&gt;Pandemrix® Und Focetria®,&lt;/em&gt; enthalten als Adjuvans (Impfverstärker ) &lt;em&gt;Squalen&lt;/em&gt;. Beim Menschen ist Squalen bei den US-Soldaten des ersten Golfkriegs als Impfverstärker eingesetzt worden.&lt;/p&gt;
-&lt;p&gt;23-27% (also jeder Vierte, auch solche, die zu Hause blieben) bekamen Die Golfkriegskrankheit, Mit chronischer Müdigkeit, Fibromyalgie (Muskelrheuma), neben Gedächtnis-und Konzentrationsproblemen, persistierenden Kopfschmerzen, Erschöpfung und ausgedehnten Schmerzen charakterisiert. Die Krankheit Kann auch chronische Verdauungsprobleme und Hautausschlag einschließen.&lt;/p&gt;
-&lt;p&gt;Die Erkrankung hat sich seit 1991 also seit 18 Jahren nicht gebessert. Bei 95 % der Geimpften mit Golfkriegssyndrom wurden Squalen-Antikörper Gefunden.&lt;/p&gt;
-&lt;p&gt;Erst nach mehr als 10 Jahren wurden die Schäden vom US-Verteidigungsministerium anerkannt.&lt;/p&gt;
-&lt;p&gt;Wenn die Bundesregierung ihren Willen durchsetzt und 35 Millionen Menschen geimpft werden, ist damit zu rechnen, dass 8-9 Millionen Bundesbürger für die nächsten Jahrzehnte unter chronischer Müdigkeit und Fibromyalgie etc. leiden werden.&lt;/p&gt;
-&lt;p&gt;Unterschrieben von:&lt;/p&gt;
-&lt;h2&gt;$GUT_KLINGENDER_ARZT_NAME&lt;/h2&gt;
-&lt;p&gt;Dazu hat sie diese gute Antwort geschrieben:&lt;/p&gt;
-&lt;p&gt;Ja, es stimmt.
-Pandemrix + Focetria enthalten Squalen, das injiziert zum Imunogen wird. Das
-ist seine wirkstoffverstärkende Ebene. Es wird auch in unserer Leber
-produziert, aber liegt natürlicherweise in öliger Form vor. Im Impfstoff
-aber als Emulsion, was einen Unterschied für die Verstoffwechselung im
-Körper macht. Der Verdacht, dass es etwas mit dem Golfkriegsyndrom zu tun
-hat, ist nicht erhärtet. Neuere Studien mit größeren Teilnehmergruppen
-zeigen keinen Zusammenhang zwischen Squalen-Antikörpern und chron.
-Symptomen.- Dennoch wird unabhängig von diesem Aspekt der Debatte um diese
-Impfstoffe ihre Sicherheit als ungenügend geprüft eingeschätzt. Er wird
-schlechter vertragen als ein Spaltimpfstoff ohne Wirkverstärker. Das ist
-sicher. ER wurde noch nicht an Schwangeren und Kindern erprobt und die jetzt
-eingesetzte Wirkstoffverstärkerdosis ist viel höher als in bisher
-eingesetzten Impfungen. Nebenwirkungen wurden noch nicht systematisch
-erfaßt. Auch seine Wirksamkeit ist noch nicht hinreichend erforscht, da eine
-verringerte Dosierung gegenüber der Zulassungsphase jetzt vermarktet wird.&lt;/p&gt;
-&lt;p&gt;Da die Grippe gutartig abläuft und kein höheres Risiko darstellt, als die
-bisherigen Herbstgrippen, ist davon bei sonst gesunden Menschen abzuraten,
-ebenso bei Schwangeren und Kindern. Hier herum impfen nur wenige Ärzte und
-auch die Kinderärzte sind sehr zurückhaltend.
-Jürgen hat herausgefunden, dass 1974 dieser Virus schon mal "um die Welt
-lief", so dass alle, die damals schon sich anstecken konnten, wahrscheinlich
-immun sind.&lt;/p&gt;
-&lt;p&gt;Mein Rat an alle, die sich schützen wollen und dazu beitragen möchten, das
-sich die Viren nicht ausbreiten:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Bei ersten Symptomen ca 25 mg Zink einnehmen (gibt es als Tabletten) an zwei aufeinanderfolgenden Tagen. Parallel dazu Vitamin C Stoß mit heißer Zitrone o.ä. 2x täglich.&lt;/li&gt;
-&lt;li&gt;Cystus 052 Infektblocker Tabl. lutschen (pflanzlicher Virenblocker).&lt;/li&gt;
-&lt;li&gt;Wenn Fieber kommt, dieses auf über 39°C steigen lassen und abwarten. Viren werden durch Temperaturen über 39°C abgetötet. Es ist der effektivste Abwehrmechanismus. Die Nebenwirkungen des Fieberanstiegs ertragen sich am besten im Bett mit viel trinken und schlafen. Sobald die Viren keine Bedrohung mehr darstellen, geht das Fieber wieder runter (bei normalem Verlauf).&lt;/li&gt;
-&lt;li&gt;Auch ohne Fieber soll sich jeder im Stadium des Niesen und Hustens von seinen Mitmenschen fernhalten, da er wie eine lebende Viren-Schleuder wirkt.  Am besten freiwillig daheim bleiben und viel Zeit auf Pflege der Gesundheit verwenden (Nasenspülung, Inhalieren, Tee trinken, ausruhen, an die frische Luft gehen wenn möglich, Basenbäder nehmen, bei Bedarf Brustwickel, Atemübungen, viel frisches Obst).&lt;/li&gt;
-&lt;/ol&gt;
-&lt;hr&gt;
-&lt;p&gt;Ich hoffe dass das auch für viele anderen Leute einiges an Fragen beantwortet und die Pharmaindustrie hoffentlich deutlich einnahmen kostet.&lt;/p&gt;
 </content></entry></feed>

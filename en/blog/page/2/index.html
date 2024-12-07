@@ -57,6 +57,56 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2021/5/was-sagt-mir-ein-covid-schnelltest-ergebnis/">
+        Was sagt mir ein Covid-Schnelltest Ergebnis?
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2021-05-13">Thursday, May 13, 2021</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Inspiriert von <a href="https://www.youtube.com/watch?v=lG4VkPoG3ko">diesem Video von 3Blue1Brown</a>, hat sich mein Verständnis wie man über Covid-Tests nachdenkt, grundsätzlich gewandelt.</p>
+<p>Zwar war mir schon sehr lange Bewusst, dass Test-Ergebnisse kontra-intuitiv sein können, weil sie eben auch Gesunde als krank erkennen können.</p>
+<p>Das ist einfach nachzuvollziehen, wenn man einen Covid-Schnelltest anschaut. Die Güte dieser Tests wird fast immer mit zwei Zahlen angegeben: Sensitivität (wie viele der tatsächlich Kranken werden erkannt) und Spezifizität (wie viele der Gesunden werden auch als Gesund erkannt). Nehmen wir an unser Test hat jetzt 90% Sensitivität und 90% Spezifität (fiktive Zahlen für leichteres Rechnen - echte Zahlen kommen später).</p>
+<p>Wende ich diesen Test jetzt auf 100 menschen in einem Land an, das Zero-Covid hat. Dann sollten trotzdem 10 Personen als Krank gemeldet werden. Was heißt das jetzt? Logischerweise nix, denn es sind ja alle Gesund.</p>
+<p>Gehe ich stattdessen ins Krankenhaus auf die Covid-Station und mache den Test dort mit 100 Personen, dann sollten trotzdem 10 Personen als Gesund gemeldet werden. Was heißt das jetzt? Logischerweise auch nix, die Leute sind ja schon wegen Covid in Behandlung und nicht durch den Test plötzlich gesundet.</p>
+<p>Und das ist die wichtige Denk-Änderung die 3Blue1Brown in seinem Video motiviert - man muss beim nachdenken über Testergebnisse einfach immer auch darüber nachdenken wie wahrscheinlich es ist das man tatsächlich Krank ist. (<a href="https://de.wikipedia.org/wiki/Satz_von_Bayes">Bayes läßt grüßen</a>)</p>
+<p>Und jetzt kommt der Dreh - alles wird viel einfacher, wenn man von vorne herein nicht denkt dass der Test mir sagt ob ich gesund oder Krank bin, sondern:</p>
+<blockquote><p>Jeder Test hat ein <em>Vorhersagekraft</em>, und dieser Faktor <em>verändert meine Wahrscheinlichkeit</em> Krank zu sein.</p>
+</blockquote>
+<p>Es wäre also viel Einfacher, wenn man bei Tests nicht Sensitivität und Spezifizität angibt, sondern daraus die <em>Vorhersagekraft</em> des Tests berechnet. Damit kann man dann nämlich plötzlich viel einfacher Denken und verstehen. Und insbesondere ist es viel einfacher  eine 'Vorhersagekraft' nicht mit 'Wahrscheinlichkeit das ich Krank bin' zu verwechseln, was einfach jeder tut der sich mit dem Thema nicht intensiv auseinander setzt.</p>
+<p>Und das beste: Wenn man nicht in Prozent, sondern in Verhältnissen rechnet, dann ist das sogar präzise!</p>
+<p>Wie kommt man jetzt auf diese <em>Vorhersagekraft</em> (auch Bayes Faktor genannt)</p>
+<p>Jeder Test ist durch zwei Zahlen (Sensitivität[welcher Anteil der Kranken wird erkannt], Spezifität[welcher Anteil der Gesunden wird als Gesund erkannt]) bzw. durch die Komplemente davon (Falsch-Negativ-Rate, Falsch-Positiv-Rate) bestimmt.</p>
+<p>Interessiert man sich jetzt für die Frage was ein Positiver-Test aussagt, kann man aus dem Quotient von Sensitivität geteilt durch Falsch-Positiv-Rate die Vorhersagekraft eines Positiven Tests und aus dem Quotient von Falsch-Negativ-Rate geteilt durch Spezifität die Vorhersagekraft eines Negativen Tests erhalten.</p>
+<p>Ein Beispiel: Angenommen ein Test hat Sensitivität 90% und Spezifität 95% (also Falsch-Negativ-Rate 10%, Falsch-Positiv-Rate 5%). Dann ist die Vorhersagekraft eines Positiven Tests 90%/5%=18. Das heißt, wenn ich einen Positiven Test habe, dann weiß ich, dass sich die Wahrscheinlichkeit das ich Krank bin 18 mal vergrößert hat zu dem wie sie vorher war. Und umgekehrt: Ein Negativer Test 10%/95%≈  1/10. In Worten: Ein Negativer Test verkleinert meine Chance krank zu sein um etwa eine Größenordnung.</p>
+<blockquote><p>🤯</p>
+</blockquote>
+<p>Rechnet man in Prozent ist das leider nur eine Abschätzung, aber wenn man das ganze in <a href="https://de.wikipedia.org/wiki/Chance_(Stochastik">Chancen</a>) rechnet wird aus der Abschätzung eine präzise Formel!</p>
+<blockquote><p>🤯 🤯</p>
+</blockquote>
+<p>Schauen wir also mal auf ein paar reale Zahlen an.</p>
+<p>In Berlin (stand 13. Mai 21, sind nach <a href="https://pavelmayer.de/covid/risks/">Pavels Covid Tabelle</a>) derzeit einer von 394 Personen Ansteckend.</p>
+<p>Für einen Covid-Test den ich gerade da habe <a href="https://images.vinocentral.de/media/pdf/87/1d/be/BOSON-SARS-CoV-2-Antigen-Schnelltest-Information-Zusammenfassung.pdf">findet sich hier</a> eine Sensitivität ~93,5% und Spezifität ~98%.</p>
+<p>Die Vorhersagekraft eines Positiven Tests ist  93,5%/2% ~47. Demnach wächst meine Chance heute ansteckend zu sein von 1/394 um das fast fünfzigfache auf etwas mehr als 1/4.</p>
+<p>Die Vorhersagekraft eines negativen Tests ist 6,5%/98%~0,06. Demnach wächst meine Chance Gesund zu sein um fast zwei Größenordnungen von 1/394 auf etwa 6,5/38.612.</p>
+<p>Oh wie schön wäre es, wenn das auch überall so kommuniziert würde…</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2021/5/was-sagt-mir-ein-covid-schnelltest-ergebnis/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2021/4/open-source-flugelektronik-2-ble-und-serial/">
         Open Source Flugelektronik 2 - BLE und Serial
         </a>
@@ -418,63 +468,6 @@ $<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span
     
       <footer>
         <a href="../../2012/7/melderecht-datenweitergabe-jetzt-ohne-zustimmung/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2011/11/ssl-certificate-trouble/">
-        SSL Certificate Trouble
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2011-11-18">Friday, November 18, 2011</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>If you should ever stumble upon this bug, consider yourself very lucky that I have found the solution to this already, because it took me <em>AGES</em> to figure this out. No shit.</p>
-<p>So here's the problem: We used a self signed certificate on on of our servers and curl and all tools relying on curl just couldn't connect to this server at all (with certificate validation). Despite the fact that the root certificate that signed the server certificate was happily in my keychain and marked as trusted.</p>
-<p>The solution first: Turns out that the Keychain will eat certificates in many formats, specifically it supports DER and PEM. curl however can't use the DER certificate in the keychain and just reports it as missing. Exporting the certificate, converting it to PEM and then reimporting it (making sure to remove the DER version beforehand) fixed it.</p>
-<p>I converted the file with this command
-<code>openssl x509 -inform DER -in some.ser.ver.der -out some.serv.ver.pem</code></p>
-<p>Here's some of the error messages I got:</p>
-<div class="hll"><pre><span></span><span class="gp">% </span>curl<span class="w"> </span>-I<span class="w"> </span>https://some.serv.ver<span class="w"> </span>-v
-<span class="go">* About to connect() to some.serv.ver port 443 (#0)</span>
-<span class="go">*   Trying some.ip... connected</span>
-<span class="go">* Connected to some.ser.ver (some.ip) port 443 (#0)</span>
-<span class="go">* SSLv3, TLS handshake, Client hello (1):</span>
-<span class="go">* SSLv3, TLS handshake, Server hello (2):</span>
-<span class="go">* SSLv3, TLS handshake, CERT (11):</span>
-<span class="go">* SSLv3, TLS alert, Server hello (2):</span>
-<span class="go">* SSL certificate problem, verify that the CA cert is OK. Details:</span>
-<span class="go">error:14090086:SSL routines:SSL3_GET_SERVER_CERTIFICATE:certificate verify failed</span>
-<span class="go">* Closing connection #0</span>
-<span class="go">curl: (60) SSL certificate problem, verify that the CA cert is OK. Details:</span>
-<span class="go">error:14090086:SSL routines:SSL3_GET_SERVER_CERTIFICATE:certificate verify failed</span>
-<span class="go">More details here: http://curl.haxx.se/docs/sslcerts.html</span>
-
-<span class="go">curl performs SSL certificate verification by default, using a &quot;bundle&quot;</span>
-<span class="go"> of Certificate Authority (CA) public keys (CA certs). If the default</span>
-<span class="go"> bundle file isn&#39;t adequate, you can specify an alternate file</span>
-<span class="go"> using the --cacert option.</span>
-<span class="go">If this HTTPS server uses a certificate signed by a CA represented in</span>
-<span class="go"> the bundle, the certificate verification probably failed due to a</span>
-<span class="go"> problem with the certificate (it might be expired, or the name might</span>
-<span class="go"> not match the domain name in the URL).</span>
-<span class="go">If you&#39;d like to turn off curl&#39;s verification of the certificate, use</span>
-<span class="go"> the -k (or --insecure) option.</span>
-</pre></div>
-<p>If you hit this brick wall - hope this helps you too.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2011/11/ssl-certificate-trouble/">weiterlesen…</a>
       </footer>
     
   </article>

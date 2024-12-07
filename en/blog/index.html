@@ -57,6 +57,69 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="2024/11/grundlegende-funktionen-und-einstellungen-des-terminals/">
+        Grundlegende Funktionen und Einstellungen des Terminals
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2024-11-25">Monday, November 25, 2024</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Der Terminal-Emulator ist ein zentrales Werkzeug, mit dem wir Entwickler mit unseren Rechnern interagieren. Jedes bisschen Wissen und jede Effizienz, die du hier gewinnst, zahlt sich in kürzester Zeit hundertfach aus.</p>
+<p>Natürlich gibt es viele Terminals, wie <a href="https://iterm2.com">iTerm2</a>, <a href="https://alacritty.org">Alacritty</a> oder <a href="https://sw.kovidgoyal.net/kitty/">Kitty</a>. Aber ich finde, diese solltest du nur verwenden, wenn sie deinen Workflow wirklich verbessern. Und dafür musst du zuerst wissen, was Apple standardmäßig mitliefert.</p>
+<p>Das Schöne am Terminal ist, dass du unglaublich wenig anpassen musst, da es von Haus aus sehr gut funktioniert.</p>
+<p>Ich nutze das eingebaute Terminal von macOS mit nur zwei (!) Konfigurationsanpassungen.</p>
+<h2>Wortweise Löschen</h2>
+<p><img src="2024/11/grundlegende-funktionen-und-einstellungen-des-terminals/delete-word.png" alt="Wortweise Löschen"></p>
+<p>Die erste wirklich wichtige Anpassung für mich ist, dass ⌥-⌫ (Alt-Delete) als Standard-Keybinding gesetzt wird, damit wortweise nach links gelöscht wird. Damit passt du das Terminal an den Mac-Standard an, der in fast allen anderen Programmen ebenfalls funktioniert.</p>
+<p>So geht's:</p>
+<ol>
+<li>Terminal → Einstellungen öffnen (⌘-,).</li>
+<li>Auf der linken Seite alle Profile auswählen, damit alle Einstellungen gleichzeitig bearbeitet werden.</li>
+<li>Auf der rechten Seite → "Tastatur" auswählen.</li>
+<li>Einen neuen Shortcut hinzufügen.</li>
+<li>Die Felder wie im Screenshot ausfüllen. <code>\027</code> steht für <strong>⌃-w</strong> (<code>ctrl-w</code>), den Standard-Shortcut für wortweises Löschen in der Shell.</li>
+</ol>
+<h2>Ausgabe navigieren, selektieren und löschen</h2>
+<p>Die nächst-wichtigsten Shortcuts sind:</p>
+<ul>
+<li><strong>⌘-N</strong> / <strong>⌘-T</strong> / <strong>⌘-W:</strong> Alles Standard, aber trotzdem meine meistbenutzten Shortcuts.</li>
+<li><strong>⌘-↑</strong> und <strong>⌘-↓:</strong> Zum Anfang des vorherigen bzw. nächsten ausgeführten Befehls springen. Das ist super praktisch, um schnell nachzusehen, was die vorherigen Kommandos waren.</li>
+<li><strong>⌘-Shift-↑</strong> und <strong>⌘-Shift-↓:</strong> Wie oben, aber selektiert zusätzlich. Damit kannst du schnell einen Befehl und dessen Ausgabe kopieren. Das ist super praktisch, um Anleitungen zu schreiben oder einem Kollegen zu zeigen, wie etwas gemacht wurde.</li>
+<li><strong>⌘-L:</strong> Löscht nur die Ausgabe des letzten Kommandos. Sehr praktisch, um ein nicht mehr benötigtes Shell-Experiment zu entfernen – besonders bei Fehlern mit viel Output. Oft nutze ich das, wenn ich zuerst eine Hilfe anzeige und dann darunter verschiedene Experimente ausführe, um die richtigen Flags zu finden. (Genauer: <strong>⌘-L</strong> löscht vom Ende bis zur aktuellen Selektion und funktioniert daher hervorragend mit <strong>⌘-↑</strong>.)</li>
+<li><strong>⌘-K:</strong> Terminal löschen. Die nukleare Option – sie löscht alles im aktuellen Terminal. Großer Nachteil: Was weg ist, ist weg. Also nicht benutzen, wenn du den Output noch brauchst. Dennoch ist dies einer meiner am häufigsten benutzten Shortcuts.</li>
+</ul>
+<h2>Unbegrenzter Puffer</h2>
+<p><img src="2024/11/grundlegende-funktionen-und-einstellungen-des-terminals/unlimited-buffer.png" alt="Unbegrenzter Puffer"></p>
+<p>Die zweite Anpassung, die ich vornehme, ist, den Scrollback-Puffer auf unbegrenzt zu stellen, damit ich die Ausgabe von langen Kommandos nicht verliere. Das geht so:</p>
+<ol>
+<li>Terminal → Einstellungen öffnen (<strong>⌘-,</strong>).</li>
+<li>Wie zuvor alle Profile auswählen.</li>
+<li>Auf der rechten Seite → "Fenster" → "Zeilenpuffer" auf „auf den verfügbaren Speicher begrenzen“ stellen.</li>
+</ol>
+<h2>Fazit</h2>
+<p>Mit diesen Shortcuts kannst du ultraschnell zwischen den letzten Kommandos navigieren, deren Ausgabe selektieren (und kopieren) oder löschen.</p>
+<p>Diese Anpassungen und Shortcuts sind für mich auch einer der Hauptgründe, warum ich die eingebauten Terminals in IDEs nicht gerne benutze. Denn dort funktionieren sie oftmals nicht gut.</p>
+<p>Viele dieser Einstellungen und Shortcuts gibt es auch auf der Ebene der Shell. Der Vorteil, sie über das Terminal zu konfigurieren, ist, dass diese Shortcuts auch auf anderen Servern oder in Docker- bzw. Kubernetes-Containern funktionieren.</p>
+<p>Ich hoffe, diese Tipps helfen dir, das Terminal noch besser zu nutzen.</p>
+<p>Kennst du weitere nützliche Shortcuts oder Einstellungen, die ich nicht erwähnt habe? Hast du Fragen zu den vorgestellten Tipps? Lass es mich wissen!</p>
+<p>Happy Shelling!</p>
+
+    </section>
+    
+      <footer>
+        <a href="2024/11/grundlegende-funktionen-und-einstellungen-des-terminals/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="2024/10/waehrend-dem-lernen-lernen-lernen-ki-nutzen/">
         Wie kann KI beim Lernen mit Blooms-Taxonomie unterstützen?
         </a>
@@ -68,6 +131,7 @@
 
     <section class="blog-post-body">
       <p><img src="2024/9/waehrend-dem-lernen-lernen-lernen-blooms-taxonomie/bloom.jpeg" alt="Blooms Taxonomie"></p>
+<p><a href="2024/10/waehrend-dem-lernen-lernen-lernen-ki-nutzen/"></a></p>
 <p>Nachem ich jetzt lange <a href="2024/10/waehrend-dem-lernen-lernen-lernen-blooms-taxonomie/">über Blooms Taxonomie</a> und <a href="2024/10/waehrend-dem-lernen-lernen-lernen-blooms-taxonomie-ebene-1-3/">was die Ebenen</a> <a href="2024/9/waehrend-dem-lernen-lernen-lernen-blooms-taxonomie-ebene-4-6/">im Detail bedeuten</a> geschrieben habe, kann ich jetzt <em>endlich</em> zu dem kommen, was mir eigentlich am Herzen liegt:</p>
 <p>Mein ganzes Leben lang haben andere die Ebenen von Blooms Taxonomie verwendet um zu beurteilen wie gut ich etwas verstanden habe - aber man kann diesen Spieß auch umdrehen, und das wissen um diese Ebenen des Verständnisses nutzen um selbst besser zu lernen! (Ehrlich gesagt, bin ich ziemlich angepisst das mir das nicht von Vorne herein genau dafür erklärt und beigebracht wurde)</p>
 <p>Wie funktioniert das? Wenn Mensch ohne Plan lernt, dann neigen wir dazu uns zunächst auf den unteren Ebenen zu bewegen. Denn das ist (vermeintlich) einfacher und erscheint logisch. Aber aus der Forschung wissen wir, dass sich von vorne herein auf Fragen der 4. und 5. Ebene (also Analysieren und Bewerten) zu konzentrieren, nicht nur schneller, sondern auch tieferes Verständnis bringt.</p>
@@ -397,56 +461,6 @@ Additionally, Musk restated that he believes everyone should be a chief engineer
     
       <footer>
         <a href="2021/10/elon-musks-design-philosophie/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="2021/5/was-sagt-mir-ein-covid-schnelltest-ergebnis/">
-        Was sagt mir ein Covid-Schnelltest Ergebnis?
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2021-05-13">Thursday, May 13, 2021</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>Inspiriert von <a href="https://www.youtube.com/watch?v=lG4VkPoG3ko">diesem Video von 3Blue1Brown</a>, hat sich mein Verständnis wie man über Covid-Tests nachdenkt, grundsätzlich gewandelt.</p>
-<p>Zwar war mir schon sehr lange Bewusst, dass Test-Ergebnisse kontra-intuitiv sein können, weil sie eben auch Gesunde als krank erkennen können.</p>
-<p>Das ist einfach nachzuvollziehen, wenn man einen Covid-Schnelltest anschaut. Die Güte dieser Tests wird fast immer mit zwei Zahlen angegeben: Sensitivität (wie viele der tatsächlich Kranken werden erkannt) und Spezifizität (wie viele der Gesunden werden auch als Gesund erkannt). Nehmen wir an unser Test hat jetzt 90% Sensitivität und 90% Spezifität (fiktive Zahlen für leichteres Rechnen - echte Zahlen kommen später).</p>
-<p>Wende ich diesen Test jetzt auf 100 menschen in einem Land an, das Zero-Covid hat. Dann sollten trotzdem 10 Personen als Krank gemeldet werden. Was heißt das jetzt? Logischerweise nix, denn es sind ja alle Gesund.</p>
-<p>Gehe ich stattdessen ins Krankenhaus auf die Covid-Station und mache den Test dort mit 100 Personen, dann sollten trotzdem 10 Personen als Gesund gemeldet werden. Was heißt das jetzt? Logischerweise auch nix, die Leute sind ja schon wegen Covid in Behandlung und nicht durch den Test plötzlich gesundet.</p>
-<p>Und das ist die wichtige Denk-Änderung die 3Blue1Brown in seinem Video motiviert - man muss beim nachdenken über Testergebnisse einfach immer auch darüber nachdenken wie wahrscheinlich es ist das man tatsächlich Krank ist. (<a href="https://de.wikipedia.org/wiki/Satz_von_Bayes">Bayes läßt grüßen</a>)</p>
-<p>Und jetzt kommt der Dreh - alles wird viel einfacher, wenn man von vorne herein nicht denkt dass der Test mir sagt ob ich gesund oder Krank bin, sondern:</p>
-<blockquote><p>Jeder Test hat ein <em>Vorhersagekraft</em>, und dieser Faktor <em>verändert meine Wahrscheinlichkeit</em> Krank zu sein.</p>
-</blockquote>
-<p>Es wäre also viel Einfacher, wenn man bei Tests nicht Sensitivität und Spezifizität angibt, sondern daraus die <em>Vorhersagekraft</em> des Tests berechnet. Damit kann man dann nämlich plötzlich viel einfacher Denken und verstehen. Und insbesondere ist es viel einfacher  eine 'Vorhersagekraft' nicht mit 'Wahrscheinlichkeit das ich Krank bin' zu verwechseln, was einfach jeder tut der sich mit dem Thema nicht intensiv auseinander setzt.</p>
-<p>Und das beste: Wenn man nicht in Prozent, sondern in Verhältnissen rechnet, dann ist das sogar präzise!</p>
-<p>Wie kommt man jetzt auf diese <em>Vorhersagekraft</em> (auch Bayes Faktor genannt)</p>
-<p>Jeder Test ist durch zwei Zahlen (Sensitivität[welcher Anteil der Kranken wird erkannt], Spezifität[welcher Anteil der Gesunden wird als Gesund erkannt]) bzw. durch die Komplemente davon (Falsch-Negativ-Rate, Falsch-Positiv-Rate) bestimmt.</p>
-<p>Interessiert man sich jetzt für die Frage was ein Positiver-Test aussagt, kann man aus dem Quotient von Sensitivität geteilt durch Falsch-Positiv-Rate die Vorhersagekraft eines Positiven Tests und aus dem Quotient von Falsch-Negativ-Rate geteilt durch Spezifität die Vorhersagekraft eines Negativen Tests erhalten.</p>
-<p>Ein Beispiel: Angenommen ein Test hat Sensitivität 90% und Spezifität 95% (also Falsch-Negativ-Rate 10%, Falsch-Positiv-Rate 5%). Dann ist die Vorhersagekraft eines Positiven Tests 90%/5%=18. Das heißt, wenn ich einen Positiven Test habe, dann weiß ich, dass sich die Wahrscheinlichkeit das ich Krank bin 18 mal vergrößert hat zu dem wie sie vorher war. Und umgekehrt: Ein Negativer Test 10%/95%≈  1/10. In Worten: Ein Negativer Test verkleinert meine Chance krank zu sein um etwa eine Größenordnung.</p>
-<blockquote><p>🤯</p>
-</blockquote>
-<p>Rechnet man in Prozent ist das leider nur eine Abschätzung, aber wenn man das ganze in <a href="https://de.wikipedia.org/wiki/Chance_(Stochastik">Chancen</a>) rechnet wird aus der Abschätzung eine präzise Formel!</p>
-<blockquote><p>🤯 🤯</p>
-</blockquote>
-<p>Schauen wir also mal auf ein paar reale Zahlen an.</p>
-<p>In Berlin (stand 13. Mai 21, sind nach <a href="https://pavelmayer.de/covid/risks/">Pavels Covid Tabelle</a>) derzeit einer von 394 Personen Ansteckend.</p>
-<p>Für einen Covid-Test den ich gerade da habe <a href="https://images.vinocentral.de/media/pdf/87/1d/be/BOSON-SARS-CoV-2-Antigen-Schnelltest-Information-Zusammenfassung.pdf">findet sich hier</a> eine Sensitivität ~93,5% und Spezifität ~98%.</p>
-<p>Die Vorhersagekraft eines Positiven Tests ist  93,5%/2% ~47. Demnach wächst meine Chance heute ansteckend zu sein von 1/394 um das fast fünfzigfache auf etwas mehr als 1/4.</p>
-<p>Die Vorhersagekraft eines negativen Tests ist 6,5%/98%~0,06. Demnach wächst meine Chance Gesund zu sein um fast zwei Größenordnungen von 1/394 auf etwa 6,5/38.612.</p>
-<p>Oh wie schön wäre es, wenn das auch überall so kommuniziert würde…</p>
-
-    </section>
-    
-      <footer>
-        <a href="2021/5/was-sagt-mir-ein-covid-schnelltest-ergebnis/">weiterlesen…</a>
       </footer>
     
   </article>

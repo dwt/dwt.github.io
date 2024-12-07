@@ -57,6 +57,51 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/9/ein-tool-sie-zu-finden-und-alle-zu-binden/">
+        Ein Tool sie zu finden und alle zu binden...
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-09-16">Dienstag, 16. September 2008</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>... auf die Shell zu ziehen und ins Highlighting zu ziehen. :) (Sorry, ich muss dringend mal wieder <a href="http://isohunt.com/torrents/?ihq=lord+of+the+rings">Herr der Ringe anschauen</a>)</p>
+<p>Mir geht es um <code>grep</code>, der Urgroßvater aller Projektweiten Suchmöglichkeiten. Das kann viel - aber nicht alles.</p>
+<p>Zum Beispiel ist es nicht besonders einfach in einem Projekt zu suchen dass SVN für die Versionskontrolle einsetzt. Grep besteht nämlich darauf dass es unbedingt bei <strong><em>-r</em></strong> auch in <code>.svn</code> Verzeichnissen suchen will. Und das beste: es gibt zwar eine Option <code>--exclude</code> - die funktioniert aber nur auf File-Basis. Das heißt man kann damit keine Verzeichnisse (wie z.B. <code>.svn</code>) ausschließen.</p>
+<p>Doh.</p>
+<p>Die Entwickler sagen dazu dass man doch lieber <code>find . mumbojumbomagic | grep muster</code> benutzen soll. Tja.</p>
+<p>Enter <a href="http://petdance.com/ack/">Ack</a>. Die Lösung aller Probleme. :)</p>
+<ul>
+<li>Das Tool sucht standardmäßig rekursiv - d.h. man muss nicht ständig <code>-r</code> angeben.</li>
+<li>Es ignoriert standardmäßig .svn .hg .git etc. Verzeichnisse - daher muss man nicht ständig irrelevante Resultate ignorieren.</li>
+<li>Man kann mit switches wie <code>--python</code> oder <code>--objc</code> nur in Dateien dieses Typs suchen.</li>
+<li>Man hat vollständige Unterstützung für Perls Regular Expressions auf der Kommandozeile (das Tool ist in Perl geschrieben)</li>
+<li>Man kann das Tool supereinfach in <code>~/.ackrc</code> konfigurieren.</li>
+</ul>
+<p>Hier meine .ackrc:</p>
+<pre><code>$ cat ~./ackrc
+--type-set=nib=.nib
+--type-add=objc=.mm
+--ignore-dir=build
+</code></pre>
+<p>Schick ne?</p>
+<p><a href="http://petdance.com/ack/">Hier zu finden.</a></p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/9/ein-tool-sie-zu-finden-und-alle-zu-binden/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/9/2008-09-13-13-40/">
         2008/09/13/13.40
         </a>
@@ -433,48 +478,6 @@ openssl<span class="w"> </span>dgst<span class="w"> </span>-dss1<span class="w">
     
       <footer>
         <a href="../../2008/8/kontrollieren-welche-libraries-ein-programm-la-dt/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/8/obfuscated-objc-oder-wie-macht-man-konstanten/">
-        Obfuscated Objc - oder - wie macht man Konstanten?
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-08-27">Mittwoch, 27. August 2008</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>Ist ja eigentlich nicht schwer, man braucht lediglich eine Definition wie diese</p>
-<div class="hll"><pre><span></span><span class="cp">#define kIOHIDVendorIDKey @&quot;VendorID&quot;</span>
-<span class="k">const</span><span class="w"> </span><span class="bp">NSString</span><span class="w"> </span><span class="o">*</span><span class="n">windowName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">@&quot;Morgens&quot;</span>
-</pre></div>
-<p>Einziges Problem - immer wieder hat man vom System konstante C-Strings, die man aber als Objc-Strings benötigt.</p>
-<p>Interessanterweise hat der Compiler überhaupt kein Problem das hier zu machen:</p>
-<div class="hll"><pre><span></span><span class="cp">#define kIOHIDVendorIDKey &quot;VendorID&quot;</span>
-<span class="c1">// ...</span>
-<span class="p">[</span><span class="n">matchingDict</span><span class="w"> </span><span class="n">setValue</span><span class="o">:</span><span class="p">[</span><span class="bp">NSNumber</span><span class="w"> </span><span class="n">numberWithInt</span><span class="o">:</span><span class="n">entry</span><span class="o">-&gt;</span><span class="n">Vendor_ID</span><span class="p">]</span><span class="w"> </span>
-<span class="w">       </span><span class="nl">forKey</span><span class="p">:</span><span class="w"> </span><span class="p">@</span><span class="n">kIOHIDVendorIDKey</span><span class="p">];</span><span class="w"> </span>
-
-<span class="c1">// same, but more readable than</span>
-<span class="p">[</span><span class="n">matchingDict</span><span class="w"> </span><span class="n">setValue</span><span class="o">:</span><span class="p">[</span><span class="bp">NSNumber</span><span class="w"> </span><span class="n">numberWithInt</span><span class="o">:</span><span class="n">entry</span><span class="o">-&gt;</span><span class="n">Vendor_ID</span><span class="p">]</span><span class="w"> </span>
-<span class="w">       </span><span class="nl">forKey</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="bp">NSString</span><span class="w"> </span><span class="n">stringWithCString</span><span class="o">:</span><span class="n">kIOHIDVendorIDKey</span><span class="p">]];</span>
-<span class="c1">// Also note that -stringWithCString is deprecated</span>
-</pre></div>
-<p>Oder mit anderen Worten man kann problemlos aus jeder C-String-Konstante eine Objc-String-Konstante machen, indem man einfach ein <strong><em>@</em></strong> davor schreibt.</p>
-<p>Neat.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/8/obfuscated-objc-oder-wie-macht-man-konstanten/">weiterlesen…</a>
       </footer>
     
   </article>

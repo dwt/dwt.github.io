@@ -1,0 +1,184 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../../static/pygments.css">
+    <title>Grundlegende Funktionen und Einstellungen des Terminals</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../../../blog/feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item "><a href="../../../../work/" class="nav-link">Professional software development</a></li>
+    
+      <li class="nav-item "><a href="../../../../projects/" class="nav-link">Projects</a></li>
+    
+      <li class="nav-item "><a href="../../../../publications/" class="nav-link">Publications and talks</a></li>
+    
+      <li class="nav-item active"><a href="../../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../../categories/" class="nav-link">Categories</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="../../../../../blog/2024/11/grundlegende-funktionen-und-einstellungen-des-terminals/">🇩🇪</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="./">🇬🇧</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../../">🏠</a>
+
+
+<a class="breadcrumb-item " href="../../../">Blog</a>
+
+
+<a class="breadcrumb-item active" href="./">Grundlegende Funktionen und Einstellungen des Terminals</a>
+
+</nav>
+    </header>
+    <article class="page grundlegende-funktionen-und-einstellungen-des-terminals  container-fluid">
+      
+  
+  <article class="blog-post">
+    <header>
+      <h2>
+        
+        Grundlegende Funktionen und Einstellungen des Terminals
+        
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2024-11-25">Monday, November 25, 2024</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Der Terminal-Emulator ist ein zentrales Werkzeug, mit dem wir Entwickler mit unseren Rechnern interagieren. Jedes bisschen Wissen und jede Effizienz, die du hier gewinnst, zahlt sich in kürzester Zeit hundertfach aus.</p>
+<p>Natürlich gibt es viele Terminals, wie <a href="https://iterm2.com">iTerm2</a>, <a href="https://alacritty.org">Alacritty</a> oder <a href="https://sw.kovidgoyal.net/kitty/">Kitty</a>. Aber ich finde, diese solltest du nur verwenden, wenn sie deinen Workflow wirklich verbessern. Und dafür musst du zuerst wissen, was Apple standardmäßig mitliefert.</p>
+<p>Das Schöne am Terminal ist, dass du unglaublich wenig anpassen musst, da es von Haus aus sehr gut funktioniert.</p>
+<p>Ich nutze das eingebaute Terminal von macOS mit nur zwei (!) Konfigurationsanpassungen.</p>
+<h2>Wortweise Löschen</h2>
+<p><img src="delete-word.png" alt="Wortweise Löschen"></p>
+<p>Die erste wirklich wichtige Anpassung für mich ist, dass ⌥-⌫ (Alt-Delete) als Standard-Keybinding gesetzt wird, damit wortweise nach links gelöscht wird. Damit passt du das Terminal an den Mac-Standard an, der in fast allen anderen Programmen ebenfalls funktioniert.</p>
+<p>So geht's:</p>
+<ol>
+<li>Terminal → Einstellungen öffnen (⌘-,).</li>
+<li>Auf der linken Seite alle Profile auswählen, damit alle Einstellungen gleichzeitig bearbeitet werden.</li>
+<li>Auf der rechten Seite → "Tastatur" auswählen.</li>
+<li>Einen neuen Shortcut hinzufügen.</li>
+<li>Die Felder wie im Screenshot ausfüllen. <code>\027</code> steht für <strong>⌃-w</strong> (<code>ctrl-w</code>), den Standard-Shortcut für wortweises Löschen in der Shell.</li>
+</ol>
+<h2>Ausgabe navigieren, selektieren und löschen</h2>
+<p>Die nächst-wichtigsten Shortcuts sind:</p>
+<ul>
+<li><strong>⌘-N</strong> / <strong>⌘-T</strong> / <strong>⌘-W:</strong> Alles Standard, aber trotzdem meine meistbenutzten Shortcuts.</li>
+<li><strong>⌘-↑</strong> und <strong>⌘-↓:</strong> Zum Anfang des vorherigen bzw. nächsten ausgeführten Befehls springen. Das ist super praktisch, um schnell nachzusehen, was die vorherigen Kommandos waren.</li>
+<li><strong>⌘-Shift-↑</strong> und <strong>⌘-Shift-↓:</strong> Wie oben, aber selektiert zusätzlich. Damit kannst du schnell einen Befehl und dessen Ausgabe kopieren. Das ist super praktisch, um Anleitungen zu schreiben oder einem Kollegen zu zeigen, wie etwas gemacht wurde.</li>
+<li><strong>⌘-L:</strong> Löscht nur die Ausgabe des letzten Kommandos. Sehr praktisch, um ein nicht mehr benötigtes Shell-Experiment zu entfernen – besonders bei Fehlern mit viel Output. Oft nutze ich das, wenn ich zuerst eine Hilfe anzeige und dann darunter verschiedene Experimente ausführe, um die richtigen Flags zu finden. (Genauer: <strong>⌘-L</strong> löscht vom Ende bis zur aktuellen Selektion und funktioniert daher hervorragend mit <strong>⌘-↑</strong>.)</li>
+<li><strong>⌘-K:</strong> Terminal löschen. Die nukleare Option – sie löscht alles im aktuellen Terminal. Großer Nachteil: Was weg ist, ist weg. Also nicht benutzen, wenn du den Output noch brauchst. Dennoch ist dies einer meiner am häufigsten benutzten Shortcuts.</li>
+</ul>
+<h2>Unbegrenzter Puffer</h2>
+<p><img src="unlimited-buffer.png" alt="Unbegrenzter Puffer"></p>
+<p>Die zweite Anpassung, die ich vornehme, ist, den Scrollback-Puffer auf unbegrenzt zu stellen, damit ich die Ausgabe von langen Kommandos nicht verliere. Das geht so:</p>
+<ol>
+<li>Terminal → Einstellungen öffnen (<strong>⌘-,</strong>).</li>
+<li>Wie zuvor alle Profile auswählen.</li>
+<li>Auf der rechten Seite → "Fenster" → "Zeilenpuffer" auf „auf den verfügbaren Speicher begrenzen“ stellen.</li>
+</ol>
+<h2>Fazit</h2>
+<p>Mit diesen Shortcuts kannst du ultraschnell zwischen den letzten Kommandos navigieren, deren Ausgabe selektieren (und kopieren) oder löschen.</p>
+<p>Diese Anpassungen und Shortcuts sind für mich auch einer der Hauptgründe, warum ich die eingebauten Terminals in IDEs nicht gerne benutze. Denn dort funktionieren sie oftmals nicht gut.</p>
+<p>Viele dieser Einstellungen und Shortcuts gibt es auch auf der Ebene der Shell. Der Vorteil, sie über das Terminal zu konfigurieren, ist, dass diese Shortcuts auch auf anderen Servern oder in Docker- bzw. Kubernetes-Containern funktionieren.</p>
+<p>Ich hoffe, diese Tipps helfen dir, das Terminal noch besser zu nutzen.</p>
+<p>Kennst du weitere nützliche Shortcuts oder Einstellungen, die ich nicht erwähnt habe? Hast du Fragen zu den vorgestellten Tipps? Lass es mich wissen!</p>
+<p>Happy Shelling!</p>
+
+    </section>
+    
+  </article>
+
+  <nav>
+    
+  <div class="category-list">
+    Kategorien:
+      
+      <a href="../../../../../categories/code/">Software Development</a>
+      
+    
+  </div>
+
+    
+    <div class="relative-navigation">
+      
+      
+        <div class="next">Nächstes Post: <a class="next" href="../../10/waehrend-dem-lernen-lernen-lernen-ki-nutzen/">Wie kann KI beim Lernen mit Blooms-Taxonomie unterstützen?</a></div>
+      
+    </div>
+    
+  </nav>
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2024 <a href="../../../../work/">Martin Häcker</a></span>
+  </li>
+  
+    
+    <li class="nav-item imprint">
+      <a class="nav-link" href="../../../../meta/#imprint">
+        Imprint
+      </a></li>
+  
+    
+    <li class="nav-item privacy-policy">
+      <a class="nav-link" href="../../../../meta/#privacy-policy">
+        Privacy Policy
+      </a></li>
+  
+    
+    <li class="nav-item colophon">
+      <a class="nav-link" href="../../../../meta/#colophon">
+        Colophon
+      </a></li>
+  
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../../../blog/feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    <a class="nav-link" 
+      rel="license" 
+      target="_blank" 
+      href="https://creativecommons.org/licenses/by-sa/4.0/deed"
+    >
+      <img 
+        src="/static/cc-by-sa-88x31.png"
+        alt="Creative Commons Attribution - Share Alike 4.0 International Lizense"
+      >
+    </a>
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

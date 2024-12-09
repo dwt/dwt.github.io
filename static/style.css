@@ -77,9 +77,3 @@ blockquote {
 .nav-item.license img {
     border-width: 0;
 }
-
-.shortcut {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-        Helvetica, Arial, sans-serif;
-    padding: 20px;
-}

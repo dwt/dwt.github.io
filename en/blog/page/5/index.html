@@ -146,7 +146,7 @@
 <p>Doh.</p>
 <p>Und das nervt natürlich total bei der meta-programmierung.</p>
 <p>Hier mal ein Beispiel von etwas SQL-Alchemy Code wo mir das wieder aufgefallen ist:</p>
-<div class="hll"><pre><span></span><span class="k">class</span> <span class="nc">Poll</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+<div class="hll"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Poll</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
     <span class="n">proposal</span> <span class="o">=</span> <span class="n">relation</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">Proposal</span><span class="p">,</span> <span class="n">backref</span><span class="o">=</span><span class="n">backref</span><span class="p">(</span><span class="s1">&#39;polls&#39;</span><span class="p">,</span> <span class="n">cascade</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span>
                            <span class="n">lazy</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">order_by</span><span class="o">=</span><span class="n">Poll</span><span class="o">.</span><span class="n">begin_time</span><span class="o">.</span><span class="n">desc</span><span class="p">()))</span>
 </pre></div>
@@ -180,7 +180,7 @@
 <p>Das ist total doof, denn dadurch teilen sich alle aufrufe der Funktion den gleichen default-wert - was zwar schön schnell sein mag, aber trotzdem in fast allen Fällen nur bei nicht veränderbaren Objekten (so wie Integer und Strings) Sinn ergibt.</p>
 <p>So führt das dazu dass man in Python eine ganze Menge Workarounds braucht um mit default-argumenten zu arbeiten.</p>
 <p>Das wichtigste dabei ist der default typ None. Das ist der workaround für alle mutable-objekte, da man die in fast keinem Fall zwischen verschiedenen Methodenaufrufen teilen möchte. So sieht das aus:</p>
-<div class="hll"><pre><span></span><span class="k">def</span> <span class="nf">end_poll</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">end_time</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="hll"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">end_poll</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">end_time</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">end_time</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">end_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
     <span class="c1"># work with end_time...</span>
@@ -289,12 +289,12 @@
 </pre></div>
 <p>Das hat den großen Vorteil dass man den Methodennamen benutzen kann um Stück für Stück die Argumente zu dokumentieren. Verwendet wird das so, dass das Stück Methodennamen das vor einem Argument kommt die Rolle beschreibt die das Argument spielen wird, während der Name der Variablen eher generisch ist und sich eher am Typ orientiert. Dazu kommt natürlich das man die Typen auch explizit auszeichnen kann, was die notwendigkeit für die Typ-Annotation im Namen der Variablen im vergleich zu Smalltalk oder Python noch mal vermindert und man kann ihn ganz der Rolle hingeben die die Variable in der Methode spielen wird - versehen mit dem a/an/some/etc. prefix der Argumente (als generische Instanzen von etwas) von den lokalen und instanz-variablen unterscheidet.</p>
 <p>In Python geht das so nicht. Man kann versuchen das auf zwei wegen anzunähern:</p>
-<div class="hll"><pre><span></span><span class="k">def</span> <span class="nf">set_value_for_key</span><span class="p">(</span><span class="n">a_value</span><span class="p">,</span> <span class="n">a_key</span><span class="p">):</span> <span class="k">pass</span>
+<div class="hll"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">set_value_for_key</span><span class="p">(</span><span class="n">a_value</span><span class="p">,</span> <span class="n">a_key</span><span class="p">):</span> <span class="k">pass</span>
 <span class="c1"># benutze als: some_dict.set_value_for_key(&#39;value&#39;, &#39;key&#39;)</span>
 </pre></div>
 <p>Das hat den Vorteil das man die Argumente mehr oder weniger benennen kann wie man möchte, aber den Nachteil das die Dokumentation der argumente nicht mit diesen zusammen ist. Das hat schon mal den unangenehmen seiteneffekt das es sehr viel schlechter auf mehrere Argumente skaliert und damit sehr fix mehr extra-dokumentation nötig macht.</p>
 <p>Der andere Weg wäre so:</p>
-<div class="hll"><pre><span></span><span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">for_key</span><span class="p">):</span> <span class="k">pass</span>
+<div class="hll"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">set</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">for_key</span><span class="p">):</span> <span class="k">pass</span>
 <span class="c1">#benutze als: some_dict.set(value=&#39;value&#39;, for_key=&#39;key&#39;)</span>
 </pre></div>
 <p>Das hat den Vorteil dass der MethodenNamen von der Dokumentationshürde befreit ist - und damit Kurz wird.  Auf der anderen Seite sind die Argument-Namen jetzt effektiv teil des Methoden-Namens und damit kann man sie nicht mehr so gut benutzen um den Typ der Argumente zu dokumentieren.</p>
@@ -424,7 +424,7 @@
     <footer class="container-fluid ">
       <ul class="nav">
   <li class="nav-item copyright">
-    <span class="nav-link">&copy; 2024 <a href="../../../work/">Martin Häcker</a></span>
+    <span class="nav-link">&copy; 2025 <a href="../../../work/">Martin Häcker</a></span>
   </li>
   
     

@@ -76,14 +76,14 @@
 <p>Well, hier ist wie es geht:</p>
 <div class="hll"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
 
-<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">unittest</span>
 
-<span class="kn">from</span> <span class="nn">trac.wiki.model</span> <span class="kn">import</span> <span class="n">WikiPage</span>
-<span class="kn">from</span> <span class="nn">trac.test</span> <span class="kn">import</span> <span class="n">EnvironmentStub</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">trac.wiki.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">WikiPage</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">trac.test</span><span class="w"> </span><span class="kn">import</span> <span class="n">EnvironmentStub</span>
 
-<span class="k">class</span> <span class="nc">PluginTests</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">PluginTests</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">test_can_save_and_load_wiki_page</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_can_save_and_load_wiki_page</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">env</span> <span class="o">=</span> <span class="n">EnvironmentStub</span><span class="p">()</span>
         <span class="n">page</span> <span class="o">=</span> <span class="n">WikiPage</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="s2">&quot;Foo&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="n">page</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;barfoo&quot;</span>
@@ -101,24 +101,24 @@
 <p>Um es gleich zu verraten: Die Lösung lag darin, das man dem Environment einerseits sagen muss, das man gerne Standard-Daten hätte und andererseits, welche Plugins es alles aktivieren soll. Nicht schwer. Nur nicht offensichtlich. :(</p>
 <div class="hll"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
 
-<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">unittest</span>
 
-<span class="kn">from</span> <span class="nn">trac.wiki.model</span> <span class="kn">import</span> <span class="n">WikiPage</span>
-<span class="kn">from</span> <span class="nn">trac.test</span> <span class="kn">import</span> <span class="n">Mock</span><span class="p">,</span> <span class="n">EnvironmentStub</span><span class="p">,</span> <span class="n">MockPerm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">trac.wiki.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">WikiPage</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">trac.test</span><span class="w"> </span><span class="kn">import</span> <span class="n">Mock</span><span class="p">,</span> <span class="n">EnvironmentStub</span><span class="p">,</span> <span class="n">MockPerm</span>
 
-<span class="kn">from</span> <span class="nn">tractags.api</span> <span class="kn">import</span> <span class="n">TagSystem</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tractags.api</span><span class="w"> </span><span class="kn">import</span> <span class="n">TagSystem</span>
 
-<span class="kn">from</span> <span class="nn">tractags.model</span> <span class="kn">import</span> <span class="n">TagModelProvider</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tractags.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">TagModelProvider</span>
 
-<span class="k">class</span> <span class="nc">PostFinderTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">PostFinderTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">env</span> <span class="o">=</span> <span class="n">EnvironmentStub</span><span class="p">(</span><span class="n">default_data</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">enable</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tractags.*&quot;</span><span class="p">,</span> <span class="s1">&#39;trac.*&#39;</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">upgrade</span><span class="p">()</span>        
         <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
 
 
-    <span class="k">def</span> <span class="nf">test_can_save_and_load_wiki_page</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_can_save_and_load_wiki_page</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">page</span> <span class="o">=</span> <span class="n">WikiPage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">,</span> <span class="s2">&quot;Foo&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="n">page</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;barfoo&quot;</span>
         <span class="n">page</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;fnord&quot;</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="s2">&quot;localhost&quot;</span><span class="p">)</span>
@@ -126,8 +126,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="s2">&quot;barfoo&quot;</span><span class="p">,</span> <span class="n">WikiPage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">,</span> <span class="s2">&quot;Foo&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 
 
-    <span class="k">def</span> <span class="nf">test_can_add_tags_and_retrieve_tagged_pages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="kn">from</span> <span class="nn">trac.web.href</span> <span class="kn">import</span> <span class="n">Href</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_can_add_tags_and_retrieve_tagged_pages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">trac.web.href</span><span class="w"> </span><span class="kn">import</span> <span class="n">Href</span>
         <span class="n">page</span> <span class="o">=</span> <span class="n">WikiPage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">,</span> <span class="s2">&quot;Foo&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="n">page</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;barfoo&quot;</span>
         <span class="n">tag_system</span> <span class="o">=</span> <span class="n">TagSystem</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">)</span>
@@ -174,7 +174,7 @@
     <footer class="container-fluid ">
       <ul class="nav">
   <li class="nav-item copyright">
-    <span class="nav-link">&copy; 2024 <a href="../../../../work/">Martin Häcker</a></span>
+    <span class="nav-link">&copy; 2025 <a href="../../../../work/">Martin Häcker</a></span>
   </li>
   
     

@@ -76,7 +76,7 @@
 <p>Doh.</p>
 <p>Und das nervt natürlich total bei der meta-programmierung.</p>
 <p>Hier mal ein Beispiel von etwas SQL-Alchemy Code wo mir das wieder aufgefallen ist:</p>
-<div class="hll"><pre><span></span><span class="k">class</span> <span class="nc">Poll</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+<div class="hll"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Poll</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
     <span class="n">proposal</span> <span class="o">=</span> <span class="n">relation</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">Proposal</span><span class="p">,</span> <span class="n">backref</span><span class="o">=</span><span class="n">backref</span><span class="p">(</span><span class="s1">&#39;polls&#39;</span><span class="p">,</span> <span class="n">cascade</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span>
                            <span class="n">lazy</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">order_by</span><span class="o">=</span><span class="n">Poll</span><span class="o">.</span><span class="n">begin_time</span><span class="o">.</span><span class="n">desc</span><span class="p">()))</span>
 </pre></div>
@@ -117,7 +117,7 @@
     <footer class="container-fluid ">
       <ul class="nav">
   <li class="nav-item copyright">
-    <span class="nav-link">&copy; 2024 <a href="../../../../work/">Martin Häcker</a></span>
+    <span class="nav-link">&copy; 2025 <a href="../../../../work/">Martin Häcker</a></span>
   </li>
   
     

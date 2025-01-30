@@ -73,31 +73,31 @@
     <section class="blog-post-body">
       <p>Python is a wonderfull language - except when it's not.</p>
 <p>For example calling a super-method is really, really hard. Here's an example:</p>
-<div class="hll"><pre><span></span><span class="k">class</span> <span class="nc">Super</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">method</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="hll"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Super</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">method</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">pass</span>
 
-<span class="k">class</span> <span class="nc">Sub</span><span class="p">(</span><span class="n">Super</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">method</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Sub</span><span class="p">(</span><span class="n">Super</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">method</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Sub</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">method</span><span class="p">()</span>
 </pre></div>
 <p>This is bad because of several reasons:</p>
 <p>If your class names become longer this becomes more and more unreadable, consider this Acceptance-Test</p>
-<div class="hll"><pre><span></span><span class="k">class</span> <span class="nc">CanEnterUsernameAndPasswordOnLoginForm</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="hll"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">CanEnterUsernameAndPasswordOnLoginForm</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">CanEnterUsernameAndPasswordOnLoginForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">setUp</span><span class="p">()</span>
         <span class="c1"># more</span>
 </pre></div>
 <p>You need to repeat the class name in each method that calls super. This is especially bad if you rename your class as you need to repeat the name in so many places - also there might be situations where having the wrong name doesn't bomb but just calls the wrong code. Also if you move methods up and down the class-inheritance-chain this becomes more and more annoying.</p>
 <p>Well, so I looked at what you can do with some meta-programming - and lo and behold there's a lot you can do.</p>
 <p>Here's an example what I ended up with:</p>
-<div class="hll"><pre><span></span><span class="k">class</span> <span class="nc">Super</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="hll"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Super</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="nb">super</span> <span class="o">=</span> <span class="n">SuperProxy</span><span class="p">()</span>
-    <span class="k">def</span> <span class="nf">method</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">method</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">pass</span>
 
-<span class="k">class</span> <span class="nc">Sub</span><span class="p">(</span><span class="n">Super</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">method</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Sub</span><span class="p">(</span><span class="n">Super</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">method</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">super</span><span class="p">()</span>
 </pre></div>
 <p>Yeah! Now that's simpler. to call super you can use several syntaxes:</p>
@@ -140,7 +140,7 @@
     <footer class="container-fluid ">
       <ul class="nav">
   <li class="nav-item copyright">
-    <span class="nav-link">&copy; 2024 <a href="../../../../work/">Martin Häcker</a></span>
+    <span class="nav-link">&copy; 2025 <a href="../../../../work/">Martin Häcker</a></span>
   </li>
   
     

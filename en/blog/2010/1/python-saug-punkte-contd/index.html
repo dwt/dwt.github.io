@@ -75,7 +75,7 @@
 <p>Das ist total doof, denn dadurch teilen sich alle aufrufe der Funktion den gleichen default-wert - was zwar schön schnell sein mag, aber trotzdem in fast allen Fällen nur bei nicht veränderbaren Objekten (so wie Integer und Strings) Sinn ergibt.</p>
 <p>So führt das dazu dass man in Python eine ganze Menge Workarounds braucht um mit default-argumenten zu arbeiten.</p>
 <p>Das wichtigste dabei ist der default typ None. Das ist der workaround für alle mutable-objekte, da man die in fast keinem Fall zwischen verschiedenen Methodenaufrufen teilen möchte. So sieht das aus:</p>
-<div class="hll"><pre><span></span><span class="k">def</span> <span class="nf">end_poll</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">end_time</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="hll"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">end_poll</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">end_time</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">end_time</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">end_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
     <span class="c1"># work with end_time...</span>
@@ -126,7 +126,7 @@
     <footer class="container-fluid ">
       <ul class="nav">
   <li class="nav-item copyright">
-    <span class="nav-link">&copy; 2024 <a href="../../../../work/">Martin Häcker</a></span>
+    <span class="nav-link">&copy; 2025 <a href="../../../../work/">Martin Häcker</a></span>
   </li>
   
     

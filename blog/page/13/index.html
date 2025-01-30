@@ -349,7 +349,7 @@ Installer lukas project: 'omnibrowser'; install: 'OB-Tools'.</p>
 <span class="c1"># Inspired by Daniel Jalkut at http://www.red-sweater.com/blog/23/automatic-build-sub-versioning-in-xcode</span>
 <span class="c1"># License: Creative-Commons Public Domain http://creativecommons.org/licenses/publicdomain/</span>
 
-<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">re</span><span class="o">,</span> <span class="nn">plistlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span><span class="o">,</span><span class="w"> </span><span class="nn">re</span><span class="o">,</span><span class="w"> </span><span class="nn">plistlib</span>
 
 <span class="c1"># Test if run from xcode</span>
 <span class="n">is_run_from_xcode</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s2">&quot;BUILT_PRODUCTS_DIR&quot;</span><span class="p">)</span>
@@ -361,8 +361,8 @@ Installer lukas project: 'omnibrowser'; install: 'OB-Tools'.</p>
                                <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;INFOPLIST_PATH&quot;</span><span class="p">])</span>
 
 <span class="c1"># get latest svn revision</span>
-<span class="k">def</span> <span class="nf">output_of_command</span><span class="p">(</span><span class="o">*</span><span class="n">command_and_arguments</span><span class="p">):</span>
-    <span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">output_of_command</span><span class="p">(</span><span class="o">*</span><span class="n">command_and_arguments</span><span class="p">):</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
     <span class="k">return</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">command_and_arguments</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">)</span><span class="o">.</span><span class="n">communicate</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
 
 <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PROJECT_DIR&quot;</span><span class="p">])</span>
@@ -460,7 +460,7 @@ Installer lukas project: 'omnibrowser'; install: 'OB-Tools'.</p>
     <footer class="container-fluid ">
       <ul class="nav">
   <li class="nav-item copyright">
-    <span class="nav-link">&copy; 2024 <a href="../../../work/">Martin Häcker</a></span>
+    <span class="nav-link">&copy; 2025 <a href="../../../work/">Martin Häcker</a></span>
   </li>
   
     

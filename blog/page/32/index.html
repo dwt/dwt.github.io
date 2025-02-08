@@ -57,6 +57,67 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/3/if-z-z0-then/">
+        if [ &#34;z$?&#34; != &#34;z0&#34; ] ; then ...
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-03-02">Sonntag, 2. März 2008</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Aus dem Buildscript <a href="http://mokit.cvs.sourceforge.net/mokit/MOKit/imageFromFolder.sh?view=markup">imageFromFolder.sh</a> des MOKit Releases.</p>
+<p>Da ich so etwas schon oft gelesen habe, habe ich mich endlich mal dafür interessiert wieso zum Teufel so viele Programmierer das so machen. Könnte ja sein, hab ich mir gedacht, das es einfach so kranke sh implementierungen gibt, dass man das so machen muss damit das wirklich auf allen Systemen läuft.</p>
+<p>Nun, ein guter Hacker im CCC den ich darauf mal ansprach antwortete darauf mit dem Klassiker: "Die machen das doch nur alle weil sie das Manual nie gelesen haben!" :-) Gut, <a href="http://www.freebsd.org/cgi/man.cgi?query=sh&amp;format=html">les ich mal nach...</a></p>
+<p>Ok, also das Beispiel mal etwas detaillierter betrachtet:</p>
+<div class="hll"><pre><span></span>hdiutil<span class="w"> </span>create<span class="w"> </span><span class="c1"># and then a lot of parameters</span>
+
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;z</span><span class="nv">$?</span><span class="s2">&quot;</span><span class="w"> </span>!<span class="o">=</span><span class="w"> </span><span class="s2">&quot;z0&quot;</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Error creating image (</span><span class="nv">$?</span><span class="s2">).&quot;</span>
+<span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+<span class="k">fi</span>
+</pre></div>
+<p>Das hätte man doch in jedem fall auch so machen können:</p>
+<div class="hll"><pre><span></span>hdiutil<span class="w"> </span>create<span class="w"> </span><span class="c1"># and then a lot of parameters</span>
+
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="m">0</span><span class="w"> </span>-ne<span class="w"> </span><span class="nv">$?</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Error creating image (</span><span class="nv">$?</span><span class="s2">).&quot;</span>
+<span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+<span class="k">fi</span>
+</pre></div>
+<p>Und das fängt den Sinn des Tests auch gleich viel besser ein.</p>
+<p>Dann hätte man natürlich auch noch eine der Kurzformen wählen können, sowas wie</p>
+<div class="hll"><pre><span></span>hdiutil<span class="w"> </span>create<span class="w"> </span>mumble<span class="w"> </span>mumble<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Error creating image (</span><span class="nv">$?</span><span class="s2">).&quot;</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+</pre></div>
+<p>Das ich persönlich fast noch etwas klarer finde - erst recht wenn man es in eine Funktion <strong><em>error_exit</em></strong> oder etwas ähnlichem verpackt</p>
+<div class="hll"><pre><span></span>error_exit<span class="w"> </span><span class="o">(</span><span class="w"> </span><span class="o">)</span>
+<span class="o">{</span>
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">exit_value</span><span class="o">=</span><span class="nv">$?</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="nv">$1</span><span class="w"> </span><span class="s2">&quot;(</span><span class="nv">$exit_value</span><span class="s2">)&quot;</span>
+<span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="nv">$exit_value</span>
+<span class="o">}</span>
+
+hdiutil<span class="w"> </span>create<span class="w"> </span>mumble<span class="w"> </span>mumble<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="o">||</span><span class="w"> </span>error_exit<span class="w"> </span><span class="s2">&quot;Error creating image.&quot;</span>
+</pre></div>
+<p>Überraschenderweise ist das nämlich gar kein Problem so etwas in der Shell zu machen. Macht sich nur offenbar kaum jemand die Mühe das "fine" manual mal zu lesen.</p>
+<p>Oder zumindest so scheint es mir im Moment.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/3/if-z-z0-then/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/2/habermas-nach-aktuell/">
         Habermas nach Aktuell?
         </a>
@@ -458,32 +519,6 @@ Ah well.</p>
     
       <footer>
         <a href="../../2008/2/trac-als-homepage/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/2/bei-mac-donalds/">
-        Bei Mac Donalds
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-02-17">Sonntag, 17. Februar 2008</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>Nicht nur das es jede menge kranke <a href="http://www.youtube.com/watch?v=KMUb0aQCaz8">Mc</a> <a href="http://www.youtube.com/watch?v=XrfM0z0Xx_E">Donalds</a> <a href="http://www.youtube.com/watch?v=Jn_IqL6cBkk&amp;NR=1">Werbung</a> gibt.</p>
-<p>Noch viel kranker sind nur <a href="http://www.youtube.com/watch?v=bt1dOXsu1Tg">die Leute die bei McDonalds einkaufen...</a></p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/2/bei-mac-donalds/">weiterlesen…</a>
       </footer>
     
   </article>

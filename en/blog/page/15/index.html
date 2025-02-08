@@ -57,6 +57,33 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2009/1/25c3-vorbei/">
+        25C3 vorbei
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-01-01">Thursday, January 1, 2009</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>war das anstrengend.</p>
+<p>Die Highlights waren für mich das <a href="http://events.ccc.de/congress/2008/wiki/Liquid_Democracy_XP">Piratenprojekt zu Liquid Democracy</a> und die <a href="http://berlin.piratenpartei.de/index.php/2008/12/29/25c3-piratenpartei-unterstuetzt-opentracker/">Bierfass-Verleihung für den OpenTracker</a>. Der Rest war natürlich auch grandios - aber darüber schreiben schon andere und ich später auch noch mal.</p>
+<p>Mein Persönliches Ergebnis für den 25C3 ist eine kleine Implementierung einer [source:/open-source/LiquidDemocracy/trunk/Election.py Proxy-Voting-Engine in Python] - das ist aber natürlich mehr ein Proof of Concept denn irgend etwas anderes - und das muss man jetzt erst einmal irgendwo implementieren um es tatsächlich benutzen zu können.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/1/25c3-vorbei/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/12/world-of-goo/">
         World of Goo
         </a>
@@ -340,38 +367,6 @@ So heißen sie.</p>
     
       <footer>
         <a href="../../2008/11/das-life-bildarchiv-ist-online-gegangen/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/11/warum-ich-c-hasse/">
-        Warum ich C++ hasse
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-11-20">Thursday, November 20, 2008</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>Weil es so irrsinnig schwer zu debuggen ist.</p>
-<p>Jeder Programmierer verwendet ein anderes Subset irgendwelcher obskuren features, die man eigentlich nicht bräuchte und fürs debuggen muss man sie dann alle kennen.</p>
-<p>Gnah.</p>
-<p>Zum Beispiel das hier: Aus Performance-Gründen wird der Speicher für Objekte beim initialisieren nicht auf einen neutralen Wert (0/NULL/whatever) gesetzt, sondern (!!!) uninitialisiert gelassen. (Nein, das ist kein Opt-In für die stellen wo man die Performance wirklich braucht, sondern tatsächlich der Standard)</p>
-<p>Das geile daran: Vergisst man im Konstruktor dann eine Variable zu initialisieren, dann gibt es auch keine Warning...</p>
-<p>Also habe ich jetzt Tageweise hinter her debugged, weil an einer Stelle halt eine Variable nicht in der Konstruktor-Initializer-Liste aufgeführt - und dieser Wert dann an das System weitergereicht wurde. Tja, schade eigentlich. Dadurch wurde dann der TCP-Sendspace eben auf einen zufälligen Wert (18 Millionen) konfiguriert und verständlicherweise reichten dafür die Buffer nicht mehr aus...</p>
-<p>Und das alles weil C++ so hardcore Performance-Orientiert ist. Wo doch heute jedes Kind lernt, das man etwas erst zum funktionieren und dann schnell kriegen muss.</p>
-<p>Gnah.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/11/warum-ich-c-hasse/">weiterlesen…</a>
       </footer>
     
   </article>

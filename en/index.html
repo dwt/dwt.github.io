@@ -59,6 +59,101 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../blog/2025/2/a-nixle-in-a-buechse-und-a-goldigs-warteweile/">
+        A Nix&#39;le in a Büchse und a goldigs Warteweile
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2025-02-08">Saturday, February 8, 2025</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p><img src="../blog/2025/2/a-nixle-in-a-buechse-und-a-goldigs-warteweile/nix-rabbit-hole.png" alt="Das Nix Hasenloch">
+… ist ein schwäbisches Sprichwort und passt gar nicht so schlecht für die vielen schlechten Wortwitze die sich automatisch ergeben, wenn man anfängt, sich in das <a href="https://nix.dev">Nix Projekt</a> einzuarbeiten.</p>
+<p>Zunächst mal die Karotte mit der ich mich ködern ließ:</p>
+<ul>
+<li>Deklarative Konfiguration von Software-Builds, System-Konfigurationen, und wenn man möchte auch Deployments z.B. in Kubernetes und was man sonst gerne möchte</li>
+<li>Ein funktionaler Paket-Manager, das heißt: Jede Software kann ihre eigenen Abhängigkeiten in der passenden Version haben. Wenn ich mal ein Tool in der Version von vor 10 Jahren brauche - einfach zusätzlich installieren, ohne dass dadurch etwas gestört wird. Wenn ich mal eine neuere Version von etwas brauche als die aktuelle Distribution anbietet: Einfach installieren, ohne dass dadurch etwas gestört wird.</li>
+<li>Rollback: Systemkonfiguration hat etwas kaputt gemacht? Einfach Rückgängig machen.</li>
+<li>Update auf eine neue Version des Betriebssystems: Man kriegt fehlermeldungen für alle Konfigurationen die man vorgenommen hat die jetzt umbenannt wurden oder anders funktionieren. 🤯</li>
+<li>Reproduzierbarkeit: Vollständige Erfassung der Inputs und Ablegen derselben in einem Lock-File.</li>
+<li>Eine riesige Community, die beste Praktiken zum Betrieb von Linux (und mehr) Systemen <a href="https://repology.org/repositories/statistics/total">in die größte Software-Bibliothek kodiert, die wir bisher gesehen haben.</a></li>
+</ul>
+<p>Was sollte man da nicht mögen?</p>
+<p>Auf MacOs gibt es mit <a href="https://github.com/LnL7/nix-darwin">nix-darwin</a> ein Projekt mit dem man die System-Konfiguration deklarativ vornehmen kann - und auch <a href="https://brew.sh">homebrew</a> (was sonst so gut wie gar nicht reproduzierbar ist) unter Kontrolle kriegt. Und wenn man möchte, verwaltet es einem auch die dotfiles.</p>
+<p>Es gibt allerdings einen gewaltigen Nachteil: Das Ganze ist echt komplex und kompliziert. Und die Dokumentation ist nicht schlecht, aber könnte deutlich besser sein.</p>
+<p>Wenn man diese Hürde überwindet, wird man mit einer erstaunlich kompakten und sehr schnell anzuwendenden System-Konfiguration belohnt. Damit kann man zum Beispiel auf einem Mac ein vollständig konfiguriertes System-Image für einen Raspberry Pi erstellen. Dann noch flaschen, starten und läuft! Oder auf meinem Mac Bauen, und via ssh auf dem RasPi deployen, ohne dort irgendwas zu machen was dessen CPU stresst.</p>
+<p>Ich habe inzwischen angefangen, meine Rechner damit zu verwalten und konfigurieren.</p>
+<ul>
+<li><a href="https://github.com/dwt/nix-darwin-config">Mein Rechner (nix-darwin)</a></li>
+<li><a href="https://github.com/dwt/home-servers">Mein Homelab (nixos)</a></li>
+<li><a href="https://github.com/dwt/home-automation">Meine Heimautomatisierung (python)</a></li>
+</ul>
+<h1>Nix ist vielleicht nichts für dich…</h1>
+<p>… aber wenn Du ein bisschen nerdig bist, und gerne auf der Kommandozeile lebst, infrastruktur as Code magst oder lernen magst und DevOps für dich eh normal ist. Dann könnte Nix auch für dich genau das richtige sein.</p>
+<h1>Wie lernt man Nix am besten?</h1>
+<p>Was mir beim Lernen von Nix gefehlt hat, wäre eine Leitlinie gewesen, in welcher Reihenfolge ich mich an die vielen Features von Nix heran tasten sollte. Eine Reihenfolge, die sicherstellt, das die Lernkurve zu jedem Zeitpunkt erträglich bleibt. Und besonders wichtig: Die Sicherstellt, das zu jedem Zeitpunkt sichtbar ist wie cool und wertvoll diese Technologie ist. Sonst läuft man Gefahr, ob der steilen Lernkurve abzuspringen.</p>
+<p>Das hätte ich gerne gehabt: Wenn du anfängst Nix zu lernen, dann am besten in dieser Reihenfolge:</p>
+<h2>1. Schritt: Installieren, ohne was bestehendes kaputt zu machen</h2>
+<p>Zuerst sollte man Nix neben dem aktuellen OS installieren. Der Standard ist der <a href="https://docs.determinate.systems/getting-started/individuals/">Determinate Installer</a>, aber ich mag <a href="https://lix.systems">das Lix Projekt lieber, da es schneller ist</a>. Alternativ ist auch <a href="https://nixos.org/download/#nix-install-docker">der Nix-Docker-Container super um es mal auszuprobieren</a>. Wenn man möchte, <a href="https://nixos.org/download/#nix-install-linux">kann man Nix (auf Linux) auch einfach in einen Ordner installieren und so verwenden (siehe "Single-User Mode")</a>. Das würde ich aber nur für ein paar Experimente empfehlen. Sowohl der Determinate als auch der Lix-Installer haben sehr gute Uninstaller die das Projekt auch wieder komplett entfernen können.</p>
+<h2>2. Schritt: Imperativ verwenden</h2>
+<p>Nix erlaubt es jederzeit ein Paket zu benutzen, ohne es zu installieren. Das ist eine Konsequenz davon wie der Paket-Manager aufgebaut ist. Ein Paket kann 'im <code>/nix/store/</code> sein' - ohne das es aktiv ist. Und der Befehl <code>nix run nixpkgs#fzf</code> startet es dann einfach - ohne es zu installieren. Alternativ gibt es auch <code>nix shell nixpkgs#fzf</code>. Damit erhällt man eine Shell, in der <code>fzf</code> installiert ist. Schließt man die Shell, ist es auch wieder weg. 😳</p>
+<p>Dass ist der Hammer, weil man so Pakete ohne Reue ausprobieren kann. Ohne Sorgen, dass doch noch irgendwelche Abhängigkeiten evtl. auf dem System herum gurken und man vergessen könnte ein Experiment wieder zu entfernen. Und das beste: Auch später wird man dieses Feature die ganze Zeit verwenden.</p>
+<p>Vorsicht vor <code>nix-env</code> und <code>nix profile</code> - das ist das Äquivalent zu dem wie man mit <code>homebrew</code>  und anderen Paketmanagern Pakete installieren würde. Diese sollte man so selten wie möglich verwenden. Besser ist…</p>
+<h2>3. Schritt: Entwicklungsumgebungen <code>shell.nix</code></h2>
+<p>Das, was <code>nix shell nixpkgs#fzf</code> macht, kann man auch in eine Datei schreiben, und damit einfach in ein Repo mit einchecken. Schon hat man Deklarativ die ganzen Tools im Repo dokumentiert, die man braucht um mit einem Projekt zu arbeiten. Bonus: Ich kann für jedes Projekt eigene Versionen der Abhängigkeiten haben (wenn ich das brauche). Python-Virtual-Envs auf Steroiden!</p>
+<p>Hier ein Beispiel:</p>
+<div class="hll"><pre><span></span><span class="p">{</span>
+  pkgs <span class="o">?</span> <span class="nb">import</span> <span class="l">&lt;nixpkgs&gt;</span> <span class="p">{</span> <span class="p">},</span>
+<span class="p">}:</span>
+pkgs<span class="o">.</span>mkShell <span class="p">{</span>
+  <span class="ss">buildInputs</span> <span class="o">=</span> <span class="k">with</span> pkgs<span class="p">;</span> <span class="p">[</span>
+    <span class="c1"># Add your build inputs here</span>
+    pkgs<span class="o">.</span>python313
+    pkgs<span class="o">.</span>uv
+  <span class="p">];</span>
+  <span class="ss">env</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="ss">UV_PYTHON</span> <span class="o">=</span> pkgs<span class="o">.</span>python313<span class="p">;</span>
+    <span class="ss">UV_DOWNLOAD_PYTHON</span> <span class="o">=</span> <span class="s2">&quot;never&quot;</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</pre></div>
+<p>Wenn man das mit <code>nix-shell</code> aufruft, dann hat man diese Python-Version zur Hand. <code>uv</code> verwendet diese und lädt selber keine Python-Versionen herunter. Nice! Extra nice: mit <code>nix-shell --pure</code>  hat man eine Shell in der <em>nur</em> das sichtbar ist was in dem <code>shell.nix</code> steht, und man kriegt Fehler für alles was man verwendet und in der <code>shell.nix</code> vergessen hat. 🤯</p>
+<p>Bonus: <a href="https://direnv.net">Direnv</a> verwenden um automatisch die <code>shell.nix</code> und das <code>.env</code> zu laden. Dazu <a href="https://github.com/ajeetdsouza/zoxide">zoxide</a> um schnell in der Shell zwischen vielen Projekten hin und zu springen. Eine richtig geniale Entwicklungsumgebung.</p>
+<p>Ich empfehle erst mal eine weile auf diesem Niveau zu bleiben, denn das ist schon ziemlich cool!</p>
+<h2>4. Schritt: Mehr Tooling um besser mit Nix klar zu kommen</h2>
+<ul>
+<li>Pakete findet man am besten über <a href="https://search.nixos.org/packages">die Webseite search.nixos.org</a> - aber ich mag eigentlich in der shell suchen. <code>nix run nixpkgs#nh search ut1999</code> funktioniert besser als alles was ich sonst bisher getestet habe.</li>
+<li>Anzeigen was gerade installiert ist und wieso ist aufgrund der Architektur von nix gar nicht so einfach. <code>nix run nixpkgs#nix-tree</code> aproximiert das und gibt einen guten überblick darüber was man auf dem System hat.</li>
+<li><code>nom</code> - der <a href="https://github.com/maralorn/nix-output-monitor">Nix-Output-Monitor</a> <code>nix run nixpkgs#nix-output-monitor</code> macht den output von längeren nix builds viel informativer und spannender. Verwenden kann man das so: <code>nix run $something |&amp; nix run nixpkgs#nix-output-monitor</code></li>
+<li><code>nix store gc</code> um alles zu löschen, was man mal testweise runtergeladen hat und nicht mehr auf der Platte braucht. (Einer Der Nachteile von Nix: Es verbraucht schnell <em>viel</em> Plattenplatz).</li>
+</ul>
+<h2>5. Schritt: Tief in das Hasenloch fallen</h2>
+<p>Jetzt gibt es verschiedene Sachen die man sich anschauen könnte</p>
+<ul>
+<li><a href="https://nix.dev/manual/nix/2.24/language/index.html">Die Nix Sprache lernen</a> - die Voraussetzung für fast alles was danach kommt, also gut investierte Zeit. Und es ist eine wirklich kleine Sprache - auch wenn <a href="https://github.com/NixOS/nixpkgs">die 'Standard-Bibliothek' (meiner Meinung nach das NixPKGs Repository)</a> alles andere als klein ist.</li>
+<li><a href="https://devenv.sh">devenv</a> um Entwicklungsumgebungen kurz und Knackig und mit allen Features deklarativ zu beschreiben und ins Projekt eingecheckt zu bekommen.</li>
+<li><a href="https://nixos-and-flakes.thiscute.world">Flakes - der Standard in der Nix-Community, mit der Abhängigkeits-Versionen festgeschrieben werden</a>. Also wie checke ich die genauen git commit hashes die ich verwendet habe um alle meine Software zu bauen ins Repo mit ein. Damit kann man ein Projekt auch nach Jahren sehr einfach verlässlich wieder bauen.</li>
+<li><a href="https://github.com/pyproject-nix/uv2nix">uv2nix - wie man Python-Projekte Nix-ifiziert</a></li>
+<li><a href="https://github.com/LnL7/nix-darwin">nix-darwin</a> um ein MacOS System so deklarativ zu verwalten, wie das unter NixOS geht. (OK, Apple setzt da grenzen, aber das ist trotzdem sehr cool).</li>
+<li><a href="https://nix-community.github.io/home-manager/">home-manager</a> um dotfiles zu verwalten und auf Benutzer-Ebene alles zu konfigurieren.</li>
+<li>Und so viele Projekte mehr, die man sich anschauen könnte…</li>
+</ul>
+
+    </section>
+    
+      <footer>
+        <a href="../blog/2025/2/a-nixle-in-a-buechse-und-a-goldigs-warteweile/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../blog/2024/11/grundlegende-funktionen-und-einstellungen-des-terminals/">
         Grundlegende Funktionen und Einstellungen des Terminals
         </a>
@@ -148,58 +243,6 @@
     
       <footer>
         <a href="../blog/2024/10/waehrend-dem-lernen-lernen-lernen-ki-nutzen/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../blog/2024/9/waehrend-dem-lernen-lernen-lernen-blooms-taxonomie-ebene-4-6/">
-        Was ist blooms taxonomie? Die &#39;wichtigsten&#39; oberen Ebenen
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2024-09-06">Friday, September 6, 2024</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p><img src="../blog/2024/9/waehrend-dem-lernen-lernen-lernen-blooms-taxonomie/bloom.jpeg" alt="Blooms Taxonomie"></p>
-<p>In <a href="../blog/2024/9/waehrend-dem-lernen-lernen-lernen-blooms-taxonomie/">meinem ersten Blog-Post habe ich mich mit Blooms Taxonomie beschäftigt</a>. Im <a href="../blog/2024/9/was-ist-blooms-taxonomie-ebene-1-3/">zweiten ging es um die ersten drei Ebenen seines Lernmodells</a>. Hier geht es jetzt um die mir am wichtigsten ebenen vier und fünf. Und der Vollständigkeit halber auch auch um die sechste.</p>
-<p>Und los gehts!</p>
-<h2>Die Ebenen von <a href="https://de.wikipedia.org/wiki/Blooms_Taxonomie">Blooms Taxonomie</a>:</h2>
-<h3>4. Analyse</h3>
-<p>Auf dieser Ebene geht es darum, Wissen und Informationen in seine Bestandteile zu zerlegen um Beziehungen und Strukturen zu erkennen und Verstehen. Hier geht es erstmals um kritisches Denken und das erkennen von Mustern.</p>
-<p><em>Fragen</em>: "Welche Elemente bilden das Gesamtkonzept?" oder "Wie hängen die Teile zusammen?" und "Was sind die zugrunde liegenden Annahmen?" Diese Fragen helfen uns, tiefer in das Thema einzutauchen und es aus verschiedenen Perspektiven zu betrachten.</p>
-<p><em>Tätigkeit</em>: Untersuchen, Zerlegen, Beziehungen erkennen, Vergleichen. Hier geht es darum, das erlernte Wissen zu analysieren, zu hinterfragen und mit schon gelerntem aus anderen Themen zu vergleichen und zu kontrastieren.</p>
-<p>Die Fähigkeit, komplexe Informationen zu durchdringen und logische Verbindungen herzustellen.</p>
-<p><em>Lernziel</em>: Ich kann komplexe Informationen durchdringen, zerlegen und logische Beziehungen erkennen. Auch zu anderem bisher gelernten. Das Ergebnis dieser Lernstufe ist die Fähigkeit, das Gelernte zu analysieren und zu hinterfragen.</p>
-<p>Daher ist diese Ebene und Ihre Fragestellung auch mit der nächsten so wichtig, um langfristig zu behalten was man gelernt hat (verknüpfungen und kontrastierung zu anderem was man schon kann). Außerdem: Wenn man sich von Anfang an mit diesen Fragen beschäftigt, kriegt man in der gleichen Lernzeit Ebene 1-3 quasi umsonst.</p>
-<p><em>Beispiel</em>: Ein Softwareentwickler könnte beispielsweise den Code eines Programms analysieren, um Fehler zu finden oder um zu verstehen, wie verschiedene Teile des Codes zusammenarbeiten. In einem Konflikt könnte ich die Argumente analysieren, um Bestandteile, Beziehungen zwischen den Argumenten und die dahinter stehenden Annahmen, deren Logik, und die historische Beziehung der konflikteten Parteien zu bewerten.</p>
-<h3>5. Evaluieren</h3>
-<p>Jetzt, wo wir das Wissen analysiert und zerlegt haben, geht es darum, dieses Wissen zu bewerten, zu kritisieren und zu priorisieren. Es geht darum, fundierte Urteile zu fällen und Kritik zu üben.</p>
-<p><em>Fragen</em>: "Ist diese These Valide?", "Wie effektiv ist diese Methode?", "Welche vor und Nachteile hat dieser Ansatz?", "Welcher andere Ansatz ist aus welchen Gründen besser?" oder "Welche Methode sollte ich priorisieren?" Diese Fragen helfen uns, das Wissen zu bewerten und Entscheidungen zu treffen.</p>
-<p><em>Lernziel</em>: Das Ergebnis dieser Lernstufe ist die Fähigkeit, das Gelernte kritisch anhand der für meine Situation relevanten Kriterien zu bewerten und Entscheidungen zu treffen. Es geht darum, das Wissen zu nutzen, um fundierte Entscheidungen zu treffen und Prioritäten zu setzen.</p>
-<p><em>Tätigkeit</em>: Führen von Debatten, Entscheidung zwischen Ansätzen, Bewerten von Projekten und Theorien. Hier geht es darum, das erlernte Wissen zu bewerten und zu priorisieren.</p>
-<p><em>Beispiel</em>: In einem Projekt oder bei der Softwareentwicklung verschiedene Strategien oder Umsetzungsmöglichkeiten bewerten und entscheiden, welche am besten umgesetzt werden sollte. Oder auch kleiner: Bewertung der Glaubwürdigkeit einer Quelle. Kritisches hinterfragen von Maßnahmen und (politischen) Entscheidungen.</p>
-<h3>6. Erzeugen</h3>
-<p>Einleitung: Die höchste Ebene ist das Erschaffen, bei dem ein neues oder originelles Werk entwickelt wird. Es geht darum, Wissen und Ideen auf innovative Weise zu kombinieren und neue Konzepte zu entwickeln.</p>
-<p><em>Fragen</em>: "Was wäre, wenn...?" oder "Wie könnte ich...?". "Könnte ich [Problem X] vielleicht auch ganz anders angehen?", "Kann ich diese Konzepte vielleicht auch so kombinieren?"</p>
-<p><em>Lernziel</em>: Kreativit und Innovativ eigene Ideen in Produkte umsetzen.</p>
-<p><em>Tätigkeit</em>: Entwickeln von Projekten oder Modellen. Schreiben von Texten. Entwerfen von Experimenten oder Prototypen.</p>
-<p><em>Beispiel</em>: Als Softwareentwickler entwickle ich eine Software. Ich schreibe ein Gedicht. Ich führe eine neue Software ein um ein altes Problem neu besser zu lösen.</p>
-<h2>Warum ist mir das so wichtig?</h2>
-<p>Seit den 1960er Jahren wird Blooms Taxonomie dazu verwendet, um einzuschätzen, wie gut ich und andere ein Thema verstanden haben. Und erst jetzt kriege ich raus, dass es a) existiert, und ich es b) dazu verwenden kann mein eigenes Lernen besser zu verstehen und zu vertiefen? Boah ey, wieso hat mir das in der Schule niemand erklärt? Oder wenn, wieso dann nicht auf eine Weise die ich verstanden habe? Ich fühle mich im Moment so, als wurde mir hier über Jahre etwas wichtiges vorenthalten.</p>
-<p>So, das wars. Jetzt wisst Ihr so viel über das Modell und seine Ebenen wie ich auch. <a href="../blog/2024/10/waehrend-dem-lernen-lernen-lernen-ki-nutzen/">Nächstes mal soll es dann darum gehen wie man mit hilfe von KI sich selbst auf die Ebene des Lernens Katapultieren kann auf der man gerade sein will.</a></p>
-<p>Bis dahin, bleibt neugierig und probiert es doch mal aus in diesen Kategorien über euer eigenes Lernen nachzudenken.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../blog/2024/9/waehrend-dem-lernen-lernen-lernen-blooms-taxonomie-ebene-4-6/">weiterlesen…</a>
       </footer>
     
   </article>

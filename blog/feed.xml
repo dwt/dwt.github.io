@@ -68,6 +68,7 @@ pkgs&lt;span class="o"&gt;.&lt;/span&gt;mkShell &lt;span class="p"&gt;{&lt;/span
 &lt;li&gt;&lt;a href="https://github.com/pyproject-nix/uv2nix"&gt;uv2nix - wie man Python-Projekte Nix-ifiziert&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/LnL7/nix-darwin"&gt;nix-darwin&lt;/a&gt; um ein MacOS System so deklarativ zu verwalten, wie das unter NixOS geht. (OK, Apple setzt da grenzen, aber das ist trotzdem sehr cool).&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://nix-community.github.io/home-manager/"&gt;home-manager&lt;/a&gt; um dotfiles zu verwalten und auf Benutzer-Ebene alles zu konfigurieren.&lt;/li&gt;
+&lt;li&gt;Quasi alles von &lt;a href="https://github.com/nix-community/awesome-nix?tab=readme-ov-file"&gt;Awesome-Nix&lt;/a&gt;.&lt;/li&gt;
 &lt;li&gt;Und so viele Projekte mehr, die man sich anschauen könnte…&lt;/li&gt;
 &lt;/ul&gt;
 </content></entry><entry><title>Grundlegende Funktionen und Einstellungen des Terminals</title><link href="https://h%C3%A4cker.net/blog/2024/11/grundlegende-funktionen-und-einstellungen-des-terminals/" rel="alternate"></link><updated>2024-11-25T00:00:00Z</updated><author><name>Martin Häcker</name></author><id>urn:uuid:7ac6f6b9-ca17-3604-b104-b3c1e258eaac</id><content type="html">&lt;p&gt;Der Terminal-Emulator ist ein zentrales Werkzeug, mit dem wir Entwickler mit unseren Rechnern interagieren. Jedes bisschen Wissen und jede Effizienz, die du hier gewinnst, zahlt sich in kürzester Zeit hundertfach aus.&lt;/p&gt;

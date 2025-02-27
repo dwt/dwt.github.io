@@ -57,6 +57,54 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/10/syntax-matters/">
+        Syntax matters
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-10-26">Sunday, October 26, 2008</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>[wiki:2008/10/25/01.21 Gerade habe ich doch ein Stück Code hochgeladen] mit dem man jeden beliebigen Methodenaufruf in eine Invocation umwandeln kann.</p>
+<p>Nun, das hat mir nicht gereicht. Jetzt hab ich mich noch mal hingesetzt und mich an einer anderen Syntax versucht:</p>
+<div class="hll"><pre><span></span><span class="c1">// anstatt</span>
+<span class="kt">id</span><span class="w"> </span><span class="n">invocation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NMCatchInvocation</span><span class="p">(</span><span class="s">@&quot;fnord&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">stringByAppendingString</span><span class="o">:</span><span class="s">@&quot;42&quot;</span><span class="p">);</span>
+
+<span class="c1">// jetzt</span>
+<span class="kt">id</span><span class="w"> </span><span class="n">invocation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">NMRecordingInvocation</span><span class="w"> </span><span class="n">invocation</span><span class="p">];</span>
+<span class="p">[</span><span class="n">invocation</span><span class="w"> </span><span class="n">recordWithTarget</span><span class="o">:</span><span class="s">@&quot;fnord&quot;</span><span class="p">]</span><span class="w"> </span><span class="n">stringByAppendingString</span><span class="o">:</span><span class="s">@&quot;42&quot;</span><span class="p">];</span>
+
+<span class="c1">// oder</span>
+<span class="kt">id</span><span class="w"> </span><span class="n">invocation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">NMRecordingInvocation</span><span class="w"> </span><span class="n">invocationWithTarget</span><span class="o">:</span><span class="s">@&quot;fnord&quot;</span><span class="p">];</span>
+<span class="p">[</span><span class="n">invocation</span><span class="w"> </span><span class="n">record</span><span class="p">]</span><span class="w"> </span><span class="n">stringByAppendingString</span><span class="o">:</span><span class="s">@&quot;42&quot;</span><span class="p">];</span>
+</pre></div>
+<p>Und ich  finde das ist von der Syntax her deutlich eleganter als das Makro.</p>
+<p>Allerdings:</p>
+<ul>
+<li>Es ist etwa der doppelte Aufwand dass zu implementieren</li>
+<li>Das Makro erzeugt viel schnelleren Code (viel weniger allokationen)</li>
+</ul>
+<p>Was soll ich davon jetzt halten? Small is beautifull? Keep it simple stupid? Oder ist doch wichtiger dass der zweite Versuch eher dem Objc-Spirit entspricht?</p>
+<p>Mir ist das auch nach einem Tag darüber nachdenken erheblich unklar.</p>
+<ul>
+<li>[source:open-source/NMInvocationBuilder/trunk Hier gehts zum Code]</li>
+</ul>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/10/syntax-matters/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/10/grundeinkommen/">
         Grundeinkommen
         </a>
@@ -413,32 +461,6 @@ Dann wird bisschen Krieg gemacht.
     
       <footer>
         <a href="../../2008/10/regexe-updated/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/10/wie-kriegt-man-eigentlich-mit-was-sich-im-linux-kernel-so-tut/">
-        Wie kriegt man eigentlich mit was sich im Linux Kernel so tut?
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-10-12">Sunday, October 12, 2008</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>Schließlich gibt es dort nicht so ausgezeichnete release notes wie man sie von <a href="http://archive.eclipse.org/eclipse/downloads/drops/S-3.4M7-200805020100/eclipse-news-M7.html">Eclipse</a>, <a href="http://library.gnome.org/misc/release-notes/2.24/">Gnome</a> oder <a href="https://wiki.ubuntu.com/IntrepidIbex/TechnicalOverview">Ubuntu</a> kennt.</p>
-<p>Die Antwort ist überraschenderweise: <a href="http://www.heise.de/open/Viel-bewegt-Die-Neuerungen-von-Linux-2-6-27--/artikel/116387/0">Heise lesen</a>. Und sogar <a href="http://www.heise-online.co.uk/open/Kernel-Log-Linux-2-6-27-Released--/features/111671">optional auch auf englisch</a>.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/10/wie-kriegt-man-eigentlich-mit-was-sich-im-linux-kernel-so-tut/">weiterlesen…</a>
       </footer>
     
   </article>

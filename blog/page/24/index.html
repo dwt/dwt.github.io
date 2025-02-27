@@ -57,6 +57,32 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/6/censorship-sells/">
+        Censorship sells
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-06-12">Donnerstag, 12. Juni 2008</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p><a href="http://vids.myspace.com/index.cfm?fuseaction=vids.fullscreen&amp;videoid=35830130">and how it does!</a></p>
+<p>Via <a href="http://rivva.de/">Rivva</a> (genaues Post weiß ich nicht mehr)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/6/censorship-sells/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/6/outteach/">
         Outteach
         </a>
@@ -402,46 +428,6 @@ end with either a new-line or null character.
     
       <footer>
         <a href="../../2008/5/liquid-democracy/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/5/debugging-unit-tests-in-xcode-3-1/">
-        Debugging Unit Tests in Xcode 3.1
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-05-25">Sonntag, 25. Mai 2008</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>Since I haven't found this info anywhere in the Blogosphere and had to painfully gather it through a long debugging stare, I'm posting it here:</p>
-<p>If you want do debug Unit Tests in Xcode 3.1 you have to do the usual, that is:</p>
-<ul>
-<li>Make a custom Executable</li>
-<li>Set it's argumet to <code>-SenTest All</code></li>
-<li>Set some Environment Variables<ul>
-<li><code>DYLD_INSERT_LIBRARIES</code> to <code>${DEVELOPER_LIBRARY_DIR}/PrivateFrameworks/DevToolsBundleInjection.framework/DevToolsBundleInjection</code></li>
-<li><code>DYLD_FALLBACK_FRAMEWORK_PATH</code> to <code>$(DEVELOPER_LIBRARY_DIR)/Frameworks</code></li>
-<li><code>XCInjectBundle</code> to <code>$(BUILT_PRODUCTS_DIR)/InvocationBuilder Tests.octest</code> This is of course where you have enter the name of your test bundle</li>
-</ul>
-</li>
-</ul>
-<p>So far nothing new.</p>
-<p>What is new though is that you also set the variable <code>XCInjectBundleInto</code> to point to the executable that is going to load the tests (probably to avoid the 3.0 Bug that would load the tests into the shell that GDB used to start the Application). This should be the same as the <code>$(TEST_HOST)</code> variable that you have to set for the Unit Test bundle. In my case this is <code>$(BUILT_PRODUCTS_DIR)/InvocationBuilder.app/Contents/MacOS/InvocationBuilder</code>.</p>
-<p>This is quite interesting, since it means that <code>otest</code> is not used anymore to start the tests, but instead <code>RunTargetUnitTests</code> executes the tests directly.</p>
-<p>Well, now that I can again debug my tests maybe I'l even get it to work with debugging Unit Tests which use Mock-Objects sometime. :-)</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/5/debugging-unit-tests-in-xcode-3-1/">weiterlesen…</a>
       </footer>
     
   </article>

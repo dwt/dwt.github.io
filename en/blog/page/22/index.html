@@ -57,6 +57,33 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/7/where-the-hell-is-matt/">
+        Where the hell is Matt?
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-07-29">Tuesday, July 29, 2008</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p><a href="http://www.vimeo.com/1019038">Der erste Teil hat ihn zu einer Internet-Legende gemacht.</a></p>
+<p><a href="http://www.vimeo.com/1211060">Der Zweite teil ist noch besser.</a></p>
+<p>Unbedingt anschauen. :)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/7/where-the-hell-is-matt/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/7/zuverla-ssiger-spamschutz/">
         Zuverlässiger Spamschutz
         </a>
@@ -310,63 +337,6 @@
     
       <footer>
         <a href="../../2008/7/timemachine-auf-beliebigem-nas/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/7/xcode-tips-tipp-deine-doch-selber/">
-        Xcode Tips: Tipp deine [ ] doch selber!
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-07-14">Monday, July 14, 2008</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>Dachte ich mir zum letzten mal.</p>
-<p>Denn das kann XCode ja schließlich auch automatisieren, wenn man ein wenig in die Makros von Xcode reingreift.</p>
-<p>Schritt eins, <code>/Developer/Applications/Xcode.app/Contents/PlugIns/TextMacros.xctxtmacro/Contents/Resources/ObjectiveC.xctxtmacro</code> im Texteditor der Wahl öffnen und das Macro finden das Apple als Hilfe für solche Fälle vorgesehen hat. (Bei mir ist das auf Zeile 68)</p>
-<pre><code>{
-            Identifier = objc.bracket;
-            BasedOn = objc;
-            IsMenuItem = YES;
-            Name = "Bracket Expression";
-            TextString = "[&lt;#!expression!#&gt; ]";
-        },
-</code></pre>
-<p>Das habe ich mir dann durch zwei Macro-Definitionen ersetzt die für mich wesentlich nützlicher sind:</p>
-<pre><code>{
-            Identifier = objc.bracket;
-            BasedOn = objc;
-            IsMenuItem = YES;
-            Name = "Bracket Expression";
-            TextString = "[&lt;#!expression!#&gt;]";
-        },
-
-        {
-            Identifier = objc.bracket.withSemicolon;
-            BasedOn = objc;
-            IsMenuItem = YES;
-            Name = "Bracket Expression with Semicolon";
-            TextString = "[&lt;#!expression!#&gt;];";
-        },
-</code></pre>
-<p>Das war Schritt eins, um dass jetzt noch richtig Nützlich zu machen, habe ich mir diese Befehle (die jetzt beide im Menü auftauchen) noch mit einem Shortcut belegt - also Menü-&gt;Xcode-&gt;Preferences-&gt;Key Bindings, dort eine eigene Konfiguration anlegen und bei den "Menu Key Bindings" die Menü-Eintrag unter Edit-&gt;Insert Text Macro-&gt;Objective C finden.</p>
-<p>Ich hab mir den ersten (ohne Semicolon) auf Command-1 und den zweiten (mit Semicolon) auf Command-2 gelegt.</p>
-<p>Nie wieder Semicolons Tippen. Einfach Text-Auswählen und Command-1, dann hab ich eckige Klammern drumherum.</p>
-<p>Ahhh....</p>
-<p>Lediglich eines hätte ich noch gerne, dass der Cursor danach vor der schließenden eckigen Klammer ist.. aber das finde ich auch noch raus.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/7/xcode-tips-tipp-deine-doch-selber/">weiterlesen…</a>
       </footer>
     
   </article>

@@ -57,6 +57,46 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/5/debugging-unit-tests-in-xcode-3-1/">
+        Debugging Unit Tests in Xcode 3.1
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-05-25">Sunday, May 25, 2008</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Since I haven't found this info anywhere in the Blogosphere and had to painfully gather it through a long debugging stare, I'm posting it here:</p>
+<p>If you want do debug Unit Tests in Xcode 3.1 you have to do the usual, that is:</p>
+<ul>
+<li>Make a custom Executable</li>
+<li>Set it's argumet to <code>-SenTest All</code></li>
+<li>Set some Environment Variables<ul>
+<li><code>DYLD_INSERT_LIBRARIES</code> to <code>${DEVELOPER_LIBRARY_DIR}/PrivateFrameworks/DevToolsBundleInjection.framework/DevToolsBundleInjection</code></li>
+<li><code>DYLD_FALLBACK_FRAMEWORK_PATH</code> to <code>$(DEVELOPER_LIBRARY_DIR)/Frameworks</code></li>
+<li><code>XCInjectBundle</code> to <code>$(BUILT_PRODUCTS_DIR)/InvocationBuilder Tests.octest</code> This is of course where you have enter the name of your test bundle</li>
+</ul>
+</li>
+</ul>
+<p>So far nothing new.</p>
+<p>What is new though is that you also set the variable <code>XCInjectBundleInto</code> to point to the executable that is going to load the tests (probably to avoid the 3.0 Bug that would load the tests into the shell that GDB used to start the Application). This should be the same as the <code>$(TEST_HOST)</code> variable that you have to set for the Unit Test bundle. In my case this is <code>$(BUILT_PRODUCTS_DIR)/InvocationBuilder.app/Contents/MacOS/InvocationBuilder</code>.</p>
+<p>This is quite interesting, since it means that <code>otest</code> is not used anymore to start the tests, but instead <code>RunTargetUnitTests</code> executes the tests directly.</p>
+<p>Well, now that I can again debug my tests maybe I'l even get it to work with debugging Unit Tests which use Mock-Objects sometime. :-)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/5/debugging-unit-tests-in-xcode-3-1/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/5/u-ber-fehlermeldungen-aus-alten-tagen/">
         Über Fehlermeldungen aus alten Tagen
         </a>
@@ -337,37 +377,6 @@
     
       <footer>
         <a href="../../2008/5/regeln/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/5/der-traum-vom-fliegen/">
-        Der Traum vom Fliegen ...
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-05-17">Saturday, May 17, 2008</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>... ist schnell ausgeträumt wenn man sich <a href="http://wiki.piratenpartei.de/Bundessatzung/%C3%84nderungsantr%C3%A4ge/Bundesparteitag_2008">die Liste der Änderungsanträge für den Piratenparteitag</a> anschaut.</p>
-<p>Da kann man wirklich nur noch von einer <a href="http://de.wikipedia.org/wiki/Denial_of_Service">DOS Attacke</a> sprechen.</p>
-<p>Ich bin mal gespannt was wir daraus machen werden - ob sich wohl dieses Jahr mehr Leute vorbereitet und alles mal gelesen und sich eine Meinung gebildet haben?</p>
-<p>Ich hoffe ja für das nächste Jahr, das man im Wiki jedem Antrag Punkte geben kann, damit wenigstens die wichtigsten nach vorne kommen.</p>
-<p>Für dieses Jahr wünsche ich mir, dass alle, die noch Diskussionsbedarf haben, in einem Raum eingeschlossen werden und dort Diskutieren bis sie genug haben, während der Rest sich um andere Dinge kümmern kann. Die Abstimmungen werden dann gerafft in einem Zeitraum ohne viel Diskussion gemacht damit es schnell geht.</p>
-<p>Na mal schaun.</p>
-<p>Update: Tja, die Merhheit hat sich nicht vorbereitet und möchte das sich der Rest auch mit ihnen in Diskussionen abbricht. Mal schauen wie viel Zeit dann noch übrig bleibt.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/5/der-traum-vom-fliegen/">weiterlesen…</a>
       </footer>
     
   </article>

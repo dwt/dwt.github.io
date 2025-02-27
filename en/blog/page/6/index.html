@@ -57,6 +57,35 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2009/12/how-to-crash-ie-7-with-javascript/">
+        How to crash IE 7 with javascript
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-12-12">Saturday, December 12, 2009</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Well, it's all too easy apparently. We stumbled upon the problem when suddenly our web application crashed left and right on us in IE 7.</p>
+<p>I've since reduced the code involved and created a plugin to jQuery to make it easier to reproduce this.</p>
+<p>Well, maybe perhaps sometimes somebody even discovers a use for the crashIE7 jQuery plugin. :)</p>
+<p>In any event - it was fun creating this. :)</p>
+<p>See the blog post page for the attached source and how to use this.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/12/how-to-crash-ie-7-with-javascript/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2009/12/python-distributions/">
         Python distributions
         </a>
@@ -433,68 +462,6 @@ sich die Viren nicht ausbreiten:</p>
     
       <footer>
         <a href="../../2009/10/playing-with-javascript-variable-lookup/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2009/10/simple-super/">
-        Simple super
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2009-10-14">Wednesday, October 14, 2009</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>Python is a wonderfull language - except when it's not.</p>
-<p>For example calling a super-method is really, really hard. Here's an example:</p>
-<div class="hll"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Super</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">method</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">pass</span>
-
-<span class="k">class</span><span class="w"> </span><span class="nc">Sub</span><span class="p">(</span><span class="n">Super</span><span class="p">):</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">method</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">Sub</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">method</span><span class="p">()</span>
-</pre></div>
-<p>This is bad because of several reasons:</p>
-<p>If your class names become longer this becomes more and more unreadable, consider this Acceptance-Test</p>
-<div class="hll"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">CanEnterUsernameAndPasswordOnLoginForm</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">CanEnterUsernameAndPasswordOnLoginForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">setUp</span><span class="p">()</span>
-        <span class="c1"># more</span>
-</pre></div>
-<p>You need to repeat the class name in each method that calls super. This is especially bad if you rename your class as you need to repeat the name in so many places - also there might be situations where having the wrong name doesn't bomb but just calls the wrong code. Also if you move methods up and down the class-inheritance-chain this becomes more and more annoying.</p>
-<p>Well, so I looked at what you can do with some meta-programming - and lo and behold there's a lot you can do.</p>
-<p>Here's an example what I ended up with:</p>
-<div class="hll"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Super</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="nb">super</span> <span class="o">=</span> <span class="n">SuperProxy</span><span class="p">()</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">method</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">pass</span>
-
-<span class="k">class</span><span class="w"> </span><span class="nc">Sub</span><span class="p">(</span><span class="n">Super</span><span class="p">):</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">method</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">super</span><span class="p">()</span>
-</pre></div>
-<p>Yeah! Now that's simpler. to call super you can use several syntaxes:</p>
-<ul>
-<li><code>self.super()</code> just calls the super method of the same name and hands it all arguments that the current method got</li>
-<li><code>self.super('foo')</code> this way you can hand specific methods to the super-class and prevent the automatic gathering of arguments. If you prefer explicit - this is it.</li>
-<li><code>self.super.some_method()</code> self.super is exactly the same as what the super-method returns (so it's the same as <code>super(ThisClass, self)</code>) so you can use it to call any method on the superclass and hand it any arguments you want.</li>
-</ul>
-<p>Well, so I consider this a boon for any bigger python project as it considerably eases the pain of working with class-hierarchies, and best of all you can import it into your project one superclass at a time.</p>
-<p>Oh, and please tell me if you use it and like it. :-)</p>
-<p>So [browser:/open-source/python-simple-super/trunk/simple_super.py here's the code!]</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2009/10/simple-super/">weiterlesen…</a>
       </footer>
     
   </article>

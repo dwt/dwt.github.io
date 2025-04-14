@@ -57,6 +57,55 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/11/delegation-sucks/">
+        Delegation sucks
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-11-02">Sunday, November 2, 2008</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Well, it doesn't really. But if way overused it becomes a pain in the a**.</p>
+<p>This is not so much a problem in on itself, but the code sprouts dependencies that nobody is able to follow from just reading a class but which become crucial to the operation of the application.</p>
+<p>Well, out of frustration I started thinking about the saying that Design-Patterns are just for languages that are not powerful enough to implement something in the language.</p>
+<p>So lets see, what can we do to make this simpler:</p>
+<div class="hll"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">([</span><span class="n">someObject</span><span class="w"> </span><span class="n">respondsToSelector</span><span class="o">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">someDelegateMethod</span><span class="o">:</span><span class="p">)])</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">[</span><span class="n">someObject</span><span class="w"> </span><span class="n">someDelegateMethod</span><span class="o">:</span><span class="nb">self</span><span class="p">];</span>
+<span class="p">}</span>
+</pre></div>
+<p>The key here is to only call the messagte <code>-someDelegateMethod:</code> if it is actually supported on the target. A perfect application [wiki:2008/10/26/20.59 of my invocation] [wiki:2008/10/25/01.21 catching code].</p>
+<div class="hll"><pre><span></span><span class="p">[[</span><span class="n">NMDelegateCaller</span><span class="w"> </span><span class="n">callerForDelegate</span><span class="o">:</span><span class="n">object</span><span class="p">]</span><span class="w"> </span><span class="n">someDelegateMethod</span><span class="o">:</span><span class="nb">self</span><span class="p">];</span>
+</pre></div>
+<p>In real life of course you would hide the delegator by just wrapping your delegate in the <code>-setDelegate:</code> method.</p>
+<p>Interestingly implementing this proved rather more tricky than I anticipated. This is because of the way the objc-runtime creates NSInvocations out of c-method calls. The trick is, that really at runtime nothing is known about how arguments have to be scraped out of the stack because in C you have no clue what arguments actually are on the stack.</p>
+<p>So objc takes a detour and stores this information alongside each method in the object that the method belongs to. This however has the unfortunate side effect that it should make just the delegator I wanted to build impossible to build. That is, because the runtime cannot build an NSInvocation out of a method call that the destination does not support - simply because it doesn't know what arguments are on the stack and what to return.</p>
+<p>This is where my little evil hack comes in: I defined a method on NSObject that represents an identity for this situation - that is, it returns nothing and takes no argument - therefore the runtime won't crash anything by using it's description to build an NSInvocation. This is my marker.</p>
+<p>And with this the problem becomes solvable - in <code>-methodSignatureForSelector:</code> I ask the target for a signature if it has one, and return my marker signature and let the runtime build an NSInvocation out of whatever method call was made (what exactly it was doesn't interest me, only that it's not implemented on the delegate). Then in <code>-forwardInvocation:</code> I can test if the signature is that marker and just discard the method if it is.</p>
+<p>Voilá.</p>
+<p>So it is proven - objc is powerful enough to implement this design pattern in itself - no need for all those if statements - and I learned a lot about the internals of NSInvocations.</p>
+<p>Still I'm not sure if I really want to use that code. Yes it's shorter, but it's also a lot more complicated and it makes something very convenient which in essence I don't really want to be so convenient, because if overused it becomes a maintenance nightmare.</p>
+<p>Also it lacks the simple elegance of just stating exactly what you want to achieve and returning good default values (my solution can just return NULL/NO/0 if the method is not implemented).</p>
+<p>Damn. Alles für die Katz.</p>
+<p>Still very interseting though. Maybe I'l find a different application that suits me more.</p>
+<ul>
+<li>[source:open-source/NMInvocationBuilder/trunk Here's the code]</li>
+</ul>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/11/delegation-sucks/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/10/syntax-matters/">
         Syntax matters
         </a>
@@ -433,34 +482,6 @@ Dann wird bisschen Krieg gemacht.
     
       <footer>
         <a href="../../2008/10/das-gedicht-zum-bankendomino/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/10/regexe-updated/">
-        Regexe updated
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-10-12">Sunday, October 12, 2008</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>Hab ich mir doch gedacht, nur matching von regexen auf ganzen Strings ist doch langweilig - also hab ich noch <code>containsRegex:</code> hinzugefügt um etwas mehr komfort zu haben.</p>
-<p>Da dachte ich ja zuerst dass ein Regex wie dieser hier eigentlich nicht funktionieren dürfte: <code>.*^a</code> angewandt auf "aaa" - aber interessanterweise funktioniert das ohne Probleme. Muss ich wohl noch etwas an meinen Regex-Verständnis feilen.</p>
-<p>Ah well.</p>
-<p>[source:/open-source/SimpleRegexSupport/trunk/RegexTest.m  Code hier]</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/10/regexe-updated/">weiterlesen…</a>
       </footer>
     
   </article>

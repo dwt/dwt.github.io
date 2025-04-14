@@ -57,6 +57,78 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2009/1/svn-revision-number-in-der-about-box-verfu-gbar-machen/">
+        SVN Revision Number in der About Box verfügbar machen
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-01-24">Saturday, January 24, 2009</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Das wollte ich tun, aber <a href="http://www.red-sweater.com/blog/23/automatic-build-sub-versioning-in-xcode">die bestehenden Lösungen</a> fand ich alle nicht so toll.</p>
+<p>Well, also noch mal.</p>
+<p>Immerhin bietet Python ja eine menge mit seinen Batteries Included. Das heißt ich muss nicht aufwendig mit RegExen die plist dateien auseinander nehmen. Schließlich gibt es die <a href="http://docs.python.org/dev/library/plistlib.html">plistlib</a>.</p>
+<p>Hier das Resultat:</p>
+<div class="hll"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1"># Usage:</span>
+<span class="c1"># Either copy into a shell script build phase </span>
+<span class="c1"># (don&#39;t forget to change the interpreter to &quot;/usr/bin/env python&quot;)</span>
+<span class="c1"># Or just put it into a shell script and call it form there.</span>
+<span class="c1">#</span>
+<span class="c1"># Discussion:</span>
+<span class="c1"># There are really two info plist keys that could be used for the source revision:</span>
+<span class="c1"># The CFBundleShortVersionString and CFBundleVersion</span>
+<span class="c1"># Apple recommends to use CFBundleVersion, because it is not shown in the finders info dialog,</span>
+<span class="c1"># but is shown in the standard about dialog of a cocoa application where the CFBundleVersion</span>
+<span class="c1"># is shown in parantheses behind the CFBundleShortVersionString.</span>
+<span class="c1">#</span>
+<span class="c1"># Inspired by Daniel Jalkut at http://www.red-sweater.com/blog/23/automatic-build-sub-versioning-in-xcode</span>
+<span class="c1"># License: Creative-Commons Public Domain http://creativecommons.org/licenses/publicdomain/</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span><span class="o">,</span><span class="w"> </span><span class="nn">re</span><span class="o">,</span><span class="w"> </span><span class="nn">plistlib</span>
+
+<span class="c1"># Test if run from xcode</span>
+<span class="n">is_run_from_xcode</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s2">&quot;BUILT_PRODUCTS_DIR&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">is_run_from_xcode</span><span class="p">:</span>
+    <span class="n">exit</span><span class="p">(</span><span class="s2">&quot;Needs to be run from a Xcode shell scribt build phase&quot;</span><span class="p">)</span>
+
+<span class="c1"># We take the one from the built products dir to keep revision numbers out of the repository</span>
+<span class="n">info_plist_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;BUILT_PRODUCTS_DIR&quot;</span><span class="p">],</span> \
+                               <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;INFOPLIST_PATH&quot;</span><span class="p">])</span>
+
+<span class="c1"># get latest svn revision</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">output_of_command</span><span class="p">(</span><span class="o">*</span><span class="n">command_and_arguments</span><span class="p">):</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+    <span class="k">return</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">command_and_arguments</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">)</span><span class="o">.</span><span class="n">communicate</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PROJECT_DIR&quot;</span><span class="p">])</span>
+<span class="n">version_range</span> <span class="o">=</span> <span class="n">output_of_command</span><span class="p">(</span><span class="s2">&quot;svnversion&quot;</span><span class="p">,</span> <span class="s2">&quot;-nc&quot;</span><span class="p">)</span>
+<span class="n">latest_commited_version</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\d*\w*$&quot;</span><span class="p">,</span> <span class="n">version_range</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># enter into Info.plist</span>
+<span class="n">info</span> <span class="o">=</span> <span class="n">plistlib</span><span class="o">.</span><span class="n">readPlist</span><span class="p">(</span><span class="n">info_plist_path</span><span class="p">)</span>
+<span class="n">info</span><span class="p">[</span><span class="s2">&quot;CFBundleVersion&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">latest_commited_version</span>
+<span class="n">plistlib</span><span class="o">.</span><span class="n">writePlist</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">info_plist_path</span><span class="p">)</span>
+</pre></div>
+<p>Pretty neat. :)</p>
+<p>Die aktuelle Version des Scripts liegt wie immer [source:open-source/utilities/xcode-add-subversion-version-to-built-Info.plist.py im Repository].</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/1/svn-revision-number-in-der-about-box-verfu-gbar-machen/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2009/1/wenn-apple-mail-auf-einmal-keine-passwo-rter-mehr-speichert/">
         Wenn Apple mail auf einmal keine Passwörter mehr speichert...
         </a>
@@ -360,31 +432,6 @@
     
       <footer>
         <a href="../../2009/1/software-literacy/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2009/1/stop-motion-videos-are-all-the-rage/">
-        Stop-Motion Videos are all the rage...
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2009-01-04">Sunday, January 4, 2009</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p><a href="http://www.smashingmagazine.com/2008/12/31/50-incredible-stop-motion-videos/">Und dem kann ich nur zustimmen</a>. Anschauen!</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2009/1/stop-motion-videos-are-all-the-rage/">weiterlesen…</a>
       </footer>
     
   </article>

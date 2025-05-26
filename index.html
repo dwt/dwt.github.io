@@ -59,6 +59,101 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="blog/2025/5/die-freuden-einer-gut-eingerichteten-shell-fzf/">
+        Die Freuden einer gut eingerichteten Shell: fzf
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2025-05-07">Mittwoch, 7. Mai 2025</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p><img src="blog/2025/5/die-freuden-einer-gut-eingerichteten-shell-fzf/fzf.png" alt="fzf"></p>
+<p>Nachdem es bisher in <a href="categories/code/">der Serie</a> um die <a href="blog/2024/11/grundlegende-funktionen-und-einstellungen-des-terminals/">grundlegende Einrichtung der Shell</a>, <a href="blog/2025/2/die-freuden-einer-gut-eingerichteten-shell-prompt/">einen guten Prompt</a> und <a href="blog/2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/">funktionierende autoomatische Vervollständigung</a> ging, geht es jetzt eine Weile um Werkzeuge um mit der Shell effizient zu navigieren und Dateien und Inhalte zu finden.</p>
+<h2>Einleitung</h2>
+<p>Hier geht es mir darum das die Arbeit auf der Shell (auf dem eigenen Rechner vor allem) nur dann schnell und Effizient ist, wenn man schnel und einfach in die Ordner kommt in denen man arbeiten möchte, und die Dateien findet in denen etwas interessantes steht das man entweder lesen oder verändern möchte.</p>
+<p>Und natürlich ist das Skillset auch auf beliebige Server transferierbar, weil man alle diese Werkzeuge (oder deren etwas primitivere Variante, dazu später mehr) auch auf einem Server, oder in einem Docker-Container, gerne auch auf einem Kubernetes-Cluster in Produktion einsetzen kann, wo man sonst halt nicht so viele Werkzeuge hat, und schon gar nicht seine IDE anschließen kann um zu versuchen dort Herr der Lage zu werden.</p>
+<p>Dazu möchte ich euch die Tools <a href="https://github.com/ajeetdsouza/zoxide">zoxide</a>, grep/<a href="https://github.com/BurntSushi/ripgrep">ripgrep</a>, <a href="https://github.com/junegunn/fzf">fzf</a>, less/cat/<a href="https://github.com/sharkdp/bat">bat</a> und <a href="https://direnv.net">direnv</a> vorstellen.</p>
+<p>Diese Tools erleichtern viele täglich oft wiederholte Arbeitsabläufe dramatisch, und sie ermöglichen viele Use-Cases, die viele grafischen IDEs und Text-Editoren gar nicht unterstützen. Los geht es mit dem flauschigsten der Tools, fzf.</p>
+<h2>Zackig die richtige Datei finden: fzf</h2>
+<p><a href="https://github.com/junegunn/fzf">fzf</a> frei Eingezangendeutscht "der flauschige Kommandozeilen Finder", ist ein werkzeug um Dateien (aber auch beliebige andere Dinge) anhand von teilen des Namens oder Mustern wie jeder erste Buchstabe der Wörter ihres Namens zu finden. Dazu bietet dieses Werkzeug eine Oberfläche die interaktiv die Liste der Auswahlmöglichkeiten filtert während man tippt. Die meisten IDEs bieten so eine Funktion irgendwo mehr oder weniger gut versteckt an, und dieses Werkzeug portiert diese Funktionalität als generisches Werkzeug in die Shell.</p>
+<p>Als beispiel: Ich möchte einen bestimmten UnitTest ausführen:</p>
+<div class="hll"><pre><span></span>$<span class="w"> </span>bin/run_tests_in_docker.sh<span class="w"> </span><span class="k">$(</span>fzf<span class="k">)</span>
+</pre></div>
+<p>Mit diesem Kommando, wird zuerst fzf aufgerufen (wegen <code>$(fzf)</code>) was dann eine oberfläche präsentiert, mit der man interktiv die richtige oder die richtigen Dateien auswählen kann.</p>
+<div class="hll"><pre><span></span><span class="c"># ich verwende die fish shell, daher brauch ich das $ nicht</span>
+❯ bin/run_tests_in_docker.sh <span class="o">(</span>fzf<span class="o">)</span>
+  src/models/dokumente/tests/document_distribution_test.py
+  src/controller/process_distribution/tests/models_test.py
+  src/models/dokumente/tests/dokumente_test.py
+  src/integration/d3/api/test/models_test.py
+▌ src/models/tests/kontaktdaten_test.py
+  5/448 ────────────────────────────────
+<span class="o">&gt;</span> models <span class="err">&#39;</span><span class="k">test</span>.py
+</pre></div>
+<p>In dem Interface kann man auch mit den Pfeiltasten navigieren, oder einen Eintrag anklicken. Der von mir eingegebene Suchstring "models 'test.py" bedeutet, dass 'models' irgendwo in dem Treffer diese Buchstaben in dieser Reihenfolge vorkommen müssen, während "'test.py" erzwingt das der exakte String 'test.py' vorkommen muss.</p>
+<p><a href="https://junegunn.github.io/fzf/shell-integration/">Wenn man die fzf-Integration mit der eigenen Shell aktiviert</a>, kriegt man viele weitere Integrationen in die Shell dazu. Zwei Beispiele:</p>
+<ul>
+<li><p><code>⌃-T</code> sucht (mit Vorschau!) nach Dateien unterhalb des aktuellen Verzeichnisses. Das ist immer dann Praktisch wenn man für ein Kommando eine Datei aus dem aktuellen Projekt als Argument übergeben muss, und spart das tippen von <code>$(fzf)</code>. Klar, mit Auto-Vervollständigung kommt man auch ans Ziel, aber das ist <em>soo</em> viel schneller. Insbesondere wenn man nicht genau im Kopf hat wo die Datei liegt, aber noch weiß was in Ihrem Namen oder Pfad vorkommen muss. Das verwende ich die ganze Zeit.</p>
+</li>
+<li><p><code>⌃-R</code> sucht mit <code>fzf</code> in der Shell-Historie. Das funktioniert viel besser als die Standard-Suche, die nur nach direkt zusammenhängenden Buchstaben suchen kann. Ein Beispiel: Das Wenn ich das Kommando <code>helm template extensions ./k8s/extensions/ --values ./k8s/extensions/values.dev.yaml | yq</code> aus meiner historie suchen möchte, müsste ich ohne <code>fzf</code> den exakten Text schreiben der in dem Kommando vorkommt.</p>
+</li>
+</ul>
+<div class="hll"><pre><span></span>~
+Search History&gt; helmtemplateexten
+  76/32637 <span class="o">(</span>0<span class="o">)</span>
+  02-17 18:07:03 │ helm template extensions ./k8s/extensions/ --values ./k8s/extensions/values.dev.yaml
+  02-17 18:06:10 │ helm template extensions ./k8s/extensions/ --values ./k8s/extensions/values.dev.yaml <span class="o">|</span> yq
+  02-17 17:59:53 │ helm template extensions ./k8s/extensions/ --values ./k8s/extensions/values-dev.yaml
+  02-17 20:22:18 │ helm template  extensions ./k8s/extensions/ --values ./k8s/extensions/values.dev.yaml
+  02-17 18:15:27 │ helm template --debug extensions ./k8s/extensions/ --values ./k8s/extensions/values.dev.yaml
+  02-17 17:59:42 │ helm template --dry-run --debug extensions ./k8s/extensions/ --values ./k8s/extensions/values-dev.yaml
+▌ 02-17 17:59:29 │ helm template --dry-run --debug  ./k8s/extensions/ --values ./k8s/extensions/values-dev.yaml
+  02-17 17:59:36 │ helm template --dry-run --debug foo ./k8s/extensions/ --values ./k8s/extensions/values-dev.yaml
+╭──────────────────────────────────────────────────────────────────────────────────────────────╮
+│ helm template --dry-run --debug ./k8s/extensions/ --values ./k8s/extensions/values-dev.yaml  │
+╰──────────────────────────────────────────────────────────────────────────────────────────────╯
+</pre></div>
+<p>Wenn ich oft, wenn ich ein neues Terminal öffne in die gleichen Projekte navigiere, dann geht das prima über die Shell-History:</p>
+<div class="hll"><pre><span></span>❯ <span class="c"># ctrl-r für history suche</span>
+Search History&gt; cdmkkapi
+  352/32638 <span class="o">(</span>0<span class="o">)</span> ──────────────────────────
+  08-12 11:56:19 │ <span class="k">cd</span> mkk/api
+  08-24 19:05:13 │ <span class="k">cd</span> ../mkk/api
+▌ 05-26 08:39:19 │ <span class="k">cd</span> Code/Projekte/mkk/api
+  07-29 17:02:48 │ <span class="k">cd</span> Code/Projekte/mkk/api_infra/
+  02-15 08:37:01 │ <span class="k">cd</span> Code/Projekte/mkk/api_infra/monitoring/
+╭──────────────────────────╮
+│ <span class="k">cd</span> Code/Projekte/mkk/api │
+╰──────────────────────────╯
+</pre></div>
+<p>Mit <a href="https://github.com/ajeetdsouza/zoxide">Zoxide</a> geht das noch besser, aber dazu später mehr.</p>
+<p>So habe ich meine fzf Integration konfiguriert:</p>
+<div class="hll"><pre><span></span><span class="c"># configure key-bindings for fzf-fish</span>
+<span class="c"># ctrl-f directory search</span>
+<span class="c"># ctrl-r history search</span>
+<span class="c"># ctlr-v variables search</span>
+<span class="c"># ctrl-l git log search</span>
+<span class="c"># ctrl-s git status search</span>
+<span class="c"># ctrl-p processes pid search</span>
+fzf_configure_bindings --git_log<span class="o">=</span><span class="se">\f</span> --directory<span class="o">=</span><span class="se">\c</span>F --git_status<span class="o">=</span><span class="se">\c</span>S --processes<span class="o">=</span><span class="se">\c</span>P
+</pre></div>
+<p>Das geniale an fzf ist, dass es sich so wunderbar in andere Tools integrieren lässt. Hat man es installiert wird es z.B. von <a href="https://github.com/ahmetb/kubectx">KubeCTX</a> verwendet um in <code>kubectx</code> die liste der verbundenen Kubernetes Cluster zu filtern. Oder von <code>kubens</code> um die Liste der Namespaces. Tatsächlich verwenden viele Werkzeuge intern <code>fzf</code> wenn es instaliert ist. Für mich immer wieder eine schöne Überrachung, wenn ein weiteres Werkzeug das ich gerne einsetze <code>fzf</code> verwendet.</p>
+
+    </section>
+    
+      <footer>
+        <a href="blog/2025/5/die-freuden-einer-gut-eingerichteten-shell-fzf/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="blog/2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/">
         Die Freuden einer gut eingerichteten Shell: Autocomplete
         </a>
@@ -94,7 +189,7 @@ Das zeigt hier nichts, genauso für lange Optionen <code>ls --⇥⇥</code> (zw
 <img src="blog/2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/autocomplete-long-options-configured.png" alt="Vervollständigung von langen Optionen mit der Fish-Shell"></p>
 <p>Natürlich kann ich mit den Pfeiltasten oder mit Tab eine der Optionen auswählen - natürlich mit ordentlichem Highlighting.
 So macht arbeiten auf der Shell Spaß!</p>
-<p>Falls Ihr verwirrt seid das mein ls andere Optionen anbietet als eures, dann liegt das daran das ich ls durch <a href="https://github.com/ogham/exa">exa</a> ersetzt habe.</p>
+<p>Falls Ihr verwirrt seid das mein ls andere Optionen anbietet als eures, dann liegt das daran <a href="https://github.com/ogham/exa">das ich ls durch exa ersetzt habe</a>.</p>
 <h2>Wie könnt Ihr das bei euch nutzen?</h2>
 <p>Ich nutze die <a href="https://fishshell.com">Fish-Shell</a>, da diese von Haus aus eine sehr gute Autocompletion anbietet. Das ist aber nicht für jede, denn die Syntax der Fish Shell ist etwas anders als bei Bash/ZSH - eben nicht posix kompatibel. Ich mag das Weil es logischer und Kürzer ist, aber ich komme auch nicht durcheinander mit den verschiedenen Shell-Syntaxen da ich sie schon so lange verwende.</p>
 <p>Fast alle Shell Konfigrurations-Frameworks wie <a href="https://ohmyz.sh">oh-my-zsh</a> oder <a href="https://github.com/sorin-ionescu/prezto">Prezto</a> bieten zumindest etwas an das diesem Nahe kommen. Alle automatische Konfiguration stößt aber irgendwann an Ihre Grenzen wenn es um die Kommandos geht, die wir täglich benutzen. <code>docker</code> vervollständigt dann nicht compose und oder kennt die Unterkommandos davon nicht oder nur unvollständig, kubectl und helm sind notorische Kandidaten für die man sich selber kümmern muss.</p>
@@ -191,102 +286,6 @@ dwt@NB1321<span class="w"> </span>Favorites<span class="w"> </span>%
     
       <footer>
         <a href="blog/2025/2/die-freuden-einer-gut-eingerichteten-shell-prompt/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="blog/2025/2/a-nixle-in-a-buechse-und-a-goldigs-warteweile/">
-        A Nix&#39;le in a Büchse und a goldigs Warteweile
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2025-02-08">Samstag, 8. Februar 2025</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p><img src="blog/2025/2/a-nixle-in-a-buechse-und-a-goldigs-warteweile/nix-rabbit-hole.png" alt="Das Nix Hasenloch">
-… ist ein schwäbisches Sprichwort und passt gar nicht so schlecht für die vielen schlechten Wortwitze die sich automatisch ergeben, wenn man anfängt, sich in das <a href="https://nix.dev">Nix Projekt</a> einzuarbeiten.</p>
-<p>Zunächst mal die Karotte mit der ich mich ködern ließ:</p>
-<ul>
-<li>Deklarative Konfiguration von Software-Builds, System-Konfigurationen, und wenn man möchte auch Deployments z.B. in Kubernetes und was man sonst gerne möchte</li>
-<li>Ein funktionaler Paket-Manager, das heißt: Jede Software kann ihre eigenen Abhängigkeiten in der passenden Version haben. Wenn ich mal ein Tool in der Version von vor 10 Jahren brauche - einfach zusätzlich installieren, ohne dass dadurch etwas gestört wird. Wenn ich mal eine neuere Version von etwas brauche als die aktuelle Distribution anbietet: Einfach installieren, ohne dass dadurch etwas gestört wird.</li>
-<li>Rollback: Systemkonfiguration hat etwas kaputt gemacht? Einfach Rückgängig machen.</li>
-<li>Update auf eine neue Version des Betriebssystems: Man kriegt fehlermeldungen für alle Konfigurationen die man vorgenommen hat die jetzt umbenannt wurden oder anders funktionieren. 🤯</li>
-<li>Reproduzierbarkeit: Vollständige Erfassung der Inputs und Ablegen derselben in einem Lock-File.</li>
-<li>Eine riesige Community, die beste Praktiken zum Betrieb von Linux (und mehr) Systemen <a href="https://repology.org/repositories/statistics/total">in die größte Software-Bibliothek kodiert, die wir bisher gesehen haben.</a></li>
-</ul>
-<p>Was sollte man da nicht mögen?</p>
-<p>Auf MacOs gibt es mit <a href="https://github.com/LnL7/nix-darwin">nix-darwin</a> ein Projekt mit dem man die System-Konfiguration deklarativ vornehmen kann - und auch <a href="https://brew.sh">homebrew</a> (was sonst so gut wie gar nicht reproduzierbar ist) unter Kontrolle kriegt. Und wenn man möchte, verwaltet es einem auch die dotfiles.</p>
-<p>Es gibt allerdings einen gewaltigen Nachteil: Das Ganze ist echt komplex und kompliziert. Und die Dokumentation ist nicht schlecht, aber könnte deutlich besser sein.</p>
-<p>Wenn man diese Hürde überwindet, wird man mit einer erstaunlich kompakten und sehr schnell anzuwendenden System-Konfiguration belohnt. Damit kann man zum Beispiel auf einem Mac ein vollständig konfiguriertes System-Image für einen Raspberry Pi erstellen. Dann noch flaschen, starten und läuft! Oder auf meinem Mac Bauen, und via ssh auf dem RasPi deployen, ohne dort irgendwas zu machen was dessen CPU stresst.</p>
-<p>Ich habe inzwischen angefangen, meine Rechner damit zu verwalten und konfigurieren.</p>
-<ul>
-<li><a href="https://github.com/dwt/nix-darwin-config">Mein Rechner (nix-darwin)</a></li>
-<li><a href="https://github.com/dwt/home-servers">Mein Homelab (nixos)</a></li>
-<li><a href="https://github.com/dwt/home-automation">Meine Heimautomatisierung (python)</a></li>
-</ul>
-<h1>Nix ist vielleicht nichts für dich…</h1>
-<p>… aber wenn Du ein bisschen nerdig bist, und gerne auf der Kommandozeile lebst, infrastruktur as Code magst oder lernen magst und DevOps für dich eh normal ist. Dann könnte Nix auch für dich genau das richtige sein.</p>
-<h1>Wie lernt man Nix am besten?</h1>
-<p>Was mir beim Lernen von Nix gefehlt hat, wäre eine Leitlinie gewesen, in welcher Reihenfolge ich mich an die vielen Features von Nix heran tasten sollte. Eine Reihenfolge, die sicherstellt, das die Lernkurve zu jedem Zeitpunkt erträglich bleibt. Und besonders wichtig: Die Sicherstellt, das zu jedem Zeitpunkt sichtbar ist wie cool und wertvoll diese Technologie ist. Sonst läuft man Gefahr, ob der steilen Lernkurve abzuspringen.</p>
-<p>Das hätte ich gerne gehabt: Wenn du anfängst Nix zu lernen, dann am besten in dieser Reihenfolge:</p>
-<h2>1. Schritt: Installieren, ohne was bestehendes kaputt zu machen</h2>
-<p>Zuerst sollte man Nix neben dem aktuellen OS installieren. Der Standard ist der <a href="https://docs.determinate.systems/getting-started/individuals/">Determinate Installer</a>, aber ich mag <a href="https://lix.systems">das Lix Projekt lieber, da es schneller ist</a>. Alternativ ist auch <a href="https://nixos.org/download/#nix-install-docker">der Nix-Docker-Container super um es mal auszuprobieren</a>. Wenn man möchte, <a href="https://nixos.org/download/#nix-install-linux">kann man Nix (auf Linux) auch einfach in einen Ordner installieren und so verwenden (siehe "Single-User Mode")</a>. Das würde ich aber nur für ein paar Experimente empfehlen. Sowohl der Determinate als auch der Lix-Installer haben sehr gute Uninstaller die das Projekt auch wieder komplett entfernen können.</p>
-<h2>2. Schritt: Imperativ verwenden</h2>
-<p>Nix erlaubt es jederzeit ein Paket zu benutzen, ohne es zu installieren. Das ist eine Konsequenz davon wie der Paket-Manager aufgebaut ist. Ein Paket kann 'im <code>/nix/store/</code> sein' - ohne das es aktiv ist. Und der Befehl <code>nix run nixpkgs#fzf</code> startet es dann einfach - ohne es zu installieren. Alternativ gibt es auch <code>nix shell nixpkgs#fzf</code>. Damit erhällt man eine Shell, in der <code>fzf</code> installiert ist. Schließt man die Shell, ist es auch wieder weg. 😳</p>
-<p>Dass ist der Hammer, weil man so Pakete ohne Reue ausprobieren kann. Ohne Sorgen, dass doch noch irgendwelche Abhängigkeiten evtl. auf dem System herum gurken und man vergessen könnte ein Experiment wieder zu entfernen. Und das beste: Auch später wird man dieses Feature die ganze Zeit verwenden.</p>
-<p>Vorsicht vor <code>nix-env</code> und <code>nix profile</code> - das ist das Äquivalent zu dem wie man mit <code>homebrew</code>  und anderen Paketmanagern Pakete installieren würde. Diese sollte man so selten wie möglich verwenden. Besser ist…</p>
-<h2>3. Schritt: Entwicklungsumgebungen <code>shell.nix</code></h2>
-<p>Das, was <code>nix shell nixpkgs#fzf</code> macht, kann man auch in eine Datei schreiben, und damit einfach in ein Repo mit einchecken. Schon hat man Deklarativ die ganzen Tools im Repo dokumentiert, die man braucht um mit einem Projekt zu arbeiten. Bonus: Ich kann für jedes Projekt eigene Versionen der Abhängigkeiten haben (wenn ich das brauche). Python-Virtual-Envs auf Steroiden!</p>
-<p>Hier ein Beispiel:</p>
-<div class="hll"><pre><span></span><span class="p">{</span>
-  pkgs <span class="o">?</span> <span class="nb">import</span> <span class="l">&lt;nixpkgs&gt;</span> <span class="p">{</span> <span class="p">},</span>
-<span class="p">}:</span>
-pkgs<span class="o">.</span>mkShell <span class="p">{</span>
-  <span class="ss">buildInputs</span> <span class="o">=</span> <span class="k">with</span> pkgs<span class="p">;</span> <span class="p">[</span>
-    <span class="c1"># Add your build inputs here</span>
-    pkgs<span class="o">.</span>python313
-    pkgs<span class="o">.</span>uv
-  <span class="p">];</span>
-  <span class="ss">env</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="ss">UV_PYTHON</span> <span class="o">=</span> pkgs<span class="o">.</span>python313<span class="p">;</span>
-    <span class="ss">UV_DOWNLOAD_PYTHON</span> <span class="o">=</span> <span class="s2">&quot;never&quot;</span><span class="p">;</span>
-  <span class="p">};</span>
-<span class="p">}</span>
-</pre></div>
-<p>Wenn man das mit <code>nix-shell</code> aufruft, dann hat man diese Python-Version zur Hand. <code>uv</code> verwendet diese und lädt selber keine Python-Versionen herunter. Nice! Extra nice: mit <code>nix-shell --pure</code>  hat man eine Shell in der <em>nur</em> das sichtbar ist was in dem <code>shell.nix</code> steht, und man kriegt Fehler für alles was man verwendet und in der <code>shell.nix</code> vergessen hat. 🤯</p>
-<p>Bonus: <a href="https://direnv.net">Direnv</a> verwenden um automatisch die <code>shell.nix</code> und das <code>.env</code> zu laden. Dazu <a href="https://github.com/ajeetdsouza/zoxide">zoxide</a> um schnell in der Shell zwischen vielen Projekten hin und zu springen. Eine richtig geniale Entwicklungsumgebung.</p>
-<p>Ich empfehle erst mal eine weile auf diesem Niveau zu bleiben, denn das ist schon ziemlich cool!</p>
-<h2>4. Schritt: Mehr Tooling um besser mit Nix klar zu kommen</h2>
-<ul>
-<li>Pakete findet man am besten über <a href="https://search.nixos.org/packages">die Webseite search.nixos.org</a> - aber ich mag eigentlich in der shell suchen. <code>nix run nixpkgs#nh search ut1999</code> funktioniert besser als alles was ich sonst bisher getestet habe.</li>
-<li>Anzeigen was gerade installiert ist und wieso ist aufgrund der Architektur von nix gar nicht so einfach. <code>nix run nixpkgs#nix-tree</code> aproximiert das und gibt einen guten überblick darüber was man auf dem System hat.</li>
-<li><code>nom</code> - der <a href="https://github.com/maralorn/nix-output-monitor">Nix-Output-Monitor</a> <code>nix run nixpkgs#nix-output-monitor</code> macht den output von längeren nix builds viel informativer und spannender. Verwenden kann man das so: <code>nix run $something |&amp; nix run nixpkgs#nix-output-monitor</code></li>
-<li><code>nix store gc</code> um alles zu löschen, was man mal testweise runtergeladen hat und nicht mehr auf der Platte braucht. (Einer Der Nachteile von Nix: Es verbraucht schnell <em>viel</em> Plattenplatz).</li>
-</ul>
-<h2>5. Schritt: Tief in das Hasenloch fallen</h2>
-<p>Jetzt gibt es verschiedene Sachen die man sich anschauen könnte</p>
-<ul>
-<li><a href="https://nix.dev/manual/nix/2.24/language/index.html">Die Nix Sprache lernen</a> - die Voraussetzung für fast alles was danach kommt, also gut investierte Zeit. Und es ist eine wirklich kleine Sprache - auch wenn <a href="https://github.com/NixOS/nixpkgs">die 'Standard-Bibliothek' (meiner Meinung nach das NixPKGs Repository)</a> alles andere als klein ist.</li>
-<li><a href="https://devenv.sh">devenv</a> um Entwicklungsumgebungen kurz und Knackig und mit allen Features deklarativ zu beschreiben und ins Projekt eingecheckt zu bekommen.</li>
-<li><a href="https://nixos-and-flakes.thiscute.world">Flakes - der Standard in der Nix-Community, mit der Abhängigkeits-Versionen festgeschrieben werden</a>. Also wie checke ich die genauen git commit hashes die ich verwendet habe um alle meine Software zu bauen ins Repo mit ein. Damit kann man ein Projekt auch nach Jahren sehr einfach verlässlich wieder bauen.</li>
-<li><a href="https://github.com/pyproject-nix/uv2nix">uv2nix - wie man Python-Projekte Nix-ifiziert</a></li>
-<li><a href="https://github.com/LnL7/nix-darwin">nix-darwin</a> um ein MacOS System so deklarativ zu verwalten, wie das unter NixOS geht. (OK, Apple setzt da grenzen, aber das ist trotzdem sehr cool).</li>
-<li><a href="https://nix-community.github.io/home-manager/">home-manager</a> um dotfiles zu verwalten und auf Benutzer-Ebene alles zu konfigurieren.</li>
-<li>Quasi alles von <a href="https://github.com/nix-community/awesome-nix?tab=readme-ov-file">Awesome-Nix</a>.</li>
-<li>Und so viele Projekte mehr, die man sich anschauen könnte…</li>
-</ul>
-
-    </section>
-    
-      <footer>
-        <a href="blog/2025/2/a-nixle-in-a-buechse-und-a-goldigs-warteweile/">weiterlesen…</a>
       </footer>
     
   </article>

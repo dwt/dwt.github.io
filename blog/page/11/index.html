@@ -57,6 +57,32 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2009/3/endlich-erkla-rt-mal-jemand-twitter/">
+        Endlich erklärt mal jemand Twitter
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-03-23">Montag, 23. März 2009</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p><a href="http://www.youtube.com/watch?v=PN2HAroA12w">Auf Youtube natürlich</a>. Oh die Ironie...</p>
+<p>Aber gut und lustig. :)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/3/endlich-erkla-rt-mal-jemand-twitter/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2009/3/brooot/">
         Brooot
         </a>
@@ -334,64 +360,6 @@
     
       <footer>
         <a href="../../2009/3/wie-funktioniert-ein-bailout/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2009/3/cappucino-cocoa/">
-        Cappucino != Cocoa
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2009-03-05">Donnerstag, 5. März 2009</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>Tja, also nach längerer Neugierde habe ich mich mal mit <a href="http://cappuccino.org/">Cappucino</a> auseinander gesetzt und ein wenig damit Programmiert.</p>
-<p>Und das hat für mich als Cocoa Programmierer eine Menge Spaß gemacht.</p>
-<p>Erst mal ein paar Kleinigkeiten:</p>
-<ul>
-<li>Der Java-Script Parser von Safari saugt. Er sagt einem nie wo der Fehler jetzt genau aufgetreten ist. :-( Unbedingt mit Firefox und Firebug entwickeln!</li>
-<li>Wenn man sich den git tip of the tree auscheckt kriegt man weit mehr Klassen als in der offiziellen Dokumentation erwähnt sind. Insbesondere funktioniert das nib2cib tool auch ein wenig besser - und das spart unmengen von Zeit.<ul>
-<li>Allerdings funktioniert nib2cib auch nicht soo gut. Viele Klassen die es können könnte gehen damit nicht. NSScrollView zum Beispiel.</li>
-</ul>
-</li>
-<li>Wenn man sein eigenes Objective-J kompilieren will darf man keine spaces im Pfad haben. (arrrrghhh!!!!!)</li>
-<li>Man kann (noch) nicht den Code so ohne weiteres in Unterverzeichnisse auslagern. Das macht die Projekte unübersichtlich - aber angeblich soll das bald gefixt sein.</li>
-<li>nib2cib darf man nie mit mehr als einem Filenamen aufrufen. Sonst schreibt es nämlich einfach in das zweite Argument den output hinein.<ul>
-<li>Wo ich gerade darüber nachdenke: das geht eigentlich mit kaum einem objective-j tool ojtest zum beispiel... Dabei ist der Startup von Rhino immer das langsamste daran. :-(</li>
-</ul>
-</li>
-<li>Und man muss einiges an Umgebungsvariablen setzen. Am besten macht man sich ein ein shell script was diese dinger setzt und dann wieder eine shell exec'd. Damit hat man dann gleich eine Arbeitsumgebung für Cappucino ohne alles irgendwohin in standard-Betriebsystem-Locations installieren zu müssen.</li>
-</ul>
-<div class="hll"><pre><span></span><span class="ch">#!/bin/sh</span>
-
-<span class="nv">PROJECT_DIR</span><span class="o">=</span><span class="s2">&quot;/path/to/the/cappucino/sources/but/without/spaces/cappuccino&quot;</span>
-
-<span class="c1"># you can move this elsewhere to keep things separate</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">STEAM_BUILD</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">PROJECT_DIR</span><span class="si">}</span><span class="s2">/build&quot;</span>
-<span class="nv">TOOLS_DIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">STEAM_BUILD</span><span class="si">}</span><span class="s2">/Cappuccino/Tools/objj&quot;</span>
-<span class="nv">NIBTOOLS_DIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">PROJECT_DIR</span><span class="si">}</span><span class="s2">/Tools/objj&quot;</span>
-
-<span class="nb">export</span><span class="w"> </span><span class="nv">OBJJ_HOME</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">TOOLS_DIR</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">PATH</span><span class="si">}</span><span class="s2">:</span><span class="si">${</span><span class="nv">TOOLS_DIR</span><span class="si">}</span><span class="s2">/bin:</span><span class="si">${</span><span class="nv">NIBTOOLS_DIR</span><span class="si">}</span><span class="s2">/bin&quot;</span>
-<span class="s2">&quot;</span><span class="si">${</span><span class="nv">SHELL</span><span class="si">}</span><span class="s2">&quot;</span>
-</pre></div>
-<p>Damit kann man immerhin die ganzen objj tools (ojtest, nib2cib, etc) direkt benutzen.</p>
-<p>Cappucino selber benutzt sich tatsächlich ziemlich wie eine recht alte Version von Cocoa. Erstmal keine Bindings und entsprechende Controller und !CPBundle ist reichlich underpowered - Lokalisierter Resourcen-Lookup ist damit erst mal noch nicht drin.</p>
-<p>Die Tools sind natürlich nicht so toll. Insebesondere fehlt ein vernünftiger Ersatz für Interface Builder.</p>
-<p>Aber ansonsten rockt <a href="http://cappuccino.org/">Cappuccino</a> schon gewaltig. Jedem Cocoa-Programmierer sei also eine Beschäftigung damit schwer ans Herz gelegt.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2009/3/cappucino-cocoa/">weiterlesen…</a>
       </footer>
     
   </article>

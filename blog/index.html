@@ -57,6 +57,101 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="2025/5/die-freuden-einer-gut-eingerichteten-shell-fzf/">
+        Die Freuden einer gut eingerichteten Shell: fzf
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2025-05-07">Mittwoch, 7. Mai 2025</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p><img src="2025/5/die-freuden-einer-gut-eingerichteten-shell-fzf/fzf.png" alt="fzf"></p>
+<p>Nachdem es bisher in <a href="../categories/code/">der Serie</a> um die <a href="2024/11/grundlegende-funktionen-und-einstellungen-des-terminals/">grundlegende Einrichtung der Shell</a>, <a href="2025/2/die-freuden-einer-gut-eingerichteten-shell-prompt/">einen guten Prompt</a> und <a href="2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/">funktionierende autoomatische Vervollständigung</a> ging, geht es jetzt eine Weile um Werkzeuge um mit der Shell effizient zu navigieren und Dateien und Inhalte zu finden.</p>
+<h2>Einleitung</h2>
+<p>Hier geht es mir darum das die Arbeit auf der Shell (auf dem eigenen Rechner vor allem) nur dann schnell und Effizient ist, wenn man schnel und einfach in die Ordner kommt in denen man arbeiten möchte, und die Dateien findet in denen etwas interessantes steht das man entweder lesen oder verändern möchte.</p>
+<p>Und natürlich ist das Skillset auch auf beliebige Server transferierbar, weil man alle diese Werkzeuge (oder deren etwas primitivere Variante, dazu später mehr) auch auf einem Server, oder in einem Docker-Container, gerne auch auf einem Kubernetes-Cluster in Produktion einsetzen kann, wo man sonst halt nicht so viele Werkzeuge hat, und schon gar nicht seine IDE anschließen kann um zu versuchen dort Herr der Lage zu werden.</p>
+<p>Dazu möchte ich euch die Tools <a href="https://github.com/ajeetdsouza/zoxide">zoxide</a>, grep/<a href="https://github.com/BurntSushi/ripgrep">ripgrep</a>, <a href="https://github.com/junegunn/fzf">fzf</a>, less/cat/<a href="https://github.com/sharkdp/bat">bat</a> und <a href="https://direnv.net">direnv</a> vorstellen.</p>
+<p>Diese Tools erleichtern viele täglich oft wiederholte Arbeitsabläufe dramatisch, und sie ermöglichen viele Use-Cases, die viele grafischen IDEs und Text-Editoren gar nicht unterstützen. Los geht es mit dem flauschigsten der Tools, fzf.</p>
+<h2>Zackig die richtige Datei finden: fzf</h2>
+<p><a href="https://github.com/junegunn/fzf">fzf</a> frei Eingezangendeutscht "der flauschige Kommandozeilen Finder", ist ein werkzeug um Dateien (aber auch beliebige andere Dinge) anhand von teilen des Namens oder Mustern wie jeder erste Buchstabe der Wörter ihres Namens zu finden. Dazu bietet dieses Werkzeug eine Oberfläche die interaktiv die Liste der Auswahlmöglichkeiten filtert während man tippt. Die meisten IDEs bieten so eine Funktion irgendwo mehr oder weniger gut versteckt an, und dieses Werkzeug portiert diese Funktionalität als generisches Werkzeug in die Shell.</p>
+<p>Als beispiel: Ich möchte einen bestimmten UnitTest ausführen:</p>
+<div class="hll"><pre><span></span>$<span class="w"> </span>bin/run_tests_in_docker.sh<span class="w"> </span><span class="k">$(</span>fzf<span class="k">)</span>
+</pre></div>
+<p>Mit diesem Kommando, wird zuerst fzf aufgerufen (wegen <code>$(fzf)</code>) was dann eine oberfläche präsentiert, mit der man interktiv die richtige oder die richtigen Dateien auswählen kann.</p>
+<div class="hll"><pre><span></span><span class="c"># ich verwende die fish shell, daher brauch ich das $ nicht</span>
+❯ bin/run_tests_in_docker.sh <span class="o">(</span>fzf<span class="o">)</span>
+  src/models/dokumente/tests/document_distribution_test.py
+  src/controller/process_distribution/tests/models_test.py
+  src/models/dokumente/tests/dokumente_test.py
+  src/integration/d3/api/test/models_test.py
+▌ src/models/tests/kontaktdaten_test.py
+  5/448 ────────────────────────────────
+<span class="o">&gt;</span> models <span class="err">&#39;</span><span class="k">test</span>.py
+</pre></div>
+<p>In dem Interface kann man auch mit den Pfeiltasten navigieren, oder einen Eintrag anklicken. Der von mir eingegebene Suchstring "models 'test.py" bedeutet, dass 'models' irgendwo in dem Treffer diese Buchstaben in dieser Reihenfolge vorkommen müssen, während "'test.py" erzwingt das der exakte String 'test.py' vorkommen muss.</p>
+<p><a href="https://junegunn.github.io/fzf/shell-integration/">Wenn man die fzf-Integration mit der eigenen Shell aktiviert</a>, kriegt man viele weitere Integrationen in die Shell dazu. Zwei Beispiele:</p>
+<ul>
+<li><p><code>⌃-T</code> sucht (mit Vorschau!) nach Dateien unterhalb des aktuellen Verzeichnisses. Das ist immer dann Praktisch wenn man für ein Kommando eine Datei aus dem aktuellen Projekt als Argument übergeben muss, und spart das tippen von <code>$(fzf)</code>. Klar, mit Auto-Vervollständigung kommt man auch ans Ziel, aber das ist <em>soo</em> viel schneller. Insbesondere wenn man nicht genau im Kopf hat wo die Datei liegt, aber noch weiß was in Ihrem Namen oder Pfad vorkommen muss. Das verwende ich die ganze Zeit.</p>
+</li>
+<li><p><code>⌃-R</code> sucht mit <code>fzf</code> in der Shell-Historie. Das funktioniert viel besser als die Standard-Suche, die nur nach direkt zusammenhängenden Buchstaben suchen kann. Ein Beispiel: Das Wenn ich das Kommando <code>helm template extensions ./k8s/extensions/ --values ./k8s/extensions/values.dev.yaml | yq</code> aus meiner historie suchen möchte, müsste ich ohne <code>fzf</code> den exakten Text schreiben der in dem Kommando vorkommt.</p>
+</li>
+</ul>
+<div class="hll"><pre><span></span>~
+Search History&gt; helmtemplateexten
+  76/32637 <span class="o">(</span>0<span class="o">)</span>
+  02-17 18:07:03 │ helm template extensions ./k8s/extensions/ --values ./k8s/extensions/values.dev.yaml
+  02-17 18:06:10 │ helm template extensions ./k8s/extensions/ --values ./k8s/extensions/values.dev.yaml <span class="o">|</span> yq
+  02-17 17:59:53 │ helm template extensions ./k8s/extensions/ --values ./k8s/extensions/values-dev.yaml
+  02-17 20:22:18 │ helm template  extensions ./k8s/extensions/ --values ./k8s/extensions/values.dev.yaml
+  02-17 18:15:27 │ helm template --debug extensions ./k8s/extensions/ --values ./k8s/extensions/values.dev.yaml
+  02-17 17:59:42 │ helm template --dry-run --debug extensions ./k8s/extensions/ --values ./k8s/extensions/values-dev.yaml
+▌ 02-17 17:59:29 │ helm template --dry-run --debug  ./k8s/extensions/ --values ./k8s/extensions/values-dev.yaml
+  02-17 17:59:36 │ helm template --dry-run --debug foo ./k8s/extensions/ --values ./k8s/extensions/values-dev.yaml
+╭──────────────────────────────────────────────────────────────────────────────────────────────╮
+│ helm template --dry-run --debug ./k8s/extensions/ --values ./k8s/extensions/values-dev.yaml  │
+╰──────────────────────────────────────────────────────────────────────────────────────────────╯
+</pre></div>
+<p>Wenn ich oft, wenn ich ein neues Terminal öffne in die gleichen Projekte navigiere, dann geht das prima über die Shell-History:</p>
+<div class="hll"><pre><span></span>❯ <span class="c"># ctrl-r für history suche</span>
+Search History&gt; cdmkkapi
+  352/32638 <span class="o">(</span>0<span class="o">)</span> ──────────────────────────
+  08-12 11:56:19 │ <span class="k">cd</span> mkk/api
+  08-24 19:05:13 │ <span class="k">cd</span> ../mkk/api
+▌ 05-26 08:39:19 │ <span class="k">cd</span> Code/Projekte/mkk/api
+  07-29 17:02:48 │ <span class="k">cd</span> Code/Projekte/mkk/api_infra/
+  02-15 08:37:01 │ <span class="k">cd</span> Code/Projekte/mkk/api_infra/monitoring/
+╭──────────────────────────╮
+│ <span class="k">cd</span> Code/Projekte/mkk/api │
+╰──────────────────────────╯
+</pre></div>
+<p>Mit <a href="https://github.com/ajeetdsouza/zoxide">Zoxide</a> geht das noch besser, aber dazu später mehr.</p>
+<p>So habe ich meine fzf Integration konfiguriert:</p>
+<div class="hll"><pre><span></span><span class="c"># configure key-bindings for fzf-fish</span>
+<span class="c"># ctrl-f directory search</span>
+<span class="c"># ctrl-r history search</span>
+<span class="c"># ctlr-v variables search</span>
+<span class="c"># ctrl-l git log search</span>
+<span class="c"># ctrl-s git status search</span>
+<span class="c"># ctrl-p processes pid search</span>
+fzf_configure_bindings --git_log<span class="o">=</span><span class="se">\f</span> --directory<span class="o">=</span><span class="se">\c</span>F --git_status<span class="o">=</span><span class="se">\c</span>S --processes<span class="o">=</span><span class="se">\c</span>P
+</pre></div>
+<p>Das geniale an fzf ist, dass es sich so wunderbar in andere Tools integrieren lässt. Hat man es installiert wird es z.B. von <a href="https://github.com/ahmetb/kubectx">KubeCTX</a> verwendet um in <code>kubectx</code> die liste der verbundenen Kubernetes Cluster zu filtern. Oder von <code>kubens</code> um die Liste der Namespaces. Tatsächlich verwenden viele Werkzeuge intern <code>fzf</code> wenn es instaliert ist. Für mich immer wieder eine schöne Überrachung, wenn ein weiteres Werkzeug das ich gerne einsetze <code>fzf</code> verwendet.</p>
+
+    </section>
+    
+      <footer>
+        <a href="2025/5/die-freuden-einer-gut-eingerichteten-shell-fzf/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/">
         Die Freuden einer gut eingerichteten Shell: Autocomplete
         </a>
@@ -92,7 +187,7 @@ Das zeigt hier nichts, genauso für lange Optionen <code>ls --⇥⇥</code> (zw
 <img src="2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/autocomplete-long-options-configured.png" alt="Vervollständigung von langen Optionen mit der Fish-Shell"></p>
 <p>Natürlich kann ich mit den Pfeiltasten oder mit Tab eine der Optionen auswählen - natürlich mit ordentlichem Highlighting.
 So macht arbeiten auf der Shell Spaß!</p>
-<p>Falls Ihr verwirrt seid das mein ls andere Optionen anbietet als eures, dann liegt das daran das ich ls durch <a href="https://github.com/ogham/exa">exa</a> ersetzt habe.</p>
+<p>Falls Ihr verwirrt seid das mein ls andere Optionen anbietet als eures, dann liegt das daran <a href="https://github.com/ogham/exa">das ich ls durch exa ersetzt habe</a>.</p>
 <h2>Wie könnt Ihr das bei euch nutzen?</h2>
 <p>Ich nutze die <a href="https://fishshell.com">Fish-Shell</a>, da diese von Haus aus eine sehr gute Autocompletion anbietet. Das ist aber nicht für jede, denn die Syntax der Fish Shell ist etwas anders als bei Bash/ZSH - eben nicht posix kompatibel. Ich mag das Weil es logischer und Kürzer ist, aber ich komme auch nicht durcheinander mit den verschiedenen Shell-Syntaxen da ich sie schon so lange verwende.</p>
 <p>Fast alle Shell Konfigrurations-Frameworks wie <a href="https://ohmyz.sh">oh-my-zsh</a> oder <a href="https://github.com/sorin-ionescu/prezto">Prezto</a> bieten zumindest etwas an das diesem Nahe kommen. Alle automatische Konfiguration stößt aber irgendwann an Ihre Grenzen wenn es um die Kommandos geht, die wir täglich benutzen. <code>docker</code> vervollständigt dann nicht compose und oder kennt die Unterkommandos davon nicht oder nur unvollständig, kubectl und helm sind notorische Kandidaten für die man sich selber kümmern muss.</p>
@@ -549,42 +644,6 @@ pkgs<span class="o">.</span>mkShell <span class="p">{</span>
     
       <footer>
         <a href="2024/6/rich-und-objexplore-um-python-code-interaktiv-zu-verstehen/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="2024/5/wie-nutze-ich-die-shell-effektiv/">
-        Wie nutze ich die Shell effektiv
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2024-05-24">Freitag, 24. Mai 2024</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p><img src="2024/5/wie-nutze-ich-die-shell-effektiv/hacker.jpeg" alt="Häcker bei der Arbeit…">
-Bei meiner Arbeit ist mir aufgefallen, dass viele Entwickler bei uns die Shell viel effektiver nutzen könnten, um ihre Arbeit besser und schneller zu machen. Da ich die Shell sehr viel nutze, habe ich dazu ein paar Ideen. 😇 Auf der anderen Seite gibt es immer wieder ein Nugget, das ich selbst nicht kenne – und das möchte ich natürlich auch lernen.  </p>
-<p>In diesem Sinne: Ich freue mich über Tips, lasst uns gerne daraus einen Austausch machen, wie man seine Shell effektiv einsetzt.</p>
-<p>Damit verständlich wird wie ich meine Shell verwende ist es wichtig zu verstehen dass es verschiedene Arten gibt einen Mac effektiv zu nutzen. Ich kategorisiere das für mich grob so:</p>
-<ul>
-<li>Fensterbasiert: Viele Fenster, oft klein, die sich gegenseitig teilweise verdecken. Spezialisierte Apps anstatt Monolithen. Terminal, Editor, Git GUI, Datenbank-GUI und ein Dokumentationsbrowser, anstatt einer IDE die alles inkludiert.</li>
-<li>Screen/Tmux Style: Auch viele Fenster, aber ohne das diese sich überlappen. Viel Full-Screen und oft ein Window Manger oder Terminal das sicherstellt das Fenster garantiert nebeneinander sind. IDEs arbeiten in der Regel so.</li>
-<li>Quake Shell-Style: Im wesentlichen irgend ein anderer Stil, aber mit einem globalen Shortcut, der jederzeit eine Shell in den Vordergrund bringt oder wieder verschwinden lässt - egal wo man gerade ist.</li>
-<li>Mehrere Desktops: Separation von Apps über mehrere Desktops oder Workspaces.</li>
-</ul>
-<p>Ich bin ganz klar tief in dem Fensterbasierten Workflow verortet. Ich kenne natürlich auch die anderen Workflows, aber sie funktionieren für mich persönlich einfach nicht so gut. Ich finde überlappende Fenster wirklich großartig, weil ich damit auf einem sehr viel kleineren Bildschirm (14-Zoll-Notebook) genauso produktiv sein kann, wie auf einem sehr viel größeren Bildschirm. </p>
-<p>Ich hoffe sehr, dass die Apple-Vision bald so gut funktioniert und so leicht wird, wie ich es mir wünsche. Dann kann ich es mir meine Fenster fei um mich herum anordnen. Aber bis dahin bleibe ich bei überlappenden Fenstern.</p>
-
-    </section>
-    
-      <footer>
-        <a href="2024/5/wie-nutze-ich-die-shell-effektiv/">weiterlesen…</a>
       </footer>
     
   </article>

@@ -57,6 +57,47 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2010/1/method-argument-naming-confusion/">
+        Method argument naming confusion
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2010-01-08">Freitag, 8. Januar 2010</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Schon seit einigen Wochen bin ich am grübeln, nach welcher Regel ich in Python meine variablen für Methoden-Argumente benennen soll. Das ist erstaunlicherweise gar nicht so klar.</p>
+<p>Hier mal das Problem: In Objective-C ist alles sehr klar und einfach (von Smalltalk kommend). Jede Methoden-Deklaration besteht abwechselnd aus einem Teil Methodennamen und dann einer Variablen. Hier mal ein Beispiel:</p>
+<div class="hll"><pre><span></span><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">setValue:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">aValue</span><span class="w"> </span><span class="nf">forKey:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">aKey</span>
+</pre></div>
+<p>Das hat den großen Vorteil dass man den Methodennamen benutzen kann um Stück für Stück die Argumente zu dokumentieren. Verwendet wird das so, dass das Stück Methodennamen das vor einem Argument kommt die Rolle beschreibt die das Argument spielen wird, während der Name der Variablen eher generisch ist und sich eher am Typ orientiert. Dazu kommt natürlich das man die Typen auch explizit auszeichnen kann, was die notwendigkeit für die Typ-Annotation im Namen der Variablen im vergleich zu Smalltalk oder Python noch mal vermindert und man kann ihn ganz der Rolle hingeben die die Variable in der Methode spielen wird - versehen mit dem a/an/some/etc. prefix der Argumente (als generische Instanzen von etwas) von den lokalen und instanz-variablen unterscheidet.</p>
+<p>In Python geht das so nicht. Man kann versuchen das auf zwei wegen anzunähern:</p>
+<div class="hll"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">set_value_for_key</span><span class="p">(</span><span class="n">a_value</span><span class="p">,</span> <span class="n">a_key</span><span class="p">):</span> <span class="k">pass</span>
+<span class="c1"># benutze als: some_dict.set_value_for_key(&#39;value&#39;, &#39;key&#39;)</span>
+</pre></div>
+<p>Das hat den Vorteil das man die Argumente mehr oder weniger benennen kann wie man möchte, aber den Nachteil das die Dokumentation der argumente nicht mit diesen zusammen ist. Das hat schon mal den unangenehmen seiteneffekt das es sehr viel schlechter auf mehrere Argumente skaliert und damit sehr fix mehr extra-dokumentation nötig macht.</p>
+<p>Der andere Weg wäre so:</p>
+<div class="hll"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">set</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">for_key</span><span class="p">):</span> <span class="k">pass</span>
+<span class="c1">#benutze als: some_dict.set(value=&#39;value&#39;, for_key=&#39;key&#39;)</span>
+</pre></div>
+<p>Das hat den Vorteil dass der MethodenNamen von der Dokumentationshürde befreit ist - und damit Kurz wird.  Auf der anderen Seite sind die Argument-Namen jetzt effektiv teil des Methoden-Namens und damit kann man sie nicht mehr so gut benutzen um den Typ der Argumente zu dokumentieren.</p>
+<p>:-(</p>
+<p>Das ist der Grund wieso ich die Objective-C / Smalltalk Syntax so gerne mag, weil es darin so einfach ist selbstdokumentierenden Code von hoher qualität zu schreiben.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2010/1/method-argument-naming-confusion/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2009/12/python-saug-punkte/">
         Python Saug-Punkte
         </a>
@@ -391,38 +432,6 @@ sich die Viren nicht ausbreiten:</p>
     
       <footer>
         <a href="../../2009/11/wieso-blo-cke-keine-echten-funktionen-sein-sollten/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2009/10/worin-liegt-der-erfolg-von-ruby-on-rails/">
-        Worin liegt der Erfolg von &#34;Ruby on Rails&#34;
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2009-10-24">Samstag, 24. Oktober 2009</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>Liegt es vielleicht wie <a href="http://stackoverflow.com/questions/1099305/why-is-ruby-more-suitable-for-rails-than-python/1099367#1099367">auf Stackoverflow angekündigt</a> an der Sprache?</p>
-<p>Jedenfalls fand ich den ersten Kommentar hervorragend.</p>
-<pre><code>"Python on Pails" just doesn't have the same feel to it... – ephemient
-  @Ephemient: I believe it would be Python on Planes. – Jimmy
-  @Jimmy: Who needs planes? import antigravity ;-) xkcd.com/353 – Vinay Sajip
-  Is there a Java in Jails? – Nosredna
-</code></pre>
-<p><em>lol</em> Eindeutig, die Sprache ist schuld.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2009/10/worin-liegt-der-erfolg-von-ruby-on-rails/">weiterlesen…</a>
       </footer>
     
   </article>

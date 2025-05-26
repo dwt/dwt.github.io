@@ -1,5 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Martin Häckers Blog - Software, Go / Baduk / Weiqi, Liquid Democracy</title><link href="https://h%C3%A4cker.net/en/blog/" rel="alternate"></link><link href="https://h%C3%A4cker.net/blog/feed.xml" rel="self"></link><id>urn:uuid:d0d51cf8-c6be-310d-a416-bf22c1661ce7</id><updated>2025-04-14T00:00:00Z</updated><author><name></name></author><entry><title>Die Freuden einer gut eingerichteten Shell: Autocomplete</title><link href="https://h%C3%A4cker.net/blog/2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/" rel="alternate"></link><updated>2025-04-14T00:00:00Z</updated><author><name>Martin Häcker</name></author><id>urn:uuid:636e212b-31f2-322d-a44c-49226a7bc768</id><content type="html">&lt;h2&gt;Was ist schlechte Vervollständigung?&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Martin Häckers Blog - Software, Go / Baduk / Weiqi, Liquid Democracy</title><link href="https://h%C3%A4cker.net/en/blog/" rel="alternate"></link><link href="https://h%C3%A4cker.net/blog/feed.xml" rel="self"></link><id>urn:uuid:d0d51cf8-c6be-310d-a416-bf22c1661ce7</id><updated>2025-05-07T00:00:00Z</updated><author><name></name></author><entry><title>Die Freuden einer gut eingerichteten Shell: fzf</title><link href="https://h%C3%A4cker.net/blog/2025/5/die-freuden-einer-gut-eingerichteten-shell-fzf/" rel="alternate"></link><updated>2025-05-07T00:00:00Z</updated><author><name>Martin Häcker</name></author><id>urn:uuid:ac85de84-24e4-3685-9502-550b7a7c039d</id><content type="html">&lt;p&gt;&lt;img src="fzf.png" alt="fzf"&gt;&lt;/p&gt;
+&lt;p&gt;Nachdem es bisher in &lt;a href="../../../../categories/code/"&gt;der Serie&lt;/a&gt; um die &lt;a href="../../../2024/11/grundlegende-funktionen-und-einstellungen-des-terminals/"&gt;grundlegende Einrichtung der Shell&lt;/a&gt;, &lt;a href="../../2/die-freuden-einer-gut-eingerichteten-shell-prompt/"&gt;einen guten Prompt&lt;/a&gt; und &lt;a href="../../4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/"&gt;funktionierende autoomatische Vervollständigung&lt;/a&gt; ging, geht es jetzt eine Weile um Werkzeuge um mit der Shell effizient zu navigieren und Dateien und Inhalte zu finden.&lt;/p&gt;
+&lt;h2&gt;Einleitung&lt;/h2&gt;
+&lt;p&gt;Hier geht es mir darum das die Arbeit auf der Shell (auf dem eigenen Rechner vor allem) nur dann schnell und Effizient ist, wenn man schnel und einfach in die Ordner kommt in denen man arbeiten möchte, und die Dateien findet in denen etwas interessantes steht das man entweder lesen oder verändern möchte.&lt;/p&gt;
+&lt;p&gt;Und natürlich ist das Skillset auch auf beliebige Server transferierbar, weil man alle diese Werkzeuge (oder deren etwas primitivere Variante, dazu später mehr) auch auf einem Server, oder in einem Docker-Container, gerne auch auf einem Kubernetes-Cluster in Produktion einsetzen kann, wo man sonst halt nicht so viele Werkzeuge hat, und schon gar nicht seine IDE anschließen kann um zu versuchen dort Herr der Lage zu werden.&lt;/p&gt;
+&lt;p&gt;Dazu möchte ich euch die Tools &lt;a href="https://github.com/ajeetdsouza/zoxide"&gt;zoxide&lt;/a&gt;, grep/&lt;a href="https://github.com/BurntSushi/ripgrep"&gt;ripgrep&lt;/a&gt;, &lt;a href="https://github.com/junegunn/fzf"&gt;fzf&lt;/a&gt;, less/cat/&lt;a href="https://github.com/sharkdp/bat"&gt;bat&lt;/a&gt; und &lt;a href="https://direnv.net"&gt;direnv&lt;/a&gt; vorstellen.&lt;/p&gt;
+&lt;p&gt;Diese Tools erleichtern viele täglich oft wiederholte Arbeitsabläufe dramatisch, und sie ermöglichen viele Use-Cases, die viele grafischen IDEs und Text-Editoren gar nicht unterstützen. Los geht es mit dem flauschigsten der Tools, fzf.&lt;/p&gt;
+&lt;h2&gt;Zackig die richtige Datei finden: fzf&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://github.com/junegunn/fzf"&gt;fzf&lt;/a&gt; frei Eingezangendeutscht "der flauschige Kommandozeilen Finder", ist ein werkzeug um Dateien (aber auch beliebige andere Dinge) anhand von teilen des Namens oder Mustern wie jeder erste Buchstabe der Wörter ihres Namens zu finden. Dazu bietet dieses Werkzeug eine Oberfläche die interaktiv die Liste der Auswahlmöglichkeiten filtert während man tippt. Die meisten IDEs bieten so eine Funktion irgendwo mehr oder weniger gut versteckt an, und dieses Werkzeug portiert diese Funktionalität als generisches Werkzeug in die Shell.&lt;/p&gt;
+&lt;p&gt;Als beispiel: Ich möchte einen bestimmten UnitTest ausführen:&lt;/p&gt;
+&lt;div class="hll"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$&lt;span class="w"&gt; &lt;/span&gt;bin/run_tests_in_docker.sh&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;fzf&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Mit diesem Kommando, wird zuerst fzf aufgerufen (wegen &lt;code&gt;$(fzf)&lt;/code&gt;) was dann eine oberfläche präsentiert, mit der man interktiv die richtige oder die richtigen Dateien auswählen kann.&lt;/p&gt;
+&lt;div class="hll"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c"&gt;# ich verwende die fish shell, daher brauch ich das $ nicht&lt;/span&gt;
+❯ bin/run_tests_in_docker.sh &lt;span class="o"&gt;(&lt;/span&gt;fzf&lt;span class="o"&gt;)&lt;/span&gt;
+  src/models/dokumente/tests/document_distribution_test.py
+  src/controller/process_distribution/tests/models_test.py
+  src/models/dokumente/tests/dokumente_test.py
+  src/integration/d3/api/test/models_test.py
+▌ src/models/tests/kontaktdaten_test.py
+  5/448 ────────────────────────────────
+&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; models &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;test&lt;/span&gt;.py
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;In dem Interface kann man auch mit den Pfeiltasten navigieren, oder einen Eintrag anklicken. Der von mir eingegebene Suchstring "models 'test.py" bedeutet, dass 'models' irgendwo in dem Treffer diese Buchstaben in dieser Reihenfolge vorkommen müssen, während "'test.py" erzwingt das der exakte String 'test.py' vorkommen muss.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://junegunn.github.io/fzf/shell-integration/"&gt;Wenn man die fzf-Integration mit der eigenen Shell aktiviert&lt;/a&gt;, kriegt man viele weitere Integrationen in die Shell dazu. Zwei Beispiele:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;⌃-T&lt;/code&gt; sucht (mit Vorschau!) nach Dateien unterhalb des aktuellen Verzeichnisses. Das ist immer dann Praktisch wenn man für ein Kommando eine Datei aus dem aktuellen Projekt als Argument übergeben muss, und spart das tippen von &lt;code&gt;$(fzf)&lt;/code&gt;. Klar, mit Auto-Vervollständigung kommt man auch ans Ziel, aber das ist &lt;em&gt;soo&lt;/em&gt; viel schneller. Insbesondere wenn man nicht genau im Kopf hat wo die Datei liegt, aber noch weiß was in Ihrem Namen oder Pfad vorkommen muss. Das verwende ich die ganze Zeit.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;⌃-R&lt;/code&gt; sucht mit &lt;code&gt;fzf&lt;/code&gt; in der Shell-Historie. Das funktioniert viel besser als die Standard-Suche, die nur nach direkt zusammenhängenden Buchstaben suchen kann. Ein Beispiel: Das Wenn ich das Kommando &lt;code&gt;helm template extensions ./k8s/extensions/ --values ./k8s/extensions/values.dev.yaml | yq&lt;/code&gt; aus meiner historie suchen möchte, müsste ich ohne &lt;code&gt;fzf&lt;/code&gt; den exakten Text schreiben der in dem Kommando vorkommt.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="hll"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;~
+Search History&amp;gt; helmtemplateexten
+  76/32637 &lt;span class="o"&gt;(&lt;/span&gt;0&lt;span class="o"&gt;)&lt;/span&gt;
+  02-17 18:07:03 │ helm template extensions ./k8s/extensions/ --values ./k8s/extensions/values.dev.yaml
+  02-17 18:06:10 │ helm template extensions ./k8s/extensions/ --values ./k8s/extensions/values.dev.yaml &lt;span class="o"&gt;|&lt;/span&gt; yq
+  02-17 17:59:53 │ helm template extensions ./k8s/extensions/ --values ./k8s/extensions/values-dev.yaml
+  02-17 20:22:18 │ helm template  extensions ./k8s/extensions/ --values ./k8s/extensions/values.dev.yaml
+  02-17 18:15:27 │ helm template --debug extensions ./k8s/extensions/ --values ./k8s/extensions/values.dev.yaml
+  02-17 17:59:42 │ helm template --dry-run --debug extensions ./k8s/extensions/ --values ./k8s/extensions/values-dev.yaml
+▌ 02-17 17:59:29 │ helm template --dry-run --debug  ./k8s/extensions/ --values ./k8s/extensions/values-dev.yaml
+  02-17 17:59:36 │ helm template --dry-run --debug foo ./k8s/extensions/ --values ./k8s/extensions/values-dev.yaml
+╭──────────────────────────────────────────────────────────────────────────────────────────────╮
+│ helm template --dry-run --debug ./k8s/extensions/ --values ./k8s/extensions/values-dev.yaml  │
+╰──────────────────────────────────────────────────────────────────────────────────────────────╯
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Wenn ich oft, wenn ich ein neues Terminal öffne in die gleichen Projekte navigiere, dann geht das prima über die Shell-History:&lt;/p&gt;
+&lt;div class="hll"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;❯ &lt;span class="c"&gt;# ctrl-r für history suche&lt;/span&gt;
+Search History&amp;gt; cdmkkapi
+  352/32638 &lt;span class="o"&gt;(&lt;/span&gt;0&lt;span class="o"&gt;)&lt;/span&gt; ──────────────────────────
+  08-12 11:56:19 │ &lt;span class="k"&gt;cd&lt;/span&gt; mkk/api
+  08-24 19:05:13 │ &lt;span class="k"&gt;cd&lt;/span&gt; ../mkk/api
+▌ 05-26 08:39:19 │ &lt;span class="k"&gt;cd&lt;/span&gt; Code/Projekte/mkk/api
+  07-29 17:02:48 │ &lt;span class="k"&gt;cd&lt;/span&gt; Code/Projekte/mkk/api_infra/
+  02-15 08:37:01 │ &lt;span class="k"&gt;cd&lt;/span&gt; Code/Projekte/mkk/api_infra/monitoring/
+╭──────────────────────────╮
+│ &lt;span class="k"&gt;cd&lt;/span&gt; Code/Projekte/mkk/api │
+╰──────────────────────────╯
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Mit &lt;a href="https://github.com/ajeetdsouza/zoxide"&gt;Zoxide&lt;/a&gt; geht das noch besser, aber dazu später mehr.&lt;/p&gt;
+&lt;p&gt;So habe ich meine fzf Integration konfiguriert:&lt;/p&gt;
+&lt;div class="hll"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c"&gt;# configure key-bindings for fzf-fish&lt;/span&gt;
+&lt;span class="c"&gt;# ctrl-f directory search&lt;/span&gt;
+&lt;span class="c"&gt;# ctrl-r history search&lt;/span&gt;
+&lt;span class="c"&gt;# ctlr-v variables search&lt;/span&gt;
+&lt;span class="c"&gt;# ctrl-l git log search&lt;/span&gt;
+&lt;span class="c"&gt;# ctrl-s git status search&lt;/span&gt;
+&lt;span class="c"&gt;# ctrl-p processes pid search&lt;/span&gt;
+fzf_configure_bindings --git_log&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="se"&gt;\f&lt;/span&gt; --directory&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="se"&gt;\c&lt;/span&gt;F --git_status&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="se"&gt;\c&lt;/span&gt;S --processes&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="se"&gt;\c&lt;/span&gt;P
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Das geniale an fzf ist, dass es sich so wunderbar in andere Tools integrieren lässt. Hat man es installiert wird es z.B. von &lt;a href="https://github.com/ahmetb/kubectx"&gt;KubeCTX&lt;/a&gt; verwendet um in &lt;code&gt;kubectx&lt;/code&gt; die liste der verbundenen Kubernetes Cluster zu filtern. Oder von &lt;code&gt;kubens&lt;/code&gt; um die Liste der Namespaces. Tatsächlich verwenden viele Werkzeuge intern &lt;code&gt;fzf&lt;/code&gt; wenn es instaliert ist. Für mich immer wieder eine schöne Überrachung, wenn ein weiteres Werkzeug das ich gerne einsetze &lt;code&gt;fzf&lt;/code&gt; verwendet.&lt;/p&gt;
+</content></entry><entry><title>Die Freuden einer gut eingerichteten Shell: Autocomplete</title><link href="https://h%C3%A4cker.net/blog/2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/" rel="alternate"></link><updated>2025-04-14T00:00:00Z</updated><author><name>Martin Häcker</name></author><id>urn:uuid:636e212b-31f2-322d-a44c-49226a7bc768</id><content type="html">&lt;h2&gt;Was ist schlechte Vervollständigung?&lt;/h2&gt;
 &lt;p&gt;Um zu verstehen was ich mit guter Auto-Completion für Shells meine, brauchen wir erst einmal eine Baseline wie eine schlechte Completion aussieht. Das lässt sich sehr gut mit Docker demonstrieren: &lt;/p&gt;
 &lt;div class="hll"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;docker&lt;span class="w"&gt; &lt;/span&gt;run&lt;span class="w"&gt; &lt;/span&gt;--rm&lt;span class="w"&gt; &lt;/span&gt;-it&lt;span class="w"&gt; &lt;/span&gt;--hostname&lt;span class="w"&gt; &lt;/span&gt;shell-completion-demo&lt;span class="w"&gt; &lt;/span&gt;debian
 &lt;/pre&gt;&lt;/div&gt;
@@ -24,7 +95,7 @@ Das zeigt hier nichts, genauso für lange Optionen &lt;code&gt;ls --⇥⇥&lt;/
 &lt;img src="autocomplete-long-options-configured.png" alt="Vervollständigung von langen Optionen mit der Fish-Shell"&gt;&lt;/p&gt;
 &lt;p&gt;Natürlich kann ich mit den Pfeiltasten oder mit Tab eine der Optionen auswählen - natürlich mit ordentlichem Highlighting.
 So macht arbeiten auf der Shell Spaß!&lt;/p&gt;
-&lt;p&gt;Falls Ihr verwirrt seid das mein ls andere Optionen anbietet als eures, dann liegt das daran das ich ls durch &lt;a href="https://github.com/ogham/exa"&gt;exa&lt;/a&gt; ersetzt habe.&lt;/p&gt;
+&lt;p&gt;Falls Ihr verwirrt seid das mein ls andere Optionen anbietet als eures, dann liegt das daran &lt;a href="https://github.com/ogham/exa"&gt;das ich ls durch exa ersetzt habe&lt;/a&gt;.&lt;/p&gt;
 &lt;h2&gt;Wie könnt Ihr das bei euch nutzen?&lt;/h2&gt;
 &lt;p&gt;Ich nutze die &lt;a href="https://fishshell.com"&gt;Fish-Shell&lt;/a&gt;, da diese von Haus aus eine sehr gute Autocompletion anbietet. Das ist aber nicht für jede, denn die Syntax der Fish Shell ist etwas anders als bei Bash/ZSH - eben nicht posix kompatibel. Ich mag das Weil es logischer und Kürzer ist, aber ich komme auch nicht durcheinander mit den verschiedenen Shell-Syntaxen da ich sie schon so lange verwende.&lt;/p&gt;
 &lt;p&gt;Fast alle Shell Konfigrurations-Frameworks wie &lt;a href="https://ohmyz.sh"&gt;oh-my-zsh&lt;/a&gt; oder &lt;a href="https://github.com/sorin-ionescu/prezto"&gt;Prezto&lt;/a&gt; bieten zumindest etwas an das diesem Nahe kommen. Alle automatische Konfiguration stößt aber irgendwann an Ihre Grenzen wenn es um die Kommandos geht, die wir täglich benutzen. &lt;code&gt;docker&lt;/code&gt; vervollständigt dann nicht compose und oder kennt die Unterkommandos davon nicht oder nur unvollständig, kubectl und helm sind notorische Kandidaten für die man sich selber kümmern muss.&lt;/p&gt;
@@ -770,8 +841,4 @@ $&lt;span class="w"&gt; &lt;/span&gt;python&lt;span class="w"&gt; &lt;/span&gt;-
 &lt;p&gt;Das hat den Vorteil dass der MethodenNamen von der Dokumentationshürde befreit ist - und damit Kurz wird.  Auf der anderen Seite sind die Argument-Namen jetzt effektiv teil des Methoden-Namens und damit kann man sie nicht mehr so gut benutzen um den Typ der Argumente zu dokumentieren.&lt;/p&gt;
 &lt;p&gt;:-(&lt;/p&gt;
 &lt;p&gt;Das ist der Grund wieso ich die Objective-C / Smalltalk Syntax so gerne mag, weil es darin so einfach ist selbstdokumentierenden Code von hoher qualität zu schreiben.&lt;/p&gt;
-</content></entry><entry><title>Here be electric dragons</title><link href="https://h%C3%A4cker.net/blog/2010/1/here-be-electric-dragons/" rel="alternate"></link><updated>2010-01-08T00:00:00Z</updated><author><name>Martin Häcker</name></author><id>urn:uuid:235d7d10-6598-3d18-9e90-12da2a1db8a6</id><content type="html">&lt;p&gt;Ich vertrete ja schon länger den Punkt dass ein Grundeinkommen eine Notwendigkeit sein wird in einer Gesellschaft in der Maschinen uns alle physischen Arbeiten abnehmen können.&lt;/p&gt;
-&lt;p&gt;Well, jetzt habe ich endlich jemanden gefunden der dieses Argument auch vertritt.&lt;/p&gt;
-&lt;p&gt;Auf dem 26C3 im Vortrag &lt;a href="http://events.ccc.de/congress/2009/Fahrplan/events/3452.en.html"&gt;Here be electric dragons&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Sehr sehenswert!&lt;/p&gt;
 </content></entry></feed>

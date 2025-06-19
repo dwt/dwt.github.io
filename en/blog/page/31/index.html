@@ -57,6 +57,37 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/3/warum-entwickeln-immer-noch-so-viele-leute-ohne-unittests/">
+        Warum entwickeln immer noch so viele Leute ohne UnitTests?
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-03-16">Sunday, March 16, 2008</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Weiß ich nicht, aber ich weiß, was für Folgen es hat.</p>
+<p>Wenn man ohne Tests entwickelt, dann hat man beim Schreiben von z.B. einer Klasse immer den vollen Zugriff auf das gesamte System - und es ist ständig verlockend, nur eben dieses andere Subsystem aufzurufen oder es in die klasse als Instanzvariable einzubinden. Da man kein Korrektiv hat, sind die Folgen dieser Handlungen fast unsichtbar. Die Abhängigkeiten im System nehmen immer weiter zu - und die Architetkur immer weiter ab. :/</p>
+<p>Als Testgetriebener Entwickler muss man sich, um den Code in einer Testsuite überhaupt laufen lassen zu können maximal vom Rest des Systems abkapseln. Das bedeutet das man sich bei jeder Abhängigkeit die man dazu nimmt genau überlegt, ob man sie wirklich braucht, ob man sie erreichen kann, indem man einen Parameter übergibt, oder indem man ein Protokoll einführt das die Kommunikation dieser zweier Systembestandteile klärt. Immer macht man sich über die Grenzen der Komponente Gedanken und wie die Kommunikation darüber hinaus abläuft.</p>
+<p>Man macht eben nicht einfach nur einen Konstruktorparameter über den dann als globale Variable alles zugänglich ist - den man im Test aber niemals instanziiert bekommt.</p>
+<p>Diese Tatsache macht für mich einen der größten Unterschiede zwischen Testgetrieben entwickeltem Code und sonstigem Code aus.</p>
+<p>Es ist unglaublich schwierig (auf anhieb) Code zu schreiben der Wiederbenutzbar ist und wenig Abhängigkeiten besitzt - wenn man Code testgetrieben entwickelt bekommt man aber unheimlich viel davon umsonst.</p>
+<p>Alleine deswegen darf es heute eigentlich keine Ausrede mehr Geben ohne Tests zu entwickeln.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/3/warum-entwickeln-immer-noch-so-viele-leute-ohne-unittests/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/3/die-provider-sollen-gefa-lligst-p2p-verhindern/">
         Die Provider sollen gefälligst P2P verhindern!
         </a>
@@ -401,38 +432,6 @@ Zwei Revolutionen, eine Idee</p>
     
       <footer>
         <a href="../../2008/3/scho-ne-podiumsdiskussion/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/3/piraten-aus-mangel-an-auswahl/">
-        Piraten aus &#34;Mangel an Auswahl&#34;
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-03-05">Wednesday, March 5, 2008</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p><a href="http://torrentfreak.com/piracy-is-caused-by-poor-choice-080305/">Torrentfreak</a> schrieb heute über <a href="http://www.entertainmentmediaresearch.com/reports/DigitalEntertainmentSurvey2008_FullReport.pdf">eine Studie</a> der <del><a href="http://www.wiggin.co.uk/gaming.asp">Wiggin LLP</a></del> <a href="http://www.wiggin.co.uk/index.asp">Wiggin LLP</a>.</p>
-<p>In der graphisch anspruchsvollen Studie stellt die Firma fest (unklar ist mir noch, wer sie Bezahlt hat) das das eingeschränkte Angebot einer der wichtigsten Gründe ist wieso Leute zu Piraten werden.</p>
-<p>Ahem.</p>
-<p>Na gut, ich finde es ja richtig wenn sich die Entertainement Industrie endlich auf ihren Hosenboden setzt und alle Inhalte (ja, auch die Alten) im Netz verkauft.</p>
-<p>ABER</p>
-<p>Ich vermisse hier ein ganz wesentliches Argument: Filesharing machen zuallererst die Leute die Zeit haben, aber wenig Geld. Diese Leute (Jugendliche &amp; Studenten z.B.) waren und sind aber ein ganz wesentlicher Markt für die Entertainment Branche.</p>
-<p>Davon abgesehen bin ich als Pirat natürlich noch der festen Überzeugung, das unser Land mehr freie Kultur braucht und auch bekommen wird.</p>
-<p>Dazu aber später mehr.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/3/piraten-aus-mangel-an-auswahl/">weiterlesen…</a>
       </footer>
     
   </article>

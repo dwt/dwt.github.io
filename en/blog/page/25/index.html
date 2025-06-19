@@ -57,6 +57,47 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/5/fonelink-2-0/">
+        FoneLink 2.0
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-05-30">Friday, May 30, 2008</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Yay!</p>
+<p>Nachdem wir das Innenleben der Software fast komplett ausgetauscht haben ist <a href="http://www.novamedia.de/d_pages/d_produkte_mac_fl.html">endlich die Version 2.0</a> fertig geworden.</p>
+<p>Was ein Akt.</p>
+<p>Von dem was die Software ausmacht, ist wirklich kein Stein mehr so gelassen worden wie er war.</p>
+<p>Jede operation wurde Asyncron gemacht, alles in ein Konzept von Aktionen gepresst (und das war manchmal nicht einfach) die gescheduled werden und (wenn es das Telefon erlaubt) sogar parallel ausgeführt werden können.</p>
+<p>Mein Hauptteil daran war das Datenmodell das den synchronen Zugriff auf das Dateisystem des Handies erlaubt - intern aber alle Operationen Asynchron abarbeitet.</p>
+<p>Was gar nicht so einfach zu verkapseln war. (Dementsprechend sind die Unit Tests auch fast die noch mal halb so viel Code wie der eigentliche Code).</p>
+<p>Das Design für das ich mich letztendlich entschieden habe ist recht simpel: Jeder Dateisystem-Knoten kann einen von mehreren Zuständen haben:</p>
+<ol>
+<li><strong>Out Of Date</strong> -&gt; Der Zustand muss mit dem Handy abgeglichen werden</li>
+<li>"Up To Date" -&gt; nichts zu tun, die aktuellen Daten sind da</li>
+<li><strong>Update In Progress</strong>-&gt; Die Daten werden gerade Aktualisiert oder ein anderer Job (Meist mit Progress-Anzeige) läuft mit Bezug auf diesen Knoten.</li>
+</ol>
+<p>Jobs können zum Beispiel das Kopieren auf oder von dem Handy sein.</p>
+<p>Dazu kommt dann natürlich noch etwas Intelligenz die diese Jobs automatisch anwirft wenn es Sinn macht (Verzeichnisse Aktualisieren wenn die GUI sie anzeigt) und unnötiges Kopieren vermeidet (Es gibt einen Cache auf der Festplatte - wird eine Datei einmal vom Handy Kopiert und dann nicht mehr Verändert wird die Kopierte ab da für Operationen verwendet.) Und nicht zu vergessen: Versionierte Backup und Restores gibt es natürlich auch noch.</p>
+<p>Ach ja und Rasend Schnell sollte das natürlich auch sein.</p>
+<p>War nicht leicht - aber jetzt läuft es rock-solid. Und über die Implementierung erzähle ich später mal mehr.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/5/fonelink-2-0/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/5/spaces-in-the-path/">
         Spaces in the path
         </a>
@@ -373,43 +414,6 @@ end with either a new-line or null character.
     
       <footer>
         <a href="../../2008/5/die-piratenpartei-ist-gross/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/5/parteitagswahnsinn/">
-        Parteitagswahnsinn
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-05-18">Sunday, May 18, 2008</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p><a href="http://de.wikipedia.org/wiki/Gesch%C3%A4ftsordnung#Antrag_zur_Gesch.C3.A4ftsordnung">GO Antrag</a> auf:</p>
-<ul>
-<li>Ende der Diskussion und Beschlussfassung -&gt; Angenommen</li>
-<li>Großer Protest des noch-Vorsitzenden</li>
-<li>Daraufhin sein GO Antrag keine weiteren GO-Anträge auf Ende der Diskussion und Beschlussfassung zu stellen -&gt; der wurde Angenommen</li>
-<li>Daraufhin der Verweigerung des Versammlungsleiters die restlichen Diskutanten noch reden zu lassen, weil der Antrag auf Ende der Diskussion vor dem GO Antrag der das verhindern möchte beschlossen wurde</li>
-<li>Daraufhin der GO Antrag die Diskussion wieder zu eröffnen</li>
-<li>Und dann ging die Diskussion weiter</li>
-<li>Viele viele GO Anträge später...</li>
-<li>Und dann gab es GO Anträge die Sitzung auf morgen zu Vertagen</li>
-</ul>
-<p>ARGHHHHHHH</p>
-<p>Interessante Begriffe: <a href="http://de.wikipedia.org/wiki/Filibuster">Filibuster</a></p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/5/parteitagswahnsinn/">weiterlesen…</a>
       </footer>
     
   </article>

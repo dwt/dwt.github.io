@@ -1,0 +1,226 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../../static/pygments.css">
+    <title>DevOpsCon: Stolperfallen beim Aufbau interner Developer Platforms (IDP)</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../../../blog/feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item "><a href="../../../../work/" class="nav-link">Professional software development</a></li>
+    
+      <li class="nav-item "><a href="../../../../projects/" class="nav-link">Projects</a></li>
+    
+      <li class="nav-item "><a href="../../../../publications/" class="nav-link">Publications and talks</a></li>
+    
+      <li class="nav-item active"><a href="../../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../../categories/" class="nav-link">Categories</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="../../../../../blog/2025/6/devopscon-stolperfallen-beim-aufbau-interner-developer-platforms-idp/">🇩🇪</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="./">🇬🇧</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../../">🏠</a>
+
+
+<a class="breadcrumb-item " href="../../../">Blog</a>
+
+
+<a class="breadcrumb-item active" href="./">DevOpsCon: Stolperfallen beim Aufbau interner Developer Platforms (IDP)</a>
+
+</nav>
+    </header>
+    <article class="page devopscon-stolperfallen-beim-aufbau-interner-developer-platforms-idp  container-fluid">
+      
+  
+  <article class="blog-post">
+    <header>
+      <h2>
+        
+        DevOpsCon: Stolperfallen beim Aufbau interner Developer Platforms (IDP)
+        
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2025-06-19">Thursday, June 19, 2025</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Heute gibts den Start meines Berichts von der DevOpsCon 25. So viel allgemeines vorweg: War schön.  Druckbetankung wie es sich gehört.</p>
+<p>Los ging es mit einer Keynote über interne Entwickler-Plattformen und was dabei gerne schief geht.</p>
+<h2>1 | Reality-Check: 90 % der Devs nutzen schon eine IDP – wir auch</h2>
+<ul>
+<li>Laut Jessica arbeiten rund 90 % aller Entwickler:innen mittlerweile mit einer internen Plattform – oft, ohne es zu merken.</li>
+<li>Wir auch? Was ist unsere Plattform?</li>
+</ul>
+<h2>2 | Das theoretische Fundament</h2>
+<p>Jessica empfahl <em>vier Bücher</em>, die jede:r Platform‑Builder kennen sollte. (Lustigerweise gab Sie zu, das Sie selbst noch nicht alle davon gelesen komplett gelesen hat.)</p>
+<table>
+<thead><tr>
+<th>Buch</th>
+<th>Kernaussage für IDP</th>
+<th>Mein Take‑away</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><a href="https://www.amazon.com/Transformed-Becoming-Product-Driven-Company-Silicon/dp/1119697336">Transformed</a></strong></td>
+<td>Von Silos zu <strong>empowereden Produkt‑Teams</strong></td>
+<td>Auch Plattform‑Teams brauchen Produktdenken und Produkt-Manager.</td>
+</tr>
+<tr>
+<td><strong><a href="https://www.amazon.com/Team-Topologies-Organizing-Business-Technology/dp/1942788819">Team Topologies</a></strong></td>
+<td><strong>Team‑Typen &amp; Schnittstellen</strong> (u. a. Platform &amp; Enabling Teams)</td>
+<td>Klingt sehr ähnlich zu dem wie wir organisiert sind. Unterschiede: Komplizierte Subsysteme brauchen eigene Teams. Enabling‑Teams sind hier fast immer <strong>temporär</strong>.</td>
+</tr>
+<tr>
+<td><strong><a href="https://www.amazon.de/Accelerate-Software-Performing-Technology-Organizations/dp/1942788339">Accelerate</a></strong></td>
+<td>Deploy‑Freq., Lead‑Time, Failure‑Rate, MTTR</td>
+<td><a href="https://dora.dev/guides/dora-metrics-four-keys/">DORA‑Scores</a> = Proxy für Platform-Team‑Erfolg. Nugget: Im Raum war niemand der alle 4 Metriken einsetzt, oder jemanden kennt der das tut…</td>
+</tr>
+<tr>
+<td><strong><a href="https://www.amazon.de/Platform-Engineering-Technical-Product-Leaders/dp/1098153642">Platform Engineering</a></strong></td>
+<td><strong>Plattform ersetzt Glue‑Code</strong> &amp; schafft Self‑Service</td>
+<td>Eine IDP ist <strong>Software</strong>, kein Ops‑Team.</td>
+</tr>
+</tbody>
+</table>
+<h2>3 | Typische Fallstricke</h2>
+<ol>
+<li><strong>Menschen im Plattform-Team bringen ihre Erfahrungen mit</strong><ul>
+<li>„It’s faster if I just do it.“ Sorgt gerne dafür das das Ergebnis auch nur Sie benutzen können.</li>
+<li>Damit erzeugt man ein neues Ops-Silo. Dringend zu vermeiden. Das Ziel ist, das andere Teams sich selbst helfen können.</li>
+</ul>
+</li>
+<li><strong>Rudis Resterampe</strong> (Scope Creep)<ul>
+<li>Plattform‑Team sammelt alles, was sonst niemand machen will.</li>
+<li>Konsequenz: Keine Zeit mehr für strategische Funktionen.</li>
+<li>Braucht eine klare Vision, und insbesondere By-In von Leadership. Dann Iterationen und viel Kommunikation.</li>
+</ul>
+</li>
+<li><strong>Alles sofort lösen wollen (Rudis Resterampe 2.0)</strong><ul>
+<li>Minimalismus ist King 👑. Nicht jedes Problem muss gleich gelöst werden.</li>
+<li>Priorisiere <strong>Onboarding, Self‑Service &amp; Empowerment</strong>.</li>
+</ul>
+</li>
+<li><strong>Das falsche Problem Lösen</strong><ol>
+<li>Es ist sehr einfach das falsche Problem zu lösen. Schließlich sind wir alle Entwickler und wissen was wir brauchen.</li>
+<li>Aber jedes Team ist anders und hat andere Aufgaben. Daher ist es unglaublich wichtig mit den Menschen intensiv zu sprechen die man beglücken will.</li>
+<li>Plattform-Engineering braucht genauso Produkt-Management und einen Produkt-Manager wie andere Themen. Wenn das Budget dafür nicht vorhanden ist, muss man diese Aufgaben trotzdem erfüllen.</li>
+</ol>
+</li>
+<li><strong>Plattform‑Migrationen unterschätzen</strong><ul>
+<li>Jede Migration ist Schmerzhaft und <strong>kostet Vertrauen</strong> (Vertrauen ist wie eine Währung. Wenn man es ausgegeben hat, ists wech).</li>
+<li>Daher so wenig Migrationen wie möglich, und diese gut vorbereiten, auch wenn es viel Aufwand erzeugt.</li>
+<li>Ziel: <strong>Automatisierte, Low‑Impact‑Migrationspfade</strong>.</li>
+</ul>
+</li>
+</ol>
+<h2>4 | Fragen an den Leser</h2>
+<ol>
+<li><strong>Was ist deine aktuelle Plattform?</strong></li>
+<li><strong>Wo klemmt es eigentlich derzeit?</strong></li>
+<li><strong>Macht es Sinn die DORA‑Baselines zu</strong> messen?</li>
+</ol>
+<h2>5 | Fazit</h2>
+<p>Ein internes Developer‑Platform‑Team ist <strong>kein Sonder‑Ops‑Team</strong>, sondern ein <strong>Produkt‑Team</strong> mit klarer Vision, fokussiertem Scope und messbarem Impact.
+Je einfacher, desto besser – und Vertrauen ist kostbar.</p>
+<blockquote><p><em>„Minimalismus ist King – löse die wichtigsten 20 % zuerst, die den Teams 80 % des Schmerzes nehmen.“</em> – Jessica Anderson</p>
+</blockquote>
+
+    </section>
+    
+  </article>
+
+  <nav>
+    
+  <div class="category-list">
+    Kategorien:
+      
+      <a href="../../../../../categories/code/">Software Development</a>
+      
+    
+  </div>
+
+    
+    <div class="relative-navigation">
+      
+      
+        <div class="next">Nächstes Post: <a class="next" href="../../5/die-freuden-einer-gut-eingerichteten-shell-fzf/">Die Freuden einer gut eingerichteten Shell: fzf</a></div>
+      
+    </div>
+    
+  </nav>
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2025 <a href="../../../../work/">Martin Häcker</a></span>
+  </li>
+  
+    
+    <li class="nav-item imprint">
+      <a class="nav-link" href="../../../../meta/#imprint">
+        Imprint
+      </a></li>
+  
+    
+    <li class="nav-item privacy-policy">
+      <a class="nav-link" href="../../../../meta/#privacy-policy">
+        Privacy Policy
+      </a></li>
+  
+    
+    <li class="nav-item colophon">
+      <a class="nav-link" href="../../../../meta/#colophon">
+        Colophon
+      </a></li>
+  
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../../../blog/feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    <a class="nav-link" 
+      rel="license" 
+      target="_blank" 
+      href="https://creativecommons.org/licenses/by-sa/4.0/deed"
+    >
+      <img 
+        src="/static/cc-by-sa-88x31.png"
+        alt="Creative Commons Attribution - Share Alike 4.0 International Lizense"
+      >
+    </a>
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

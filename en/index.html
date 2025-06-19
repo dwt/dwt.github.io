@@ -59,6 +59,111 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../blog/2025/6/devopscon-stolperfallen-beim-aufbau-interner-developer-platforms-idp/">
+        DevOpsCon: Stolperfallen beim Aufbau interner Developer Platforms (IDP)
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2025-06-19">Thursday, June 19, 2025</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Heute gibts den Start meines Berichts von der DevOpsCon 25. So viel allgemeines vorweg: War schön.  Druckbetankung wie es sich gehört.</p>
+<p>Los ging es mit einer Keynote über interne Entwickler-Plattformen und was dabei gerne schief geht.</p>
+<h2>1 | Reality-Check: 90 % der Devs nutzen schon eine IDP – wir auch</h2>
+<ul>
+<li>Laut Jessica arbeiten rund 90 % aller Entwickler:innen mittlerweile mit einer internen Plattform – oft, ohne es zu merken.</li>
+<li>Wir auch? Was ist unsere Plattform?</li>
+</ul>
+<h2>2 | Das theoretische Fundament</h2>
+<p>Jessica empfahl <em>vier Bücher</em>, die jede:r Platform‑Builder kennen sollte. (Lustigerweise gab Sie zu, das Sie selbst noch nicht alle davon gelesen komplett gelesen hat.)</p>
+<table>
+<thead><tr>
+<th>Buch</th>
+<th>Kernaussage für IDP</th>
+<th>Mein Take‑away</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><a href="https://www.amazon.com/Transformed-Becoming-Product-Driven-Company-Silicon/dp/1119697336">Transformed</a></strong></td>
+<td>Von Silos zu <strong>empowereden Produkt‑Teams</strong></td>
+<td>Auch Plattform‑Teams brauchen Produktdenken und Produkt-Manager.</td>
+</tr>
+<tr>
+<td><strong><a href="https://www.amazon.com/Team-Topologies-Organizing-Business-Technology/dp/1942788819">Team Topologies</a></strong></td>
+<td><strong>Team‑Typen &amp; Schnittstellen</strong> (u. a. Platform &amp; Enabling Teams)</td>
+<td>Klingt sehr ähnlich zu dem wie wir organisiert sind. Unterschiede: Komplizierte Subsysteme brauchen eigene Teams. Enabling‑Teams sind hier fast immer <strong>temporär</strong>.</td>
+</tr>
+<tr>
+<td><strong><a href="https://www.amazon.de/Accelerate-Software-Performing-Technology-Organizations/dp/1942788339">Accelerate</a></strong></td>
+<td>Deploy‑Freq., Lead‑Time, Failure‑Rate, MTTR</td>
+<td><a href="https://dora.dev/guides/dora-metrics-four-keys/">DORA‑Scores</a> = Proxy für Platform-Team‑Erfolg. Nugget: Im Raum war niemand der alle 4 Metriken einsetzt, oder jemanden kennt der das tut…</td>
+</tr>
+<tr>
+<td><strong><a href="https://www.amazon.de/Platform-Engineering-Technical-Product-Leaders/dp/1098153642">Platform Engineering</a></strong></td>
+<td><strong>Plattform ersetzt Glue‑Code</strong> &amp; schafft Self‑Service</td>
+<td>Eine IDP ist <strong>Software</strong>, kein Ops‑Team.</td>
+</tr>
+</tbody>
+</table>
+<h2>3 | Typische Fallstricke</h2>
+<ol>
+<li><strong>Menschen im Plattform-Team bringen ihre Erfahrungen mit</strong><ul>
+<li>„It’s faster if I just do it.“ Sorgt gerne dafür das das Ergebnis auch nur Sie benutzen können.</li>
+<li>Damit erzeugt man ein neues Ops-Silo. Dringend zu vermeiden. Das Ziel ist, das andere Teams sich selbst helfen können.</li>
+</ul>
+</li>
+<li><strong>Rudis Resterampe</strong> (Scope Creep)<ul>
+<li>Plattform‑Team sammelt alles, was sonst niemand machen will.</li>
+<li>Konsequenz: Keine Zeit mehr für strategische Funktionen.</li>
+<li>Braucht eine klare Vision, und insbesondere By-In von Leadership. Dann Iterationen und viel Kommunikation.</li>
+</ul>
+</li>
+<li><strong>Alles sofort lösen wollen (Rudis Resterampe 2.0)</strong><ul>
+<li>Minimalismus ist King 👑. Nicht jedes Problem muss gleich gelöst werden.</li>
+<li>Priorisiere <strong>Onboarding, Self‑Service &amp; Empowerment</strong>.</li>
+</ul>
+</li>
+<li><strong>Das falsche Problem Lösen</strong><ol>
+<li>Es ist sehr einfach das falsche Problem zu lösen. Schließlich sind wir alle Entwickler und wissen was wir brauchen.</li>
+<li>Aber jedes Team ist anders und hat andere Aufgaben. Daher ist es unglaublich wichtig mit den Menschen intensiv zu sprechen die man beglücken will.</li>
+<li>Plattform-Engineering braucht genauso Produkt-Management und einen Produkt-Manager wie andere Themen. Wenn das Budget dafür nicht vorhanden ist, muss man diese Aufgaben trotzdem erfüllen.</li>
+</ol>
+</li>
+<li><strong>Plattform‑Migrationen unterschätzen</strong><ul>
+<li>Jede Migration ist Schmerzhaft und <strong>kostet Vertrauen</strong> (Vertrauen ist wie eine Währung. Wenn man es ausgegeben hat, ists wech).</li>
+<li>Daher so wenig Migrationen wie möglich, und diese gut vorbereiten, auch wenn es viel Aufwand erzeugt.</li>
+<li>Ziel: <strong>Automatisierte, Low‑Impact‑Migrationspfade</strong>.</li>
+</ul>
+</li>
+</ol>
+<h2>4 | Fragen an den Leser</h2>
+<ol>
+<li><strong>Was ist deine aktuelle Plattform?</strong></li>
+<li><strong>Wo klemmt es eigentlich derzeit?</strong></li>
+<li><strong>Macht es Sinn die DORA‑Baselines zu</strong> messen?</li>
+</ol>
+<h2>5 | Fazit</h2>
+<p>Ein internes Developer‑Platform‑Team ist <strong>kein Sonder‑Ops‑Team</strong>, sondern ein <strong>Produkt‑Team</strong> mit klarer Vision, fokussiertem Scope und messbarem Impact.
+Je einfacher, desto besser – und Vertrauen ist kostbar.</p>
+<blockquote><p><em>„Minimalismus ist King – löse die wichtigsten 20 % zuerst, die den Teams 80 % des Schmerzes nehmen.“</em> – Jessica Anderson</p>
+</blockquote>
+
+    </section>
+    
+      <footer>
+        <a href="../blog/2025/6/devopscon-stolperfallen-beim-aufbau-interner-developer-platforms-idp/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../blog/2025/5/die-freuden-einer-gut-eingerichteten-shell-fzf/">
         Die Freuden einer gut eingerichteten Shell: fzf
         </a>
@@ -220,72 +325,6 @@ yq completion <span class="nb">fish</span> <span class="o">|</span> <span class=
     
       <footer>
         <a href="../blog/2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../blog/2025/2/die-freuden-einer-gut-eingerichteten-shell-prompt/">
-        Die Freuden einer gut eingerichteten Shell: Der Prompt
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2025-02-27">Thursday, February 27, 2025</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p><img src="../blog/2025/2/die-freuden-einer-gut-eingerichteten-shell-prompt/terminal.jpg" alt="Terminal"></p>
-<p>Es fängt natürlich mit der Frage an: welche Shell?</p>
-<p>Das ist sehr einfach zu beantworten. Auf MacOS ist die <a href="https://www.zsh.org">zsh</a> die Standard-Shell - und daher sollte man die auch benutzen. Artikel Fertig, vielen Dank fürs Lesen! 😅</p>
-<p>Windows hat die <a href="https://de.wikipedia.org/wiki/PowerShell">PowerShell</a> - wer damit Arbeiten (muss) sollte sie lernen!</p>
-<p>Die nackte Shell ist ziemlich schlecht konfiguriert, da die Möglichkeiten der Shell gar nicht ausgenutzt werden. Auf Linux-Distributionen ist es Standard, dass die Shell von der Distribution eingerichtet wird, daher kann man damit meistens schon gut arbeiten.</p>
-<p>Aber für MacOS (und Windows) gibt es viel zu tun.</p>
-<p>So sieht die zsh unkonfiguriert aus:</p>
-<div class="hll"><pre><span></span>dwt@NB1321<span class="w"> </span>~<span class="w"> </span>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>Library/Favorites
-dwt@NB1321<span class="w"> </span>Favorites<span class="w"> </span>%
-</pre></div>
-<p>Das ist schon gar nicht schlecht, denn man sieht einiges:</p>
-<ul>
-<li><code>dwt</code>: Welcher Nutzer man gerade ist. Wichtig, wenn man viel mit <code>sudo</code> arbeitet, damit man nicht versehentlich Kommandos als <code>root</code> mit zu vielen Rechten ausführt.</li>
-<li><code>NB1321</code>: Auf welchem Rechner man gerade eingeloggt ist. Wichtig wenn man auf vielen Rechnern arbeitet und nicht</li>
-<li>Den aktuellen Ordner in dem man ist (<code>Favorites</code>). Wichtig damit man z.B. nicht versehentlich die falschen Dateien löscht.</li>
-<li>Der Prompt <code>%</code> trennt die Meta-Informationen von dem was man selbst eingibt.</li>
-</ul>
-<p>Da geht aber noch wesentlich mehr. Bei mir z.B. sieht der Prompt so aus:</p>
-<div class="hll"><pre><span></span>~/C/P/m/api<span class="w"> </span>❄️<span class="w"> </span>🧪<span class="w"> </span>nix-shell-env<span class="w">   </span>🐍<span class="w"> </span>venv<span class="w"> </span>⛵️<span class="w"> </span>mkk-itsc-dev<span class="w"> </span><span class="o">(</span>api<span class="o">)</span><span class="w"> </span>🌱<span class="w"> </span>main<span class="w"> </span><span class="nv">$!</span><span class="w">  </span>4s
-❯
-</pre></div>
-<p>Da ist enthalten:</p>
-<ul>
-<li><code>~/C/P/m/api</code> - nicht nur der aktuelle Ordner, sondern auch jeweils der Anfangsbuchstabe der darüber liegenden Ordner. Das liefert platzsparend viel mehr Kontext, wo man gerade ist. Super wenn man in vielen Projekten gleichnamige Ordner wie z.B. <code>etc</code>, <code>src</code> oder <code>dist</code> hat.</li>
-<li><code>❄️ 🧪 nix-shell-env</code> Zeigt an, dass gerade eine 'dreckige' <a href="https://nixos.wiki/wiki/Development_environment_with_nix-shell">Nix-Shell</a> aktiv ist. Das verwende ich um Projek-spezifische Abhängigkeiten (Shell-Tools, bestimmte Vesionen von Python etc.) zu installieren die ich deklarativ im Projekt tracke. Gut vergleichbar mit Python-Virtual-Envs - aber eben für alles, nicht nur Python-Pakete. Dreckig ('impure') ist Sie, da nicht <em>nur</em> die Shell-Tools aus der Nix-Shell sichtbar sind, sondern auch alles andere was ich im Betriebsystem installiert habe.</li>
-<li><code>🐍 venv</code> - zeigt an, dass gerade ein Python-Virtual-Env aktiv ist. Da ich hauptsächlich mit Pyton entwickle ist das natürlich entscheidend weil es bedeutet das ich die Projekt-Werkzeuge direkt verwenden kann, da sie im <code>$PATH</code> und <code>$PYTHONPATH</code> sind.</li>
-<li><code>⛵️ mkk-itsc-dev (api)</code> zeigt an, dass ich mit dem <code>mkk-itsc-dev</code> Kubernetes Cluster verbunden bin, und den Namespace <code>api</code> aktiviert habe. Das ist mir sehr wichtig, damit ich nicht versehentlich mit <code>kubectl</code> Befehlen versehentlich den Produktiv-Cluster zerstöre. (Rate wieso mir das so wichtig ist…)</li>
-<li><code>🌱 main $!</code> zeigt an, dass ich in einem Git-Repository bin, auf dem main branch, das ich dinge ge-'stash't habe (die vergisst man sonst sehr leicht) und das ich Änderungen habe die ich noch nicht commited habe. Hier gibt es <a href="https://starship.rs/config/#git-status">auch noch mehr informationen wenn das Repo den entsprechenden Zustand hat</a>.</li>
-<li>Zuletzt sehe ich da das letzte Kommando 4 Sekunden gedauert hat. Das wird nur angezeigt wenn das letzte Programm mehr als 3 Sekunden gedauert hat und ist immer wiede ein hilfreiche Information um bei langlaufenden Prozesen zu verstehen ob es sich lohnt da etwas zu optimieren.</li>
-</ul>
-<p>Natürlich könnte man hier noch viel mehr anzeigen, je nachdem an was man gerade arbeitet. Ich habe hier eben die Informationen aufgenommen die ich am meisten benötige.</p>
-<p>Jetzt kommt der Clou: Früher habe ich das alles von hand Konfiguriert. Das war ein ewiges und mühsammes gefummel um <code>$PS1</code> und konsorten so hinzufummeln das das alles funktioniert hat, und hat nie Spaß gemacht. Der Standard ist derzeit, das man einen Shell-Konfigurations-Framework wie <a href="https://ohmyz.sh">Oh-My-Zsh</a> oder <a href="https://github.com/sorin-ionescu/prezto">Prezto</a> verwendet. Und die sind auch gut. Aber auch langsam, und komplex und kompliziert. Wenn man da mal etwas anders haben will dann gott bewahre wenn das nicht schon vorbereitet ist oder man darf sich nicht nur mit den Komplexitäten von <code>$PS1</code> auseinandersetzen, sondern auch noch damit wie genau dieser Framework das handhabt.</p>
-<p>Inzwischen bin ich weiser geworden, und verwende <a href="https://starship.rs">Starship</a>. Damit kann ich meinen Prompt deklarativ in einer <code>.toml</code>-Datei konfigurieren und diesen auch mitnehmen wenn ich mal die Shell wechsle. (Was häufiger vorkommt als mir lieb ist). Und: Starship funktioniert auch mit der PowerShell.</p>
-<p><a href="../blog/2025/2/die-freuden-einer-gut-eingerichteten-shell-prompt/starship.toml">So sieht meine Konfiguration aus</a></p>
-<p>Wie richtet man das ein?</p>
-<ol>
-<li><code>brew install starship</code> (oder mit <a href="https://lix.systems">nix</a>)</li>
-<li><code>nano ~/.zshrc</code> und am Ende <code>eval "$(starship init zsh)"</code> einfügen.</li>
-<li>Konfigurationsdatei erstellen: <code>nano ~/.config/starship.toml</code> und z.b. <a href="../blog/2025/2/die-freuden-einer-gut-eingerichteten-shell-prompt/starship.toml">den Inhalt aus der Datei oben einfügen</a>.</li>
-<li>Shell neu starten oder neues Terminal öffnen.</li>
-</ol>
-<p>Danke sagen für die grandiose Verbesserung eures Shell-Lebens bei mir nicht vergessen. 😅</p>
-
-    </section>
-    
-      <footer>
-        <a href="../blog/2025/2/die-freuden-einer-gut-eingerichteten-shell-prompt/">weiterlesen…</a>
       </footer>
     
   </article>

@@ -57,6 +57,34 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2007/2/soziale-filter/">
+        Soziale Filter
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2007-02-04">Sunday, February 4, 2007</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Ich vertrete ja nun schon länger die Meinung, dass die alten Medien keine Chance gegen die Vielfalt und die Qualität des Internets haben. Begründen lässt sich das meiner Meinung nach damit, dass durch den <a href="http://en.wikipedia.org/wiki/Long_tail">Long-Tail</a> effekt so viel mehr Inhalte verfügbar werden, dass da eben auch mehr Inhalte guter Qualität verfügbar sind. Bei diesem Argument fehlt aber natürlich noch, dass diese guten Inhalte zwischen den unzähligen schlechten auch auffindbar sein müssen.</p>
+<p>Und das ist die Aufgabe von Sozialen Filtern. :)</p>
+<p>Persönlich kann ich mich nicht entscheiden ob ich den Ansatz von reddit oder von digg lieber mag - beide sind jedenfalls fürs erste brauchbar.  (<a href="http://baron.vc/a-cursory-comparison-of-the-big-three-social-media/">Vergleich der Dienste</a>)</p>
+<p>Und was hab ich auch gleich damit gefunden: <a href="http://youtube.com/watch?v=TcZIXLFPdRo">Schöne Videos was die Russen mit ihren Kampfjets alles anstellen können (wow)</a> und <a href="http://419eater.com/">was leute alles tun die von Scams so angepisst sind dass sie zurückpissen wollen.</a> (Naja.... zwar ist das Lustig, aber als Selbstjustiz kann ich das natürlich nicht unterstützen).</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2007/2/soziale-filter/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2007/1/u-berwachungsstaat-england/">
         Überwachungsstaat England
         </a>
@@ -359,59 +387,6 @@ Just as an exercise I ripped the progress bar rendering code out of MPlayer and 
     
       <footer>
         <a href="../../2006/2/how-to-fold-a-shirt/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2006/2/unterdokumentierte-design-patterns/">
-        Unterdokumentierte Design Patterns
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2006-02-06">Monday, February 6, 2006</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>Eine Frage die mich schon länger beschäftigt, ist das Finden von Design Patterns in Funktionalen Sprachen. Lange Zeit schien es mir so, als gäbe es da gar nichts, auch viele Programmierer, die in diesen Sprachen arbeiten, konnten mit dem Begriff nichts anfangen. Dabei gibt es meiner Meinung nach eine Menge, das man von funktionalen Sprachen lernen kann - und einiges, das schon gelernt wurde.</p>
-<p>Einige Design Patterns, die ich seitdem gefunden habe, sind:</p>
-<ul>
-<li>[wiki:BlogEntries/2006-02-23 Funktionen] als voll berechtigte Datentypen, d.h. man kann sie als Argument oder Rückgabewert in der Programmiersprache verwenden</li>
-<li>Die Verwendung von Lambda-Ausdrücken (anonymen Funktionen)<ul>
-<li>Für Iteration, als Callback, für Fehlerbehandlung, Kontrollfluss...</li>
-</ul>
-</li>
-<li>Higher Order Funktionen - Funktionen als Argument und Rückgabewert von Funktionen</li>
-<li>Currying zum teilweisen Anwenden von Funktionen (vor allem in Zusammenhang mit anonymen Funktionen interessant)</li>
-<li>Funktionen zur Kombination von Funktionen zu größeren Einheiten (sehr schön z.B. in Parsern)</li>
-<li><a href="http://www.linuxjournal.com/article/8850">Monaden</a>, zum sicheren Einbetten von Seiteneffekten in puren funktionalen Sprachen</li>
-<li><a href="http://en.wikipedia.org/wiki/Arrows_in_functional_programming">Arrows</a>, für sichere Nebenläufigkeit in puren funktionalen Sprachen</li>
-<li>Unendliche Listen als Fassung von Reihen von Zahlen / Ereignissen. (Aktionen des Benutzers, Zufallszahlen, stetig genauer werdende Berechnungen einer Zahl...)</li>
-<li>Continuations: Ein Konstrukt mit dem sich z.B. Exceptions und Coroutinen implementieren lassen</li>
-<li>Coroutinen: Am einfachsten als eine Art Ultraleicht-Thread zu verstehen</li>
-</ul>
-<p>Einige dieser Design Patterns werden auch in anderen Sprachen intensiv genutzt. Die Lambda-Abstraktion zum Beispiel spielt eine zentrale Rolle in Java, wenn man dort GUIs baut, da sie der ideale Callback sind. Also im Beispiel:</p>
-<div class="hll"><pre><span></span><span class="n">JButton</span><span class="w"> </span><span class="n">button</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">JButton</span><span class="p">(</span><span class="s">&quot;Titel&quot;</span><span class="p">);</span>
-<span class="n">button</span><span class="p">.</span><span class="na">addActionListener</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">ActionListener</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">actionPerformed</span><span class="p">(</span><span class="n">java</span><span class="p">.</span><span class="na">awt</span><span class="p">.</span><span class="na">event</span><span class="p">.</span><span class="na">ActionEvent</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// this is a lambda</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-<p>Gibt es noch mehr dieser Design Patterns? Funktionale Sprachen werden doch von jeder Menge Menschen benutzt...</p>
-<p>Sind die irgendwo dokumentiert? Wenn nicht, dann muss ich mich wohl ranhalten und mein Verständnis selber aufschreiben.</p>
-<p>Außerdem haben hochintegrierte Sprachen wie Lisp, Scheme, Smalltalk und Ruby noch ein weiteres Pattern, da sie sich besonders gut (oder überhaupt?) dazu eignen, Domänenspezifischen Subsprachen (DSL), also Sprachen die direkt in der Implementierungssprache eingebettet sind, zu formulieren. In Lisp bzw. Scheme ist das sogar die bevorzugte Vorgehensweise!</p>
-<p>Mir ist allerdings noch nicht klar, welches Kriterium eine Sprache in die Lage versetzt, diese Integrierten DSLs besonders gut umzusetzen. Bisher dachte ich immer, dass dazu eine in ihrer Übersimplifizierung geniale Sprachdefinition - wie in Lisp und Smalltalk - notwendig ist, aber gerade das Beispiel von Ruby scheint dem zu widersprechen.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2006/2/unterdokumentierte-design-patterns/">weiterlesen…</a>
       </footer>
     
   </article>

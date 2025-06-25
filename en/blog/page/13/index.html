@@ -57,6 +57,32 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2009/2/windows-vista-usability-improvements/">
+        Windows Vista Usability Improvements
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-02-15">Sunday, February 15, 2009</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p><img src="../../2009/2/windows-vista-usability-improvements/Shutdown.png" alt="Image"></p>
+<p><a href="http://thedailywtf.com/Articles/Somewhat-Obsolete.aspx">via</a></p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/2/windows-vista-usability-improvements/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2009/2/warum-setzt-sun-auf-open-source/">
         Warum setzt Sun auf Open Source?
         </a>
@@ -348,70 +374,6 @@
     
       <footer>
         <a href="../../2009/1/writing-code-that-doesn-t-suck/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2009/1/landing-on-mars-with-squeak/">
-        Landing on Mars (with Squeak)
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2009-01-29">Thursday, January 29, 2009</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>I just started playing around with <a href="http://www.smallworks.com.ar/productos/Mars">Mars</a> which is a bridge from Squeak to Cocoa, which allows Squeak Programms to have a Cocoa GUI.</p>
-<p>Pretty nice - however not quite as easy to get installed if you are a SmallTalk newbie like me.</p>
-<p><a href="http://www.smallworks.com.ar/productos/Mars/Download">There are installation instructions on the Mars homepage</a> however I couldn't quite follow them, so I enhanced them a little and give you the rundown here:</p>
-<h2>Instructions</h2>
-<ul>
-<li>I downloaded the basic Image from <a href="http://ftp.squeak.org/3.10/Squeak3.10.2-7179-basic.zip">http://ftp.squeak.org/3.10/Squeak3.10.2-7179-basic.zip</a></li>
-<li>Got the Virtual Machine from ftp://ftp.smalltalkconsulting.com/experimental//Squeak%203.8.21beta1U.app.zip</li>
-<li>Installed basic developer tools by executing &lt;HTTPSocket httpFileIn: 'installer.pbwiki.com/f/LPF.st'.&gt; in a workspace window (select it and hit command-d)</li>
-<li>Then I ran<pre><code>Installer universe 
- addPackage: 'OmniBrowser';
- addPackage: 'OmniBrowser-Morphic';
- addPackage: 'OmniBrowser-Standard';
-     addPackage: 'OmniBrowser-Refactory';
- install.
-</code></pre>
-to get the basics and</li>
-<li>installed Mars by executing 
-```
-Installer wiresong project: 'ob'; install: 'OB-Monticello'.
-Installer lukas project: 'omnibrowser'; install: 'OB-Tools'.</li>
-</ul>
-<p>Installer ss project: 'Mars';
-    install: 'Mars';
-    install: 'OB-Mars'.</p>
-<pre><code>
-After that `OBMarsWorld execute.` replaces the menubar of Squeak with the Cocoa stuff.
-
-:) Have fun!
-
-Oh, and by the way, I just tried this with the dev image available from Damien Cassou at http://damiencassou.seasidehosting.st/Smalltalk/squeak-dev
-
-This image already has most stuff preloaded, so you can just run
-</code></pre>
-<p>Installer wiresong project: 'ob'; install: 'OB-Monticello'.
-Installer lukas project: 'omnibrowser'; install: 'OB-Tools'.</p>
-<p>Installer ss project: 'Mars';
-    install: 'Mars';
-    install: 'OB-Mars'.
-```</p>
-<p>to get Mars installed and then start it by running: <code>OBMarsWorld execute.</code></p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2009/1/landing-on-mars-with-squeak/">weiterlesen…</a>
       </footer>
     
   </article>

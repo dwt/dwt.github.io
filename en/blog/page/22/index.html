@@ -57,6 +57,45 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/8/bzr-vs-hg-vs-git/">
+        bzr vs. hg vs. git
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-08-02">Saturday, August 2, 2008</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Ich fang ja nur langsam an zu verstehen wie sich die verschiedenen Konstrukte unterscheiden.</p>
+<p>Da wäre zum Beispiel das immer wieder auftretende Problem das man an Sourcen arbeitet, auf die man nicht comiten kann oder will.</p>
+<p>Also zum Beispiel an Bugfixes für ein Projekt, von dem man zwar die Sourcen hat, das aber dooferweise einer Firma gehört die keine comits zulässt. Ah well.</p>
+<p>In <a href="http://git.or.cz/">Git</a> löst man das, indem man das einfach brancht und bei einem neuen Release mit rebase seine Changes auf die neue Plattform hebt. <a href="http://www.selenic.com/mercurial/wiki/">Mercurial</a> und <a href="http://bazaar-vcs.org/">Bazaar</a> lösen das anders, dort gibt es spezielle Plugins <a href="http://www.selenic.com/mercurial/wiki/index.cgi/MqExtension">Mercurial Patch-Queues</a> und <a href="http://bazaar-vcs.org/Documentation/LoomAsSmarterQuilt">Bazaar Looms</a> die ein <a href="http://savannah.nongnu.org/projects/quilt/">Quilt</a> ähnliches Interface bieten um das Problem zu lösen.</p>
+<p>Tja, was macht den Unterschied aus?</p>
+<p>Eine Sache die mir allmählich aufgeht ist das Teilen dieser Änderungen. Macht man einen Branch und rebased dann immer wieder auf die originalen Sourcen. Das ist super, weil es kein neues Konzept braucht und somit relativ simpel. Aber man kann diesen Branch so gut wie nicht mit anderen leuten Teilen - schließlich verändert man ständig die History. Also doof für die Zusammenarbeit an so einem branch.</p>
+<p>Mercurial Patch-Queues sind da besser geeignet - mit dem unterschied das sie extra sind und nicht versioniert werden. Damit kann man sie aber auch nicht teilen.... :) - Das wiederum lässt sich hacken, indem man einfach in dem repository in dem ordner in dem die patch-queue liegt wiederum ein eigenes hg-repository eröffnet. Ein Hack - aber er löst das Problem auf elegante Art und Weise.</p>
+<p>Bazaar scheint das mit dem looms am besten gelöst zu haben - die lassen sich nämlich ganz normal im repository pushen - sind aber eben nicht teil der history und führen daher nicht zu den üblen merge-conflikten die man in git erhält.</p>
+<p>Auf mich wirkt das so, als zeigen sich die verschiedenen Ideologien der Entwicklungsteams in diesen Entscheidungen:
+GIT:: KISS - kein neues Konzept (Quilt) ohne das es absolut sein muss, gleichzeitig aber die Linux-Poweruser Mentalität: Wenn du deine History-Verändern willst, dann mach doch, wirst schon wissen was du willst.
+HG:: Gutes Design, history verändern ist evil - daher musste es was anderes sein. Gleichzeitig ist man aber so stolz auf die Binary- und Wire-Formate, dass man sie nicht verändern darf - daher bleibt die Information aus dem Repository ausgeschlossen.
+BZR:: Hier wird vor allem auf die Qualität der Code-Basis geachtet, Veränderbarkeit, Usability und schöne API sind dort am wichtigsten - daher ist es überhaupt kein Problem, das die looms natürlich im repository und damit push-bar sind.</p>
+<p>Mir ist unklar wie ich das gegeneinander abwägen kann - jede der Mentalitäten hat ihre eigenen Vor- und Nachteile. Zum Beispiel ist mir BZR immer noch zu Langsam um es im täglichen gebrauch einzusetzen - es macht schlicht keinen Spaß.</p>
+<p>Andererseits erinnert es mich stark an das alte Mantra: "First make it work, then make it fast!". Also vielleicht wird es doch noch?</p>
+<p>p.s.: Ich weiß natürlich das es <a href="http://procode.org/stgit/">Stacked-GIT</a> gibt - aber soweit ich das feststellen konnte, ist das nicht der "recommended way of doing things" in der GIT community.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/8/bzr-vs-hg-vs-git/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/8/origami-ist-cool/">
         Origami ist cool
         </a>
@@ -293,42 +332,6 @@
     
       <footer>
         <a href="../../2008/7/drogen-und-andere-dinge-die-man-mit-python-machen-kann/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/7/wunderscho-ne-apis/">
-        Wunderschöne APIs
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-07-26">Saturday, July 26, 2008</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>Dokumentation.</p>
-<p>Den vergleich zwischen Dokumentation und dem Austausch von Körperflüssigkeiten spare ich mir jetzt. Wahr ist er aber trotzdem.</p>
-<p>Vergleicht man die <a href="http://docs.python.org/lib/lib.html">Python</a> und die <a href="http://developer.apple.com/referencelibrary/Cocoa/index.html">Cocoa</a> Dokumentation dann fällt bei Cocoa recht schnell auf das es keine klare Trennung gibt in High level Dokumentation und Klassenspezifische Dokumentation während das bei Python gemischt ist.</p>
-<p>Dazu kommt das bei Python oft die high level Beispiele fehlen und es von der Referenz-Dokumentation keinen Link auf die komplette Listung der Methoden eines Objekts gibt.</p>
-<p>Zwar kann man dann in Python oft auf den interpreter zurückgreifen und sich von dort aus noch mehr informationen über ein Objekt holen - das ist aber ganz schön aufwendig.</p>
-<p>High Level Dokumentation: Cocoa++, Python--</p>
-<p>Wenn es um die Klassenbasierte Doku geht hat Cocoa auch eindeutig die Nase vorne. Alle Methoden sind immer nach Topics geordnet. <a href="http://developer.apple.com/documentation/Cocoa/Reference/Foundation/Classes/NSArray_Class/Reference/Reference.html">NSArray zum Beispiel</a> startet mit einer Liste der Fakten über die Klasse (in welchem file definiert, ab welcher Version des Frameworks verfügbar, welche High-Level Guides gehören dazu) und fährt dann erst einmal mit einem Überblick über den Zweck der Klasse fort der auch gleichzeitig die wichtigsten Methoden der Klasse erklärt.</p>
-<p>Danach kommt immer der Guide was man beachten muss wenn man eine Subklasse davon anlegen will. (Was erfordern kann dass man ein bestimmtes set von Methoden immer gleichzeitig überschreiben muss, da in Cococa gerne <a href="http://developer.apple.com/documentation/Cocoa/Conceptual/CocoaFundamentals/CocoaObjects/chapter_3_section_9.html">Class Clusters</a> eingesetzt werden - ein Konzept das ich in Python leider noch gar nicht gefunden habe.</p>
-<p>Dann kommt der für die tägliche Arbeit für mich wichtigste Teil der Dokumentation: <a href="http://developer.apple.com/documentation/Cocoa/Reference/Foundation/Classes/NSArray_Class/Reference/Reference.html#//apple_ref/doc/uid/20000137-DontLinkElementID_1">Tasks</a>. Hier sind alle Methoden des Objekts nach den Aufgaben sortiert die man mit ihnen erledigt.</p>
-<p>Creating an Array, Initializing an Array, Querying an Array, Comparing, Sorting, ...</p>
-<p>So findet man schnellstens heraus was das Objekt anbietet für das was man tun möchte.</p>
-<p>Ergo: Dokumentation in Python ist ganz schön mies - in Trac fehlt sie sogar ganz :/</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/7/wunderscho-ne-apis/">weiterlesen…</a>
       </footer>
     
   </article>

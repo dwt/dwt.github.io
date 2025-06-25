@@ -57,6 +57,48 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2009/8/ie-8-oh-ie-8-wa-rst-du-doch-kein-ie-7/">
+        IE 8 oh IE 8, wärst Du doch kein IE 7...
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2009-08-19">Mittwoch, 19. August 2009</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Heute bin ich auf einen sehr interessanten Bug gestoßen - im IE natürlich. Genauer genommen im IE 8.</p>
+<p>Folgendes ist passiert: Wir hatten ein Problem mit dem Rendering einer Webapplikation - dort fehlte mal wieder ein Teil das eigentlich hätte da sein sollen. Stellt sich heraus, dass auf manchen der Rechner der IE 8 die Seite im IE 7 Kompatibilitätsmodus gerendert hat - ok wir hatten also eigentlich einen Bug mit dem IE 7 der das CSS nicht vertragen hat. Soweit so gut.</p>
+<p>Mysteriös war das ganze, denn es ließ sich auf verschiednen Rechnern nicht reproduzieren. Dabei verwendeten wir sogar die gleichen images (<a href="http://www.virtualbox.org/">VirtualBox ich liebe dich</a>).</p>
+<p>Ok, wir sind also irgendwie auf manchen Rechnern in den IE 7 Kompatibilitätsmodus gerutscht. Wirklich Lustig wurde dass als wir auf <a href="http://blogs.msdn.com/ie/archive/2008/08/27/introducing-compatibility-view.aspx">dieser Seite auf die Erklärung</a> gestoßen sind:</p>
+<p>IE 8 kann nämlich den IE 7 emulieren. Aus 'Kompatibilitätsgründen'. Und weil das natürlich total kompatibel sein muss hat Microsoft das so eingestellt dass alle Intranetseiten automatisch im IE 7 Modus gerendert werden - natürlich ohne einen Knopf mit dem man das abstellen kann. (Andersrum gibt es schon einen…)</p>
+<p>Das geile daran: IE erkennt Intranetseiten nicht an der IP, sondern an der Domain! Weil das nicht anders geht! [sic] Und da auf dem anderen Rechner die Webseite per IP aufgerufen wurde wurde das Problem da nicht sichtbar…</p>
+<p>Überhaupt ist die Implementierung dieses Kompatibilitätsmodus eine einzige Katastrophe.</p>
+<ol>
+<li>Der Modus aktiviert sich automatisch für Intranet-Webseiten</li>
+<li>Er lässt sich für diese nicht deaktivieren</li>
+<li>IE merkt sich welche Webseiten der User irgendwann schon einmal (vielleicht aus versehen) in den Kompatibilitätsmodus geschaltet hat - aber löscht dieses Wissen wenn man die History löscht.</li>
+<li>Jede Webseite kann diese User-Einstellung überschreiben, indem sie einen meta-tag setzt<ol>
+<li>und dann wird die User-Einstellung auch gleich komplett gelöscht! (<em>rotflol</em>)</li>
+<li>Man kann über den Meta-Tag nur einstellen dass man gerne eine IE 8 Emulation hätte - wenn der IE 9 dann herauskommt darf man also wieder ran und noch mehr Meta-Tags definieren… (<em>kotz</em>)</li>
+</ol>
+</li>
+</ol>
+<p>Also wirklich verkackt auf der ganzen Linie - eine <a href="http://blogs.msdn.com/ie/archive/2008/08/27/introducing-compatibility-view.aspx">Lektüre des Original-Artikels</a> ist wirklich empfohlen. :)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2009/8/ie-8-oh-ie-8-wa-rst-du-doch-kein-ie-7/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2009/8/ich-bleibe-dabei-dass-wir-oft-an-wahlkampfaussagen-gemessen-werden-ist-nicht-gerecht/">
         Ich bleibe dabei: Daß wir oft an Wahlkampfaussagen gemessen werden, ist nicht gerecht.
         </a>
@@ -363,38 +405,6 @@ stew
     
       <footer>
         <a href="../../2009/6/this-dosomethingwith-somenonexistingvariable/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2009/6/ken-schwaber-in-action/">
-        Ken Schwaber in Action
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2009-06-01">Montag, 1. Juni 2009</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>Ich muss sagen, er spricht wirklich gut - seine Erklärung von Scrum ist jedenfalls wirklich gut verständlich.</p>
-<p><a href="http://www.youtube.com/watch?v=IyNPeTn8fpo">Hier auf YouTube</a></p>
-<p>Ein paar interessante Punkte zu seinem Vortrag:</p>
-<ul>
-<li>Keine Folien - er hällt den Vortrag komplett frei</li>
-<li>Kein Verkaufsgespräch - er nimmt klar in den Mund welche Probleme durch Scrum sichtbar werden (und natürlich ist das eine ganz hervorragende Verkaufstaktik)</li>
-<li>Alle Graphen / Schaubilder malt er <strong>on demand</strong> an die Tafel - einfach und effektiv.</li>
-</ul>
-
-    </section>
-    
-      <footer>
-        <a href="../../2009/6/ken-schwaber-in-action/">weiterlesen…</a>
       </footer>
     
   </article>

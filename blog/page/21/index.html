@@ -57,6 +57,75 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/8/adium-otr/">
+        Adium + OTR
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-08-19">Dienstag, 19. August 2008</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>So I want to be able to chat to my buddies in private. This is still very hard - one has to have all sorts of knowledge about encryption to get it right and even then the process is painful and hard to get right. Well, it's time to do something about it. <a href="http://adiumx.com/">Adium</a> has supported <a href="http://www.cypherpunks.ca/otr/">OTR</a> for some time now, and OTR recently gained the ability to use the <a href="http://en.wikipedia.org/wiki/Socialist_millionaire">Socialist Millionaire Protocol</a> as a means for authenticating chat partners to each other. The problem is, It's just not yet implemented in Adium.</p>
+<p>We'd like to change that.</p>
+<p>(Disclaimer: Imagine in long and fearful words me saying that this is not final and is just part of my thinking process and stuff I  want to get feedback on)
+The obvious first thing to do is to think about the GUI and what I want to achieve there. Adium is quite good, in that it's reasonably easy to set it up so that as much as possible is encrypted, or to start encryption by just a single mouse click. The most pressing problem lies in that it's very hard to verify that a buddy really is who he claims to be. This is because both users have to read and confirm a 20-something digit fingerprint to each other out of the band of im communication (preferably over the phone or in person).</p>
+<p>The <strong><em>Socialist Millionaire Protocol</em></strong> offers an alluring alternative - in theory, authentication is now as simple as you asking your partner a question that only he can answer correctly. If he provides the correct answer, dual-sided, authenticated encryption can be established. However, as shown in a <a href="http://www.cypherpunks.ca/~iang/pubs/otr_userstudy.pdf">usability study on the Pidgin implementation of OTR</a> bad GUI-Design can still ruin this great idea.</p>
+<p>So lets get think about how we can make this work as seamlessly as possible.</p>
+<p>Here's the example user that guides my thinking: Andrea, a history student wants to chat with her buddy Bert. She has no deeper understanding of computer science and cryptography, nor is she especially computer savvy. Even so she should be able to effectively secure her privacy with a few clicks and without any studying of handbooks or confusion on her part.</p>
+<p>Two parts are needed for this to work:
+ 1) Adium needs to inform her of the 'security status' of her connection without any doubt. This includes that it needs to show her in unambigous ways what she has to do next if she wants to get to a secure chat-connection. 
+ 2) Adium needs to allow her to run the <strong><em>Social Millionaire Protocol</em></strong>.</p>
+<p>For 1) I have some nice ideas already. (linked to at the end of the article. For 2) I'm still not very far. The obvious way would be to just open another window - but thats merely ok GUI-Design as it completely disrupts whatever the user wanted to do. Another alternative could be to do it inline in the chat window - but this leads to all sorts of confusion, as the chat window suddenly becomes the interface to something completely different than chatting - something which it wasn't meant to do.</p>
+<p>So, more drawing board needed there.</p>
+<p>On to some mockups. :)</p>
+<p>It's all basically the same idea. There are two ways that I see this working: either by showing the status of the chat inline in the message view - or not.</p>
+<p>Inline has several advantages - for one, it's a lot easier to program. However, it has severe usability disadvantages. It is hard to see for example, because the font is small and who reads those system messages anyway? Also running the <strong><em>Socialist Millionaire Protocol</em></strong> requires an action by the user, so that leaves me with either adding a hyperlink to the message field to start this (which is unexpected by the user) or just explaining him what to do (which is bad, if I have to explain to him, why not just let him do it from right there?)</p>
+<p>So I discarded that idea.</p>
+<p>What I really like is Firefox in this regard. Their way of showing that they just suppressed a popup or a cookie is just a perfect example of the kind of interface I have in mind. Easy to see, enough space to put a button and a nice way to tell the user some status that doesn't disturb his workflow if he doesn't bother / can't do anything about it right now.</p>
+<p>So I have something like this in mind:</p>
+<p><img src="../../2008/8/adium-otr/Encrypted-but-not-verified-1.png" alt="Image"></p>
+<p>This fits my requirements pretty good (more Ideas I toyed with at the end of the article). It clearly states what is happening, and gives the user an immediate means to do something about it. No confusion possible.</p>
+<p>Well, to be frank, wording is still a problem. "Verify his identity" is very long, and will be much longer in german. Same for the first sentence. Some users may also react with a heartfelt: "Now you tell me, when I tried to turn encryption on?". Also what if the user just doesn't care?</p>
+<p>Well, I'l ponder that some more.</p>
+<p>Next stop: Actually doing the <strong><em>Socialist Millionaire Protocol</em></strong>.</p>
+<p>After the user clicks the darned button, there be dragons. As I said above, I briefly toyed with the idea of doing everything inline the message view, however decided against that. My current working thesis is this:</p>
+<p><img src="../../2008/8/adium-otr/Dialog-based-implementation-of-the-Sociallist-Millionaire-Protocoll.png" alt="Image"></p>
+<p>This dialog has some merits: It clearly states what the user is supposed to do. It gives hints on how to do it and what to avoid, and it is mostly text.</p>
+<p>Well.... I'm not very content with it yet. Also I haven't had a good look at how <a href="http://www.cypherpunks.ca/otr/help/authenticate.php?lang=en">Pidgin actually implements this feature</a> (I wanted to build my own ideas unobstructed first).</p>
+<p>Well, onto that later.</p>
+<p>Here's the rest of my WIPs:</p>
+<p><img src="../../2008/8/adium-otr/Encrypted-but-not-verified-2.png" alt="Image"></p>
+<p>Note the lock in the menu-bar that also tells me the status of the conversation is private (to make the easy to miss  lock in the toolbar more prominent.</p>
+<p>I toyed with placing more locks, here's some results:</p>
+<p><img src="../../2008/8/adium-otr/Encrypted-status-display-inline-locks.png" alt="Image">
+<img src="../../2008/8/adium-otr/Encrypted-status-display.png" alt="Image"></p>
+<p>Just repeating something that doesn't work seems, to force it to work seems foolish though, so I thought about more radical approaches, of which I like this the most:</p>
+<p><img src="../../2008/8/adium-otr/Encrypted-status-display-color-change.png" alt="Image"></p>
+<p>The problem is to communicate to the user that he is in a completely different status now, and make it accessible at a glance. Well, why dont just change the background color? Again Firefox is an example here, when surfing to a secure site, the status bar is rendered completely different to give the user good feedback. Why not apply that to Adium?</p>
+<p>Oh and the inline SMP implementation:</p>
+<p><img src="../../2008/8/adium-otr/Inline-GUI-for-the-Sociallist-Millionaire-Protocol.png" alt="Image"></p>
+<p>Well.... It could be made to work... from a technological standpoint. :) Maybe it sparks some new ideas.</p>
+<p>Want to read more?</p>
+<ul>
+<li>[blog:2008/09/02/23.32 Second part of the conceptual work]</li>
+<li><a href="http://trac.adiumx.com/wiki/OTREncryption">Coordination for this feature</a></li>
+</ul>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/8/adium-otr/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/8/bei-vortra-gen-u-ber-das-programmieren/">
         Bei Vorträgen über das Programmieren...
         </a>
@@ -309,45 +378,6 @@
     
       <footer>
         <a href="../../2008/8/doufu-mapo/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/8/bzr-vs-hg-vs-git/">
-        bzr vs. hg vs. git
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-08-02">Samstag, 2. August 2008</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>Ich fang ja nur langsam an zu verstehen wie sich die verschiedenen Konstrukte unterscheiden.</p>
-<p>Da wäre zum Beispiel das immer wieder auftretende Problem das man an Sourcen arbeitet, auf die man nicht comiten kann oder will.</p>
-<p>Also zum Beispiel an Bugfixes für ein Projekt, von dem man zwar die Sourcen hat, das aber dooferweise einer Firma gehört die keine comits zulässt. Ah well.</p>
-<p>In <a href="http://git.or.cz/">Git</a> löst man das, indem man das einfach brancht und bei einem neuen Release mit rebase seine Changes auf die neue Plattform hebt. <a href="http://www.selenic.com/mercurial/wiki/">Mercurial</a> und <a href="http://bazaar-vcs.org/">Bazaar</a> lösen das anders, dort gibt es spezielle Plugins <a href="http://www.selenic.com/mercurial/wiki/index.cgi/MqExtension">Mercurial Patch-Queues</a> und <a href="http://bazaar-vcs.org/Documentation/LoomAsSmarterQuilt">Bazaar Looms</a> die ein <a href="http://savannah.nongnu.org/projects/quilt/">Quilt</a> ähnliches Interface bieten um das Problem zu lösen.</p>
-<p>Tja, was macht den Unterschied aus?</p>
-<p>Eine Sache die mir allmählich aufgeht ist das Teilen dieser Änderungen. Macht man einen Branch und rebased dann immer wieder auf die originalen Sourcen. Das ist super, weil es kein neues Konzept braucht und somit relativ simpel. Aber man kann diesen Branch so gut wie nicht mit anderen leuten Teilen - schließlich verändert man ständig die History. Also doof für die Zusammenarbeit an so einem branch.</p>
-<p>Mercurial Patch-Queues sind da besser geeignet - mit dem unterschied das sie extra sind und nicht versioniert werden. Damit kann man sie aber auch nicht teilen.... :) - Das wiederum lässt sich hacken, indem man einfach in dem repository in dem ordner in dem die patch-queue liegt wiederum ein eigenes hg-repository eröffnet. Ein Hack - aber er löst das Problem auf elegante Art und Weise.</p>
-<p>Bazaar scheint das mit dem looms am besten gelöst zu haben - die lassen sich nämlich ganz normal im repository pushen - sind aber eben nicht teil der history und führen daher nicht zu den üblen merge-conflikten die man in git erhält.</p>
-<p>Auf mich wirkt das so, als zeigen sich die verschiedenen Ideologien der Entwicklungsteams in diesen Entscheidungen:
-GIT:: KISS - kein neues Konzept (Quilt) ohne das es absolut sein muss, gleichzeitig aber die Linux-Poweruser Mentalität: Wenn du deine History-Verändern willst, dann mach doch, wirst schon wissen was du willst.
-HG:: Gutes Design, history verändern ist evil - daher musste es was anderes sein. Gleichzeitig ist man aber so stolz auf die Binary- und Wire-Formate, dass man sie nicht verändern darf - daher bleibt die Information aus dem Repository ausgeschlossen.
-BZR:: Hier wird vor allem auf die Qualität der Code-Basis geachtet, Veränderbarkeit, Usability und schöne API sind dort am wichtigsten - daher ist es überhaupt kein Problem, das die looms natürlich im repository und damit push-bar sind.</p>
-<p>Mir ist unklar wie ich das gegeneinander abwägen kann - jede der Mentalitäten hat ihre eigenen Vor- und Nachteile. Zum Beispiel ist mir BZR immer noch zu Langsam um es im täglichen gebrauch einzusetzen - es macht schlicht keinen Spaß.</p>
-<p>Andererseits erinnert es mich stark an das alte Mantra: "First make it work, then make it fast!". Also vielleicht wird es doch noch?</p>
-<p>p.s.: Ich weiß natürlich das es <a href="http://procode.org/stgit/">Stacked-GIT</a> gibt - aber soweit ich das feststellen konnte, ist das nicht der "recommended way of doing things" in der GIT community.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/8/bzr-vs-hg-vs-git/">weiterlesen…</a>
       </footer>
     
   </article>

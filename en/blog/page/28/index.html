@@ -57,6 +57,57 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/4/function-call-vs-message-send/">
+        Function Call vs. Message Send
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-04-26">Saturday, April 26, 2008</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Oder: Wieso mich die Lisp Syntax so stört.</p>
+<p>In meiner Freizeit beschäftige ich mich gerade mit dem Buch <a href="http://gigamonkeys.com/book/">Practical Common Lisp</a>.</p>
+<p>Das Buch gefällt mir auch ganz gut - vielleicht abgesehen davon das er 'loop etwas zu häufig verwendet - ohne es zu erklären - was den Code gerade am Anfang reichlich magisch macht.</p>
+<p>Aber: Worum es mir eigentlich geht, ist die Syntax von Lips. Nicht die Klammern, nicht die Einrückung, nicht die Art wie man es schreibt, sondern schlicht die Reihenfolge.</p>
+<p>Weil: in Lisp ist erst einmal alles auf Funktionen abgebildet. Und das hat Vorteile aber eben auch einen gravierenden Nachteil: Jede Funktion muss immer als erstes in einem Funktionsaufruf Tupel stehen.</p>
+<div class="hll"><pre><span></span><span class="p">(</span><span class="nv">funktion</span><span class="w"> </span><span class="nv">argument-eins</span><span class="w"> </span><span class="nv">argument-zwei</span><span class="p">)</span>
+</pre></div>
+<p>Das ist ein Problem, weil man bei verschachtelten Funktionsaufrufen (auch schon bei nur sehr wenigen Ebenen) sehr schnell den Überblick verliert welcher Funktionsaufruf zu welchem argument gehört.</p>
+<div class="hll"><pre><span></span><span class="p">(</span><span class="nv">funktion</span><span class="w"> </span><span class="p">(</span><span class="nv">funktion-zwei</span><span class="w"> </span><span class="nv">argument-eins</span><span class="w"> </span><span class="p">(</span><span class="nv">funktion-drei</span><span class="w"> </span><span class="nv">argument-eins</span><span class="w"> </span><span class="nv">argument-zwei</span><span class="p">))</span><span class="w"> </span><span class="nv">argument-zwei</span><span class="p">)</span>
+</pre></div>
+<p>Das kann man jetzt natürlich auch als Feature sehen, weil man gezwungen wird seinen Code vernünftig einzurücken und keine zu langen Funktionen zu schreiben</p>
+<div class="hll"><pre><span></span><span class="p">(</span><span class="nv">funktion</span><span class="w"> </span><span class="p">(</span><span class="nv">funktion-zwei</span><span class="w"> </span><span class="nv">argument-eins</span>
+<span class="w">                     </span><span class="p">(</span><span class="nv">funktion-drei</span><span class="w"> </span><span class="nv">argument-eins</span><span class="w"> </span><span class="nv">argument-zwei</span><span class="p">))</span><span class="w"> </span>
+<span class="w">        </span><span class="nv">argument-zwei</span><span class="p">)</span>
+</pre></div>
+<p>Das hilft, aber eben nur so weit. Vor allem weil man beim Lesen von Code immer eine interne herumdrehung machen muss um den Code korrekt zu lesen.</p>
+<div class="hll"><pre><span></span><span class="p">(</span><span class="nb">defparameter</span><span class="w"> </span><span class="nv">a-list</span><span class="w"> </span><span class="p">(</span><span class="nb">list</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="p">))</span>
+
+<span class="p">(</span><span class="nb">car</span><span class="w"> </span><span class="p">(</span><span class="nb">cdr</span><span class="w"> </span><span class="p">(</span><span class="nb">cdr</span><span class="w"> </span><span class="p">(</span><span class="nb">cdr</span><span class="w"> </span><span class="nv">a-list</span><span class="p">))))</span>
+</pre></div>
+<p>Soll (wenn (ich) (mich nicht verschrieben) habe) 5 ergeben.</p>
+<p>Aber man muss es von innen nach aussen lesen, damit man es richtig versteht.</p>
+<p>Und das erfordert jede menge Geistige Kapazität, die besser beim finden von guten Namen für Variablen und Funktionen aufgehoben ist. Viel besser.</p>
+<p>Jetzt zum Message-Passing - das ist zwar fundamental "weniger mächtig" als der Funktionsaufruf, weil man zum Beispiel generische Funktionen nicht oder nicht so gut implementieren kann, ABER: man kann viel besser mit dem resultat eines vorherigen Aufrufes das nächste tun.</p>
+<p>Weil die Reihenfolge in der die Sachen ausgeführt werden die gleiche ist in der die Sachen auf dem Bildschirm stehen.</p>
+<p>Und das ist eine ganze Menge besser les- und versteh-bar als die Funktion es jemals sein kann.</p>
+<p>Das war es was <a href="http://de.wikipedia.org/wiki/Alan_Kay">Alan Kay</a> meinte, als er sagt das das wichtigste an <a href="http://de.wikipedia.org/wiki/Smalltalk_(Programmiersprache">Smalltalk</a>) nicht die Objektorientierung, sondern das <a href="http://c2.com/cgi/wiki?AlanKayOnMessaging">Message Passing</a> gewesen ist.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/4/function-call-vs-message-send/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/4/yay-wir-sind-im-fernsehen/">
         Yay, wir sind im Fernsehen!
         </a>
@@ -315,55 +366,6 @@
     
       <footer>
         <a href="../../2008/4/wer-wer-wer-wer-wer-hat-uns-verraten/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/4/hg-bzr-und-git/">
-        HG, BZR und GIT
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-04-15">Tuesday, April 15, 2008</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>(zu <a href="http://musicbrainz.org/track/dfad0a06-56d0-4b7b-a3d5-0adc2f9a9113.html">Hotaka</a>)</p>
-<p>Well, am WE hab ich mich mit <a href="http://www.felix-schwarz.name/Hauptseite">Felix</a> gerade über Versionskontrollsysteme und unsere Experimente mit <a href="http://www.selenic.com/mercurial/wiki/">HG</a> unterhalten, als mich jemand 'von der Seite angemacht'  hat, dass doch wohl im Moment alle Welt weg von HG und hin zu <a href="http://git.or.cz/">GIT</a> wechseln würde.</p>
-<p>Well, das konnte ich so nicht glauben, aber ich wollte mir die verschiedenen Tools dann doch mal anschauen - vor allem in Hinsicht auf <a href="http://subversion.tigris.org/">SVN</a> Kompatibilität - denn ich setze SVN sowohl für meine <a href="http://www.novamedia.de/index_d.html">Arbeit</a>, also auch für mich [browser:/ Privat] ein.</p>
-<p>Na, denn ma auf zu dem Vergleich:</p>
-<h3>GIT</h3>
-<p>... hab ich mir als erstes dran genommen, und bin erst mal dran gescheitert, das das perl-script, dass den SVN-Modus macht via Fink natürlich nicht mit meiner Installation zusammenwollte, weil diese alten Perlhacker natürlich alle davon ausgehen, das Perl in <code>/usr/bin/perl</code> liegt. Well, tut es bei mir nicht, bzw, in <code>/usr/bin</code> liegt eine alte version von Perl, die eine bestimmte Library nicht enthält, die aber das Skript benötigt. ARGH! Also erst mal einen Patch zusammengebaut und an den Maintainer geschickt der das auf <code>/usr/bin/env perl</code> ändert. Oh well.</p>
-<p>Danach war aber eigentlich alles dandy, bis auf die Tatsache, das ich trotz längerem nachlesen ums verrecken nicht verstanden habe, welchen Sinn diese komische Staging-Area "Index" haben soll, die man bei GIT immer zuerst mal auffüllen muss, bevor man sie Comitten kann.</p>
-<p>Well, GIT is powerfull - aber für meinen Geschmack zu sehr an den Geschmack von Herrn Torvalds angepasst. Mag ja sein das er nur mit inkonsistenten und komplizierten Kommandozeilenoptionen effizient arbeiten kann. Ich jedenfalls hab was besseres verdient. Ausserdem erzeugt es bei mir Ablehnung wenn Herr Torvalds aus seiner Göttlichen Eingebung sämtliches anderes für Mist erklärt und dann etwas neues macht was deutlich komplizierter ist als die anderen - ohne das klar wird, wieso diese Komplexität der richtige Default ist und man nicht das Einfache zum Default machen kann, um das komplizierte als Option anzubieten.</p>
-<p>Fazit: Funktioniert, push und pull zum SVN server waren kein Problem und das ist schon mal ein starkes Stück. Beindruckendes Tool, dass aber auch viel Ablehnung in mir erzeugt.</p>
-<h3><a href="http://bazaar-vcs.org/">BZR</a></h3>
-<p>... war dann der zweite Kandidat, der nicht mehr viel Langsamer daherkommt als die anderen beiden (allerdings auch nicht zacko schnell). Allerdings, gibt es eine nette Extension die das Kommando <code>shell</code> hinzufügt. Das ist nett, denn dann hat man eine native Shell in bzr und hat superschnelle reaktionen, Tabvervollständigung überall, etc.</p>
-<p>Der Checkout aus SVN hat auch prima geklappt (die Anfangsschwierigkeiten hatte ich vor einem halben Jahr, als ich mir die SVN-Python-Bindings selber bauen musste. ARGH war das ein Kampf.) Jetzt hatte ich sie aber schon und mir auch schon die notwendigen Wrapper-Skripte gebaut die die Library dann halt noch dazuladen.</p>
-<p>Well, was soll ich sagen: pull vom SVN war hervorragend, lokales arbeiten auch, aber das Push.. das stirbt immer mit Fehler 175008 (ernsthaft!) und wirft mir dann noch an den Kopf das irgend eine property nicht angewendet werden konnte. Wenn er wenigstens sagen würde welche Property das Problem ist.. Aber naja.</p>
-<p>Fazit: Sehr poliert. Gerade im Vergleich zu meinem letzten Test ist die Dokumentation viel besser geworden, das ganze Tool wirkt durchdacht. Vor allem der Output der Kommandos hat mir gefallen, schön aufgeräumt und übersichtlich. Dann ist da natürlich die Tatsache das dieses Tool doch immer noch das einzige ist, das tatsächlich Verzeichnisse auch Versionieren kann und mit renames vernünftig umgeht. Ahh.... Endlich ohne scheu refaktorn. :-)</p>
-<h3>HG</h3>
-<p>... will ich eigentlich schon länger mal benutzen, aber es hat mir bisher immer nur zu ein paar kleinen Experimenten gereicht. Allerdings: Felix hat sich schon anstecken lassen und verwendet das jetzt nahezu ausschließlich.</p>
-<p>Well, mein Testcase hat leider gar nicht Funktioniert. Einigen <a href="http://www.selenic.com/pipermail/mercurial/2008-March/018014.html">Anmerkungen</a> hatte ich entnommen das HG jetzt auch auf SVN zurückschreiben kann herausgefunden wie das geht, hab ich aber leider nicht. Oh well.</p>
-<p>Fazit: Schnell, gute Bedienung und Python - aber ungeeignet um damit gegen SVN Repositories zu Arbeiten.</p>
-<h3>Fazit Fazit</h3>
-<p>So, dann bleibt mir also die Wahl: entweder GIT zu akzeptieren um damit gegen SVN zu arbeiten, oder aber den Bug in BZR zu finden um dann damit zu Arbeiten.</p>
-<p>Vom Bauchgefühl her würde ich mich eigentlich lieber an BZR heranmachen. Mögen tue ich HG am liebsten, das hat einfach das einfachste Design und auch noch eine sehr gute Integration in das System - so öffnet es zum Beispiel standardmäßig gleich das System Merge-Tool (opendiff) anstatt CVS like Konflitkmarker in der Datei zu verstreuen.</p>
-<p>So macht man dass.</p>
-<p>BZR ist auf jeden fall mein zweiter Favorit - auch Python (kann ich also Hacken) und schön durchdacht - wenn auch manchmal etwas verbose zu bedienen (pull z.B. macht kein merge, aber er sagt einem dann das man statt pull merge machen müsste. ???)</p>
-<p>GIT wirkt wie eine mächtige Kanone - ja man kann damit auch auf Spatzen schießen - ja danach wären sie tot - aber muss man sich das wirklich antun, das jeder normale Usecase ein wenig Komplizierter zu handhaben ist als mit den anderen Tools, nur damit man im zweifelsfall auch den Linux-Kernel mit dem gleichen Tool Maintainen kann?</p>
-<p>Ich jedenfalls beantworte diese Frage für mich mit einem klaren nein. Und werde mich jetzt erstmal auf bzr und hg werfen.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/4/hg-bzr-und-git/">weiterlesen…</a>
       </footer>
     
   </article>

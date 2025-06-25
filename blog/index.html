@@ -57,6 +57,50 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="2025/6/nuetzliche-shell-kommandos-sort-uniq/">
+        Nützliche Shell-Kommandos: sort, uniq
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2025-06-25">Mittwoch, 25. Juni 2025</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p><img src="2025/6/nuetzliche-shell-kommandos-sort-uniq/set-operations.png" alt="Set Operations">
+Weil ich es heute wiederholt nachschlagen musste, hier noch eine Erinnerung an mich selbst, wie einfach es ist auf der Shell set Operationen durchzuführen.</p>
+<p>In unserem Beispiel: ~10k Datenbank-IDs hier, ~15k Datenbank-IDs da, und die Frage welche davon nur in der einen Liste enthalten sind. Das ist dann einfach zu beantworten, wenn man die auf eine ID pro Zeile ausgibt, und dann einfach mit <code>set_difference</code> bearbeitet.</p>
+<div class="hll"><pre><span></span>set_union<span class="w"> </span><span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">   </span>sort<span class="w"> </span><span class="nv">$1</span><span class="w"> </span><span class="nv">$2</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>uniq
+<span class="o">}</span>
+
+set_intersection<span class="w"> </span><span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">   </span>sort<span class="w"> </span><span class="nv">$1</span><span class="w"> </span><span class="nv">$2</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>uniq<span class="w"> </span>--repeated
+<span class="o">}</span>
+
+set_difference<span class="w"> </span><span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">   </span>sort<span class="w"> </span><span class="nv">$1</span><span class="w"> </span><span class="nv">$2</span><span class="w"> </span><span class="nv">$2</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>uniq<span class="w"> </span>--unique
+<span class="o">}</span>
+
+set_symmetric_difference<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">   </span>sort<span class="w"> </span><span class="nv">$1</span><span class="w"> </span><span class="nv">$2</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>uniq<span class="w"> </span>--unique
+<span class="o">}</span>
+</pre></div>
+<p><a href="https://stackoverflow.com/a/13038235/4572750">Quelle</a></p>
+
+    </section>
+    
+      <footer>
+        <a href="2025/6/nuetzliche-shell-kommandos-sort-uniq/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="2025/6/devopscon-stolperfallen-beim-aufbau-interner-developer-platforms-idp/">
         DevOpsCon: Stolperfallen beim Aufbau interner Developer Platforms (IDP)
         </a>
@@ -684,41 +728,6 @@ pkgs<span class="o">.</span>mkShell <span class="p">{</span>
     
       <footer>
         <a href="2024/9/waehrend-dem-lernen-lernen-lernen-blooms-taxonomie-ebene-1-3/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="2024/9/waehrend-dem-lernen-lernen-lernen-blooms-taxonomie/">
-        Während dem lernen Lernen lernen - Blooms Taxonomie
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2024-09-06">Freitag, 6. September 2024</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p><img src="2024/9/waehrend-dem-lernen-lernen-lernen-blooms-taxonomie/bloom.jpeg" alt="Die Lernpyramide nach Bloom"></p>
-<p>Vor einigen Wochen bin ich über <a href="https://www.youtube.com/watch?v=1xqerXscTsE">ein wundervolles Youtube Video gestolpert, dass mich über Blooms Taxonomie des Lernens informiert hat</a>. Bloom stellt darin eine faszinierende Methode vor, mit der man sich Wissen über ein Thema schnell und effektiv aneignen kann.</p>
-<p>Das hat mich ein bisschen umgehauen, da ich in alle den Jahren in denen ich gelernt habe noch nie davon gehört hatte. Endlich ein brauchbares Modell, wieso manche meiner Lerngewohnheiten gut oder eben schlecht funktionieren. </p>
-<p>In kurz, <a href="https://de.wikipedia.org/wiki/Blooms_Taxonomie">Blooms Taxonomie</a> ist ein Modell aus den 60' er Jahren, in dem er postuliert das es sechs Ebenen des Lernens gibt. Diese werden gerne als Pyramide visualisiert, was ich ungünstig finde → dazu gleich mehr.  </p>
-<p>Die Pyramide fängt ganz unten (1) mit dem Auswendiglernen an. Dann lernt man (2) wie man Gelerntes erklärt. Dann (3) wendet man es direkt an. Dann lernt man (4) es mit anderem Wissen zu vergleichen. Dann es (5) gegen andere Ansätze zu priorisieren. An der Spitze der Pyramide (6) gewinnt man aus der Erfahrung aus der Anwendung, gewappnet mit den Analysen und Vergleichen, neue Erkenntnisse und Dokumentieren diese (zum Beispiel als Blog-Post).</p>
-<p>Wenn man das sieht, erscheint es logisch, dass man diese Stufen brav der Reihe nach von unten nach oben durchläuft.</p>
-<p><em>Und das ist der Clou - das ist genau falsch.</em></p>
-<p>Stattdessen ist es viel schlauer, sofort mit dem Analysieren und Evaluieren anzufangen (Level 4 und 5).</p>
-<p>Ja, das ist Anstrengender,  aber man kriegt damit die ersten drei Ebenen geschenkt, denn es passiert automatisch wenn man sich selbst mit den Fragen der Ebene 4 und 5 herausfordert.</p>
-<p>Dazu kann mann jetzt auch noch Vergleichen wie sich das neue Wissen in das bereits gelernte einordnet, und Begründen, in welchem Kontext welcher der Ansätze die man kennt besser funktionieren.</p>
-<p>Also: Versucht es mal! <a href="2024/9/waehrend-dem-lernen-lernen-lernen-blooms-taxonomie-ebene-1-3/">Nächstes mal gehe ich noch mal tiefer darauf ein was die einzelnen Ebenen ausmacht</a> und danach, wie man KI dafür verwenden kann sich selbst beim lernen sofort auf Ebene vier und fünf zu katapultieren! </p>
-
-    </section>
-    
-      <footer>
-        <a href="2024/9/waehrend-dem-lernen-lernen-lernen-blooms-taxonomie/">weiterlesen…</a>
       </footer>
     
   </article>

@@ -57,6 +57,34 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2007/3/probleme-beim-installieren-von-wordpress-unter-mac-os-x/">
+        Probleme beim installieren von Wordpress unter Mac OS X
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2007-03-05">Montag, 5. März 2007</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Man sollte beachten das 'localhost' nicht gleich '127.0.0.1' ist. (mysql via <a href="http://fink.sf.net/">Fink</a>)</p>
+<p>Da wären sie nicht drauf gekommen? Tja, ich auch nicht.</p>
+<p>Aber wenn man mysql via PHP sagt, das es sich mit der Datenbank auf <strong>localhost</strong> benutzen soll, dann versucht php die Verbindung via einem Socket in <strong>/var/mysql/blah</strong> herzustellen (der eben woanders ist, wenn MySQL wo anders installiert ist), während es bei <strong>127.0.0.1</strong> einen TCP/IP Socket verwendet...</p>
+<p>Tja, wer hätte gedacht das PHP so intelligent ist.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2007/3/probleme-beim-installieren-von-wordpress-unter-mac-os-x/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2007/3/ego-striptease/">
         Ego-Striptease?
         </a>
@@ -305,32 +333,6 @@ Endlich gibt es das Wunderbare Gnu Xaos mit einer schönen GUI für den Mac. Es 
     
       <footer>
         <a href="../../2007/2/die-qualita-t-der-freien-medien/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2007/2/milita-rische-logik/">
-        Militärische Logik.....
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2007-02-04">Sonntag, 4. Februar 2007</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>Vor etwa einem Jahr hab ich mich mit meinem Onkel (Uli) darüber unterhalten wie die USA und ihre Militärs arbeiten. Naja, er hat mich zerpflückt.</p>
-<p>Um so mehr freut es mich das viele meiner Punkte <a href="http://www.fredoneverything.net/Vegetius.shtml">in diesem Text</a> sehr schön aufgenommen werden. :)</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2007/2/milita-rische-logik/">weiterlesen…</a>
       </footer>
     
   </article>

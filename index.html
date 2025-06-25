@@ -59,6 +59,50 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="blog/2025/6/nuetzliche-shell-kommandos-sort-uniq/">
+        Nützliche Shell-Kommandos: sort, uniq
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2025-06-25">Mittwoch, 25. Juni 2025</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p><img src="blog/2025/6/nuetzliche-shell-kommandos-sort-uniq/set-operations.png" alt="Set Operations">
+Weil ich es heute wiederholt nachschlagen musste, hier noch eine Erinnerung an mich selbst, wie einfach es ist auf der Shell set Operationen durchzuführen.</p>
+<p>In unserem Beispiel: ~10k Datenbank-IDs hier, ~15k Datenbank-IDs da, und die Frage welche davon nur in der einen Liste enthalten sind. Das ist dann einfach zu beantworten, wenn man die auf eine ID pro Zeile ausgibt, und dann einfach mit <code>set_difference</code> bearbeitet.</p>
+<div class="hll"><pre><span></span>set_union<span class="w"> </span><span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">   </span>sort<span class="w"> </span><span class="nv">$1</span><span class="w"> </span><span class="nv">$2</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>uniq
+<span class="o">}</span>
+
+set_intersection<span class="w"> </span><span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">   </span>sort<span class="w"> </span><span class="nv">$1</span><span class="w"> </span><span class="nv">$2</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>uniq<span class="w"> </span>--repeated
+<span class="o">}</span>
+
+set_difference<span class="w"> </span><span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">   </span>sort<span class="w"> </span><span class="nv">$1</span><span class="w"> </span><span class="nv">$2</span><span class="w"> </span><span class="nv">$2</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>uniq<span class="w"> </span>--unique
+<span class="o">}</span>
+
+set_symmetric_difference<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">   </span>sort<span class="w"> </span><span class="nv">$1</span><span class="w"> </span><span class="nv">$2</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>uniq<span class="w"> </span>--unique
+<span class="o">}</span>
+</pre></div>
+<p><a href="https://stackoverflow.com/a/13038235/4572750">Quelle</a></p>
+
+    </section>
+    
+      <footer>
+        <a href="blog/2025/6/nuetzliche-shell-kommandos-sort-uniq/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="blog/2025/6/devopscon-stolperfallen-beim-aufbau-interner-developer-platforms-idp/">
         DevOpsCon: Stolperfallen beim Aufbau interner Developer Platforms (IDP)
         </a>
@@ -250,81 +294,6 @@ fzf_configure_bindings --git_log<span class="o">=</span><span class="se">\f</spa
     
       <footer>
         <a href="blog/2025/5/die-freuden-einer-gut-eingerichteten-shell-fzf/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="blog/2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/">
-        Die Freuden einer gut eingerichteten Shell: Autocomplete
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2025-04-14">Montag, 14. April 2025</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <h2>Was ist schlechte Vervollständigung?</h2>
-<p>Um zu verstehen was ich mit guter Auto-Completion für Shells meine, brauchen wir erst einmal eine Baseline wie eine schlechte Completion aussieht. Das lässt sich sehr gut mit Docker demonstrieren: </p>
-<div class="hll"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--hostname<span class="w"> </span>shell-completion-demo<span class="w"> </span>debian
-</pre></div>
-<p>Erstes Experiment: <code>ls⇥⇥</code> (kein Leerzeichen vor den Tabs!)</p>
-<p><img src="blog/2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/autocomplete-commands-unconfigured.png" alt="Automatische Vervollständigung von Kommandos - unkonfiguriert"></p>
-<p>Zeigt alle Kommandos die mit <code>ls</code> anfangen
-Zweites Experiment: <code>ls ⇥⇥</code>
-Das zeigt bei mir:</p>
-<p><img src="blog/2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/autocomplete-files-unconfigured.png" alt="Automatische Vervollständigung von Dateien - unkonfiguriert"></p>
-<p>Schon mal gut, denn hier werden die Dateien im aktuellen Ordner vervollständigt.</p>
-<p>Nächste Schwierigkeitsstufe - kurze und lange Optionen: <code>ls -⇥⇥</code> (Minus vor dem Tab)
-Das zeigt hier nichts, genauso für lange Optionen <code>ls --⇥⇥</code> (zwei mal Minus vor dem Tab)</p>
-<p>Keine Ausgabe. <code>ls</code> ist eigentlich so ungefähr das einfachste Programm das jeder Shell beiliegt. Wenn automatische Vervollständigung also irgend etwas kann, dann sollte <code>ls</code> gut funktionieren.</p>
-<h2>Was ist gute Vervollständigung?</h2>
-<p>Dagegen mal ein Beispiel von meinem System:</p>
-<p><code>ls⇥</code> zeigt die Kommandos die mit ls anfangen, mit einer Kurzbeschreibung was diese Kommandos tun.</p>
-<p><img src="blog/2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/autocomplete-commands-configured.png" alt="Vervollständigung von Kommandos mit der Fish-Shell"></p>
-<p>Schon mit einem Tab sehe ich die Dateien, und zusätzlich sehe ich als Vorschlag den letzten Befehl den ich mit <code>ls</code> abgesetzt habe und kann diesen mit <code>⌃→</code> im ganzen, oder mit  <code>→</code> wortweise akzeptieren kann.</p>
-<p><img src="blog/2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/autocomplete-files-configured.png" alt="Automatische Vervollständigung von Dateien mit der Fish Shell"></p>
-<p>Ein ls -⇥<code>ergibt sofort eine Optionsliste - kurz und lang - mit einer Kurzbeschreibung was dieses Schalter tun. Ein zweites Minus und Tab</code>ls --⇥` zeigt nur noch die langen Optionen an:</p>
-<p><img src="blog/2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/autocomplete-options-configured.png" alt="Vervollständigung von Optionen mit der Fish-Shell">
-<img src="blog/2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/autocomplete-long-options-configured.png" alt="Vervollständigung von langen Optionen mit der Fish-Shell"></p>
-<p>Natürlich kann ich mit den Pfeiltasten oder mit Tab eine der Optionen auswählen - natürlich mit ordentlichem Highlighting.
-So macht arbeiten auf der Shell Spaß!</p>
-<p>Falls Ihr verwirrt seid das mein ls andere Optionen anbietet als eures, dann liegt das daran <a href="https://github.com/ogham/exa">das ich ls durch exa ersetzt habe</a>.</p>
-<h2>Wie könnt Ihr das bei euch nutzen?</h2>
-<p>Ich nutze die <a href="https://fishshell.com">Fish-Shell</a>, da diese von Haus aus eine sehr gute Autocompletion anbietet. Das ist aber nicht für jede, denn die Syntax der Fish Shell ist etwas anders als bei Bash/ZSH - eben nicht posix kompatibel. Ich mag das Weil es logischer und Kürzer ist, aber ich komme auch nicht durcheinander mit den verschiedenen Shell-Syntaxen da ich sie schon so lange verwende.</p>
-<p>Fast alle Shell Konfigrurations-Frameworks wie <a href="https://ohmyz.sh">oh-my-zsh</a> oder <a href="https://github.com/sorin-ionescu/prezto">Prezto</a> bieten zumindest etwas an das diesem Nahe kommen. Alle automatische Konfiguration stößt aber irgendwann an Ihre Grenzen wenn es um die Kommandos geht, die wir täglich benutzen. <code>docker</code> vervollständigt dann nicht compose und oder kennt die Unterkommandos davon nicht oder nur unvollständig, kubectl und helm sind notorische Kandidaten für die man sich selber kümmern muss.</p>
-<p>Jetzt könnte man natürlich versuchen automatisch aus der Hilfsausgabe dieser Kommandos etwas zu generieren (das macht z.B. die Fish shell von sich aus) oder man schreibt selber etwas (argh).</p>
-<p>Oder man wendet sich vertrauensvoll an das tool <a href="https://github.com/carapace-sh/carapace">carapace</a>, mit dem man die Completion für Programme komfortabel für alle Shells nachrüsten kann. Als Beispiel um die die Autocompletions für kubectl nachzurüsten, einfach <code>source &lt;(carapace kubectl zsh)</code> oder <code>carapace kubectl fish | source</code> (je nach shell) eingeben und ausprobieren ob es gefällt, und wenn ja, diese Zeile in die User-Konfiguration deiner shell eintragen und viel glücklicher sein.</p>
-<p>Obacht: Man kann mit so einem Snippet</p>
-<div class="hll"><pre><span></span><span class="c1"># ~/.zshrc </span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">CARAPACE_BRIDGES</span><span class="o">=</span><span class="s1">&#39;zsh,fish,bash,inshellisense&#39;</span><span class="w"> </span><span class="c1"># optional</span>
-zstyle<span class="w"> </span><span class="s1">&#39;:completion:*&#39;</span><span class="w"> </span>format<span class="w"> </span><span class="s1">$&#39;\e[2;37mCompleting %d\e[m&#39;</span>
-<span class="nb">source</span><span class="w"> </span>&lt;<span class="o">(</span>carapace<span class="w"> </span>_carapace<span class="o">)</span>
-</pre></div>
-<p>in seiner Shell-Konfiguration alle completer des Carapace Projekts aktivieren. Das hat mir allerdings nicht gefallen,, da ich manche der eingebauten Completer der Fish-Shell noch etwas besser finde als das was Carapace bereit stellt. Aber um Lücken zu ergänzen? Perfekt!</p>
-<p>Meine Shell-Completion Konfiguration (fish!) sieht daher so aus:</p>
-<div class="hll"><pre><span></span><span class="c"># enable shell completions</span>
-<span class="k">set</span> --global --export CARAPACE_BRIDGES <span class="s1">&#39;zsh,fish,bash,inshellisense&#39;</span>
-<span class="c"># I didn&#39;t have much luck enabling all carapace completions, but I do like some of them - especially if there is no built in fish completion for them</span>
-<span class="c"># carapace _carapace | source</span>
-carapace fd <span class="o">|</span> <span class="nb">source</span>
-carapace bat <span class="o">|</span> <span class="nb">source</span>
-carapace brew <span class="o">|</span> <span class="nb">source</span>
-carapace rg <span class="o">|</span> <span class="nb">source</span>
-carapace docker <span class="o">|</span> <span class="nb">source</span>
-uv generate-shell-completion <span class="nb">fish</span> <span class="o">|</span> <span class="nb">source</span>
-yq completion <span class="nb">fish</span> <span class="o">|</span> <span class="nb">source</span>
-</pre></div>
-
-    </section>
-    
-      <footer>
-        <a href="blog/2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/">weiterlesen…</a>
       </footer>
     
   </article>

@@ -57,6 +57,55 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/4/hg-bzr-und-git/">
+        HG, BZR und GIT
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-04-15">Tuesday, April 15, 2008</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>(zu <a href="http://musicbrainz.org/track/dfad0a06-56d0-4b7b-a3d5-0adc2f9a9113.html">Hotaka</a>)</p>
+<p>Well, am WE hab ich mich mit <a href="http://www.felix-schwarz.name/Hauptseite">Felix</a> gerade über Versionskontrollsysteme und unsere Experimente mit <a href="http://www.selenic.com/mercurial/wiki/">HG</a> unterhalten, als mich jemand 'von der Seite angemacht'  hat, dass doch wohl im Moment alle Welt weg von HG und hin zu <a href="http://git.or.cz/">GIT</a> wechseln würde.</p>
+<p>Well, das konnte ich so nicht glauben, aber ich wollte mir die verschiedenen Tools dann doch mal anschauen - vor allem in Hinsicht auf <a href="http://subversion.tigris.org/">SVN</a> Kompatibilität - denn ich setze SVN sowohl für meine <a href="http://www.novamedia.de/index_d.html">Arbeit</a>, also auch für mich [browser:/ Privat] ein.</p>
+<p>Na, denn ma auf zu dem Vergleich:</p>
+<h3>GIT</h3>
+<p>... hab ich mir als erstes dran genommen, und bin erst mal dran gescheitert, das das perl-script, dass den SVN-Modus macht via Fink natürlich nicht mit meiner Installation zusammenwollte, weil diese alten Perlhacker natürlich alle davon ausgehen, das Perl in <code>/usr/bin/perl</code> liegt. Well, tut es bei mir nicht, bzw, in <code>/usr/bin</code> liegt eine alte version von Perl, die eine bestimmte Library nicht enthält, die aber das Skript benötigt. ARGH! Also erst mal einen Patch zusammengebaut und an den Maintainer geschickt der das auf <code>/usr/bin/env perl</code> ändert. Oh well.</p>
+<p>Danach war aber eigentlich alles dandy, bis auf die Tatsache, das ich trotz längerem nachlesen ums verrecken nicht verstanden habe, welchen Sinn diese komische Staging-Area "Index" haben soll, die man bei GIT immer zuerst mal auffüllen muss, bevor man sie Comitten kann.</p>
+<p>Well, GIT is powerfull - aber für meinen Geschmack zu sehr an den Geschmack von Herrn Torvalds angepasst. Mag ja sein das er nur mit inkonsistenten und komplizierten Kommandozeilenoptionen effizient arbeiten kann. Ich jedenfalls hab was besseres verdient. Ausserdem erzeugt es bei mir Ablehnung wenn Herr Torvalds aus seiner Göttlichen Eingebung sämtliches anderes für Mist erklärt und dann etwas neues macht was deutlich komplizierter ist als die anderen - ohne das klar wird, wieso diese Komplexität der richtige Default ist und man nicht das Einfache zum Default machen kann, um das komplizierte als Option anzubieten.</p>
+<p>Fazit: Funktioniert, push und pull zum SVN server waren kein Problem und das ist schon mal ein starkes Stück. Beindruckendes Tool, dass aber auch viel Ablehnung in mir erzeugt.</p>
+<h3><a href="http://bazaar-vcs.org/">BZR</a></h3>
+<p>... war dann der zweite Kandidat, der nicht mehr viel Langsamer daherkommt als die anderen beiden (allerdings auch nicht zacko schnell). Allerdings, gibt es eine nette Extension die das Kommando <code>shell</code> hinzufügt. Das ist nett, denn dann hat man eine native Shell in bzr und hat superschnelle reaktionen, Tabvervollständigung überall, etc.</p>
+<p>Der Checkout aus SVN hat auch prima geklappt (die Anfangsschwierigkeiten hatte ich vor einem halben Jahr, als ich mir die SVN-Python-Bindings selber bauen musste. ARGH war das ein Kampf.) Jetzt hatte ich sie aber schon und mir auch schon die notwendigen Wrapper-Skripte gebaut die die Library dann halt noch dazuladen.</p>
+<p>Well, was soll ich sagen: pull vom SVN war hervorragend, lokales arbeiten auch, aber das Push.. das stirbt immer mit Fehler 175008 (ernsthaft!) und wirft mir dann noch an den Kopf das irgend eine property nicht angewendet werden konnte. Wenn er wenigstens sagen würde welche Property das Problem ist.. Aber naja.</p>
+<p>Fazit: Sehr poliert. Gerade im Vergleich zu meinem letzten Test ist die Dokumentation viel besser geworden, das ganze Tool wirkt durchdacht. Vor allem der Output der Kommandos hat mir gefallen, schön aufgeräumt und übersichtlich. Dann ist da natürlich die Tatsache das dieses Tool doch immer noch das einzige ist, das tatsächlich Verzeichnisse auch Versionieren kann und mit renames vernünftig umgeht. Ahh.... Endlich ohne scheu refaktorn. :-)</p>
+<h3>HG</h3>
+<p>... will ich eigentlich schon länger mal benutzen, aber es hat mir bisher immer nur zu ein paar kleinen Experimenten gereicht. Allerdings: Felix hat sich schon anstecken lassen und verwendet das jetzt nahezu ausschließlich.</p>
+<p>Well, mein Testcase hat leider gar nicht Funktioniert. Einigen <a href="http://www.selenic.com/pipermail/mercurial/2008-March/018014.html">Anmerkungen</a> hatte ich entnommen das HG jetzt auch auf SVN zurückschreiben kann herausgefunden wie das geht, hab ich aber leider nicht. Oh well.</p>
+<p>Fazit: Schnell, gute Bedienung und Python - aber ungeeignet um damit gegen SVN Repositories zu Arbeiten.</p>
+<h3>Fazit Fazit</h3>
+<p>So, dann bleibt mir also die Wahl: entweder GIT zu akzeptieren um damit gegen SVN zu arbeiten, oder aber den Bug in BZR zu finden um dann damit zu Arbeiten.</p>
+<p>Vom Bauchgefühl her würde ich mich eigentlich lieber an BZR heranmachen. Mögen tue ich HG am liebsten, das hat einfach das einfachste Design und auch noch eine sehr gute Integration in das System - so öffnet es zum Beispiel standardmäßig gleich das System Merge-Tool (opendiff) anstatt CVS like Konflitkmarker in der Datei zu verstreuen.</p>
+<p>So macht man dass.</p>
+<p>BZR ist auf jeden fall mein zweiter Favorit - auch Python (kann ich also Hacken) und schön durchdacht - wenn auch manchmal etwas verbose zu bedienen (pull z.B. macht kein merge, aber er sagt einem dann das man statt pull merge machen müsste. ???)</p>
+<p>GIT wirkt wie eine mächtige Kanone - ja man kann damit auch auf Spatzen schießen - ja danach wären sie tot - aber muss man sich das wirklich antun, das jeder normale Usecase ein wenig Komplizierter zu handhaben ist als mit den anderen Tools, nur damit man im zweifelsfall auch den Linux-Kernel mit dem gleichen Tool Maintainen kann?</p>
+<p>Ich jedenfalls beantworte diese Frage für mich mit einem klaren nein. Und werde mich jetzt erstmal auf bzr und hg werfen.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/4/hg-bzr-und-git/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/4/eine-schreibmaschine-sort-of/">
         Eine Schreibmaschine... sort of :-)
         </a>
@@ -411,37 +460,6 @@
     
       <footer>
         <a href="../../2008/4/wikipedia-braucht-einen-neuen-namen/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/4/unser-feind-das-bundesverfassungsgericht/">
-        Unser Feind - **das Bundesverfassungsgericht**
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-04-04">Friday, April 4, 2008</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>Durch Denkanstoß von <a href="http://www.taz.de/1/debatte/kommentar/artikel/1/zaehmung-der-wanzen/?src=AR&amp;cHash=6fe6c547bd">CHRISTIAN RATH</a></p>
-<p>Wer hätte das Gedacht. Die letzte Bastion der Gerechten in einem Staat voller kranker, überwachungsgeiler Politiker. Ein Kleines Dorf umgeben von vier Garnisonen....</p>
-<p>Aber wenn man drüber nachdenkt: Das Bundesverfassungsgericht ist seit geraumer Zeit schon die letzte Hoffnung für alle Menschen die vernünftige Gesetze fordern. Jedes Sicherheitsgesetz macht eine Zwischenrunde durch Karlsruhe - und wird dort Beschnitten.</p>
-<p>Und genau das ist das Problem. In Karlsruhe wird ein Kompromiss gefunden zwischen dem was das Grundgesezt / die Vernunft sagt und dem was die Politiker wollen.</p>
-<p>Und das bedeutet letztlich auch nichts anderes als die Gesetze kommen - zwar gebremst, aber sie kommen.</p>
-<p>Aber weil Karlsruhe gesagt hat jetzt ist alles ok, ist es dann natürlich in Ordnung.</p>
-<p>Ha ha, selten so gelacht.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/4/unser-feind-das-bundesverfassungsgericht/">weiterlesen…</a>
       </footer>
     
   </article>

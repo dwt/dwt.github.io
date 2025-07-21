@@ -57,6 +57,65 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/2/macros-in-c/">
+        Macros in C
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-02-13">Mittwoch, 13. Februar 2008</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>(Zu "Feuer Frei" von Rammstein)</p>
+<p>Makros in C sind ja so eine Sache.</p>
+<p>Zum einen kommt man in C an vielen Stellen gar nicht ohne aus, da sie die einzige Möglichkeit sind Ausdrücke OHNE sie zu evaluieren an mehreren stellen zu verwenden. Zum anderen Sind sie rein Textuell, "unhygienisch" und haben keine Ahnung was in ihnen eigentlich passiert.</p>
+<p>Das macht vor allem in Objective-C mächtig Schwierigkeiten. Das hier zum Beispiel geht nicht.</p>
+<div class="hll"><pre><span></span><span class="cp">#define DO(argument) argument</span>
+
+<span class="n">DO</span><span class="p">([</span><span class="bp">NSString</span><span class="w"> </span><span class="n">stringWithFormat</span><span class="o">:</span><span class="s">@&quot;%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;asdf&quot;</span><span class="p">]);</span>
+</pre></div>
+<p>Der Compiler meckert hier über zu viele Kommas und denkt das ich das Makro mit zwei Argumenten aufrufen will. Gnah.</p>
+<p>Warum beschäftigt mich das eigentlich?</p>
+<p>Ich möchte gerne Macro's haben, die je nach Typ des Arguments etwas anderes machen. Für Unit-Tests z.B. möchte ich sagen:</p>
+<div class="hll"><pre><span></span><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">testOverloadedAssert</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">);</span>
+<span class="w">    </span><span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="s">@&quot;barf&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;barf&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="s">&quot;bar&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;bar&quot;</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// These should fail in a sensible manner</span>
+<span class="w">    </span><span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="s">&quot;bar&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;bar&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mf">3.3</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+<p>Das ist aber schon ein großes Problem. In C++ könnte man den ersten teil ja noch über überladene Funktionen lösen - das geht in reinem Objective-C aber schon mal nicht. Dazu kommt ja noch der zweite Teil - da kriegt man vielleicht noch Compiler-Fehlermeldungen, wenn der Compiler nicht auto-conversion von Parametern anwirft. :-/</p>
+<p>Dazu kommt, das ich C++ nicht mag und schon gar nicht in alle meine Tests eine zwingende Abhängigkeit auf C++ einfügen will.</p>
+<p>Will man dann aber noch weiter gehen, wird es endgültig schwierig. Hier ein paar Beispiele:</p>
+<div class="hll"><pre><span></span><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">testAdvancedAssert</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="mf">3.3</span><span class="p">,</span><span class="w"> </span><span class="mf">3.3</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span><span class="w"> </span><span class="cm">/* accuracy */</span><span class="p">);</span>
+<span class="w">    </span><span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="mf">3.3</span><span class="p">,</span><span class="w"> </span><span class="mf">3.3</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;important meta information&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">ASSERT_EQUALS</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;info contains: %@ in %s:%d&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="s">@&quot;other info&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">__PRETTY_FUNCTION__</span><span class="p">,</span><span class="w"> </span><span class="n">__LINE__</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+<p>In reinem C hätte man hier gar keine Möglichkeiten mehr etwas zu machen.</p>
+<p>Wie weit ich mit einer Lösung dennoch gekommen bin - morgen. :)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/2/macros-in-c/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/2/geek-humor/">
         Geek-Humor
         </a>
@@ -356,35 +415,6 @@ Just two days ago I watched the episode <a href="http://www.wdr.de/tv/quarks/sen
     
       <footer>
         <a href="../../2008/2/shell-scripting-aus-python/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/2/vergessene-objective-c-mo-glichkeiten/">
-        Vergessene Objective C-Möglichkeiten
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-02-03">Sonntag, 3. Februar 2008</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>Da gibt es doch tatsächlich in Objective C die Möglichkeit, jederzeit eine Klasse unter einem anderen Namen zu importieren.</p>
-<p>Nice.</p>
-<div class="hll"><pre><span></span><span class="p">@</span><span class="n">compatibility_alias</span><span class="w"> </span><span class="n">MyShortClassName</span><span class="w"> </span><span class="n">MyVeryLongClassNameThatIDontWantToTypeEveryTime</span><span class="p">;</span>
-</pre></div>
-<p>Von <a href="http://cocoadevcentral.com/articles/000089.php">Write a Screen Saver Part II</a></p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/2/vergessene-objective-c-mo-glichkeiten/">weiterlesen…</a>
       </footer>
     
   </article>

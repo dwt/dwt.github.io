@@ -57,6 +57,63 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="2025/7/die-bittere-realitaet-container-sicherheit-ist-kaputt/">
+        Die bittere Realität: Container-Sicherheit ist Kaputt
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2025-07-16">Mittwoch, 16. Juli 2025</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p><img src="2025/7/die-bittere-realitaet-container-sicherheit-ist-kaputt/chainguard-cve-history.png" alt="Container Security">
+Vor einigen Wochen war ich auf der DevOpsCon in Berlin. Einer der spannenderen  Vorträge war für mich: <strong>"Supply Chain Security and the real world: Lessons from Incidents"</strong>. Offiziell ging es um Sicherheit in Container-Umgebungen. Inoffiziell war es eine Abrechnung mit dem Chaos, das wir im Alltag mit Docker-Containern erleben.</p>
+<p>Wir alle lieben Docker Hub: Schnell ein Image ziehen, starten, fertig. Aber was dabei oft vergessen wird: Selbst die als "offiziell" markierten Container bieten keinerlei Garantien. Weder über die Aktualität noch über Sicherheit. Fast alle dieser Container werden monatelang nicht aktualisiert, obwohl es CVEs für enthaltene Komponenten gibt.</p>
+<p>Wenn man das ernst nimmt, müsste man:</p>
+<ul>
+<li>Alle Container regelmäßig selbst neu bauen und dabei Updates der darin enthaltenen Distributionen installieren</li>
+<li>Bei jeder Abhängigkeit überwachen, ob es CVEs oder Updates gibt</li>
+<li>Die Upstream-Projekte verstehen, ihre Update-Kanäle abonnieren</li>
+<li>Alle Dockerfiles durchdringen (insbesondere bizarr manuell installierter Binaries)</li>
+</ul>
+<p>Kurz: Wer Container sicher betreiben will, muss eigentlich selbst zur Distribution werden.</p>
+<h3>Die Lösung: "Start Left" statt "Shift Left"</h3>
+<p>Die Firma <strong>Chainguard</strong> hat in dem Vortrag ihre Alternative vorgestellt: Ein Repository von sicherheitsoptimierten, rootlosen Containern, die alle:</p>
+<ul>
+<li><strong>ohne bekannte CVEs</strong> ausgeliefert werden</li>
+<li>auf einem selbstgebauten, deterministischen OS basieren ("Wolfi", im wesentlichen Alpine mit GLibC statt Musl)</li>
+<li>reproduzierbar gebaut werden (jede\:r kann sie nachbauen, wenn auch nicht Bit für Bit)</li>
+<li>mit Software-Bill-of-Materials (SBOM) ausgeliefert werden</li>
+<li>Auch im Container als normale Nutzer ausgeführt werden anstatt als `root`</li>
+<li>und bei neuen Upstream-Vulnerabilities innerhalb von 7 Tagen gepatcht werden</li>
+</ul>
+<p>Die Container sind FIPS-kompatibel, in zwei Varianten (Production vs. Dev - mit mehr Tools) verfügbar und mit bekannten Tools wie <code>trivy</code> problemlos scannbar. Offen Statistiken zeigen beeindruckend wie <em>viel weniger CVEs</em> sieh in Ihren Containern haben. Nämlich in der Regel gar keine.</p>
+<h3>Warum das für viele ein Game-Changer sein könnte</h3>
+<p>Wie in vielen Unternehmen, ist auch bei uns die Nutzung von Docker-Containern ein "Free for All": Jeder zieht, was er braucht, hauptsache es läuft. Sicherheitsrichtlinien? Nicht vorhanden. Updates? Machen wir Manuell alle Jubeljahre. Genau hier setzen die Container von Chainguard (oder auch Dockers eigene "Hardened Images") an:</p>
+<p>Man könnte sagen:</p>
+<blockquote><p>Was sonst niemand zuverlässig macht, macht ChainGuard automatisch.</p>
+</blockquote>
+<p>Und das Beste: Die Basis-Container sind sogar kostenlos (und damit z.B. auch für Open Source Projekte) verwendbar. Damit kann man ohne großen Aufwand den Produktivbetrieb auf eine wesentlich sicherere Basis stellen.</p>
+<p>Gerade wenn man – wie bei KRITIS-Vorgegeben – innerhalb eines festen Zeitrahmens Sicherheitsupdates einspielen muss, ist eine verlässliche Update-Garantie Gold wert.</p>
+<h3>Mein Fazit</h3>
+<p>Container sind kein Selbstzweck – und sie haben einen großen Nachteil gegenüber Veränderbarer Infrastruktur: Man verliert die automatisch installierten Updates der Linux Distributionen. Wer diesen Aufwand nicht selbst stemmen will, braucht Alternativen. Die gehärteten Container von ChainGuard oder Docker sind ein vielversprechender Weg, um  mit minimalem Aufwand viel weniger CVEs und fehlender Updates, sowie weit mehr Transparenz gewinnen kann.</p>
+<p>Probiert es doch mal aus. Ich würde mich sehr über Feedback freuen wo die Grenzen und Probleme dieses Ansatzes liegen. Offensichtlich ist schon mal, dass dort nicht so viele Container gibt.</p>
+<p>Grundsätzlich aber immer: Bitte Entscheidet euch bewusst für Images, die gepflegt werden. Und nicht für das erste, das die Suche auf Docker Hub zurück gibt.</p>
+
+    </section>
+    
+      <footer>
+        <a href="2025/7/die-bittere-realitaet-container-sicherheit-ist-kaputt/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="2025/6/nuetzliche-shell-kommandos-sort-uniq/">
         Nützliche Shell-Kommandos: sort, uniq
         </a>
@@ -679,55 +736,6 @@ pkgs<span class="o">.</span>mkShell <span class="p">{</span>
     
       <footer>
         <a href="2024/9/waehrend-dem-lernen-lernen-lernen-blooms-taxonomie-ebene-4-6/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="2024/9/waehrend-dem-lernen-lernen-lernen-blooms-taxonomie-ebene-1-3/">
-        Was ist blooms taxonomie? Die ersten Ebenen
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2024-09-06">Freitag, 6. September 2024</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p><img src="2024/9/waehrend-dem-lernen-lernen-lernen-blooms-taxonomie/bloom.jpeg" alt="Blooms Taxonomie"></p>
-<p>In <a href="2024/9/waehrend-dem-lernen-lernen-lernen-blooms-taxonomie/">meinem letzten Blog-Post habe ich mich mit Blooms Taxonomie beschäftigt</a>. Mir hat dieses Modell viele Gedankenanstöße darüber gegeben, wie ich lerne. Ich habe die sechs Ebenen von Blooms Taxonomie vorgestellt und ihre Anwendung sehr knapp diskutiert. Heute möchte ich diese Ebenen vertiefen und anhand von Beispielen auf die Unterschiede zwischen den Ebenen eingehen sowie die jeweiligen Lernziele beleuchten. Mein Ziel ist es, mir und anderen, die Anwendung von Blooms Taxonomie in beim Lernen zu veranschaulichen. Los gehts!</p>
-<h2>Die Ebenen von <a href="https://de.wikipedia.org/wiki/Blooms_Taxonomie">Blooms Taxonomie</a>:</h2>
-<h3>1. Wissen</h3>
-<p>Die Grundlage für alles. Hier geht es darum, sich an Fakten und Informationen zu erinnern. (Wer hätte das gedacht? ;)</p>
-<p><em>Fragen</em>: "Was sind die Fakten?" oder "Was weiß ich über dieses Thema?"</p>
-<p><em>Tätigkeit</em>: Sich was merken. Hier helfen z.B. Gedächtnis-Tricks wie ein <a href="https://de.wikipedia.org/wiki/Gedächtnispalast">Gedächtnispalast</a>, aber meine Empfehlung ist ein durchsuchbares Notizbuch als externalisiertes Gedächtnis zu führen. Warum? Weil das wunderbar für alle weiterne Ebenen verwendbar ist. :) Ich verwende derzeit <a href="https://www.agenda.com">Agenda</a>, aber wenn ich jetzt neu anfangen würde, <a href="https://logseq.com">würde ich Logseq verwenden</a>.</p>
-<p><em>Lernziel</em>: Ich kann dieses Wissen wiedergeben. Wenn Du aber nur auf dieser Ebene lernst, dann geht es Dir wie mir nach den Klausuren - eine Woche Später hatte ich das meiste erfolgreich wieder vergessen. :)</p>
-<p><em>Beispiel</em>: Welche Module und Funktionen gibt es grob in der Standardbibliothek meiner Programmiersprache? Oder: Welche Themen muss ich für die Klausur kennen? Welche Punkte hat jedes Unterthema?</p>
-<h3>2. Verständnis</h3>
-<p>Aufbauend auf Wissen, geht es jetzt darum Informationen zu interpretieren, zu erklären und erste Zusammenhänge herzustellen.</p>
-<p>Es reicht nicht mehr aus, nur Fakten zu kennen, sondern es ist wichtig, ihre Bedeutung zu verstehen und sie in einen Kontext einzuordnen.</p>
-<p><em>Fragen</em>: "Kann ich das Gelernte in eigenen Worten erklären?" oder "Kann ich ein Beispiel für das Gelernte geben?" Damit kann ich das Gelernte verstehen und in einen Kontext einordnen.</p>
-<p><em>Tätigkeit</em>: Interpretieren, Erklären, In eigenen Worten wiedergeben, Zusammenfassen, mit schon gelerntem Vergleichen, Beispiele geben.</p>
-<p><em>Lernziel</em>: Ich kann das gelernte jemand anderem erklären. (Also unter andere dass, was ich hier gerade mache). Damit kriege ich selbst ein viel tieferes Verständnis der Materie, und vergesse es auch viel weniger. Hier greift die alte Volksweisheit: Wer lehrt, lernt zweimal.</p>
-<p><em>Beispiel</em>: vor einer Klausur einen guten und vollständigen Spickzettel zu schreiben ist super. Überraschung: den braucht man in der Klausur dann üblicherweise nicht. :) Warum hilft das? Weil man hier strukturiert die (Lern)-Notizen zusammenfasst. Gerne als Mind-Map oder als Info-Graphik. Optimal: In einer Lern-Gruppe oder einem Kollegen etwas erklären.</p>
-<h3>3. Anwendung</h3>
-<p>Mit dem Verständnis an der Hand, geht es jetzt darum Wissen in die Praxis zu übersetzen. Gefordert sind (noch) keine großen Übertragungsleistungen, sondern eine direkte Anwendung des Gelernten in bekannten Kontexten.</p>
-<p><em>Fragen</em>: "Wie kann ich das Gelernte in einer bestimmten Situation oder bei einer bestimmten Aufgabe anwenden?" oder "Welche Probleme kann ich mit diesem wissen lösen?" Es geht darum das Gelernt auf bekannte Probleme anzuwenden.</p>
-<p><em>Tätigkeit</em>: Anwenden, Ausführen, Durchführen. Hilft alles nichts, man muss es mal praktisch in bekannten und neuen Situationen anwenden.</p>
-<p><em>Lernziel</em>: Ich kann das Gelernte in ähnlichen Kontexten anwenden. Das Ergebnis dieser Lernstufe ist die Fähigkeit, einfache Problemlösungen durchzuführen. Es geht darum, das Gelernte in die Praxis umzusetzen und zu zeigen, dass man das Wissen nicht nur besitzt, sondern auch anwenden kann.</p>
-<p><em>Beispiel</em>: Ein Programmierer könnte <a href="https://adventofcode.com">eine Aufgabe aus Advent Of Code</a> lösen um das dahinter liegende Konzept zu verstehen. Ein Administrator nach einer Schulung die Sicherheitseinstellungen eines Netzwerk Prüfen und verbessern. Ein Agiler Team-Teilnehmer ein neu gelerntes Projekt-Management Werkzeug in einem agilen Experiment ausprobieren.</p>
-<h2>Fazit</h2>
-<p>Beim Schreiben ist mir aufgefallen wie schwer es ist diese Ebenen kurz und Knapp vorzustellen. Es gibt ja noch drei weitere Ebenen, aber ich wollte eure geschätzte Aufmerksamkeit nicht noch weiter Quälen. :)</p>
-<p>Daher habe ich hier abgetrennt. Diese ersten Ebenen sind zwar essenziell um zu verstehen wie das alles gemeint ist. Aber den eigentlichen Schatz heben wir erst auf der 4. und 5. Ebene: Analyse und Evaluation. <a href="2024/9/waehrend-dem-lernen-lernen-lernen-blooms-taxonomie-ebene-4-6/">Und darum geht es (sicher für den geehrten Leser völlig überraschend) in meinem nächsten Blog Post</a>. :)</p>
-
-    </section>
-    
-      <footer>
-        <a href="2024/9/waehrend-dem-lernen-lernen-lernen-blooms-taxonomie-ebene-1-3/">weiterlesen…</a>
       </footer>
     
   </article>

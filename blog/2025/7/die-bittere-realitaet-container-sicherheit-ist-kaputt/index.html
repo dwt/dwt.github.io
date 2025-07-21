@@ -1,0 +1,178 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../static/pygments.css">
+    <title>Die bittere Realität: Container-Sicherheit ist Kaputt</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item "><a href="../../../../work/" class="nav-link">Professionelle Softwareentwicklung</a></li>
+    
+      <li class="nav-item "><a href="../../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../../publications/" class="nav-link">Veröffentlichungen und Vorträge</a></li>
+    
+      <li class="nav-item active"><a href="../../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../../categories/" class="nav-link">Kategorien</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="./">🇩🇪</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="../../../../en/blog/2025/7/die-bittere-realitaet-container-sicherheit-ist-kaputt/">🇬🇧</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../../">🏠</a>
+
+
+<a class="breadcrumb-item " href="../../../">Blog</a>
+
+
+<a class="breadcrumb-item active" href="./">Die bittere Realität: Container-Sicherheit ist Kaputt</a>
+
+</nav>
+    </header>
+    <article class="page die-bittere-realitaet-container-sicherheit-ist-kaputt  container-fluid">
+      
+  
+  <article class="blog-post">
+    <header>
+      <h2>
+        
+        Die bittere Realität: Container-Sicherheit ist Kaputt
+        
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2025-07-16">Mittwoch, 16. Juli 2025</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p><img src="chainguard-cve-history.png" alt="Container Security">
+Vor einigen Wochen war ich auf der DevOpsCon in Berlin. Einer der spannenderen  Vorträge war für mich: <strong>"Supply Chain Security and the real world: Lessons from Incidents"</strong>. Offiziell ging es um Sicherheit in Container-Umgebungen. Inoffiziell war es eine Abrechnung mit dem Chaos, das wir im Alltag mit Docker-Containern erleben.</p>
+<p>Wir alle lieben Docker Hub: Schnell ein Image ziehen, starten, fertig. Aber was dabei oft vergessen wird: Selbst die als "offiziell" markierten Container bieten keinerlei Garantien. Weder über die Aktualität noch über Sicherheit. Fast alle dieser Container werden monatelang nicht aktualisiert, obwohl es CVEs für enthaltene Komponenten gibt.</p>
+<p>Wenn man das ernst nimmt, müsste man:</p>
+<ul>
+<li>Alle Container regelmäßig selbst neu bauen und dabei Updates der darin enthaltenen Distributionen installieren</li>
+<li>Bei jeder Abhängigkeit überwachen, ob es CVEs oder Updates gibt</li>
+<li>Die Upstream-Projekte verstehen, ihre Update-Kanäle abonnieren</li>
+<li>Alle Dockerfiles durchdringen (insbesondere bizarr manuell installierter Binaries)</li>
+</ul>
+<p>Kurz: Wer Container sicher betreiben will, muss eigentlich selbst zur Distribution werden.</p>
+<h3>Die Lösung: "Start Left" statt "Shift Left"</h3>
+<p>Die Firma <strong>Chainguard</strong> hat in dem Vortrag ihre Alternative vorgestellt: Ein Repository von sicherheitsoptimierten, rootlosen Containern, die alle:</p>
+<ul>
+<li><strong>ohne bekannte CVEs</strong> ausgeliefert werden</li>
+<li>auf einem selbstgebauten, deterministischen OS basieren ("Wolfi", im wesentlichen Alpine mit GLibC statt Musl)</li>
+<li>reproduzierbar gebaut werden (jede\:r kann sie nachbauen, wenn auch nicht Bit für Bit)</li>
+<li>mit Software-Bill-of-Materials (SBOM) ausgeliefert werden</li>
+<li>Auch im Container als normale Nutzer ausgeführt werden anstatt als `root`</li>
+<li>und bei neuen Upstream-Vulnerabilities innerhalb von 7 Tagen gepatcht werden</li>
+</ul>
+<p>Die Container sind FIPS-kompatibel, in zwei Varianten (Production vs. Dev - mit mehr Tools) verfügbar und mit bekannten Tools wie <code>trivy</code> problemlos scannbar. Offen Statistiken zeigen beeindruckend wie <em>viel weniger CVEs</em> sieh in Ihren Containern haben. Nämlich in der Regel gar keine.</p>
+<h3>Warum das für viele ein Game-Changer sein könnte</h3>
+<p>Wie in vielen Unternehmen, ist auch bei uns die Nutzung von Docker-Containern ein "Free for All": Jeder zieht, was er braucht, hauptsache es läuft. Sicherheitsrichtlinien? Nicht vorhanden. Updates? Machen wir Manuell alle Jubeljahre. Genau hier setzen die Container von Chainguard (oder auch Dockers eigene "Hardened Images") an:</p>
+<p>Man könnte sagen:</p>
+<blockquote><p>Was sonst niemand zuverlässig macht, macht ChainGuard automatisch.</p>
+</blockquote>
+<p>Und das Beste: Die Basis-Container sind sogar kostenlos (und damit z.B. auch für Open Source Projekte) verwendbar. Damit kann man ohne großen Aufwand den Produktivbetrieb auf eine wesentlich sicherere Basis stellen.</p>
+<p>Gerade wenn man – wie bei KRITIS-Vorgegeben – innerhalb eines festen Zeitrahmens Sicherheitsupdates einspielen muss, ist eine verlässliche Update-Garantie Gold wert.</p>
+<h3>Mein Fazit</h3>
+<p>Container sind kein Selbstzweck – und sie haben einen großen Nachteil gegenüber Veränderbarer Infrastruktur: Man verliert die automatisch installierten Updates der Linux Distributionen. Wer diesen Aufwand nicht selbst stemmen will, braucht Alternativen. Die gehärteten Container von ChainGuard oder Docker sind ein vielversprechender Weg, um  mit minimalem Aufwand viel weniger CVEs und fehlender Updates, sowie weit mehr Transparenz gewinnen kann.</p>
+<p>Probiert es doch mal aus. Ich würde mich sehr über Feedback freuen wo die Grenzen und Probleme dieses Ansatzes liegen. Offensichtlich ist schon mal, dass dort nicht so viele Container gibt.</p>
+<p>Grundsätzlich aber immer: Bitte Entscheidet euch bewusst für Images, die gepflegt werden. Und nicht für das erste, das die Suche auf Docker Hub zurück gibt.</p>
+
+    </section>
+    
+  </article>
+
+  <nav>
+    
+  <div class="category-list">
+    Kategorien:
+      
+      <a href="../../../../categories/code/">Software Development</a>
+      
+    
+  </div>
+
+    
+    <div class="relative-navigation">
+      
+      
+        <div class="next">Nächstes Post: <a class="next" href="../../6/nuetzliche-shell-kommandos-sort-uniq/">Nützliche Shell-Kommandos: sort, uniq</a></div>
+      
+    </div>
+    
+  </nav>
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2025 <a href="../../../../work/">Martin Häcker</a></span>
+  </li>
+  
+    
+    <li class="nav-item imprint">
+      <a class="nav-link" href="../../../../meta/#imprint">
+        Impressum
+      </a></li>
+  
+    
+    <li class="nav-item privacy-policy">
+      <a class="nav-link" href="../../../../meta/#privacy-policy">
+        Datenschutzerklärung
+      </a></li>
+  
+    
+    <li class="nav-item colophon">
+      <a class="nav-link" href="../../../../meta/#colophon">
+        Kolophon
+      </a></li>
+  
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    <a class="nav-link" 
+      rel="license" 
+      target="_blank" 
+      href="https://creativecommons.org/licenses/by-sa/4.0/deed.de"
+    >
+      <img 
+        src="/static/cc-by-sa-88x31.png"
+        alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz"
+      >
+    </a>
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

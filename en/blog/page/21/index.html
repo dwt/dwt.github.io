@@ -57,6 +57,41 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/8/usability-und-programmierer/">
+        Usability und Programmierer
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-08-21">Thursday, August 21, 2008</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Ich habe ja schon lange den Verdacht, dass das allgemeine Vorurteil das Programmierer schlechte GUI-Designer sind vielleicht nicht ganz korrekt ist.</p>
+<p>Jetzt habe ich endlich den Beweis: Gutes GUI Design ist wie gutes API-Design - die allermeisten leute können es nicht.</p>
+<p><a href="http://sources.redhat.com/bugzilla/show_bug.cgi?id=3675">Das hier zum Beispiel</a> <a href="http://linux.die.net/man/3/gethostbyname">gethostbyname()</a> ist teil der libc und gibt einem zu einem Hostnamen die Daten aus einem DNS-Lookup zurück.</p>
+<p>Well.</p>
+<p>Nur das wir jetzt eben mal zwei Tage darauf verbrannt haben herauszufinden, dass dieses gethostbyname so dämlich ist, dass es niemals nicht von sich aus checkt ob sich vielleicht seit das Programm gestartet wurde, die Netzwerkeinstellungen irgendwie verändert haben könnten. Egal wie lange das Programm schon läuft...</p>
+<p>Groooßartig.</p>
+<p>Dafür muss man nämlich die Funktion <a href="http://linux.die.net/man/3/res_init">res_init()</a> aufrufen. Ach ja, und wann man das tut rät man einfach. Weil einen Callback gibts dafür natürlich nicht. Ach ja, und in der Manpage von gethostbyname steht natürlich auch nix über res_init.</p>
+<p>Gnah.</p>
+<p>Das ist für mich ein Musterbeispiel für eine verkackte API - eine API deren Benutzerfreundlichkeit gegen null geht.</p>
+<p>Ergo: Programmierer können Benutzeroberflächen machen - aber die meisten eben nicht. Und das müssen wir alle dann wieder an den APIs erleiden die sie designen.</p>
+<p>Hab ich schon mal erwähnt das ich die libc immer weniger mag?</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/8/usability-und-programmierer/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/8/adium-otr/">
         Adium + OTR
         </a>
@@ -351,33 +386,6 @@ The obvious first thing to do is to think about the GUI and what I want to achie
     
       <footer>
         <a href="../../2008/8/open-street-map-rules/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/8/doufu-mapo/">
-        Doufu Mapo...
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-08-06">Wednesday, August 6, 2008</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>... ist super lecker. Haben wir gerade grob nach <a href="http://www.chefkoch.de/rezepte/538985109780/Mama-Chiang-s-blutverduennendes-Mapo-Tofu.html">einem Rezept auf Chefkoch gemacht.</a></p>
-<p>MJAM.</p>
-<p>Ach ja, wir haben die Pilze weggelassen, dafür doppelt so viel Fleisch.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/8/doufu-mapo/">weiterlesen…</a>
       </footer>
     
   </article>

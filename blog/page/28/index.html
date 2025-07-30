@@ -57,6 +57,41 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/4/bzr-svn/">
+        BZR -&gt; SVN
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-04-27">Sonntag, 27. April 2008</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Puah. Nach viel Gefrickel hab ich es endlich zum laufen gebracht.</p>
+<p>Jetzt kann ich mit bzr von svn auschecken, lokal arbeiten (mit voller historie) und auch wieder comitten.</p>
+<p>Was mich [wiki:2008/04/15/21.02  beim letzten mal] noch aufgehalten hatte war ein Bug, der in der neuesten Version zwar gefixt ist - aber man musste zusätzlich noch die <code>~/.bazaar/subversion.conf</code> wegschmeißen.</p>
+<p>Ach ja, und einen neuen Branch vom Subversion machen, das <a href="http://bazaar-vcs.org/Rebase">rebase</a> Plugin installieren und mit <code>cd $NEW_BRANCH_LOCATION &amp;&amp; bzr replay $OLD_BRANCH_LOCATION -r $REVISIONS_TO_GET</code> die alten Patches holen.</p>
+<p>Eigentlich ganz einfach wenn man es mal raushat. Und dann kann man das auch von dort aus in den SVN comitten.</p>
+<p>Yeah. (Danke an <a href="http://bazaar-vcs.org/JelmerVernooij">Jelmer Vernooij</a> für die Hilfe beim fixen der Probleme)</p>
+<p>Das neue Fazit:
+BZR: gut
+GIT: gut
+HG: kann bisher noch nicht ins SVN comitten - aber immerhin <a href="http://code.google.com/soc/2008/hg/appinfo.html?csaid=2757CDDD2156F1A7">arbeitet da jetzt jemand dran.</a></p>
+<p>Bleibt noch den bzr hg modus auszuprobieren ob ich damit ins subversion comitten kann.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/4/bzr-svn/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/4/das-neue-ubuntu-ist-da/">
         Das neue Ubuntu ist da
         </a>
@@ -339,37 +374,6 @@
     
       <footer>
         <a href="../../2008/4/openwrt/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/4/freifunk/">
-        Freifunk
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-04-17">Donnerstag, 17. April 2008</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>Ha!</p>
-<p>Es Funkt. Frei.</p>
-<p>Naja fast. Jedenfalls funkt das <a href="http://openwrt.org/">OpenWRT</a> schon mal. An dem <a href="http://start.freifunk.net/">Freifunk</a> arbeite ich noch.</p>
-<p>Immerhin gibt es ein paar Straßen weiter wohl noch weitere 3 Leute die Freifunk machen. Interessanterweise wohl auch immer gleich sowohl <a href="http://de.wikipedia.org/wiki/Optimized_Link_State_Routing">OLSR</a> als auch <a href="http://de.wikipedia.org/wiki/B.A.T.M.A.N.">B.A.T.M.A.N.</a>.</p>
-<p>Na mal schaun wie das läuft. Auf dem <a href="http://de.wikipedia.org/wiki/La_Fonera">Fonera</a> soll ja zusätzlich auch noch FON als Dienst laufen.</p>
-<p>Ah well, schaun mer mal.</p>
-<p>Wenn die Hardware tatsächlich an Hitzeproblemen verstirbt, muss ich halt ein neueres Modell nachbestellen.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/4/freifunk/">weiterlesen…</a>
       </footer>
     
   </article>

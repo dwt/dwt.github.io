@@ -59,6 +59,51 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="blog/2025/7/devopscon-keynote-security-ist-jetzt-teil-von-devops/">
+        DevOpsCon Keynote – Security ist jetzt Teil von DevOps?
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2025-07-30">Mittwoch, 30. Juli 2025</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p><img src="blog/2025/7/devopscon-keynote-security-ist-jetzt-teil-von-devops/secure-chips.png" alt="Metapher auf Teams die jeweils Sicherheits-Interessierte enthalten, die einfach von Spezialisten Unterstützung erhalten können"></p>
+<p>Ich habe mir auf der DevOpsCon die Keynote "From Static to Strategic: Reimagining Application Security for a DevOps World" von John D. Wood angesehen. Um ehrlich zu sein: Die Keynote hat mich nicht begeistert. Am ehesten noch fand ich interessant das er Zahlen hatte, das die meisten Sicherheitslücken (auch nach Bekanntwerden) noch über ein Dreiviertel-Jahr offen sind. Aua. Ein Satz am Ende ist bei mir hängengeblieben:</p>
+<blockquote><p>"DevOps bekommt jetzt auch Security."</p>
+</blockquote>
+<p>Was simpel klingt, ist in der Realität alles andere als einfach – und betrifft uns ganz konkret. In einer Zeit, in der wir als Unternehmen KRITIS-relevant geworden sind, ist es für viele Risiken nicht mehr möglich sie einfach zu übernehmen (AKA aussitzen). Wir müssen sie aktiv mitigieren – und das gilt besonders auch für Security-Risiken.</p>
+<h3>Security: Aus DevOps wird "DevSecOps"?</h3>
+<p>Dev ist schon schwer. Ops noch schwieriger. Und jetzt kommt Security obendrauf. Nicht jedes Team kann oder will alle drei Disziplinen gleich gut abdecken. Und dennoch ist klar: Es kommt mehr Arbeit auf uns zu.</p>
+<p>Wir werden bei bestimmten Anwendungen in Zukunft viel stärker darauf achten müssen:</p>
+<ul>
+<li>Dass Betriebssysteme (in Docker-Containern) aktuell sind,</li>
+<li>Dass Projektabhängigkeiten regelmäßig gepflegt werden,</li>
+<li>Dass wir verstehen, <em>welche Sicherheitslücken für <strong>uns</strong> relevant</em> sind – nicht nur, weil ein Scanner sie anmeckert, sondern weil unsere eigene Risikoabwägung sie als kritisch einstuft.</li>
+</ul>
+<h3>Wunsch-Szenario: Expertise teilen, nicht duplizieren</h3>
+<p>Mein Wunsch wäre, dass nicht jedes Team die komplette Security-Expertise selbst aufbauen muss. Stattdessen sollten sich diejenigen, die sich besonders für das Thema interessieren, tiefer einarbeiten können – und jederzeit unkompliziert Zugang zu  Spezialist\:innen haben. Idealerweise entsteht daraus eine Art Mentoring-Beziehung.</p>
+<p>Das Ziel: Schnell und unbürokratisch Expertise bekommen, wenn man merkt, dass man sie braucht. Entwickler\:innen sollen lernen, Security-relevante Situationen zu erkennen und wissen, wo sie gezielt und niederschwellig Unterstützung finden.</p>
+<h3>Compliance-Checkbox oder echte Verteidigung?</h3>
+<p>Ein starkes Bild aus dem Vortrag war die Kritik an klassischen Security-Prozessen: Wöchentliche Scans, lange Backlogs mit offenen CVEs, endlos False Positives, wenig konkreter Nutzen. All das erzeugt ungeplante Arbeit, und widerspricht damit dem DevOps-Grundsatz "No unplanned work" – und hilft im Ernstfall wenig. Letztlich müssen wir ja die Daten unserer Versicherten Schützen, dass der Bug den ein Angreifer bei uns Ausgenützt hat schon lange bekannt war, hilft uns nicht weiter.</p>
+<h3>Fazit</h3>
+<p>Ich nehme aus dem Talk vor allem eines mit: Security können wir in Zukunft nicht länger als "Problem von jemand anderem" verstehen. Sie ist jetzt (oder wird es bald) integraler Teil von DevOps – ob uns das passt oder nicht.</p>
+<p>Und wir müssen Wege finden, wie wir das <em>gemeinsam</em> schultern können – weil wir eben nicht jeden Entwickler zum Security-Experten machen können.</p>
+
+    </section>
+    
+      <footer>
+        <a href="blog/2025/7/devopscon-keynote-security-ist-jetzt-teil-von-devops/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="blog/2025/7/die-bittere-realitaet-container-sicherheit-ist-kaputt/">
         Die bittere Realität: Container-Sicherheit ist Kaputt
         </a>
@@ -151,111 +196,6 @@ set_symmetric_difference<span class="o">()</span><span class="w"> </span><span c
     
       <footer>
         <a href="blog/2025/6/nuetzliche-shell-kommandos-sort-uniq/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="blog/2025/6/devopscon-stolperfallen-beim-aufbau-interner-developer-platforms-idp/">
-        DevOpsCon: Stolperfallen beim Aufbau interner Developer Platforms (IDP)
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2025-06-19">Donnerstag, 19. Juni 2025</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>Heute gibts den Start meines Berichts von der DevOpsCon 25. So viel allgemeines vorweg: War schön.  Druckbetankung wie es sich gehört.</p>
-<p>Los ging es mit einer Keynote über interne Entwickler-Plattformen und was dabei gerne schief geht.</p>
-<h2>1 | Reality-Check: 90 % der Devs nutzen schon eine IDP – wir auch</h2>
-<ul>
-<li>Laut Jessica arbeiten rund 90 % aller Entwickler:innen mittlerweile mit einer internen Plattform – oft, ohne es zu merken.</li>
-<li>Wir auch? Was ist unsere Plattform?</li>
-</ul>
-<h2>2 | Das theoretische Fundament</h2>
-<p>Jessica empfahl <em>vier Bücher</em>, die jede:r Platform‑Builder kennen sollte. (Lustigerweise gab Sie zu, das Sie selbst noch nicht alle davon gelesen komplett gelesen hat.)</p>
-<table>
-<thead><tr>
-<th>Buch</th>
-<th>Kernaussage für IDP</th>
-<th>Mein Take‑away</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong><a href="https://www.amazon.com/Transformed-Becoming-Product-Driven-Company-Silicon/dp/1119697336">Transformed</a></strong></td>
-<td>Von Silos zu <strong>empowereden Produkt‑Teams</strong></td>
-<td>Auch Plattform‑Teams brauchen Produktdenken und Produkt-Manager.</td>
-</tr>
-<tr>
-<td><strong><a href="https://www.amazon.com/Team-Topologies-Organizing-Business-Technology/dp/1942788819">Team Topologies</a></strong></td>
-<td><strong>Team‑Typen &amp; Schnittstellen</strong> (u. a. Platform &amp; Enabling Teams)</td>
-<td>Klingt sehr ähnlich zu dem wie wir organisiert sind. Unterschiede: Komplizierte Subsysteme brauchen eigene Teams. Enabling‑Teams sind hier fast immer <strong>temporär</strong>.</td>
-</tr>
-<tr>
-<td><strong><a href="https://www.amazon.de/Accelerate-Software-Performing-Technology-Organizations/dp/1942788339">Accelerate</a></strong></td>
-<td>Deploy‑Freq., Lead‑Time, Failure‑Rate, MTTR</td>
-<td><a href="https://dora.dev/guides/dora-metrics-four-keys/">DORA‑Scores</a> = Proxy für Platform-Team‑Erfolg. Nugget: Im Raum war niemand der alle 4 Metriken einsetzt, oder jemanden kennt der das tut…</td>
-</tr>
-<tr>
-<td><strong><a href="https://www.amazon.de/Platform-Engineering-Technical-Product-Leaders/dp/1098153642">Platform Engineering</a></strong></td>
-<td><strong>Plattform ersetzt Glue‑Code</strong> &amp; schafft Self‑Service</td>
-<td>Eine IDP ist <strong>Software</strong>, kein Ops‑Team.</td>
-</tr>
-</tbody>
-</table>
-<h2>3 | Typische Fallstricke</h2>
-<ol>
-<li><strong>Menschen im Plattform-Team bringen ihre Erfahrungen mit</strong><ul>
-<li>„It’s faster if I just do it.“ Sorgt gerne dafür das das Ergebnis auch nur Sie benutzen können.</li>
-<li>Damit erzeugt man ein neues Ops-Silo. Dringend zu vermeiden. Das Ziel ist, das andere Teams sich selbst helfen können.</li>
-</ul>
-</li>
-<li><strong>Rudis Resterampe</strong> (Scope Creep)<ul>
-<li>Plattform‑Team sammelt alles, was sonst niemand machen will.</li>
-<li>Konsequenz: Keine Zeit mehr für strategische Funktionen.</li>
-<li>Braucht eine klare Vision, und insbesondere By-In von Leadership. Dann Iterationen und viel Kommunikation.</li>
-</ul>
-</li>
-<li><strong>Alles sofort lösen wollen (Rudis Resterampe 2.0)</strong><ul>
-<li>Minimalismus ist King 👑. Nicht jedes Problem muss gleich gelöst werden.</li>
-<li>Priorisiere <strong>Onboarding, Self‑Service &amp; Empowerment</strong>.</li>
-</ul>
-</li>
-<li><strong>Das falsche Problem Lösen</strong><ol>
-<li>Es ist sehr einfach das falsche Problem zu lösen. Schließlich sind wir alle Entwickler und wissen was wir brauchen.</li>
-<li>Aber jedes Team ist anders und hat andere Aufgaben. Daher ist es unglaublich wichtig mit den Menschen intensiv zu sprechen die man beglücken will.</li>
-<li>Plattform-Engineering braucht genauso Produkt-Management und einen Produkt-Manager wie andere Themen. Wenn das Budget dafür nicht vorhanden ist, muss man diese Aufgaben trotzdem erfüllen.</li>
-</ol>
-</li>
-<li><strong>Plattform‑Migrationen unterschätzen</strong><ul>
-<li>Jede Migration ist Schmerzhaft und <strong>kostet Vertrauen</strong> (Vertrauen ist wie eine Währung. Wenn man es ausgegeben hat, ists wech).</li>
-<li>Daher so wenig Migrationen wie möglich, und diese gut vorbereiten, auch wenn es viel Aufwand erzeugt.</li>
-<li>Ziel: <strong>Automatisierte, Low‑Impact‑Migrationspfade</strong>.</li>
-</ul>
-</li>
-</ol>
-<h2>4 | Fragen an den Leser</h2>
-<ol>
-<li><strong>Was ist deine aktuelle Plattform?</strong></li>
-<li><strong>Wo klemmt es eigentlich derzeit?</strong></li>
-<li><strong>Macht es Sinn die DORA‑Baselines zu</strong> messen?</li>
-</ol>
-<h2>5 | Fazit</h2>
-<p>Ein internes Developer‑Platform‑Team ist <strong>kein Sonder‑Ops‑Team</strong>, sondern ein <strong>Produkt‑Team</strong> mit klarer Vision, fokussiertem Scope und messbarem Impact.
-Je einfacher, desto besser – und Vertrauen ist kostbar.</p>
-<blockquote><p><em>„Minimalismus ist King – löse die wichtigsten 20 % zuerst, die den Teams 80 % des Schmerzes nehmen.“</em> – Jessica Anderson</p>
-</blockquote>
-
-    </section>
-    
-      <footer>
-        <a href="blog/2025/6/devopscon-stolperfallen-beim-aufbau-interner-developer-platforms-idp/">weiterlesen…</a>
       </footer>
     
   </article>

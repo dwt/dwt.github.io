@@ -57,6 +57,39 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/10/aus-einem-variablen-namen-einen-string-machen/">
+        Aus einem Variablen-Namen einen String machen
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-10-06">Monday, October 6, 2008</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Braucht man manchmal für Bindings. Gleichzeitig will ich aber nicht überall die namen meiner Variablen als Strings hinterlegen - schon alleine damit ich beim Refactorn auch alle Namen erwische.</p>
+<p>Also den Macro-Prozessor zur Rettung:</p>
+<div class="hll"><pre><span></span><span class="cp">#define NSStringize(aVariableName) @#aVariableName</span>
+</pre></div>
+<h1>::</h1>
+<p>macht aus einer beliebigen expression einen String
+ @::
+  und das @ davor macht aus einem constanten c-string einen ObjC-NSString.</p>
+<p>Und das problem ist gelöst. :)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/10/aus-einem-variablen-namen-einen-string-machen/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/10/history_v2/">
         _HiStOrY_V2_
         </a>
@@ -330,35 +363,6 @@
     
       <footer>
         <a href="../../2008/9/2008-09-13-13-40/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/9/sicherheit-und-parkha-user/">
-        Sicherheit und Parkhäuser
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-09-10">Wednesday, September 10, 2008</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>Heute hatte ich das witzige Erlebnis dass wir in ein Parkhaus gefahren sind - und einfach keinen Parkplatz gefunden haben.</p>
-<p>Ok, soweit wars noch nicht spannend - aber was ich hoch-interessant fand, ist dass wir dann beim Rausfahren nicht zur Kasse gebeten wurden. Das macht Sinn, denn wer keinen Parkplatz findet, ist natürlich Dreifach angepisst wenn er dann dafür auch noch Zahlen muss. (Und vielleicht während dessen auch noch den Ausgang versperrt.. :)</p>
-<p>Ich halte es für sehr wahrscheinlich, dass jedes Parkhaus so funktioniert. Cool. Denn das bedeutet, dass man prinzipiell jedes Parkhaus umsonst benutzen kann - man muss sich nur unmittelbar vor dem herausfahren eine neue Marke besorgen.</p>
-<p>:)</p>
-<p>(Ok, das mag nicht soo leicht sein, aber im Prinzip...)</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/9/sicherheit-und-parkha-user/">weiterlesen…</a>
       </footer>
     
   </article>

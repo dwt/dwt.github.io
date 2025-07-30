@@ -57,6 +57,37 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/8/nstoolbaritem-whoes/">
+        NSToolbarItem whoes
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-08-21">Thursday, August 21, 2008</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Kleines Detail, dass man wissen sollte.</p>
+<p>NSToolbarItems sind etwas völlig anderes als normale Controls. Sie sind nämlich keine. Sondern sie enthalten höchstens welche - aber nur als View. Das heißt, wenn eine Toolbar z.b. auf "nur Text" geschaltet ist, dann hat das Item überhaupt kein wissen darüber was in dem NSView eigentlich passiert - und daher versucht es auch überhaupt nicht etwas sinniges zu tun.</p>
+<p>Unter Tiger zumindest. Da wird zwar alles schön angezeigt - aber machen tut das dann alles nix mehr. Unter Leopard ist es immerhin so, dass auf einen Klick die Toolbar wieder mit Bild angezeigt wird.</p>
+<p>Tja und Lösen muss man das ganze dann so, dass man verstehen muss, das NSToolbarItems für die nur Text Darstellung ein NSMenuItem verwenden, dass man selbst anpassen muss. Steht nur in der Dokumentation lediglich als mini Absatz ohne Erklärung <strong><em>wieso</em></strong> man das braucht.</p>
+<p>Hrmpf. Naja. Immerhin macht es Sinn wenn man versteht was sie als Design gewählt haben.</p>
+<p>Aber wieso sie sich für dieses Design entschieden haben, verstehe ich absolut nicht. Sie hätten ja auch gleich ein NSControll als content nehmen können - und wenn das ein Target und eine Action hat dann einfach die wiederverwenden...</p>
+<p>Aber neee....</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/8/nstoolbaritem-whoes/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/8/usability-und-programmierer/">
         Usability und Programmierer
         </a>
@@ -346,46 +377,6 @@ The obvious first thing to do is to think about the GUI and what I want to achie
     
       <footer>
         <a href="../../2008/8/beweismaschine/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/8/open-street-map-rules/">
-        Open Street Map rules
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-08-08">Friday, August 8, 2008</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>hard.</p>
-<p>Jetzt auch mit <a href="http://www.openstreetmap.de/">deutscher Homepage</a>. (<a href="http://maps.google.com/maps?f=q&amp;hl=en&amp;geocode=&amp;q=http:%2F%2Fwww.fxfoo.com%2Fosm%2Fkml%2Fworld-hour-latest-v0.kml&amp;ie=UTF8&amp;ll=54.572062,-5.976562&amp;spn=96.431666,226.40625&amp;t=p&amp;z=2">Überhaupt ist in Deutschland Kartenmäßig ziemlich was los.</a>)</p>
-<p>So cool was man mit den Daten alles anfangen kann und was leute tatsächlich damit tun!</p>
-<p>Da wäre zum Beispiel</p>
-<ul>
-<li><a href="http://geo.topf.org/comparison/index.html">Der Kartenvergleich</a>, auf dem man sehen kann wie sich <a href="http://www.openstreetmap.org/">OpenStreetMap</a> im vergleich zu anderen Karten macht.</li>
-<li><a href="http://labs.geofabrik.de/history/">Die OSM History</a> auf der man sehen kann, wie sich die Datenbasis über die Zeit verändert.</li>
-<li><a href="http://download.geofabrik.de/osm/">Der Kartendownload fertig für Zielfindungsgeräte</a> (hauptsächlich von Garmin)</li>
-<li><a href="http://openrouteservice.org/">Ein Routenplanerservice</a> der Uni Bonn</li>
-<li><a href="http://wiki.openstreetmap.org/index.php/Featured_images">Featured Images</a> die zeigen was User mit den Daten alles machen</li>
-<li><a href="http://www.opengeodata.org/">Den offiziellen Blog des Projekts</a></li>
-<li>und und und...</li>
-</ul>
-<p>Absolut cool.</p>
-<p>Ich hätte wirklich gerne einen Client für das iPhone... nicht nur zur Anzeige, sondern direkt zum ändern und aufzeichnen. Boah wär das geil.</p>
-<p>Leider ist Open Source auf dem iPhone <a href="http://trac.adiumx.com/wiki/AdiumForiPhonen">ein echtes Problem</a>.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/8/open-street-map-rules/">weiterlesen…</a>
       </footer>
     
   </article>

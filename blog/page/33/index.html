@@ -57,6 +57,37 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/2/grundrecht-per-verfassungsgericht/">
+        Grundrecht per Verfassungsgericht
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-02-27">Mittwoch, 27. Februar 2008</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Das allgemeine Persönlichkeitsrecht ![...] umfasst das Grundrecht auf Gewährleistung der Vertraulichkeit und Integrität informationstechnischer Systeme.</p>
+<p>Mehr im <a href="http://www.bundesverfassungsgericht.de/entscheidungen/rs20080227_1bvr037007.html">Urteilsspruch des Bundesverfassungsgerichts</a>.</p>
+<p>Wow. Mir ist noch nicht ganz klar was für Auswirkungen dieses Gesetz alles haben wird.</p>
+<p>Insbesondere die "Vertraulichkeit und Integrität" ist mir unklar. Mein Freund <a href="http://wiki.piratenpartei.de/Benutzer:Bernd">Bernd</a> formulierte das sehr schön: "Wenn StudiVZ öffentlich sagt das sie dein Profil an Werbetreibende verkaufen, dann gehört es zur Integrität der Plattform das diese Informationen Verkauft werden."</p>
+<p>Großartig.</p>
+<p>Na mal genauer durchlesen was das sagt.</p>
+<p>In der Zwischenzeit: <a href="http://www.sinfest.net/comikaze/comics/2008-02-17.gif">Die Inspiration des Bundesverfassungsgerichts?</a>.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/2/grundrecht-per-verfassungsgericht/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/2/perry-rhodan-oder-wie-man-grossartige-ideen-in-den-sand-setzt/">
         Perry Rhodan - oder wie man großartige Ideen in den Sand setzt
         </a>
@@ -498,59 +529,6 @@ Ah well.</p>
     
       <footer>
         <a href="../../2008/2/c-typen-in-die-laufzeitumgebung-heben/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/2/mit-c-makros-etwas-tun-was-mit-ihnen-nicht-mo-glich-ist/">
-        Mit C Makros etwas tun, was mit ihnen nicht möglich ist
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-02-15">Freitag, 15. Februar 2008</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>Das Problem ist also ein Makro zu schreiben, das typsicher und nach Typen überladen ist, eine variable Anzahl von Argumenten erhält und zudem einfach und verständlich ist.</p>
-<p>Zugegeben, mir ist noch nicht klar wie ich das umsetzen kann.</p>
-<p>Aber, wenn man das Problem nur ein klein wenig vereinfacht, und nur versucht eines oder mehrere Argumente zu unterstützen...</p>
-<p>Also zum Beispiel ein <code>LOG()</code> Macro, dass als erstes Argument irgend etwas erhalten kann (für den Anfang, irgend etwas das sich in einen String umwandeln lässt) dann erhält man etwas das sich so verwenden lässt:</p>
-<div class="hll"><pre><span></span><span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;fnord&quot;</span><span class="p">);</span>
-<span class="n">LOG</span><span class="p">(</span><span class="s">&quot;fnord&quot;</span><span class="p">);</span>
-<span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">string</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;fnord&quot;</span><span class="p">;</span>
-<span class="n">LOG</span><span class="p">(</span><span class="n">string</span><span class="p">);</span>
-<span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;%@&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;fnord&quot;</span><span class="p">);</span>
-<span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;fnord&quot;</span><span class="p">);</span>
-<span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;%d&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span>
-<span class="n">LOG</span><span class="p">(</span><span class="s">&quot;%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;fnord&quot;</span><span class="p">);</span>
-<span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;%@&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="bp">NSString</span><span class="w"> </span><span class="n">stringWithFormat</span><span class="o">:</span><span class="s">@&quot;%s,%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;fnord&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;fnord&quot;</span><span class="p">]);</span>
-</pre></div>
-<p>Die Implementierung ist allerdings etwas tricky.</p>
-<p>Typinvariante Makros wie <code>MAX(x, y)</code> schreibt man üblicherweise so:</p>
-<div class="hll"><pre><span></span><span class="cp">#define MAX(x, y) ({ \</span>
-<span class="cp">    typeof(x) __x = (x); \</span>
-<span class="cp">    typeof(y) __Y = (y); \</span>
-<span class="cp">    (__x &lt; __y) ? __x : __y; \</span>
-<span class="cp">})</span>
-</pre></div>
-<p>Das bedeutet durch die speziellen klammern <code>({ ... })</code> wird das Makro wie eine Funktion behandelt (eine GCC-Extension) und die übergebenen Ausdrücke nur einmal auswertet und in einer Variablen vom korrekten Typ speichert. <code>int m = MAX(i++, ++j);</code> ist damit also kein Problem. Schließlich ist der Wert der letzten Zeile der "Rückgabewert" der Makro-Funktion</p>
-<p>Loggen ist aber schon noch ein Problem, da mit diesem Trick, der Typ noch nicht herauszufinden ist. Mein erster Ansatz mit <a href="http://developer.apple.com/documentation/DeveloperTools/gcc-3.3/gcc/Other-Builtins.html">__builtin_types_compatible_p(typeof(aValue), char *)</a> etc. brachten mich da nicht weiter. Es braucht noch die <a href="http://developer.apple.com/documentation/Cocoa/Conceptual/ObjectiveC/Articles/chapter_13_section_9.html#//apple_ref/doc/uid/TP30001163-CH9-TPXREF165">@encode()</a> Anweisung von Obj-C. Direkt im Makro mit <code>if (@encode(char *) == @encode(typeof(aValue)))</code> war es dann allerdings auch noch nicht obwohl ich gerne mit <a href="http://developer.apple.com/documentation/DeveloperTools/gcc-3.3/gcc/Other-Builtins.html">__builtin_choose_expr( aConstant, expressionOne, expressionTwo )</a> zur Compilezeit alles erledigt hätte.</p>
-<p>Nun ja, dann eben zur Laufzeit mit <code>@encode()</code>.</p>
-<div class="hll"><pre><span></span><span class="cp">#define LOG(aValue) [[Log sharedLog] logObjcType:@encode(typeof(aValue)) value:aValue]</span>
-</pre></div>
-<p>Die erzeugt aus einem Typ nämlich einen C-String - der zur Laufzeit geparst werden kann um daraus herauszulesen wie der void-Pointer auf <code>aValue</code> interpretiert werden muss.</p>
-<p>Wie ich das gemacht hab - morgen. :)</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/2/mit-c-makros-etwas-tun-was-mit-ihnen-nicht-mo-glich-ist/">weiterlesen…</a>
       </footer>
     
   </article>

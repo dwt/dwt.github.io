@@ -57,6 +57,81 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="2025/8/mit-llm-rag-einfach-mal-ausprobieren-direkt-von-der-shell/">
+        Mit llm RAG einfach mal ausprobieren – direkt von der Shell
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2025-08-07">Thursday, August 7, 2025</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p><img src="2025/8/mit-llm-rag-einfach-mal-ausprobieren-direkt-von-der-shell/workflow.png" alt="Ablaufdiagramm">
+Einer der coolsten Aha-Momente der letzten Tage bei mir war, wie einfach und niederschweflig das Arbeiten mit Retrieval-Augmented Generation (RAG) von der Shell inzwischen sein kann – ganz ohne spezielle Infrastruktur, Vektor-Datenbank oder Server-Backend. Das Python-Tool <a href="https://pypi.org/project/llm/"><code>llm</code></a> macht  das möglich: RAG direkt aus der Kommandozeile, mit SQLite als Backend und einfachen Kommandos, die sich hervorragend in Shell-Workflows integrieren lassen.</p>
+<h2>Ein Power Tool für Sprachmodelle in der Shell</h2>
+<p><a href="https://llm.datasette.io/en/stable/"><code>llm</code> kann natürlich noch viel mehr und ist ein Power Tool, das den Einsatz von KI direkt im Terminal erlaubt</a>. Es erlaubt mit beliebigen API-Providern oder lokalen Modellen zu sprechen und integriert diese damit nahtlos in eigene Skripte. Use Cases: Daten hinein pipen und mit dem LLM bearbeiten. Ob zusammenfassen, erklären, übersetzen, mit einem aufwendigen Prompt aus einer Datei beackern… Da geht so viel. Egal was Ihr aus diesem Artikel mitnehmt, zumindest sollte es sein das Ihr <code>llm</code> in euren Workflow aufnehmt und installiert.</p>
+<h2>Der RAG-Workflow von der Shell aus</h2>
+<p>Ein kompletter RAG-Workflow funktioniert mit <code>llm</code> in wenigen Schritten. <a href="https://building-with-llms-pycon-2025.readthedocs.io/en/latest/semantic-search-and-rag.html">Diese Demo hier hab ich von Simon Willison geklaut, dem Autor von <code>llm</code></a>. <a href="https://github.com/python/peps">Hier wird semantische Suche in den Python Enhancement Proposals demonstriert</a>. Dieses Tutorial verwendet einen lokalen LLM-Server, man kann das aber natürlich auch mit GitHub Copilot oder ähnlichen Modellen machen. Herauszufinden wie die dort heißen und zu verbinden sind bleibt ein Exercise für den Leser.</p>
+<h3>1. Dateien vorbereiten</h3>
+<p>Wir erstellen gekürzte Versionen von Textdateien:</p>
+<div class="hll"><pre><span></span>mkdir<span class="w"> </span>-p<span class="w"> </span>peps-truncated
+<span class="k">for</span><span class="w"> </span>f<span class="w"> </span><span class="k">in</span><span class="w"> </span>peps/*.rst<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">  </span>head<span class="w"> </span>-c<span class="w"> </span><span class="m">8000</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$f</span><span class="s2">&quot;</span><span class="w"> </span>&gt;<span class="w"> </span><span class="s2">&quot;peps-truncated/</span><span class="k">$(</span>basename<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$f</span><span class="s2">&quot;</span><span class="k">)</span><span class="s2">&quot;</span>
+<span class="k">done</span>
+</pre></div>
+<p>Das ist natürlich streng genommen falsch, weil wir ganz viel Daten wegschmeißen. Einiges spricht aber trotzdem dafür:</p>
+<ol>
+<li>Gerade lokale Modelle haben gerne nicht so große Kontext-Fenster und da muss das Dokument reinpassen.</li>
+<li>Meistens steht am Anfang eines Dokuments worum es geht. Für unsere Zwecke also eine gute Näherung.</li>
+</ol>
+<p>Um das später in ein Produkt umzuwandeln müssten wir uns noch weitere Strategien anschauen, z.B. mit einem Sliding Window über die Dokumente zu gehen und für jeden Abschnitt ein Embedding zu erzeugen. Grundsätzlich ist es aber eine gute Idee verschiedene Indexe zu erzeugen die unterschiedliche Zwecke erfüllen.</p>
+<h3>2. Vektor-Index erstellen</h3>
+<div class="hll"><pre><span></span>llm<span class="w"> </span>embed-multi<span class="w"> </span>peps<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-m<span class="w"> </span>mxbai-embed-large<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--files<span class="w"> </span>peps-truncated<span class="w"> </span><span class="s1">&#39;pep-3*.rst&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-d<span class="w"> </span>peps.db<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--store
+</pre></div>
+<p>Das erzeugt eine SQLite-Datenbank mit eingebetteten Vektoren. Wichtig: Die Datenbank speichert auch, mit welchem Modell die Einbettung erfolgte – bei weiteren Operationen auf der gleichen Collection <code>peps</code> ignoriert <code>llm</code> den Modell-Parameter ohne Fehlermeldung!</p>
+<p>Seiten-Notiz: Embeddings, was ist das? Ein Embedding ist eine Umwandlung von einem Text in eine Zahlenreihe (Mathematisch: Einen Vektor). Jeder dieser Vektoren beschreibt eine Koordinate in einem Hoch-Dimensionalen Raum, mit der Eigenschaft, das Koordinaten die sich Nahe sind von einem Text kommen der semantisch Ähnlich ist. Darin kann man sogar Rechnen, ein etwas überstrapaziertes Beispiel wäre z.B. der Vektor für König + Weiblich = Königin. <a href="https://simonwillison.net/2023/Oct/23/embeddings/">Mehr gibts hier</a></p>
+<h3>3. Abfragen stellen</h3>
+<div class="hll"><pre><span></span>llm<span class="w"> </span>similar<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;What do string templates look like?&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span>peps.db<span class="w"> </span>-n<span class="w"> </span><span class="m">2</span><span class="w"> </span>peps<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>llm<span class="w"> </span>-s<span class="w"> </span><span class="s2">&quot;Answer the question: What do string templates look like?&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-m<span class="w"> </span>devstral<span class="w"> </span>-o<span class="w"> </span>num_ctx<span class="w"> </span>256_00
+</pre></div>
+<p>Hier wird erst ähnliche Inhalte zur Frage gesucht. Wichtige Details: Das Kontext-Fenster des Sprachmodells das antwortet muss groß genug sein, das es alle Antworten in seinen Kontext aufnehmen kann. Ansonsten wird gerne der Anfang abgeschnitten - und da steht natürlich der Treffer mit dem besten Score.</p>
+<h3>4. Automatisieren</h3>
+<p>Wir können sogar direkt ein Skript generieren lassen:</p>
+<div class="hll"><pre><span></span>llm<span class="w"> </span><span class="s1">&#39;</span>
+<span class="s1">Build me a bash script like this:</span>
+<span class="s1">./pep-qa.sh &quot;What do string templates look like?&quot;</span>
+<span class="s1">It should first run:</span>
+<span class="s1">llm similar -c $question -d peps.db peps</span>
+<span class="s1">Then it should pipe the output from that to:</span>
+<span class="s1">llm -s &quot;Answer the question: $question&quot; -m gpt-4.1-mini</span>
+<span class="s1">That last command should run so the output is visible as it runs.</span>
+<span class="s1">&#39;</span><span class="w"> </span>-x<span class="w"> </span>&gt;<span class="w"> </span>pep-qa.sh
+</pre></div>
+<h2>Fazit</h2>
+<p>Was früher nach viel Setup aussah (Vektor-Datenbank, Backend-API, RAG-Pipeline), ist heute in wenigen Shell-Befehlen machbar. SQLite funktioniert dabei erstaunlich gut – <code>llm</code> führt einfach einen Full-Table-Scan durch und berechnet die Vektor-Abstände direkt. Das ist nicht hyper-skalierbar, aber bis 10.000 bis 100.000 Einträge durchaus brauchbar.</p>
+<p>Und das Beste: <code>llm</code> lässt sich überall in bestehende Shell-Skripte und Workflows einbauen – sogar mit piped Input. Wer also mal eben eine intelligente Suche oder ein Sprachmodell in seinen CLI-Workflow integrieren will, findet hier ein extrem mächtiges Toolset.</p>
+<p>Ich kann nur empfehlen ein Shell-Werkzeug wie <code>llm</code> zu lernen.</p>
+
+    </section>
+    
+      <footer>
+        <a href="2025/8/mit-llm-rag-einfach-mal-ausprobieren-direkt-von-der-shell/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="2025/7/devopscon-keynote-security-ist-jetzt-teil-von-devops/">
         DevOpsCon Keynote – Security ist jetzt Teil von DevOps?
         </a>
@@ -694,41 +769,6 @@ pkgs<span class="o">.</span>mkShell <span class="p">{</span>
     
       <footer>
         <a href="2024/11/grundlegende-funktionen-und-einstellungen-des-terminals/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="2024/10/waehrend-dem-lernen-lernen-lernen-ki-nutzen/">
-        Wie kann KI beim Lernen mit Blooms-Taxonomie unterstützen?
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2024-10-10">Thursday, October 10, 2024</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p><img src="2024/9/waehrend-dem-lernen-lernen-lernen-blooms-taxonomie/bloom.jpeg" alt="Blooms Taxonomie"></p>
-<p>Nachem ich jetzt lange <a href="2024/9/waehrend-dem-lernen-lernen-lernen-blooms-taxonomie/">über Blooms Taxonomie</a> und <a href="2024/9/waehrend-dem-lernen-lernen-lernen-blooms-taxonomie-ebene-1-3/">was die Ebenen</a> <a href="2024/9/waehrend-dem-lernen-lernen-lernen-blooms-taxonomie-ebene-4-6/">im Detail bedeuten</a> geschrieben habe, kann ich jetzt <em>endlich</em> zu dem kommen, was mir eigentlich am Herzen liegt:</p>
-<p>Mein ganzes Leben lang haben andere die Ebenen von Blooms Taxonomie verwendet um zu beurteilen wie gut ich etwas verstanden habe - aber man kann diesen Spieß auch umdrehen, und das wissen um diese Ebenen des Verständnisses nutzen um selbst besser zu lernen! (Ehrlich gesagt, bin ich ziemlich angepisst das mir das nicht von Vorne herein genau dafür erklärt und beigebracht wurde)</p>
-<p>Wie funktioniert das? Wenn Mensch ohne Plan lernt, dann neigen wir dazu uns zunächst auf den unteren Ebenen zu bewegen. Denn das ist (vermeintlich) einfacher und erscheint logisch. Aber aus der Forschung wissen wir, dass sich von vorne herein auf Fragen der 4. und 5. Ebene (also Analysieren und Bewerten) zu konzentrieren, nicht nur schneller, sondern auch tieferes Verständnis bringt.</p>
-<p>Warum? Weil sich die Art und Weise verändert mit der wir uns mit dem Lern-Material beschäftigen. Auswendig Lernen ist ja nicht verzichtbar. Man muss sich die Fakten ja merken. Aber das passiert auch, wenn man sie Analysiert und Bewertet - ABER - wir kriegen die Analyse und Bewertung gratis dazu. (Wohlgemerkt, für etwas mehr Kognitive Anstrengung, aber Entspannung ist ja nicht das Ziel.)</p>
-<p>Und das ist der Clou. Gleicher Zeiteinsatz, aber tieferes Verständnis.</p>
-<p>🤯</p>
-<p>Jetzt ist natürlich nicht jeder mit der Fähigkeit geboren, sich selbst einfach so Fragen auf der 4. und 5. Ebene zu stellen. Aber das ist auch gar nicht nötig. Denn KI kann dabei prima helfen.</p>
-<p>Chat-GPT hat ein sehr gutes Verständnis von Blooms-Modell und kann endlos fragen auf Bloom Level 4 und 5 zu jedem Thema generieren. Die sind nicht immer perfekt, es reicht aber, um sich darauf einzustimmnen wie solche Fragen aussehen und effizient selbst zu solchen Fragen zu kommen.</p>
-<p>Und das ist für mich ein gamechanger, und super sinnvoller Einsatz von KI.</p>
-<p>Hier mal ein Auszug aus einem <a href="2024/10/waehrend-dem-lernen-lernen-lernen-ki-nutzen/Python-Lernen-mit-Fragen.pdf">Chat mit Chat-GPT</a>. Das ist sicher nicht perfekt, aber ein starker Anfang. Chapeau, Chat-GPT!</p>
-
-    </section>
-    
-      <footer>
-        <a href="2024/10/waehrend-dem-lernen-lernen-lernen-ki-nutzen/">weiterlesen…</a>
       </footer>
     
   </article>

@@ -57,6 +57,42 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/2/habermas-nach-aktuell/">
+        Habermas nach Aktuell?
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-02-29">Freitag, 29. Februar 2008</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Habermas definiert die Privatsphäre aus der Oikos, der Lebensnotwendigkeit, die man braucht um sich die Überlebensfähigkeit zu sichern.</p>
+<p>Was ist jetzt, wenn diese Sphäre wegfällt?</p>
+<p>Schließlich sind immer mehr der überlebensnotwendigen Dinge in unserer Überflussgesellschaft einfach Verfügbar oder werden immer öffentlicher organisiert.</p>
+<ul>
+<li>Arbeit findet nicht mehr auf dem eigenen Acker, sondern fremdbestimmt und öffentlich statt.</li>
+<li>Heilung im Krankenhaus oder anderen öffentlichen Einrichtungen, denen man mühsam ein wenig eigenbestimmung der dabei entstehenden Daten abnötigt.</li>
+<li>Fortpflanzung (oder zumindest Sex) wird immer mehr öffentlich zelebriert - die Schwulen machen es mit <a href="http://www.gayromeo.com/">Community Plattformen</a> vor.</li>
+</ul>
+<p>Wenn die Ernährung, Heilung und Fortpflanzung nicht mehr Privat ist, dann bleibt für den Rest vielleicht nicht mehr ausreichend Grund übrig Privat zu sein.</p>
+<p>Dazu kommt, das durch das Internet und <a href="http://de.wikipedia.org/wiki/Wiki">passender</a> <a href="http://de.wikipedia.org/wiki/Blog">Software</a> das veröffentlichen so einfach wird, dass immer mehr öffentlich gemacht wird.</p>
+<p>Ob sich das "Private" diesem Sog auf lange Sicht entziehen kann?</p>
+<p>Strange thoughts that I have...</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/2/habermas-nach-aktuell/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/2/yay-ich-bin-auf-der-apple-homepage/">
         YAY - ich bin auf der Apple Homepage
         </a>
@@ -448,57 +484,6 @@ Ah well.</p>
     
       <footer>
         <a href="../../2008/2/bei-mac-donalds/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/2/logen-von-beliebig-vielen-argumenten/">
-        LOGen von beliebig vielen Argumenten
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-02-16">Samstag, 16. Februar 2008</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>Fehlt noch ein letzter Schritt - der erstaunlicherweise ganz einfach war und ausserdem noch ein ganz anderes Problem löste...</p>
-<p>Zuerst die Implementierung:</p>
-<div class="hll"><pre><span></span><span class="cp">#define LOG(what, variableArguments...) \</span>
-<span class="cp">    [[Log sharedLog] logObjcType:@encode(typeof(what)) \</span>
-<span class="cp">        arguments:(void *)what , ##variableArguments]</span>
-
-<span class="p">-</span> <span class="nf">logObjcType:</span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="nv">typeString</span><span class="w"> </span><span class="nf">arguments:</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)</span> <span class="nv">what</span><span class="p">,</span><span class="w"> </span><span class="p">...;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">id</span><span class="w"> </span><span class="n">formatString</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="p">[</span><span class="nb">self</span><span class="w"> </span><span class="n">stringFromType</span><span class="o">:</span><span class="n">typeString</span><span class="w"> </span><span class="n">inValue</span><span class="o">:</span><span class="n">what</span><span class="p">];</span>
-
-<span class="w">    </span><span class="kt">va_list</span><span class="w"> </span><span class="n">variadicArguments</span><span class="p">;</span>
-<span class="w">    </span><span class="n">va_start</span><span class="p">(</span><span class="n">variadicArguments</span><span class="p">,</span><span class="w"> </span><span class="n">what</span><span class="p">);</span>
-
-<span class="w">    </span><span class="kt">id</span><span class="w"> </span><span class="n">logString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[[[</span><span class="bp">NSString</span><span class="w"> </span><span class="n">alloc</span><span class="p">]</span><span class="w"> </span><span class="n">initWithFormat</span><span class="o">:</span><span class="n">formatString</span><span class="w"> </span>
-<span class="w">                    </span><span class="nl">arguments</span><span class="p">:</span><span class="n">variadicArguments</span><span class="p">]</span><span class="w"> </span><span class="n">autorelease</span><span class="p">];</span>
-
-<span class="w">    </span><span class="n">va_end</span><span class="p">(</span><span class="n">variadicArguments</span><span class="p">);</span>
-
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="nb">self</span><span class="w"> </span><span class="n">log</span><span class="o">:</span><span class="n">logString</span><span class="p">];</span>
-<span class="p">}</span>
-</pre></div>
-<p>Eigentlich hatte ich hier mehr Probleme erwartet.</p>
-<p>Ganz nebenbei löst das auch noch ein Problem von ganz zu Anfang:</p>
-<div class="hll"><pre><span></span><span class="n">LOG</span><span class="p">(</span><span class="s">@&quot;%@&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="bp">NSString</span><span class="w"> </span><span class="n">stringWithFormat</span><span class="o">:</span><span class="s">@&quot;%s,%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;fnord&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;fnord&quot;</span><span class="p">]);</span>
-</pre></div>
-<p>Das macht jetzt keine Probleme mehr, da die zusätzlichen Komas vom Präprozessor (fälschlicherweise) als zusätzliche Argumente zur dem variadischen Makro aufgefasst werden. Hehe...</p>
-<p>Jetzt fehlt nur noch ein Backend für den Logger und ich bin glücklich. Andererseits... da gibt es natürlich auch <a href="http://log4cocoa.sourceforge.net/">Log4Cocoa</a> das ich einfach erweitern könnte.</p>
-<p>Hm. Mal schauen.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/2/logen-von-beliebig-vielen-argumenten/">weiterlesen…</a>
       </footer>
     
   </article>

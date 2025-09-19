@@ -59,6 +59,119 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="blog/2025/8/arbeiten-mit-json-and-yaml-auf-der-shell/">
+        Arbeiten mit JSON &amp; YAML auf der Shell
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2025-08-25">Montag, 25. August 2025</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p><img src="blog/2025/8/arbeiten-mit-json-and-yaml-auf-der-shell/yless.png" alt="yaml ganz angenem auf der Shell"></p>
+<p>Arbeiten mit strukturierten Datenformaten auf der Shell kann anstrengend sein – <strong>wenn man noch nicht die richtigen Tools dafür hat</strong>.
+Ob JSON aus einer API, YAML aus Kubernetes-Manifests oder riesige Logfiles – ohne passende Helferlein endet man schnell bei unübersichtlichem <code>grep</code>, <code>less</code> und Copy&amp;Paste.</p>
+<p>Zum Glück gibt es eine Reihe von Werkzeugen, die genau dafür gemacht sind:</p>
+<ul>
+<li><strong>jq</strong> – JSON lesen, filtern und transformieren – <a href="https://jqlang.org">https://jqlang.org</a></li>
+<li><strong>jo</strong> – JSON in der Shell erzeugen – <a href="https://github.com/jpmens/jo">https://github.com/jpmens/jo</a></li>
+<li><strong>yq</strong> – YAML lesen, bearbeiten und konvertieren – <a href="https://mikefarah.gitbook.io/yq/">https://mikefarah.gitbook.io/yq/</a></li>
+<li><strong>jless / yless</strong> – interaktiv in JSON/YAML navigieren – <a href="https://jless.io">https://jless.io</a></li>
+</ul>
+<p>In diesem Beitrag stelle ich euch diese Tools vor – mit Beispielen, die ihr direkt in eurer eigenen Shell ausprobieren könnt.</p>
+<hr>
+<h2>jq – der Klassiker für JSON</h2>
+<p>Das vermutlich bekannteste und am weitesten verbreitete Tool für JSON ist <a href="https://jqlang.org"><strong><code>jq</code></strong></a>.
+Es ist so etwas wie der <em>Schweizer Taschenmesser</em> für JSON:</p>
+<ul>
+<li>formatiert unlesbare Minified-JSON-Dateien,</li>
+<li>extrahiert gezielt Werte,</li>
+<li>filtert und transformiert Daten,</li>
+<li>eignet sich für einmalige Ad-hoc-Analysen genauso wie für Skripte.</li>
+</ul>
+<p>Ein einfaches Beispiel: JSON schön formatieren:</p>
+<pre><code>$ cat data.json
+{"user":{"id":42,"name":"Alice"},"active":true}
+$ cat data.json | jq # oder `jq &lt; data.json`
+</code></pre>
+<div class="hll"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;user&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Alice&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;active&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="p">}</span>
+</pre></div>
+<p>So schnell wird aus einem unübersichtlichen Einzeiler eine lesbare Struktur.</p>
+<p>Mann kann es aber auch super in scripten verwenden um Daten aus json zu extrahieren:</p>
+<div class="hll"><pre><span></span>get_current_gitlab_token<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span>kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span><span class="nv">$SECRETNAME</span><span class="w"> </span>-n<span class="w"> </span><span class="nv">$INITIALNAMESPACE</span><span class="w"> </span>-o<span class="w"> </span>json<span class="w"> </span><span class="p">|</span>
+<span class="w">        </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">&#39;.data[&quot;.dockerconfigjson&quot;]&#39;</span><span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span>
+<span class="w">        </span>base64<span class="w"> </span>--decode<span class="w"> </span><span class="p">|</span>
+<span class="w">        </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">&#39;.auths[&quot;registry.gitlab.com&quot;].password&#39;</span><span class="w"> </span><span class="m">2</span>&gt;/dev/null
+<span class="o">}</span>
+</pre></div>
+<p>Oder um in einem JSON-File Daten einzutragen:</p>
+<div class="hll"><pre><span></span>kubectl<span class="w"> </span>get<span class="w"> </span>secrets<span class="w"> </span>shipa-certificates<span class="w"> </span>-o<span class="w"> </span>json<span class="w"> </span><span class="se">\</span>
+<span class="w">        </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s2">&quot;.data[\&quot;ca.pem\&quot;] |= \&quot;</span><span class="nv">$CA_CERT</span><span class="s2">\&quot;&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">        </span><span class="p">|</span><span class="w"> </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>-
+</pre></div>
+<p><code>jq</code> kann noch viel mehr. Wer das Werkzeug noch nicht kennt sollte unbedingt ein paar Minuten investieren um <a href="https://jqlang.org/tutorial/">das Tutorial</a> querzulesen, und dann bei der nächsten Einsatzmöglichkeit gezielt nach der Syntax schauen. Pro tip: KI's können diese Syntax prima, und <code>jless</code> (kommt gleich) kann diese auch generieren.</p>
+<hr>
+<h2>jo – JSON in der Shell erzeugen</h2>
+<p>Während <code>jq</code> ideal zum Lesen und Transformieren ist, eignet sich <strong><code>jo</code></strong> perfekt, um JSON direkt in der Shell zu erstellen. Damit lassen sich Testdaten oder API-Payloads schnell zusammenbauen.</p>
+<p>Ein einfaches Beispiel:</p>
+<div class="hll"><pre><span></span>jo<span class="w"> </span><span class="nv">name</span><span class="o">=</span>Alice<span class="w"> </span><span class="nv">age</span><span class="o">=</span><span class="m">30</span><span class="w"> </span><span class="nv">active</span><span class="o">=</span><span class="nb">true</span>
+</pre></div>
+<p>Ausgabe:</p>
+<div class="hll"><pre><span></span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;Alice&quot;</span><span class="p">,</span><span class="nt">&quot;age&quot;</span><span class="p">:</span><span class="mi">30</span><span class="p">,</span><span class="nt">&quot;active&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">}</span>
+</pre></div>
+<p>Auch Arrays sind möglich:</p>
+<div class="hll"><pre><span></span>jo<span class="w"> </span>-a<span class="w"> </span>red<span class="w"> </span>green<span class="w"> </span>blue
+</pre></div>
+<p>➜ <code>["red","green","blue"]</code></p>
+<p>Verschachtelte Objekte:</p>
+<div class="hll"><pre><span></span>jo<span class="w"> </span><span class="nv">user</span><span class="o">=</span><span class="k">$(</span>jo<span class="w"> </span><span class="nv">name</span><span class="o">=</span>Alice<span class="w"> </span><span class="nv">id</span><span class="o">=</span><span class="m">42</span><span class="k">)</span><span class="w"> </span><span class="nv">project</span><span class="o">=</span>Demo
+</pre></div>
+<p>➜ <code>{"user":{"name":"Alice","id":42},"project":"Demo"}</code></p>
+<p>Das eignet sich sehr gut für schnelle <code>curl</code>-Requests, aber insbesondere auch für shell scripte in denen inline json sonst sehr schnell sehr unübersichtlich wird:</p>
+<div class="hll"><pre><span></span>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">     </span>-d<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>jo<span class="w"> </span><span class="nv">username</span><span class="o">=</span>dev<span class="w"> </span><span class="nv">password</span><span class="o">=</span>secret<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">     </span>https://example.com/api/login
+</pre></div>
+<hr>
+<h2>yq – YAML lesen und bearbeiten</h2>
+<p>YAML verwenden wir überall, am meisten habe ich in Kubernetes damit zu tun. <a href="https://mikefarah.gitbook.io/yq/"><strong><code>yq</code></strong></a> ist das Werkzeug der Wahl, um YAML-Dateien zu lesen, zu durchsuchen und zu editieren. Die Syntax ist sehr nahe an <code>jq</code>, das Werkzeug kann neben YAML aber auch JSON, TOML und XML verarbeiten, und zwischen diesesn Konvertieren. Im wesentlichen kann es das gleiche wie <code>jq</code>, eben auch für YAML.</p>
+<hr>
+<h2>jless &amp; yless – interaktiv stöbern</h2>
+<p>Wenn Dateien zu groß oder zu komplex werden, helfen <a href="https://jless.io"><strong><code>jless</code></strong></a> und <strong><code>yless</code></strong> (ein <code>alias yless=jless --yaml</code>. Sie bieten eine interaktive Ansicht für JSON und YAML – mit:</p>
+<ul>
+<li>Syntax-Highlighting,</li>
+<li>Falten und Aufklappen von Strukturen,</li>
+<li>komfortabler Navigation und Suche.</li>
+</ul>
+<p>Beispiel:</p>
+<div class="hll"><pre><span></span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-oyaml<span class="w"> </span><span class="p">|</span><span class="w"> </span>yless
+</pre></div>
+<p>Das schöne: Man kann hier auf der Shell wunderbar uninteressante textblöcke einklappen um schnell die wichtigen Informationen zu fokussieren, und dann über Tastaturkommandos werte, oder jq/yq filter auf das aktuell ausgewählte Element kopieren, um das z.B. dann auf alle Pods in einem Namespace anzuwenden.</p>
+<hr>
+<h2>Fazit</h2>
+<p>Mit diesen Tools – <code>jq</code>, <code>jo</code>, <code>yq</code>, <code>jless</code> und <code>yless</code> – wird das Arbeiten mit JSON und YAML auf der Shell <em>deutlich</em> angenehmer. Sehr gut investierte Zeit diese Werkzeuge (eines nach dem Anderen) zu lernen.</p>
+
+    </section>
+    
+      <footer>
+        <a href="blog/2025/8/arbeiten-mit-json-and-yaml-auf-der-shell/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="blog/2025/8/mit-llm-rag-einfach-mal-ausprobieren-direkt-von-der-shell/">
         Mit llm RAG einfach mal ausprobieren – direkt von der Shell
         </a>
@@ -170,63 +283,6 @@ Einer der coolsten Aha-Momente der letzten Tage bei mir war, wie einfach und nie
     
       <footer>
         <a href="blog/2025/7/devopscon-keynote-security-ist-jetzt-teil-von-devops/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="blog/2025/7/die-bittere-realitaet-container-sicherheit-ist-kaputt/">
-        Die bittere Realität: Container-Sicherheit ist Kaputt
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2025-07-16">Mittwoch, 16. Juli 2025</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p><img src="blog/2025/7/die-bittere-realitaet-container-sicherheit-ist-kaputt/chainguard-cve-history.png" alt="Container Security">
-Vor einigen Wochen war ich auf der DevOpsCon in Berlin. Einer der spannenderen  Vorträge war für mich: <strong>"Supply Chain Security and the real world: Lessons from Incidents"</strong>. Offiziell ging es um Sicherheit in Container-Umgebungen. Inoffiziell war es eine Abrechnung mit dem Chaos, das wir im Alltag mit Docker-Containern erleben.</p>
-<p>Wir alle lieben Docker Hub: Schnell ein Image ziehen, starten, fertig. Aber was dabei oft vergessen wird: Selbst die als "offiziell" markierten Container bieten keinerlei Garantien. Weder über die Aktualität noch über Sicherheit. Fast alle dieser Container werden monatelang nicht aktualisiert, obwohl es CVEs für enthaltene Komponenten gibt.</p>
-<p>Wenn man das ernst nimmt, müsste man:</p>
-<ul>
-<li>Alle Container regelmäßig selbst neu bauen und dabei Updates der darin enthaltenen Distributionen installieren</li>
-<li>Bei jeder Abhängigkeit überwachen, ob es CVEs oder Updates gibt</li>
-<li>Die Upstream-Projekte verstehen, ihre Update-Kanäle abonnieren</li>
-<li>Alle Dockerfiles durchdringen (insbesondere bizarr manuell installierter Binaries)</li>
-</ul>
-<p>Kurz: Wer Container sicher betreiben will, muss eigentlich selbst zur Distribution werden.</p>
-<h3>Die Lösung: "Start Left" statt "Shift Left"</h3>
-<p>Die Firma <strong>Chainguard</strong> hat in dem Vortrag ihre Alternative vorgestellt: Ein Repository von sicherheitsoptimierten, rootlosen Containern, die alle:</p>
-<ul>
-<li><strong>ohne bekannte CVEs</strong> ausgeliefert werden</li>
-<li>auf einem selbstgebauten, deterministischen OS basieren ("Wolfi", im wesentlichen Alpine mit GLibC statt Musl)</li>
-<li>reproduzierbar gebaut werden (jede\:r kann sie nachbauen, wenn auch nicht Bit für Bit)</li>
-<li>mit Software-Bill-of-Materials (SBOM) ausgeliefert werden</li>
-<li>Auch im Container als normale Nutzer ausgeführt werden anstatt als `root`</li>
-<li>und bei neuen Upstream-Vulnerabilities innerhalb von 7 Tagen gepatcht werden</li>
-</ul>
-<p>Die Container sind FIPS-kompatibel, in zwei Varianten (Production vs. Dev - mit mehr Tools) verfügbar und mit bekannten Tools wie <code>trivy</code> problemlos scannbar. Offen Statistiken zeigen beeindruckend wie <em>viel weniger CVEs</em> sieh in Ihren Containern haben. Nämlich in der Regel gar keine.</p>
-<h3>Warum das für viele ein Game-Changer sein könnte</h3>
-<p>Wie in vielen Unternehmen, ist auch bei uns die Nutzung von Docker-Containern ein "Free for All": Jeder zieht, was er braucht, hauptsache es läuft. Sicherheitsrichtlinien? Nicht vorhanden. Updates? Machen wir Manuell alle Jubeljahre. Genau hier setzen die Container von Chainguard (oder auch Dockers eigene "Hardened Images") an:</p>
-<p>Man könnte sagen:</p>
-<blockquote><p>Was sonst niemand zuverlässig macht, macht ChainGuard automatisch.</p>
-</blockquote>
-<p>Und das Beste: Die Basis-Container sind sogar kostenlos (und damit z.B. auch für Open Source Projekte) verwendbar. Damit kann man ohne großen Aufwand den Produktivbetrieb auf eine wesentlich sicherere Basis stellen.</p>
-<p>Gerade wenn man – wie bei KRITIS-Vorgegeben – innerhalb eines festen Zeitrahmens Sicherheitsupdates einspielen muss, ist eine verlässliche Update-Garantie Gold wert.</p>
-<h3>Mein Fazit</h3>
-<p>Container sind kein Selbstzweck – und sie haben einen großen Nachteil gegenüber Veränderbarer Infrastruktur: Man verliert die automatisch installierten Updates der Linux Distributionen. Wer diesen Aufwand nicht selbst stemmen will, braucht Alternativen. Die gehärteten Container von ChainGuard oder Docker sind ein vielversprechender Weg, um  mit minimalem Aufwand viel weniger CVEs und fehlender Updates, sowie weit mehr Transparenz gewinnen kann.</p>
-<p>Probiert es doch mal aus. Ich würde mich sehr über Feedback freuen wo die Grenzen und Probleme dieses Ansatzes liegen. Offensichtlich ist schon mal, dass dort nicht so viele Container gibt.</p>
-<p>Grundsätzlich aber immer: Bitte Entscheidet euch bewusst für Images, die gepflegt werden. Und nicht für das erste, das die Suche auf Docker Hub zurück gibt.</p>
-
-    </section>
-    
-      <footer>
-        <a href="blog/2025/7/die-bittere-realitaet-container-sicherheit-ist-kaputt/">weiterlesen…</a>
       </footer>
     
   </article>

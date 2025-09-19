@@ -1,5 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Martin Häckers Blog - Software, Go / Baduk / Weiqi, Liquid Democracy</title><link href="https://h%C3%A4cker.net/en/blog/" rel="alternate"></link><link href="https://h%C3%A4cker.net/blog/feed.xml" rel="self"></link><id>urn:uuid:d0d51cf8-c6be-310d-a416-bf22c1661ce7</id><updated>2025-08-07T00:00:00Z</updated><author><name></name></author><entry><title>Mit llm RAG einfach mal ausprobieren – direkt von der Shell</title><link href="https://h%C3%A4cker.net/blog/2025/8/mit-llm-rag-einfach-mal-ausprobieren-direkt-von-der-shell/" rel="alternate"></link><updated>2025-08-07T00:00:00Z</updated><author><name>Martin Häcker</name></author><id>urn:uuid:77ae7787-fbf9-3238-b8c7-2d8a09239388</id><content type="html">&lt;p&gt;&lt;img src="workflow.png" alt="Ablaufdiagramm"&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Martin Häckers Blog - Software, Go / Baduk / Weiqi, Liquid Democracy</title><link href="https://h%C3%A4cker.net/en/blog/" rel="alternate"></link><link href="https://h%C3%A4cker.net/blog/feed.xml" rel="self"></link><id>urn:uuid:d0d51cf8-c6be-310d-a416-bf22c1661ce7</id><updated>2025-08-25T00:00:00Z</updated><author><name></name></author><entry><title>Arbeiten mit JSON &amp; YAML auf der Shell</title><link href="https://h%C3%A4cker.net/blog/2025/8/arbeiten-mit-json-and-yaml-auf-der-shell/" rel="alternate"></link><updated>2025-08-25T00:00:00Z</updated><author><name>Martin Häcker</name></author><id>urn:uuid:10fa0287-df67-3e31-ac58-360587adc774</id><content type="html">&lt;p&gt;&lt;img src="yless.png" alt="yaml ganz angenem auf der Shell"&gt;&lt;/p&gt;
+&lt;p&gt;Arbeiten mit strukturierten Datenformaten auf der Shell kann anstrengend sein – &lt;strong&gt;wenn man noch nicht die richtigen Tools dafür hat&lt;/strong&gt;.
+Ob JSON aus einer API, YAML aus Kubernetes-Manifests oder riesige Logfiles – ohne passende Helferlein endet man schnell bei unübersichtlichem &lt;code&gt;grep&lt;/code&gt;, &lt;code&gt;less&lt;/code&gt; und Copy&amp;amp;Paste.&lt;/p&gt;
+&lt;p&gt;Zum Glück gibt es eine Reihe von Werkzeugen, die genau dafür gemacht sind:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;jq&lt;/strong&gt; – JSON lesen, filtern und transformieren – &lt;a href="https://jqlang.org"&gt;https://jqlang.org&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;jo&lt;/strong&gt; – JSON in der Shell erzeugen – &lt;a href="https://github.com/jpmens/jo"&gt;https://github.com/jpmens/jo&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;yq&lt;/strong&gt; – YAML lesen, bearbeiten und konvertieren – &lt;a href="https://mikefarah.gitbook.io/yq/"&gt;https://mikefarah.gitbook.io/yq/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;jless / yless&lt;/strong&gt; – interaktiv in JSON/YAML navigieren – &lt;a href="https://jless.io"&gt;https://jless.io&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In diesem Beitrag stelle ich euch diese Tools vor – mit Beispielen, die ihr direkt in eurer eigenen Shell ausprobieren könnt.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2&gt;jq – der Klassiker für JSON&lt;/h2&gt;
+&lt;p&gt;Das vermutlich bekannteste und am weitesten verbreitete Tool für JSON ist &lt;a href="https://jqlang.org"&gt;&lt;strong&gt;&lt;code&gt;jq&lt;/code&gt;&lt;/strong&gt;&lt;/a&gt;.
+Es ist so etwas wie der &lt;em&gt;Schweizer Taschenmesser&lt;/em&gt; für JSON:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;formatiert unlesbare Minified-JSON-Dateien,&lt;/li&gt;
+&lt;li&gt;extrahiert gezielt Werte,&lt;/li&gt;
+&lt;li&gt;filtert und transformiert Daten,&lt;/li&gt;
+&lt;li&gt;eignet sich für einmalige Ad-hoc-Analysen genauso wie für Skripte.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Ein einfaches Beispiel: JSON schön formatieren:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ cat data.json
+{"user":{"id":42,"name":"Alice"},"active":true}
+$ cat data.json | jq # oder `jq &amp;lt; data.json`
+&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="hll"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;&amp;quot;user&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;&amp;quot;id&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;42&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Alice&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;&amp;quot;active&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;So schnell wird aus einem unübersichtlichen Einzeiler eine lesbare Struktur.&lt;/p&gt;
+&lt;p&gt;Mann kann es aber auch super in scripten verwenden um Daten aus json zu extrahieren:&lt;/p&gt;
+&lt;div class="hll"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;get_current_gitlab_token&lt;span class="o"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;kubectl&lt;span class="w"&gt; &lt;/span&gt;get&lt;span class="w"&gt; &lt;/span&gt;secret&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$SECRETNAME&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-n&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$INITIALNAMESPACE&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-o&lt;span class="w"&gt; &lt;/span&gt;json&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;jq&lt;span class="w"&gt; &lt;/span&gt;-r&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;.data[&amp;quot;.dockerconfigjson&amp;quot;]&amp;#39;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&amp;gt;/dev/null&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;base64&lt;span class="w"&gt; &lt;/span&gt;--decode&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;jq&lt;span class="w"&gt; &lt;/span&gt;-r&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;.auths[&amp;quot;registry.gitlab.com&amp;quot;].password&amp;#39;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&amp;gt;/dev/null
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Oder um in einem JSON-File Daten einzutragen:&lt;/p&gt;
+&lt;div class="hll"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;kubectl&lt;span class="w"&gt; &lt;/span&gt;get&lt;span class="w"&gt; &lt;/span&gt;secrets&lt;span class="w"&gt; &lt;/span&gt;shipa-certificates&lt;span class="w"&gt; &lt;/span&gt;-o&lt;span class="w"&gt; &lt;/span&gt;json&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;jq&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;.data[\&amp;quot;ca.pem\&amp;quot;] |= \&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$CA_CERT&lt;/span&gt;&lt;span class="s2"&gt;\&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;kubectl&lt;span class="w"&gt; &lt;/span&gt;apply&lt;span class="w"&gt; &lt;/span&gt;-f&lt;span class="w"&gt; &lt;/span&gt;-
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;jq&lt;/code&gt; kann noch viel mehr. Wer das Werkzeug noch nicht kennt sollte unbedingt ein paar Minuten investieren um &lt;a href="https://jqlang.org/tutorial/"&gt;das Tutorial&lt;/a&gt; querzulesen, und dann bei der nächsten Einsatzmöglichkeit gezielt nach der Syntax schauen. Pro tip: KI's können diese Syntax prima, und &lt;code&gt;jless&lt;/code&gt; (kommt gleich) kann diese auch generieren.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2&gt;jo – JSON in der Shell erzeugen&lt;/h2&gt;
+&lt;p&gt;Während &lt;code&gt;jq&lt;/code&gt; ideal zum Lesen und Transformieren ist, eignet sich &lt;strong&gt;&lt;code&gt;jo&lt;/code&gt;&lt;/strong&gt; perfekt, um JSON direkt in der Shell zu erstellen. Damit lassen sich Testdaten oder API-Payloads schnell zusammenbauen.&lt;/p&gt;
+&lt;p&gt;Ein einfaches Beispiel:&lt;/p&gt;
+&lt;div class="hll"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;jo&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;Alice&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;age&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;30&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;active&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Ausgabe:&lt;/p&gt;
+&lt;div class="hll"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nt"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Alice&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;quot;age&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;30&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;&amp;quot;active&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Auch Arrays sind möglich:&lt;/p&gt;
+&lt;div class="hll"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;jo&lt;span class="w"&gt; &lt;/span&gt;-a&lt;span class="w"&gt; &lt;/span&gt;red&lt;span class="w"&gt; &lt;/span&gt;green&lt;span class="w"&gt; &lt;/span&gt;blue
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;➜ &lt;code&gt;["red","green","blue"]&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Verschachtelte Objekte:&lt;/p&gt;
+&lt;div class="hll"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;jo&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;user&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;jo&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;Alice&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;42&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;project&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;Demo
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;➜ &lt;code&gt;{"user":{"name":"Alice","id":42},"project":"Demo"}&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Das eignet sich sehr gut für schnelle &lt;code&gt;curl&lt;/code&gt;-Requests, aber insbesondere auch für shell scripte in denen inline json sonst sehr schnell sehr unübersichtlich wird:&lt;/p&gt;
+&lt;div class="hll"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;curl&lt;span class="w"&gt; &lt;/span&gt;-X&lt;span class="w"&gt; &lt;/span&gt;POST&lt;span class="w"&gt; &lt;/span&gt;-H&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Content-Type: application/json&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;     &lt;/span&gt;-d&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;jo&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;username&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;dev&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;password&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;secret&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;     &lt;/span&gt;https://example.com/api/login
+&lt;/pre&gt;&lt;/div&gt;
+&lt;hr&gt;
+&lt;h2&gt;yq – YAML lesen und bearbeiten&lt;/h2&gt;
+&lt;p&gt;YAML verwenden wir überall, am meisten habe ich in Kubernetes damit zu tun. &lt;a href="https://mikefarah.gitbook.io/yq/"&gt;&lt;strong&gt;&lt;code&gt;yq&lt;/code&gt;&lt;/strong&gt;&lt;/a&gt; ist das Werkzeug der Wahl, um YAML-Dateien zu lesen, zu durchsuchen und zu editieren. Die Syntax ist sehr nahe an &lt;code&gt;jq&lt;/code&gt;, das Werkzeug kann neben YAML aber auch JSON, TOML und XML verarbeiten, und zwischen diesesn Konvertieren. Im wesentlichen kann es das gleiche wie &lt;code&gt;jq&lt;/code&gt;, eben auch für YAML.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2&gt;jless &amp;amp; yless – interaktiv stöbern&lt;/h2&gt;
+&lt;p&gt;Wenn Dateien zu groß oder zu komplex werden, helfen &lt;a href="https://jless.io"&gt;&lt;strong&gt;&lt;code&gt;jless&lt;/code&gt;&lt;/strong&gt;&lt;/a&gt; und &lt;strong&gt;&lt;code&gt;yless&lt;/code&gt;&lt;/strong&gt; (ein &lt;code&gt;alias yless=jless --yaml&lt;/code&gt;. Sie bieten eine interaktive Ansicht für JSON und YAML – mit:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Syntax-Highlighting,&lt;/li&gt;
+&lt;li&gt;Falten und Aufklappen von Strukturen,&lt;/li&gt;
+&lt;li&gt;komfortabler Navigation und Suche.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Beispiel:&lt;/p&gt;
+&lt;div class="hll"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;kubectl&lt;span class="w"&gt; &lt;/span&gt;get&lt;span class="w"&gt; &lt;/span&gt;pods&lt;span class="w"&gt; &lt;/span&gt;-oyaml&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;yless
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Das schöne: Man kann hier auf der Shell wunderbar uninteressante textblöcke einklappen um schnell die wichtigen Informationen zu fokussieren, und dann über Tastaturkommandos werte, oder jq/yq filter auf das aktuell ausgewählte Element kopieren, um das z.B. dann auf alle Pods in einem Namespace anzuwenden.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2&gt;Fazit&lt;/h2&gt;
+&lt;p&gt;Mit diesen Tools – &lt;code&gt;jq&lt;/code&gt;, &lt;code&gt;jo&lt;/code&gt;, &lt;code&gt;yq&lt;/code&gt;, &lt;code&gt;jless&lt;/code&gt; und &lt;code&gt;yless&lt;/code&gt; – wird das Arbeiten mit JSON und YAML auf der Shell &lt;em&gt;deutlich&lt;/em&gt; angenehmer. Sehr gut investierte Zeit diese Werkzeuge (eines nach dem Anderen) zu lernen.&lt;/p&gt;
+</content></entry><entry><title>Mit llm RAG einfach mal ausprobieren – direkt von der Shell</title><link href="https://h%C3%A4cker.net/blog/2025/8/mit-llm-rag-einfach-mal-ausprobieren-direkt-von-der-shell/" rel="alternate"></link><updated>2025-08-07T00:00:00Z</updated><author><name>Martin Häcker</name></author><id>urn:uuid:77ae7787-fbf9-3238-b8c7-2d8a09239388</id><content type="html">&lt;p&gt;&lt;img src="workflow.png" alt="Ablaufdiagramm"&gt;
 Einer der coolsten Aha-Momente der letzten Tage bei mir war, wie einfach und niederschweflig das Arbeiten mit Retrieval-Augmented Generation (RAG) von der Shell inzwischen sein kann – ganz ohne spezielle Infrastruktur, Vektor-Datenbank oder Server-Backend. Das Python-Tool &lt;a href="https://pypi.org/project/llm/"&gt;&lt;code&gt;llm&lt;/code&gt;&lt;/a&gt; macht  das möglich: RAG direkt aus der Kommandozeile, mit SQLite als Backend und einfachen Kommandos, die sich hervorragend in Shell-Workflows integrieren lassen.&lt;/p&gt;
 &lt;h2&gt;Ein Power Tool für Sprachmodelle in der Shell&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://llm.datasette.io/en/stable/"&gt;&lt;code&gt;llm&lt;/code&gt; kann natürlich noch viel mehr und ist ein Power Tool, das den Einsatz von KI direkt im Terminal erlaubt&lt;/a&gt;. Es erlaubt mit beliebigen API-Providern oder lokalen Modellen zu sprechen und integriert diese damit nahtlos in eigene Skripte. Use Cases: Daten hinein pipen und mit dem LLM bearbeiten. Ob zusammenfassen, erklären, übersetzen, mit einem aufwendigen Prompt aus einer Datei beackern… Da geht so viel. Egal was Ihr aus diesem Artikel mitnehmt, zumindest sollte es sein das Ihr &lt;code&gt;llm&lt;/code&gt; in euren Workflow aufnehmt und installiert.&lt;/p&gt;
@@ -962,16 +1051,4 @@ $&lt;span class="w"&gt; &lt;/span&gt;python&lt;span class="w"&gt; &lt;/span&gt;-
 </content></entry><entry><title>Softwareentwicklung als Kooperatives Spiel</title><link href="https://h%C3%A4cker.net/blog/2010/1/softwareentwicklung-als-kooperatives-spiel/" rel="alternate"></link><updated>2010-01-28T00:00:00Z</updated><author><name>Martin Häcker</name></author><id>urn:uuid:ee76d24c-6c22-3f63-86cd-5969a4cd286d</id><content type="html">&lt;p&gt;Das ist ein steinalter &lt;a href="http://alistair.cockburn.us/Software+development+as+a+cooperative+game"&gt;Vortrag von Alistair Cockburn&lt;/a&gt; (gesprochen Co-Burn) in dem er darlegt wieso er findet das das eine sehr gute Sichtweise auf Softwareprojekte ist.&lt;/p&gt;
 &lt;p&gt;Der Vortrag ist schon 10 Jahre alt - und trotzdem finde ich ihn sehr Aktuell.&lt;/p&gt;
 &lt;p&gt;Lesenswert!&lt;/p&gt;
-</content></entry><entry><title>Python Saug Punkte contd.: x += y ist nicht x = x + y</title><link href="https://h%C3%A4cker.net/blog/2010/1/python-saug-punkte-contd-x-y-ist-nicht-x-x-y/" rel="alternate"></link><updated>2010-01-15T00:00:00Z</updated><author><name>Martin Häcker</name></author><id>urn:uuid:f1e549a2-ef5a-3f55-a04b-200a4d4e654c</id><content type="html">&lt;div class="hll"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;foo&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;span class="nb"&gt;print&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="c1"&gt;# =&amp;gt; []&lt;/span&gt;
-
-&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;foo&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;span class="nb"&gt;print&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="c1"&gt;# =&amp;gt; [&amp;#39;foo&amp;#39;]&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Doh. Wie kann das sein? Kommt man von C ist das erst mal sehr verblüffend - und auch die meisten anderen Programmiersprachen die ich kenne verwenden &lt;code&gt;a += b&lt;/code&gt; als equivalent für &lt;code&gt;a = a + b&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;Well, nicht so Python. Weil &lt;a href="http://www.python.org/dev/peps/pep-0203/"&gt;da gab es offenbar mal Programmierer&lt;/a&gt; die fanden dass man Code der mit Matrizen rechnet lieber mit Operatoren schreiben möchte weil sich das besser ließt. Natürlich nicht mit den normalen operatoren wie */+-, weil, da kann man ja den empfänger nicht in place modifizieren, und wie jeder weiß sind Matrizen ja so groß dass die dann nicht mehr in den Ram passen.&lt;/p&gt;
-&lt;p&gt;Also haben sie die &lt;op&gt;= operatoren in Python so spezifiziert, dass sie ihre left-hand-variable in place modifizieren wenn diese mutable sind.&lt;/p&gt;
-&lt;p&gt;:-(&lt;/p&gt;
 </content></entry></feed>

@@ -1,0 +1,234 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../../static/pygments.css">
+    <title>Arbeiten mit JSON &amp; YAML auf der Shell</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../../../blog/feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item "><a href="../../../../work/" class="nav-link">Professional software development</a></li>
+    
+      <li class="nav-item "><a href="../../../../projects/" class="nav-link">Projects</a></li>
+    
+      <li class="nav-item "><a href="../../../../publications/" class="nav-link">Publications and talks</a></li>
+    
+      <li class="nav-item active"><a href="../../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../../categories/" class="nav-link">Categories</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="../../../../../blog/2025/8/arbeiten-mit-json-and-yaml-auf-der-shell/">🇩🇪</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="./">🇬🇧</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../../">🏠</a>
+
+
+<a class="breadcrumb-item " href="../../../">Blog</a>
+
+
+<a class="breadcrumb-item active" href="./">Arbeiten mit JSON &amp; YAML auf der Shell</a>
+
+</nav>
+    </header>
+    <article class="page arbeiten-mit-json-and-yaml-auf-der-shell  container-fluid">
+      
+  
+  <article class="blog-post">
+    <header>
+      <h2>
+        
+        Arbeiten mit JSON &amp; YAML auf der Shell
+        
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2025-08-25">Monday, August 25, 2025</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p><img src="yless.png" alt="yaml ganz angenem auf der Shell"></p>
+<p>Arbeiten mit strukturierten Datenformaten auf der Shell kann anstrengend sein – <strong>wenn man noch nicht die richtigen Tools dafür hat</strong>.
+Ob JSON aus einer API, YAML aus Kubernetes-Manifests oder riesige Logfiles – ohne passende Helferlein endet man schnell bei unübersichtlichem <code>grep</code>, <code>less</code> und Copy&amp;Paste.</p>
+<p>Zum Glück gibt es eine Reihe von Werkzeugen, die genau dafür gemacht sind:</p>
+<ul>
+<li><strong>jq</strong> – JSON lesen, filtern und transformieren – <a href="https://jqlang.org">https://jqlang.org</a></li>
+<li><strong>jo</strong> – JSON in der Shell erzeugen – <a href="https://github.com/jpmens/jo">https://github.com/jpmens/jo</a></li>
+<li><strong>yq</strong> – YAML lesen, bearbeiten und konvertieren – <a href="https://mikefarah.gitbook.io/yq/">https://mikefarah.gitbook.io/yq/</a></li>
+<li><strong>jless / yless</strong> – interaktiv in JSON/YAML navigieren – <a href="https://jless.io">https://jless.io</a></li>
+</ul>
+<p>In diesem Beitrag stelle ich euch diese Tools vor – mit Beispielen, die ihr direkt in eurer eigenen Shell ausprobieren könnt.</p>
+<hr>
+<h2>jq – der Klassiker für JSON</h2>
+<p>Das vermutlich bekannteste und am weitesten verbreitete Tool für JSON ist <a href="https://jqlang.org"><strong><code>jq</code></strong></a>.
+Es ist so etwas wie der <em>Schweizer Taschenmesser</em> für JSON:</p>
+<ul>
+<li>formatiert unlesbare Minified-JSON-Dateien,</li>
+<li>extrahiert gezielt Werte,</li>
+<li>filtert und transformiert Daten,</li>
+<li>eignet sich für einmalige Ad-hoc-Analysen genauso wie für Skripte.</li>
+</ul>
+<p>Ein einfaches Beispiel: JSON schön formatieren:</p>
+<pre><code>$ cat data.json
+{"user":{"id":42,"name":"Alice"},"active":true}
+$ cat data.json | jq # oder `jq &lt; data.json`
+</code></pre>
+<div class="hll"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;user&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Alice&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;active&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="p">}</span>
+</pre></div>
+<p>So schnell wird aus einem unübersichtlichen Einzeiler eine lesbare Struktur.</p>
+<p>Mann kann es aber auch super in scripten verwenden um Daten aus json zu extrahieren:</p>
+<div class="hll"><pre><span></span>get_current_gitlab_token<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span>kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span><span class="nv">$SECRETNAME</span><span class="w"> </span>-n<span class="w"> </span><span class="nv">$INITIALNAMESPACE</span><span class="w"> </span>-o<span class="w"> </span>json<span class="w"> </span><span class="p">|</span>
+<span class="w">        </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">&#39;.data[&quot;.dockerconfigjson&quot;]&#39;</span><span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span>
+<span class="w">        </span>base64<span class="w"> </span>--decode<span class="w"> </span><span class="p">|</span>
+<span class="w">        </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">&#39;.auths[&quot;registry.gitlab.com&quot;].password&#39;</span><span class="w"> </span><span class="m">2</span>&gt;/dev/null
+<span class="o">}</span>
+</pre></div>
+<p>Oder um in einem JSON-File Daten einzutragen:</p>
+<div class="hll"><pre><span></span>kubectl<span class="w"> </span>get<span class="w"> </span>secrets<span class="w"> </span>shipa-certificates<span class="w"> </span>-o<span class="w"> </span>json<span class="w"> </span><span class="se">\</span>
+<span class="w">        </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s2">&quot;.data[\&quot;ca.pem\&quot;] |= \&quot;</span><span class="nv">$CA_CERT</span><span class="s2">\&quot;&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">        </span><span class="p">|</span><span class="w"> </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>-
+</pre></div>
+<p><code>jq</code> kann noch viel mehr. Wer das Werkzeug noch nicht kennt sollte unbedingt ein paar Minuten investieren um <a href="https://jqlang.org/tutorial/">das Tutorial</a> querzulesen, und dann bei der nächsten Einsatzmöglichkeit gezielt nach der Syntax schauen. Pro tip: KI's können diese Syntax prima, und <code>jless</code> (kommt gleich) kann diese auch generieren.</p>
+<hr>
+<h2>jo – JSON in der Shell erzeugen</h2>
+<p>Während <code>jq</code> ideal zum Lesen und Transformieren ist, eignet sich <strong><code>jo</code></strong> perfekt, um JSON direkt in der Shell zu erstellen. Damit lassen sich Testdaten oder API-Payloads schnell zusammenbauen.</p>
+<p>Ein einfaches Beispiel:</p>
+<div class="hll"><pre><span></span>jo<span class="w"> </span><span class="nv">name</span><span class="o">=</span>Alice<span class="w"> </span><span class="nv">age</span><span class="o">=</span><span class="m">30</span><span class="w"> </span><span class="nv">active</span><span class="o">=</span><span class="nb">true</span>
+</pre></div>
+<p>Ausgabe:</p>
+<div class="hll"><pre><span></span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;Alice&quot;</span><span class="p">,</span><span class="nt">&quot;age&quot;</span><span class="p">:</span><span class="mi">30</span><span class="p">,</span><span class="nt">&quot;active&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">}</span>
+</pre></div>
+<p>Auch Arrays sind möglich:</p>
+<div class="hll"><pre><span></span>jo<span class="w"> </span>-a<span class="w"> </span>red<span class="w"> </span>green<span class="w"> </span>blue
+</pre></div>
+<p>➜ <code>["red","green","blue"]</code></p>
+<p>Verschachtelte Objekte:</p>
+<div class="hll"><pre><span></span>jo<span class="w"> </span><span class="nv">user</span><span class="o">=</span><span class="k">$(</span>jo<span class="w"> </span><span class="nv">name</span><span class="o">=</span>Alice<span class="w"> </span><span class="nv">id</span><span class="o">=</span><span class="m">42</span><span class="k">)</span><span class="w"> </span><span class="nv">project</span><span class="o">=</span>Demo
+</pre></div>
+<p>➜ <code>{"user":{"name":"Alice","id":42},"project":"Demo"}</code></p>
+<p>Das eignet sich sehr gut für schnelle <code>curl</code>-Requests, aber insbesondere auch für shell scripte in denen inline json sonst sehr schnell sehr unübersichtlich wird:</p>
+<div class="hll"><pre><span></span>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">     </span>-d<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>jo<span class="w"> </span><span class="nv">username</span><span class="o">=</span>dev<span class="w"> </span><span class="nv">password</span><span class="o">=</span>secret<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">     </span>https://example.com/api/login
+</pre></div>
+<hr>
+<h2>yq – YAML lesen und bearbeiten</h2>
+<p>YAML verwenden wir überall, am meisten habe ich in Kubernetes damit zu tun. <a href="https://mikefarah.gitbook.io/yq/"><strong><code>yq</code></strong></a> ist das Werkzeug der Wahl, um YAML-Dateien zu lesen, zu durchsuchen und zu editieren. Die Syntax ist sehr nahe an <code>jq</code>, das Werkzeug kann neben YAML aber auch JSON, TOML und XML verarbeiten, und zwischen diesesn Konvertieren. Im wesentlichen kann es das gleiche wie <code>jq</code>, eben auch für YAML.</p>
+<hr>
+<h2>jless &amp; yless – interaktiv stöbern</h2>
+<p>Wenn Dateien zu groß oder zu komplex werden, helfen <a href="https://jless.io"><strong><code>jless</code></strong></a> und <strong><code>yless</code></strong> (ein <code>alias yless=jless --yaml</code>. Sie bieten eine interaktive Ansicht für JSON und YAML – mit:</p>
+<ul>
+<li>Syntax-Highlighting,</li>
+<li>Falten und Aufklappen von Strukturen,</li>
+<li>komfortabler Navigation und Suche.</li>
+</ul>
+<p>Beispiel:</p>
+<div class="hll"><pre><span></span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-oyaml<span class="w"> </span><span class="p">|</span><span class="w"> </span>yless
+</pre></div>
+<p>Das schöne: Man kann hier auf der Shell wunderbar uninteressante textblöcke einklappen um schnell die wichtigen Informationen zu fokussieren, und dann über Tastaturkommandos werte, oder jq/yq filter auf das aktuell ausgewählte Element kopieren, um das z.B. dann auf alle Pods in einem Namespace anzuwenden.</p>
+<hr>
+<h2>Fazit</h2>
+<p>Mit diesen Tools – <code>jq</code>, <code>jo</code>, <code>yq</code>, <code>jless</code> und <code>yless</code> – wird das Arbeiten mit JSON und YAML auf der Shell <em>deutlich</em> angenehmer. Sehr gut investierte Zeit diese Werkzeuge (eines nach dem Anderen) zu lernen.</p>
+
+    </section>
+    
+  </article>
+
+  <nav>
+    
+  <div class="category-list">
+    Kategorien:
+      
+      <a href="../../../../../categories/code/">Software Development</a>
+      
+    
+  </div>
+
+    
+    <div class="relative-navigation">
+      
+      
+        <div class="next">Nächstes Post: <a class="next" href="../mit-llm-rag-einfach-mal-ausprobieren-direkt-von-der-shell/">Mit llm RAG einfach mal ausprobieren – direkt von der Shell</a></div>
+      
+    </div>
+    
+  </nav>
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2025 <a href="../../../../work/">Martin Häcker</a></span>
+  </li>
+  
+    
+    <li class="nav-item imprint">
+      <a class="nav-link" href="../../../../meta/#imprint">
+        Imprint
+      </a></li>
+  
+    
+    <li class="nav-item privacy-policy">
+      <a class="nav-link" href="../../../../meta/#privacy-policy">
+        Privacy Policy
+      </a></li>
+  
+    
+    <li class="nav-item colophon">
+      <a class="nav-link" href="../../../../meta/#colophon">
+        Colophon
+      </a></li>
+  
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../../../blog/feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    <a class="nav-link" 
+      rel="license" 
+      target="_blank" 
+      href="https://creativecommons.org/licenses/by-sa/4.0/deed"
+    >
+      <img 
+        src="/static/cc-by-sa-88x31.png"
+        alt="Creative Commons Attribution - Share Alike 4.0 International Lizense"
+      >
+    </a>
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

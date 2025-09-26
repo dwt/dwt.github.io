@@ -57,6 +57,197 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="2025/9/textbearbeitung-mit-grep-tr-cut-awk-und-sed/">
+        Textbearbeitung auf der Shell: grep, cut, awk, sed und tr
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2025-09-25">Donnerstag, 25. September 2025</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p><img src="2025/9/textbearbeitung-mit-grep-tr-cut-awk-und-sed/tr-in-action.png" alt="`tr` in aktion"></p>
+<p>Diese fünf kleinen Tools sind echte Arbeitspferde für jeden, der mit Text auf der Kommandozeile arbeitet. Sie haben viele Optionen – aber man braucht nicht alles zu kennen. Schon mit ein paar Grundbefehlen kann man 80 % der typischen Aufgaben lösen.</p>
+<h3>1. <code>grep</code> – Zeilen finden</h3>
+<p>grep filtert Textzeilen anhand von Mustern. Praktisch, wenn man in langen Outputs schnell das Relevante sehen will.</p>
+<table>
+<thead><tr>
+<th>Aufgabe</th>
+<th>Befehl</th>
+<th>Beispiel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Textzeilen ausgeben, die ein Wort enthalten</td>
+<td><code>grep PATTERN</code></td>
+<td>`cat protokoll.txt</td>
+<td>grep "Fehler"`</td>
+</tr>
+<tr>
+<td>Zeilen ausschließen</td>
+<td><code>grep -v PATTERN</code></td>
+<td><code>grep -v "^#" protokoll.txt</code></td>
+</tr>
+<tr>
+<td>In einem ganzen Projektbaum nach</td>
+<td><code>grep -r PATTERN DIR</code></td>
+<td><code>grep -r "TODO" src/</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tipps</strong></p>
+<ul>
+<li><code>-i</code> ignoriert Groß/Kleinschreibung</li>
+<li><code>-e</code> aktiviert Reguläre Ausdrücke (unter linux gibt es noch <code>-P</code> für Perl-kompatible Regex)</li>
+</ul>
+<p>Kombinationen über Pipes machen grep besonders stark:</p>
+<div class="hll"><pre><span></span>grep<span class="w"> </span>-r<span class="w"> </span>-P<span class="w"> </span><span class="s2">&quot;def \w*\(&quot;</span><span class="w"> </span>.<span class="w"> </span>--after-context<span class="w"> </span><span class="m">30</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot;foo&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span><span class="s2">&quot;bar&quot;</span>
+</pre></div>
+<p>Für große Projekte lohnt sich ripgrep (rg), weil es schneller ist, <code>.gitignore</code> respektiert und reguläre Ausdrücke standardmäßig aktiviert.</p>
+<h3>2. <code>cut</code> – Spalten und Zeichen</h3>
+<p><code>cut</code> schneidet Spalten oder Zeichen aus Textzeilen heraus. Funktioniert am besten, wenn der Trenner ein einzelnes Zeichen ist.</p>
+<table>
+<thead><tr>
+<th>Aufgabe</th>
+<th>Befehl</th>
+<th>Beispiel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Spalte 2 eine CSV <sup class="footnote-ref" id="fnref-csv"><a href="#fn-csv">1</a></sup></td>
+<td><code>-d ',' -f 2</code></td>
+<td><code>cut -d ',' -f 2 daten.csv</code></td>
+</tr>
+<tr>
+<td>Zeichen 5‑10 einer Zeile</td>
+<td><code>-c 5-10</code></td>
+<td><code>cut -c 5-10 string.txt</code></td>
+</tr>
+<tr>
+<td>Mehrere Felder</td>
+<td><code>-f 1,3,5</code></td>
+<td><code>cut -d ';' -f 1,3,5 daten.txt</code></td>
+</tr>
+</tbody>
+</table>
+<p>Bei Whitespace-getrennten Daten stößt cut an Grenzen – da ist <code>awk</code> besser.</p>
+<h3>3. <code>awk</code> – Felder und Muster</h3>
+<p><code>awk</code> versteht Texte als Felder, getrennt durch Whitespace oder ein angegebenes Zeichen. Wenn man möchte, kann man mit <code>awk</code> Text-Dateien fast wie Datenbanken abfragen, aber für den Anfang:</p>
+<table>
+<thead><tr>
+<th>Aufgabe</th>
+<th>Befehl</th>
+<th>Beispiel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Spalten ausgeben</td>
+<td><code>{print $1, $3}</code></td>
+<td><code>awk '{print $1, $3}' daten.txt</code></td>
+</tr>
+<tr>
+<td>Letzte Spalte ausgeben</td>
+<td><code>{print $NF}</code></td>
+<td><code>awk '{print $NF}' daten.txt</code></td>
+</tr>
+<tr>
+<td>Summe einer Spalte</td>
+<td><code>{s+=$2} END {print s}</code></td>
+<td><code>awk '{s+=$2} END {print s}' zahlen.txt</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Nützliche Variablen</strong></p>
+<ul>
+<li><code>NF</code> = Anzahl Felder in der Zeile</li>
+<li><code>NR</code> = aktuelle Zeilennummer</li>
+</ul>
+<h3>4. <code>sed</code> – Suchen und Ersetzen</h3>
+<p><code>sed</code> ist ein Stream-Editor: ideal für Ersetzungen und einfache Transformationen.</p>
+<table>
+<thead><tr>
+<th>Aufgabe</th>
+<th>Befehl</th>
+<th>Beispiel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ersetzen</td>
+<td><code>s/alt/neu/g</code></td>
+<td><code>sed 's/Fehler/Warning/g' log.txt</code></td>
+</tr>
+</tbody>
+</table>
+<p>Vorsicht: Nie direkt in die gleiche Datei schreiben mit &gt; – sonst überschreibst du sie, bevor sie gelesen wurde. <strong>DAMIT HABE ICH SCHON DATEN VERLOREN</strong> Stattdessen:</p>
+<div class="hll"><pre><span></span>sed<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;s/alt/neu/g&#39;</span><span class="w"> </span>datei.txt<span class="w">   </span><span class="c1"># Direkt in der Datei ändern</span>
+</pre></div>
+<h3>5. <code>tr</code> – Zeichen übersetzen</h3>
+<table>
+<thead><tr>
+<th>Aufgabe</th>
+<th>Befehl</th>
+<th>Beispiel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Groß→Klein</td>
+<td><code>tr [:upper:][:lower:]</code></td>
+<td><code>tr '[:upper:]' '[:lower:]' &lt; input.txt</code></td>
+</tr>
+<tr>
+<td>Leerzeichen löschen</td>
+<td><code>tr -d ' '</code></td>
+<td><code>tr -d ' ' &lt; file</code></td>
+</tr>
+<tr>
+<td>ROT13 (Caesar‑Shift)</td>
+<td><code>tr 'a-z' 'n-za-m'</code></td>
+<td><code>tr 'a-z' 'n-za-m' &lt; text.txt</code></td>
+</tr>
+<tr>
+<td>Mehrere Zeichen gleichzeitig</td>
+<td><code>tr 'abc' 'ABC'</code></td>
+<td><code>tr 'abc' 'ABC' &lt; input.txt</code></td>
+</tr>
+</tbody>
+</table>
+<p>Beispiel: <code>$PATH</code> lesbarer machen:</p>
+<div class="hll"><pre><span></span>❯<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="nv">$PATH</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tr<span class="w"> </span><span class="s1">&#39;:&#39;</span><span class="w"> </span><span class="s1">&#39;\n&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>nl
+</pre></div>
+<h2>Fazit</h2>
+<ul>
+<li><strong><code>grep</code></strong>: Zeilen nach Mustern filtern</li>
+<li><strong><code>cut</code></strong>: Spalten oder Zeichen ausschneiden.</li>
+<li><strong><code>awk</code></strong>: Felder flexibel verarbeiten und berechnen.</li>
+<li><strong><code>sed</code></strong>: Ersetzen und transformieren</li>
+<li><strong><code>tr</code></strong>: Zeichen umwandeln oder löschen</li>
+</ul>
+<p>👉 Zusammengeschaltet mit Pipes (<code>|</code>) werden diese Tools zu einem Schweizer Taschenmesser für Textbearbeitung – schnell, skriptbar und überall verfügbar.</p>
+<div class="footnotes">
+<hr>
+<ol><li id="fn-csv"><p>CSV = Comma-Separated Values, kann natürlich auch maskierte Kommas in dem Wert enthalten, was dieser Befehl geflissentlich ignoriert oder falsch macht. Verwendet zum CSV-Parsen also bitte nicht diesen Shell-Befehl. Dieser Befehle sind dafür da, auf der Shell schnell mal in eine Datei hineinzuschauen. Wenn das Ergebnis gut genug ist, kann man es auch weiter verarbeiten.<a href="#fnref-csv" class="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+    </section>
+    
+      <footer>
+        <a href="2025/9/textbearbeitung-mit-grep-tr-cut-awk-und-sed/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="2025/8/arbeiten-mit-json-and-yaml-auf-der-shell/">
         Arbeiten mit JSON &amp; YAML auf der Shell
         </a>
@@ -723,102 +914,6 @@ dwt@NB1321<span class="w"> </span>Favorites<span class="w"> </span>%
     
       <footer>
         <a href="2025/2/die-freuden-einer-gut-eingerichteten-shell-prompt/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="2025/2/a-nixle-in-a-buechse-und-a-goldigs-warteweile/">
-        A Nix&#39;le in a Büchse und a goldigs Warteweile
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2025-02-08">Samstag, 8. Februar 2025</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p><img src="2025/2/a-nixle-in-a-buechse-und-a-goldigs-warteweile/nix-rabbit-hole.png" alt="Das Nix Hasenloch">
-… ist ein schwäbisches Sprichwort und passt gar nicht so schlecht für die vielen schlechten Wortwitze die sich automatisch ergeben, wenn man anfängt, sich in das <a href="https://nix.dev">Nix Projekt</a> einzuarbeiten.</p>
-<p>Zunächst mal die Karotte mit der ich mich ködern ließ:</p>
-<ul>
-<li>Deklarative Konfiguration von Software-Builds, System-Konfigurationen, und wenn man möchte auch Deployments z.B. in Kubernetes und was man sonst gerne möchte</li>
-<li>Ein funktionaler Paket-Manager, das heißt: Jede Software kann ihre eigenen Abhängigkeiten in der passenden Version haben. Wenn ich mal ein Tool in der Version von vor 10 Jahren brauche - einfach zusätzlich installieren, ohne dass dadurch etwas gestört wird. Wenn ich mal eine neuere Version von etwas brauche als die aktuelle Distribution anbietet: Einfach installieren, ohne dass dadurch etwas gestört wird.</li>
-<li>Rollback: Systemkonfiguration hat etwas kaputt gemacht? Einfach Rückgängig machen.</li>
-<li>Update auf eine neue Version des Betriebssystems: Man kriegt fehlermeldungen für alle Konfigurationen die man vorgenommen hat die jetzt umbenannt wurden oder anders funktionieren. 🤯</li>
-<li>Reproduzierbarkeit: Vollständige Erfassung der Inputs und Ablegen derselben in einem Lock-File.</li>
-<li>Eine riesige Community, die beste Praktiken zum Betrieb von Linux (und mehr) Systemen <a href="https://repology.org/repositories/statistics/total">in die größte Software-Bibliothek kodiert, die wir bisher gesehen haben.</a></li>
-</ul>
-<p>Was sollte man da nicht mögen?</p>
-<p>Auf MacOs gibt es mit <a href="https://github.com/LnL7/nix-darwin">nix-darwin</a> ein Projekt mit dem man die System-Konfiguration deklarativ vornehmen kann - und auch <a href="https://brew.sh">homebrew</a> (was sonst so gut wie gar nicht reproduzierbar ist) unter Kontrolle kriegt. Und wenn man möchte, verwaltet es einem auch die dotfiles.</p>
-<p>Es gibt allerdings einen gewaltigen Nachteil: Das Ganze ist echt komplex und kompliziert. Und die Dokumentation ist nicht schlecht, aber könnte deutlich besser sein.</p>
-<p>Wenn man diese Hürde überwindet, wird man mit einer erstaunlich kompakten und sehr schnell anzuwendenden System-Konfiguration belohnt. Damit kann man zum Beispiel auf einem Mac ein vollständig konfiguriertes System-Image für einen Raspberry Pi erstellen. Dann noch flaschen, starten und läuft! Oder auf meinem Mac Bauen, und via ssh auf dem RasPi deployen, ohne dort irgendwas zu machen was dessen CPU stresst.</p>
-<p>Ich habe inzwischen angefangen, meine Rechner damit zu verwalten und konfigurieren.</p>
-<ul>
-<li><a href="https://github.com/dwt/nix-darwin-config">Mein Rechner (nix-darwin)</a></li>
-<li><a href="https://github.com/dwt/home-servers">Mein Homelab (nixos)</a></li>
-<li><a href="https://github.com/dwt/home-automation">Meine Heimautomatisierung (python)</a></li>
-</ul>
-<h1>Nix ist vielleicht nichts für dich…</h1>
-<p>… aber wenn Du ein bisschen nerdig bist, und gerne auf der Kommandozeile lebst, infrastruktur as Code magst oder lernen magst und DevOps für dich eh normal ist. Dann könnte Nix auch für dich genau das richtige sein.</p>
-<h1>Wie lernt man Nix am besten?</h1>
-<p>Was mir beim Lernen von Nix gefehlt hat, wäre eine Leitlinie gewesen, in welcher Reihenfolge ich mich an die vielen Features von Nix heran tasten sollte. Eine Reihenfolge, die sicherstellt, das die Lernkurve zu jedem Zeitpunkt erträglich bleibt. Und besonders wichtig: Die Sicherstellt, das zu jedem Zeitpunkt sichtbar ist wie cool und wertvoll diese Technologie ist. Sonst läuft man Gefahr, ob der steilen Lernkurve abzuspringen.</p>
-<p>Das hätte ich gerne gehabt: Wenn du anfängst Nix zu lernen, dann am besten in dieser Reihenfolge:</p>
-<h2>1. Schritt: Installieren, ohne was bestehendes kaputt zu machen</h2>
-<p>Zuerst sollte man Nix neben dem aktuellen OS installieren. Der Standard ist der <a href="https://docs.determinate.systems/getting-started/individuals/">Determinate Installer</a>, aber ich mag <a href="https://lix.systems">das Lix Projekt lieber, da es schneller ist</a>. Alternativ ist auch <a href="https://nixos.org/download/#nix-install-docker">der Nix-Docker-Container super um es mal auszuprobieren</a>. Wenn man möchte, <a href="https://nixos.org/download/#nix-install-linux">kann man Nix (auf Linux) auch einfach in einen Ordner installieren und so verwenden (siehe "Single-User Mode")</a>. Das würde ich aber nur für ein paar Experimente empfehlen. Sowohl der Determinate als auch der Lix-Installer haben sehr gute Uninstaller die das Projekt auch wieder komplett entfernen können.</p>
-<h2>2. Schritt: Imperativ verwenden</h2>
-<p>Nix erlaubt es jederzeit ein Paket zu benutzen, ohne es zu installieren. Das ist eine Konsequenz davon wie der Paket-Manager aufgebaut ist. Ein Paket kann 'im <code>/nix/store/</code> sein' - ohne das es aktiv ist. Und der Befehl <code>nix run nixpkgs#fzf</code> startet es dann einfach - ohne es zu installieren. Alternativ gibt es auch <code>nix shell nixpkgs#fzf</code>. Damit erhällt man eine Shell, in der <code>fzf</code> installiert ist. Schließt man die Shell, ist es auch wieder weg. 😳</p>
-<p>Dass ist der Hammer, weil man so Pakete ohne Reue ausprobieren kann. Ohne Sorgen, dass doch noch irgendwelche Abhängigkeiten evtl. auf dem System herum gurken und man vergessen könnte ein Experiment wieder zu entfernen. Und das beste: Auch später wird man dieses Feature die ganze Zeit verwenden.</p>
-<p>Vorsicht vor <code>nix-env</code> und <code>nix profile</code> - das ist das Äquivalent zu dem wie man mit <code>homebrew</code>  und anderen Paketmanagern Pakete installieren würde. Diese sollte man so selten wie möglich verwenden. Besser ist…</p>
-<h2>3. Schritt: Entwicklungsumgebungen <code>shell.nix</code></h2>
-<p>Das, was <code>nix shell nixpkgs#fzf</code> macht, kann man auch in eine Datei schreiben, und damit einfach in ein Repo mit einchecken. Schon hat man Deklarativ die ganzen Tools im Repo dokumentiert, die man braucht um mit einem Projekt zu arbeiten. Bonus: Ich kann für jedes Projekt eigene Versionen der Abhängigkeiten haben (wenn ich das brauche). Python-Virtual-Envs auf Steroiden!</p>
-<p>Hier ein Beispiel:</p>
-<div class="hll"><pre><span></span><span class="p">{</span>
-  pkgs <span class="o">?</span> <span class="nb">import</span> <span class="l">&lt;nixpkgs&gt;</span> <span class="p">{</span> <span class="p">},</span>
-<span class="p">}:</span>
-pkgs<span class="o">.</span>mkShell <span class="p">{</span>
-  <span class="ss">buildInputs</span> <span class="o">=</span> <span class="k">with</span> pkgs<span class="p">;</span> <span class="p">[</span>
-    <span class="c1"># Add your build inputs here</span>
-    pkgs<span class="o">.</span>python313
-    pkgs<span class="o">.</span>uv
-  <span class="p">];</span>
-  <span class="ss">env</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="ss">UV_PYTHON</span> <span class="o">=</span> pkgs<span class="o">.</span>python313<span class="p">;</span>
-    <span class="ss">UV_DOWNLOAD_PYTHON</span> <span class="o">=</span> <span class="s2">&quot;never&quot;</span><span class="p">;</span>
-  <span class="p">};</span>
-<span class="p">}</span>
-</pre></div>
-<p>Wenn man das mit <code>nix-shell</code> aufruft, dann hat man diese Python-Version zur Hand. <code>uv</code> verwendet diese und lädt selber keine Python-Versionen herunter. Nice! Extra nice: mit <code>nix-shell --pure</code>  hat man eine Shell in der <em>nur</em> das sichtbar ist was in dem <code>shell.nix</code> steht, und man kriegt Fehler für alles was man verwendet und in der <code>shell.nix</code> vergessen hat. 🤯</p>
-<p>Bonus: <a href="https://direnv.net">Direnv</a> verwenden um automatisch die <code>shell.nix</code> und das <code>.env</code> zu laden. Dazu <a href="https://github.com/ajeetdsouza/zoxide">zoxide</a> um schnell in der Shell zwischen vielen Projekten hin und zu springen. Eine richtig geniale Entwicklungsumgebung.</p>
-<p>Ich empfehle erst mal eine weile auf diesem Niveau zu bleiben, denn das ist schon ziemlich cool!</p>
-<h2>4. Schritt: Mehr Tooling um besser mit Nix klar zu kommen</h2>
-<ul>
-<li>Pakete findet man am besten über <a href="https://search.nixos.org/packages">die Webseite search.nixos.org</a> - aber ich mag eigentlich in der shell suchen. <code>nix run nixpkgs#nh search ut1999</code> funktioniert besser als alles was ich sonst bisher getestet habe.</li>
-<li>Anzeigen was gerade installiert ist und wieso ist aufgrund der Architektur von nix gar nicht so einfach. <code>nix run nixpkgs#nix-tree</code> aproximiert das und gibt einen guten überblick darüber was man auf dem System hat.</li>
-<li><code>nom</code> - der <a href="https://github.com/maralorn/nix-output-monitor">Nix-Output-Monitor</a> <code>nix run nixpkgs#nix-output-monitor</code> macht den output von längeren nix builds viel informativer und spannender. Verwenden kann man das so: <code>nix run $something |&amp; nix run nixpkgs#nix-output-monitor</code></li>
-<li><code>nix store gc</code> um alles zu löschen, was man mal testweise runtergeladen hat und nicht mehr auf der Platte braucht. (Einer Der Nachteile von Nix: Es verbraucht schnell <em>viel</em> Plattenplatz).</li>
-</ul>
-<h2>5. Schritt: Tief in das Hasenloch fallen</h2>
-<p>Jetzt gibt es verschiedene Sachen die man sich anschauen könnte</p>
-<ul>
-<li><a href="https://nix.dev/manual/nix/2.24/language/index.html">Die Nix Sprache lernen</a> - die Voraussetzung für fast alles was danach kommt, also gut investierte Zeit. Und es ist eine wirklich kleine Sprache - auch wenn <a href="https://github.com/NixOS/nixpkgs">die 'Standard-Bibliothek' (meiner Meinung nach das NixPKGs Repository)</a> alles andere als klein ist.</li>
-<li><a href="https://devenv.sh">devenv</a> um Entwicklungsumgebungen kurz und Knackig und mit allen Features deklarativ zu beschreiben und ins Projekt eingecheckt zu bekommen.</li>
-<li><a href="https://nixos-and-flakes.thiscute.world">Flakes - der Standard in der Nix-Community, mit der Abhängigkeits-Versionen festgeschrieben werden</a>. Also wie checke ich die genauen git commit hashes die ich verwendet habe um alle meine Software zu bauen ins Repo mit ein. Damit kann man ein Projekt auch nach Jahren sehr einfach verlässlich wieder bauen.</li>
-<li><a href="https://github.com/pyproject-nix/uv2nix">uv2nix - wie man Python-Projekte Nix-ifiziert</a></li>
-<li><a href="https://github.com/LnL7/nix-darwin">nix-darwin</a> um ein MacOS System so deklarativ zu verwalten, wie das unter NixOS geht. (OK, Apple setzt da grenzen, aber das ist trotzdem sehr cool).</li>
-<li><a href="https://nix-community.github.io/home-manager/">home-manager</a> um dotfiles zu verwalten und auf Benutzer-Ebene alles zu konfigurieren.</li>
-<li>Quasi alles von <a href="https://github.com/nix-community/awesome-nix?tab=readme-ov-file">Awesome-Nix</a>.</li>
-<li>Und so viele Projekte mehr, die man sich anschauen könnte…</li>
-</ul>
-
-    </section>
-    
-      <footer>
-        <a href="2025/2/a-nixle-in-a-buechse-und-a-goldigs-warteweile/">weiterlesen…</a>
       </footer>
     
   </article>

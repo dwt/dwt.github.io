@@ -57,6 +57,38 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/11/warum-ich-c-hasse/">
+        Warum ich C++ hasse
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-11-20">Donnerstag, 20. November 2008</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Weil es so irrsinnig schwer zu debuggen ist.</p>
+<p>Jeder Programmierer verwendet ein anderes Subset irgendwelcher obskuren features, die man eigentlich nicht bräuchte und fürs debuggen muss man sie dann alle kennen.</p>
+<p>Gnah.</p>
+<p>Zum Beispiel das hier: Aus Performance-Gründen wird der Speicher für Objekte beim initialisieren nicht auf einen neutralen Wert (0/NULL/whatever) gesetzt, sondern (!!!) uninitialisiert gelassen. (Nein, das ist kein Opt-In für die stellen wo man die Performance wirklich braucht, sondern tatsächlich der Standard)</p>
+<p>Das geile daran: Vergisst man im Konstruktor dann eine Variable zu initialisieren, dann gibt es auch keine Warning...</p>
+<p>Also habe ich jetzt Tageweise hinter her debugged, weil an einer Stelle halt eine Variable nicht in der Konstruktor-Initializer-Liste aufgeführt - und dieser Wert dann an das System weitergereicht wurde. Tja, schade eigentlich. Dadurch wurde dann der TCP-Sendspace eben auf einen zufälligen Wert (18 Millionen) konfiguriert und verständlicherweise reichten dafür die Buffer nicht mehr aus...</p>
+<p>Und das alles weil C++ so hardcore Performance-Orientiert ist. Wo doch heute jedes Kind lernt, das man etwas erst zum funktionieren und dann schnell kriegen muss.</p>
+<p>Gnah.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/11/warum-ich-c-hasse/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/11/amerikanischer-sport-der-propper-buttslap/">
         Amerikanischer Sport: Der &#34;propper&#34; Buttslap..
         </a>
@@ -639,42 +671,6 @@
     
       <footer>
         <a href="../../2008/10/syntax-matters/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/10/grundeinkommen/">
-        Grundeinkommen
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-10-25">Samstag, 25. Oktober 2008</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>Spannend wars heute auf <a href="http://www.grundeinkommen2008.org/">dem Kongress.</a></p>
-<p>Vormittags der Workshop über Simulationsmodelle über die Auswirkungen der Einführung von Grundeinkommen auf ein Modell der österreichischen Volkswirtschaft (in dem sich zeigte dass Gewinnsteuerfinanziertes Grundeinkommen das verwendete Modell stärker destabilisierte als ein durch negative Einkommenssteur finanziertes.</p>
-<p>Well, dafür das der verantwortliche für das Modell nur einen Tag lang simuliert hat...</p>
-<p>Danach ging es noch ein bisschen mit zellulären automaten weiter um damit zu simulieren wie sich das Wissen um Grundeinkommen in der Bevölkerung ausbreiten konnte.</p>
-<p>Beides nicht großartig, aber doch ein interessanter Einblick darin dass auch in der Simulation eben nur mit Wasser gekocht wird. Will sagen: Das hätte ich auch gekonnt.</p>
-<p>Danach gabs dann einen Argumentationsworkshop gegen Stammtischparolen und Killerargumente - das war mal was praktisches und für mich (trotz einer was Argumente angeht eher mageren Ausbeute) damit das Highlight des Tages.</p>
-<p>Schlussendich noch eine (gefühlt endlose) Podiumsdiskussion. Bei der ich wie auf Kohlen saß - mir ist nach wie vor noch nicht klar wieso ich das so extrem nervig fand. Naja.</p>
-<p>Immerhin kam mir dabei noch eine interessante Idee: Viel beschworen ist ja die Angst vor der Arbeitsunwütigkeit der Bevölkerung wenn es ein Grundeinkommen gibt. Dass die dann nicht mehr Arbeiten würden und es sich nur noch gut gehen lassen werden.</p>
-<p>Tja, das kann man doch einfach Testen. Alle Gemeinden &lt; $GRENZWERT dürfen sich für eine Lotterie anmelden. Die Leute die in der Gemeinde leben die Gewinnt (und nur die die zu dem Zeitpunkt dort leben) kriegen dann von da ab bis an ihr Lebensende ein garantiertes und bedingungsloses Grundeinkommen.</p>
-<p>Voila - schon weiß man bald viel mehr darüber wie sich Menschen mit Grundeinkommen verhalten. Und dann kann man bald die Angst dass die dann ja alle nicht mehr Arbeiten würden fundiert wiederlegen. (Ok, kann man IMO jetzt auch schon, aber es wäre halt doch etwas anderes)</p>
-<p>Bonus wäre natürlich wenn man gleich mehrere solcher Versuche macht um verschiedene Rahmenbedingungen zu testen.</p>
-<p>Billiger als ein Bankencrash wäre es allemal - und viel Produktiver.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/10/grundeinkommen/">weiterlesen…</a>
       </footer>
     
   </article>

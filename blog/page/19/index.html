@@ -57,6 +57,56 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/10/cocoa-hat-ja-regex-support/">
+        Cocoa hat ja Regex Support
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-10-09">Donnerstag, 9. Oktober 2008</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Überraschend.</p>
+<p>Das der so vollständig ist, hätte ich nicht erwartet. Aber in der Tat, <a href="http://www.icu-project.org/userguide/regexp.html">ICU-Regexe in ihrer ganzen Pracht</a>. Völlig ohne eine neue externe Dependency.</p>
+<p>Laut der Dokumentation sollte das sogar in 10.4 schon funktionieren - mit dem einen Caveat, dass multiline Support dort wohl von Hand eingeschaltet werden muss (via <code>(?m)</code>)</p>
+<p>Sowas wird da möglich:</p>
+<div class="hll"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">([</span><span class="s">@&quot;aaa&quot;</span><span class="w"> </span><span class="n">matchesRegex</span><span class="o">:</span><span class="s">@&quot;a{3}&quot;</span><span class="p">])</span>
+<span class="w">    </span><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;gotcha&quot;</span><span class="p">);</span>
+
+<span class="c1">// other examples</span>
+<span class="p">[</span><span class="s">@&quot;argh fnord argh&quot;</span><span class="w"> </span><span class="n">matchesRegex</span><span class="o">:</span><span class="s">@&quot;.*</span><span class="se">\\</span><span class="s">bfnord</span><span class="se">\\</span><span class="s">b.*&quot;</span><span class="p">];</span>
+<span class="p">[</span><span class="s">@&quot;aaa&quot;</span><span class="w"> </span><span class="n">matchesRegex</span><span class="o">:</span><span class="s">@&quot;</span><span class="se">\\</span><span class="s">w{3}&quot;</span><span class="p">];</span>
+</pre></div>
+<p>Und das mit extrem wenig Aufwand:</p>
+<div class="hll"><pre><span></span><span class="k">@interface</span> <span class="bp">NSString</span> <span class="nl">(SimpleRegexMatching)</span>
+<span class="p">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span> <span class="nf">matchesRegex:</span><span class="p">(</span><span class="bp">NSString</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="nv">aRegex</span><span class="p">;</span>
+<span class="k">@end</span>
+
+<span class="k">@implementation</span> <span class="bp">NSString</span> <span class="nl">(SimpleRegexMatching)</span>
+<span class="p">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span> <span class="nf">matchesRegex:</span><span class="p">(</span><span class="bp">NSString</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="nv">aRegex</span><span class="p">;</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">id</span><span class="w"> </span><span class="n">predicate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="bp">NSPredicate</span><span class="w"> </span><span class="n">predicateWithFormat</span><span class="o">:</span><span class="s">@&quot;self matches %@&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">aRegex</span><span class="p">];</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="n">predicate</span><span class="w"> </span><span class="n">evaluateWithObject</span><span class="o">:</span><span class="nb">self</span><span class="p">];</span>
+<span class="p">}</span>
+<span class="k">@end</span>
+</pre></div>
+<p>Ich bin beeindruckt.</p>
+<p>[source:/open-source/SimpleRegexSupport/trunk/RegexTest.m  Code hier]</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/10/cocoa-hat-ja-regex-support/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/10/die-gegenwa-rtige-finanzkrise-ist/">
         Die gegenwärtige Finanzkrise ist...
         </a>
@@ -313,34 +363,6 @@
     
       <footer>
         <a href="../../2008/9/applicationen-in-den-appstore-zu-kriegen/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/9/afro-samurai/">
-        Afro Samurai
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-09-23">Dienstag, 23. September 2008</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>Wunderschönes Comic - gezeichnet und gesprochen von Meistern.</p>
-<p>Eine schräge Mischung aus japanischem Samurai-Gemetzel mit western Einflüssen plus Handies und Roboter...</p>
-<p><a href="http://www.google.com/search?client=safari&amp;rls=de-de&amp;q=afro+samurai+torrent&amp;ie=UTF-8&amp;oe=UTF-8">Muss man sehen.</a></p>
-<p>(<a href="http://www.afrosamurai.com/">Mehr</a> <a href="http://en.wikipedia.org/wiki/Afro_Samurai">Info</a>)</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/9/afro-samurai/">weiterlesen…</a>
       </footer>
     
   </article>

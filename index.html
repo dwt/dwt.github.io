@@ -59,6 +59,197 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="blog/2025/9/textbearbeitung-mit-grep-tr-cut-awk-und-sed/">
+        Textbearbeitung auf der Shell: grep, cut, awk, sed und tr
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2025-09-25">Donnerstag, 25. September 2025</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p><img src="blog/2025/9/textbearbeitung-mit-grep-tr-cut-awk-und-sed/tr-in-action.png" alt="`tr` in aktion"></p>
+<p>Diese fünf kleinen Tools sind echte Arbeitspferde für jeden, der mit Text auf der Kommandozeile arbeitet. Sie haben viele Optionen – aber man braucht nicht alles zu kennen. Schon mit ein paar Grundbefehlen kann man 80 % der typischen Aufgaben lösen.</p>
+<h3>1. <code>grep</code> – Zeilen finden</h3>
+<p>grep filtert Textzeilen anhand von Mustern. Praktisch, wenn man in langen Outputs schnell das Relevante sehen will.</p>
+<table>
+<thead><tr>
+<th>Aufgabe</th>
+<th>Befehl</th>
+<th>Beispiel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Textzeilen ausgeben, die ein Wort enthalten</td>
+<td><code>grep PATTERN</code></td>
+<td>`cat protokoll.txt</td>
+<td>grep "Fehler"`</td>
+</tr>
+<tr>
+<td>Zeilen ausschließen</td>
+<td><code>grep -v PATTERN</code></td>
+<td><code>grep -v "^#" protokoll.txt</code></td>
+</tr>
+<tr>
+<td>In einem ganzen Projektbaum nach</td>
+<td><code>grep -r PATTERN DIR</code></td>
+<td><code>grep -r "TODO" src/</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tipps</strong></p>
+<ul>
+<li><code>-i</code> ignoriert Groß/Kleinschreibung</li>
+<li><code>-e</code> aktiviert Reguläre Ausdrücke (unter linux gibt es noch <code>-P</code> für Perl-kompatible Regex)</li>
+</ul>
+<p>Kombinationen über Pipes machen grep besonders stark:</p>
+<div class="hll"><pre><span></span>grep<span class="w"> </span>-r<span class="w"> </span>-P<span class="w"> </span><span class="s2">&quot;def \w*\(&quot;</span><span class="w"> </span>.<span class="w"> </span>--after-context<span class="w"> </span><span class="m">30</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot;foo&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span><span class="s2">&quot;bar&quot;</span>
+</pre></div>
+<p>Für große Projekte lohnt sich ripgrep (rg), weil es schneller ist, <code>.gitignore</code> respektiert und reguläre Ausdrücke standardmäßig aktiviert.</p>
+<h3>2. <code>cut</code> – Spalten und Zeichen</h3>
+<p><code>cut</code> schneidet Spalten oder Zeichen aus Textzeilen heraus. Funktioniert am besten, wenn der Trenner ein einzelnes Zeichen ist.</p>
+<table>
+<thead><tr>
+<th>Aufgabe</th>
+<th>Befehl</th>
+<th>Beispiel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Spalte 2 eine CSV <sup class="footnote-ref" id="fnref-csv"><a href="#fn-csv">1</a></sup></td>
+<td><code>-d ',' -f 2</code></td>
+<td><code>cut -d ',' -f 2 daten.csv</code></td>
+</tr>
+<tr>
+<td>Zeichen 5‑10 einer Zeile</td>
+<td><code>-c 5-10</code></td>
+<td><code>cut -c 5-10 string.txt</code></td>
+</tr>
+<tr>
+<td>Mehrere Felder</td>
+<td><code>-f 1,3,5</code></td>
+<td><code>cut -d ';' -f 1,3,5 daten.txt</code></td>
+</tr>
+</tbody>
+</table>
+<p>Bei Whitespace-getrennten Daten stößt cut an Grenzen – da ist <code>awk</code> besser.</p>
+<h3>3. <code>awk</code> – Felder und Muster</h3>
+<p><code>awk</code> versteht Texte als Felder, getrennt durch Whitespace oder ein angegebenes Zeichen. Wenn man möchte, kann man mit <code>awk</code> Text-Dateien fast wie Datenbanken abfragen, aber für den Anfang:</p>
+<table>
+<thead><tr>
+<th>Aufgabe</th>
+<th>Befehl</th>
+<th>Beispiel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Spalten ausgeben</td>
+<td><code>{print $1, $3}</code></td>
+<td><code>awk '{print $1, $3}' daten.txt</code></td>
+</tr>
+<tr>
+<td>Letzte Spalte ausgeben</td>
+<td><code>{print $NF}</code></td>
+<td><code>awk '{print $NF}' daten.txt</code></td>
+</tr>
+<tr>
+<td>Summe einer Spalte</td>
+<td><code>{s+=$2} END {print s}</code></td>
+<td><code>awk '{s+=$2} END {print s}' zahlen.txt</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Nützliche Variablen</strong></p>
+<ul>
+<li><code>NF</code> = Anzahl Felder in der Zeile</li>
+<li><code>NR</code> = aktuelle Zeilennummer</li>
+</ul>
+<h3>4. <code>sed</code> – Suchen und Ersetzen</h3>
+<p><code>sed</code> ist ein Stream-Editor: ideal für Ersetzungen und einfache Transformationen.</p>
+<table>
+<thead><tr>
+<th>Aufgabe</th>
+<th>Befehl</th>
+<th>Beispiel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ersetzen</td>
+<td><code>s/alt/neu/g</code></td>
+<td><code>sed 's/Fehler/Warning/g' log.txt</code></td>
+</tr>
+</tbody>
+</table>
+<p>Vorsicht: Nie direkt in die gleiche Datei schreiben mit &gt; – sonst überschreibst du sie, bevor sie gelesen wurde. <strong>DAMIT HABE ICH SCHON DATEN VERLOREN</strong> Stattdessen:</p>
+<div class="hll"><pre><span></span>sed<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;s/alt/neu/g&#39;</span><span class="w"> </span>datei.txt<span class="w">   </span><span class="c1"># Direkt in der Datei ändern</span>
+</pre></div>
+<h3>5. <code>tr</code> – Zeichen übersetzen</h3>
+<table>
+<thead><tr>
+<th>Aufgabe</th>
+<th>Befehl</th>
+<th>Beispiel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Groß→Klein</td>
+<td><code>tr [:upper:][:lower:]</code></td>
+<td><code>tr '[:upper:]' '[:lower:]' &lt; input.txt</code></td>
+</tr>
+<tr>
+<td>Leerzeichen löschen</td>
+<td><code>tr -d ' '</code></td>
+<td><code>tr -d ' ' &lt; file</code></td>
+</tr>
+<tr>
+<td>ROT13 (Caesar‑Shift)</td>
+<td><code>tr 'a-z' 'n-za-m'</code></td>
+<td><code>tr 'a-z' 'n-za-m' &lt; text.txt</code></td>
+</tr>
+<tr>
+<td>Mehrere Zeichen gleichzeitig</td>
+<td><code>tr 'abc' 'ABC'</code></td>
+<td><code>tr 'abc' 'ABC' &lt; input.txt</code></td>
+</tr>
+</tbody>
+</table>
+<p>Beispiel: <code>$PATH</code> lesbarer machen:</p>
+<div class="hll"><pre><span></span>❯<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="nv">$PATH</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tr<span class="w"> </span><span class="s1">&#39;:&#39;</span><span class="w"> </span><span class="s1">&#39;\n&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>nl
+</pre></div>
+<h2>Fazit</h2>
+<ul>
+<li><strong><code>grep</code></strong>: Zeilen nach Mustern filtern</li>
+<li><strong><code>cut</code></strong>: Spalten oder Zeichen ausschneiden.</li>
+<li><strong><code>awk</code></strong>: Felder flexibel verarbeiten und berechnen.</li>
+<li><strong><code>sed</code></strong>: Ersetzen und transformieren</li>
+<li><strong><code>tr</code></strong>: Zeichen umwandeln oder löschen</li>
+</ul>
+<p>👉 Zusammengeschaltet mit Pipes (<code>|</code>) werden diese Tools zu einem Schweizer Taschenmesser für Textbearbeitung – schnell, skriptbar und überall verfügbar.</p>
+<div class="footnotes">
+<hr>
+<ol><li id="fn-csv"><p>CSV = Comma-Separated Values, kann natürlich auch maskierte Kommas in dem Wert enthalten, was dieser Befehl geflissentlich ignoriert oder falsch macht. Verwendet zum CSV-Parsen also bitte nicht diesen Shell-Befehl. Dieser Befehle sind dafür da, auf der Shell schnell mal in eine Datei hineinzuschauen. Wenn das Ergebnis gut genug ist, kann man es auch weiter verarbeiten.<a href="#fnref-csv" class="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+    </section>
+    
+      <footer>
+        <a href="blog/2025/9/textbearbeitung-mit-grep-tr-cut-awk-und-sed/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="blog/2025/8/arbeiten-mit-json-and-yaml-auf-der-shell/">
         Arbeiten mit JSON &amp; YAML auf der Shell
         </a>
@@ -238,51 +429,6 @@ Einer der coolsten Aha-Momente der letzten Tage bei mir war, wie einfach und nie
     
       <footer>
         <a href="blog/2025/8/mit-llm-rag-einfach-mal-ausprobieren-direkt-von-der-shell/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="blog/2025/7/devopscon-keynote-security-ist-jetzt-teil-von-devops/">
-        DevOpsCon Keynote – Security ist jetzt Teil von DevOps?
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2025-07-30">Mittwoch, 30. Juli 2025</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p><img src="blog/2025/7/devopscon-keynote-security-ist-jetzt-teil-von-devops/secure-chips.png" alt="Metapher auf Teams die jeweils Sicherheits-Interessierte enthalten, die einfach von Spezialisten Unterstützung erhalten können"></p>
-<p>Ich konnte auf der DevOpsCon der Keynote "From Static to Strategic: Reimagining Application Security for a DevOps World" von John D. Wood nicht entgehen. Um ehrlich zu sein: Die Keynote hat mich nicht begeistert. Am ehesten noch fand ich interessant das er Zahlen hatte, das die meisten Sicherheitslücken (auch nach Bekanntwerden) noch über ein Dreiviertel-Jahr offen sind. Aua. Ein Satz am Ende ist bei mir hängengeblieben:</p>
-<blockquote><p>"DevOps bekommt jetzt auch Security."</p>
-</blockquote>
-<p>Was simpel klingt, ist in der Realität alles andere als einfach – und betrifft uns ganz konkret. In einer Zeit, in der wir als Unternehmen KRITIS-relevant geworden sind, ist es für viele Risiken nicht mehr möglich sie einfach zu übernehmen (AKA aussitzen). Wir müssen sie aktiv mitigieren – und das gilt besonders auch für Security-Risiken.</p>
-<h3>Security: Aus DevOps wird "DevSecOps"?</h3>
-<p>Dev ist schon schwer. Ops noch schwieriger. Und jetzt kommt Security obendrauf. Nicht jedes Team kann oder will alle drei Disziplinen gleich gut abdecken. Und dennoch ist klar: Es kommt mehr Arbeit auf uns zu.</p>
-<p>Wir werden bei bestimmten Anwendungen in Zukunft viel stärker darauf achten müssen:</p>
-<ul>
-<li>Dass Betriebssysteme (in Docker-Containern) aktuell sind,</li>
-<li>Dass Projektabhängigkeiten regelmäßig gepflegt werden,</li>
-<li>Dass wir verstehen, <em>welche Sicherheitslücken für <strong>uns</strong> relevant</em> sind – nicht nur, weil ein Scanner sie anmeckert, sondern weil unsere eigene Risikoabwägung sie als kritisch einstuft.</li>
-</ul>
-<h3>Wunsch-Szenario: Expertise teilen, nicht duplizieren</h3>
-<p>Mein Wunsch wäre, dass nicht jedes Team die komplette Security-Expertise selbst aufbauen muss. Stattdessen sollten sich diejenigen, die sich besonders für das Thema interessieren, tiefer einarbeiten können – und jederzeit unkompliziert Zugang zu  Spezialist\:innen haben. Idealerweise entsteht daraus eine Art Mentoring-Beziehung.</p>
-<p>Das Ziel: Schnell und unbürokratisch Expertise bekommen, wenn man merkt, dass man sie braucht. Entwickler\:innen sollen lernen, Security-relevante Situationen zu erkennen und wissen, wo sie gezielt und niederschwellig Unterstützung finden.</p>
-<h3>Compliance-Checkbox oder echte Verteidigung?</h3>
-<p>Ein starkes Bild aus dem Vortrag war die Kritik an klassischen Security-Prozessen: Wöchentliche Scans, lange Backlogs mit offenen CVEs, endlos False Positives, wenig konkreter Nutzen. All das erzeugt ungeplante Arbeit, und widerspricht damit dem DevOps-Grundsatz "No unplanned work" – und hilft im Ernstfall wenig. Letztlich müssen wir ja die Daten unserer Versicherten Schützen, dass der Bug den ein Angreifer bei uns Ausgenützt hat schon lange bekannt war, hilft uns nicht weiter.</p>
-<h3>Fazit</h3>
-<p>Ich nehme aus dem Talk vor allem eines mit: Security können wir in Zukunft nicht länger als "Problem von jemand anderem" verstehen. Sie ist jetzt (oder wird es bald) integraler Teil von DevOps – ob uns das passt oder nicht.</p>
-<p>Und wir müssen Wege finden, wie wir das <em>gemeinsam</em> schultern können – weil wir eben nicht jeden Entwickler zum Security-Experten machen können.</p>
-
-    </section>
-    
-      <footer>
-        <a href="blog/2025/7/devopscon-keynote-security-ist-jetzt-teil-von-devops/">weiterlesen…</a>
       </footer>
     
   </article>

@@ -57,6 +57,44 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="2025/9/warum-man-backups-und-disaster-recovery-zusammen-denken-sollte/">
+        Backup ohne verprobte Recovery ist wertlos – 5 Gründe
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2025-09-29">Montag, 29. September 2025</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p><img src="2025/9/warum-man-backups-und-disaster-recovery-zusammen-denken-sollte/backup-ohne-recovery.png" alt="Backup und Recovery"></p>
+<p>Auf der DevOpsCon 25 in Berlin habe ich viel aus dem Vortrag <a href="https://devopscon.io/devsecops/backup-disaster-recovery/">Backup and Disaster Recovery: Business as Usual or What Needs to Change Now? - DevOps Conference &amp; Camps</a> gezogen. Zum technischen Inhalt gehe ich noch mal Separat ein, aber zuerst wollte ich meine Schlüssel-Lernergebnisse auf einer sehr hohen Flughöhe mitbringen.</p>
+<h2>1. Backups ohne Restore sind nur Datenfriedhöfe</h2>
+<p>Ein Backup ist kein Wert an sich. Es ist nur die Basis für Geschäftskontinuität – erst der funktionierende Restore bringt das Unternehmen zurück ins Geschäft.</p>
+<h2>2. Zeit entscheidet über Resilienz</h2>
+<p>Recovery Time Objective (RTO) ist der kritische Faktor – nicht die schiere Menge oder Existenz von Kopien. Entscheidend ist: Wie lange darf welcher Teil des Geschäfts ausfallen, bis es ernsthafte Schäden nimmt?</p>
+<h2>3. Kontinuierlicher Minimal-Restore trennt Dauer von Ausfallzeit</h2>
+<p>Ein innovativer Ansatz ist, kontinuierlich eine schlanke, nicht skalierte Version der Systeme aus den Backups hochzufahren. Damit lässt sich jederzeit beweisen: Restore funktioniert. Und: Die Dauer des eigentlichen Restore-Vorgangs aus den Backups kann nahezu beliebig sein, ohne wesentlich das RTO zu gefährden.</p>
+<h2>4. Vorhersagbare Skalierung statt unberechenbarer Wiederanlauf</h2>
+<p>Im Notfall geht es nicht darum, <em>ob</em> das Backup läuft, sondern <em>wie schnell</em> man wieder auf ausreichende Kapazität kommt. Wer Skalierung auf Abruf plant, kennt die Antwort: „In X Minuten / Stunden ist die  Leistung verfügbar.“ Das macht den Unterschied zwischen Chaos und geplanter Resilienz.</p>
+<h2>5. Kosteneffizienz und Compliance in einem</h2>
+<p>Statt teurer Standby-Infrastruktur entsteht ein Modell, das laufend minimale Kosten verursacht, aber im Ernstfall sofort hochskaliert. Dazu kommt: Unternehmen erfüllen so auch regulatorische Anforderungen nach nachweisbarer Wiederanlauffähigkeit.</p>
+<p><strong>Fazit:</strong>
+Backups sind nur der Anfang. Erst wenn Restore und Disaster Recovery gemeinsam gedacht werden – mit kontinuierlichem Minimal-Restore und skalierbarer Infrastruktur – entsteht echte Business-Kontinuität.</p>
+
+    </section>
+    
+      <footer>
+        <a href="2025/9/warum-man-backups-und-disaster-recovery-zusammen-denken-sollte/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="2025/9/textbearbeitung-mit-grep-tr-cut-awk-und-sed/">
         Textbearbeitung auf der Shell: grep, cut, awk, sed und tr
         </a>
@@ -848,72 +886,6 @@ yq completion <span class="nb">fish</span> <span class="o">|</span> <span class=
     
       <footer>
         <a href="2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="2025/2/die-freuden-einer-gut-eingerichteten-shell-prompt/">
-        Die Freuden einer gut eingerichteten Shell: Der Prompt
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2025-02-27">Donnerstag, 27. Februar 2025</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p><img src="2025/2/die-freuden-einer-gut-eingerichteten-shell-prompt/terminal.jpg" alt="Terminal"></p>
-<p>Es fängt natürlich mit der Frage an: welche Shell?</p>
-<p>Das ist sehr einfach zu beantworten. Auf MacOS ist die <a href="https://www.zsh.org">zsh</a> die Standard-Shell - und daher sollte man die auch benutzen. Artikel Fertig, vielen Dank fürs Lesen! 😅</p>
-<p>Windows hat die <a href="https://de.wikipedia.org/wiki/PowerShell">PowerShell</a> - wer damit Arbeiten (muss) sollte sie lernen!</p>
-<p>Die nackte Shell ist ziemlich schlecht konfiguriert, da die Möglichkeiten der Shell gar nicht ausgenutzt werden. Auf Linux-Distributionen ist es Standard, dass die Shell von der Distribution eingerichtet wird, daher kann man damit meistens schon gut arbeiten.</p>
-<p>Aber für MacOS (und Windows) gibt es viel zu tun.</p>
-<p>So sieht die zsh unkonfiguriert aus:</p>
-<div class="hll"><pre><span></span>dwt@NB1321<span class="w"> </span>~<span class="w"> </span>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>Library/Favorites
-dwt@NB1321<span class="w"> </span>Favorites<span class="w"> </span>%
-</pre></div>
-<p>Das ist schon gar nicht schlecht, denn man sieht einiges:</p>
-<ul>
-<li><code>dwt</code>: Welcher Nutzer man gerade ist. Wichtig, wenn man viel mit <code>sudo</code> arbeitet, damit man nicht versehentlich Kommandos als <code>root</code> mit zu vielen Rechten ausführt.</li>
-<li><code>NB1321</code>: Auf welchem Rechner man gerade eingeloggt ist. Wichtig wenn man auf vielen Rechnern arbeitet und nicht</li>
-<li>Den aktuellen Ordner in dem man ist (<code>Favorites</code>). Wichtig damit man z.B. nicht versehentlich die falschen Dateien löscht.</li>
-<li>Der Prompt <code>%</code> trennt die Meta-Informationen von dem was man selbst eingibt.</li>
-</ul>
-<p>Da geht aber noch wesentlich mehr. Bei mir z.B. sieht der Prompt so aus:</p>
-<div class="hll"><pre><span></span>~/C/P/m/api<span class="w"> </span>❄️<span class="w"> </span>🧪<span class="w"> </span>nix-shell-env<span class="w">   </span>🐍<span class="w"> </span>venv<span class="w"> </span>⛵️<span class="w"> </span>mkk-itsc-dev<span class="w"> </span><span class="o">(</span>api<span class="o">)</span><span class="w"> </span>🌱<span class="w"> </span>main<span class="w"> </span><span class="nv">$!</span><span class="w">  </span>4s
-❯
-</pre></div>
-<p>Da ist enthalten:</p>
-<ul>
-<li><code>~/C/P/m/api</code> - nicht nur der aktuelle Ordner, sondern auch jeweils der Anfangsbuchstabe der darüber liegenden Ordner. Das liefert platzsparend viel mehr Kontext, wo man gerade ist. Super wenn man in vielen Projekten gleichnamige Ordner wie z.B. <code>etc</code>, <code>src</code> oder <code>dist</code> hat.</li>
-<li><code>❄️ 🧪 nix-shell-env</code> Zeigt an, dass gerade eine 'dreckige' <a href="https://nixos.wiki/wiki/Development_environment_with_nix-shell">Nix-Shell</a> aktiv ist. Das verwende ich um Projek-spezifische Abhängigkeiten (Shell-Tools, bestimmte Vesionen von Python etc.) zu installieren die ich deklarativ im Projekt tracke. Gut vergleichbar mit Python-Virtual-Envs - aber eben für alles, nicht nur Python-Pakete. Dreckig ('impure') ist Sie, da nicht <em>nur</em> die Shell-Tools aus der Nix-Shell sichtbar sind, sondern auch alles andere was ich im Betriebsystem installiert habe.</li>
-<li><code>🐍 venv</code> - zeigt an, dass gerade ein Python-Virtual-Env aktiv ist. Da ich hauptsächlich mit Pyton entwickle ist das natürlich entscheidend weil es bedeutet das ich die Projekt-Werkzeuge direkt verwenden kann, da sie im <code>$PATH</code> und <code>$PYTHONPATH</code> sind.</li>
-<li><code>⛵️ mkk-itsc-dev (api)</code> zeigt an, dass ich mit dem <code>mkk-itsc-dev</code> Kubernetes Cluster verbunden bin, und den Namespace <code>api</code> aktiviert habe. Das ist mir sehr wichtig, damit ich nicht versehentlich mit <code>kubectl</code> Befehlen versehentlich den Produktiv-Cluster zerstöre. (Rate wieso mir das so wichtig ist…)</li>
-<li><code>🌱 main $!</code> zeigt an, dass ich in einem Git-Repository bin, auf dem main branch, das ich dinge ge-'stash't habe (die vergisst man sonst sehr leicht) und das ich Änderungen habe die ich noch nicht commited habe. Hier gibt es <a href="https://starship.rs/config/#git-status">auch noch mehr informationen wenn das Repo den entsprechenden Zustand hat</a>.</li>
-<li>Zuletzt sehe ich da das letzte Kommando 4 Sekunden gedauert hat. Das wird nur angezeigt wenn das letzte Programm mehr als 3 Sekunden gedauert hat und ist immer wiede ein hilfreiche Information um bei langlaufenden Prozesen zu verstehen ob es sich lohnt da etwas zu optimieren.</li>
-</ul>
-<p>Natürlich könnte man hier noch viel mehr anzeigen, je nachdem an was man gerade arbeitet. Ich habe hier eben die Informationen aufgenommen die ich am meisten benötige.</p>
-<p>Jetzt kommt der Clou: Früher habe ich das alles von hand Konfiguriert. Das war ein ewiges und mühsammes gefummel um <code>$PS1</code> und konsorten so hinzufummeln das das alles funktioniert hat, und hat nie Spaß gemacht. Der Standard ist derzeit, das man einen Shell-Konfigurations-Framework wie <a href="https://ohmyz.sh">Oh-My-Zsh</a> oder <a href="https://github.com/sorin-ionescu/prezto">Prezto</a> verwendet. Und die sind auch gut. Aber auch langsam, und komplex und kompliziert. Wenn man da mal etwas anders haben will dann gott bewahre wenn das nicht schon vorbereitet ist oder man darf sich nicht nur mit den Komplexitäten von <code>$PS1</code> auseinandersetzen, sondern auch noch damit wie genau dieser Framework das handhabt.</p>
-<p>Inzwischen bin ich weiser geworden, und verwende <a href="https://starship.rs">Starship</a>. Damit kann ich meinen Prompt deklarativ in einer <code>.toml</code>-Datei konfigurieren und diesen auch mitnehmen wenn ich mal die Shell wechsle. (Was häufiger vorkommt als mir lieb ist). Und: Starship funktioniert auch mit der PowerShell.</p>
-<p><a href="2025/2/die-freuden-einer-gut-eingerichteten-shell-prompt/starship.toml">So sieht meine Konfiguration aus</a></p>
-<p>Wie richtet man das ein?</p>
-<ol>
-<li><code>brew install starship</code> (oder mit <a href="https://lix.systems">nix</a>)</li>
-<li><code>nano ~/.zshrc</code> und am Ende <code>eval "$(starship init zsh)"</code> einfügen.</li>
-<li>Konfigurationsdatei erstellen: <code>nano ~/.config/starship.toml</code> und z.b. <a href="2025/2/die-freuden-einer-gut-eingerichteten-shell-prompt/starship.toml">den Inhalt aus der Datei oben einfügen</a>.</li>
-<li>Shell neu starten oder neues Terminal öffnen.</li>
-</ol>
-<p>Danke sagen für die grandiose Verbesserung eures Shell-Lebens bei mir nicht vergessen. 😅</p>
-
-    </section>
-    
-      <footer>
-        <a href="2025/2/die-freuden-einer-gut-eingerichteten-shell-prompt/">weiterlesen…</a>
       </footer>
     
   </article>

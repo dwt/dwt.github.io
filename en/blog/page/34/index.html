@@ -57,6 +57,76 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/2/trac-als-homepage/">
+        Trac als Homepage
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-02-18">Monday, February 18, 2008</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>(Zu <a href="http://musicbrainz.org/track/9aeaaebe-2e01-4984-b7aa-6f43a5d77801.html">Amy Amy Amy</a>)</p>
+<p>Trac als Homepage hat sich für mich ja schon bewährt. Ein Wiki, eine Versionsverwaltung, Theoretisch auch noch Bug-Tracking (deaktiviert wg. Spammern) - was will man mehr.</p>
+<p>Naja, einen Blog. Und da fängt das Problem dann auch schon an.</p>
+<p>Traditionell sind Blogs alle in HTML oder mit merkwürdigen Wysiwyg-Editoren die nicht richtig funktionieren oder so beschränkt sind, das man darin gar nicht alles machen kann was man will (z.B. Source-Code highlighten. Noch dazu Objective-C!)</p>
+<p>Ausserdem will ich das mein Blog sauber mit meinem Wiki Verlinkt ist und ich die normale Wiki-Syntax zum Bloggen verwenden kann.</p>
+<p>Das mache ich bisher mit dem <a href="http://trac-hacks.org/wiki/TracBlogPlugin">TracBlogPlugin</a>, nachdem ich früher mal mit dem <a href="http://trac-hacks.org/wiki/SimpleBlogPlugin">SimpleBlogPlugin</a> eher... unzufrieden war.</p>
+<p>Leider aber ist auch das TracBlogPlugin nicht perfekt. Zwar setzt es auf das <a href="http://trac-hacks.org/wiki/TagsPlugin">TracTags</a> Plugin auf, das ganz excelent ist - aber leider bleiben einige schwächen.</p>
+<ul>
+<li>History + Archiv ist mehr oder weniger nicht vorhanden</li>
+<li>Kommentare gehen nicht.<ul>
+<li>Moderation derselben schon gleich gar nicht.</li>
+</ul>
+</li>
+<li>RSS-Feeds sind eher... nun ja, mit einigem Experimentieren kriegt man einiges hin, aber schön ist es nicht.</li>
+<li>WeblogPings und Backlinks werden nicht unterstützt.</li>
+<li>Blogrolls etc... alles von hand.</li>
+<li>XMLRPC... Ah well.</li>
+</ul>
+<p>Weiterentwickelt wurde das Plugin seit fast einem Jahr nicht mehr (ok, in <a href="http://trac-hacks.org/wiki/TracBlogPlugin#RecentChanges">den letzten Tagen</a> passiert wieder etwas, mal schauen wie das weiter geht)</p>
+<p>Jetzt hatte ich mir schon überlegt [vielleicht selber Hand anzulegen], da stellt sich heraus, das schon jemand anderes deutlich entnervt war und das Plugin <a href="http://trac-hacks.org/wiki/FullBlogPlugin">FullBlog</a> entwickelt hat.</p>
+<p>Pro:</p>
+<ul>
+<li>Feeds++</li>
+<li>Kategorien (mit TracTags Unterstützung?)</li>
+<li>Kommentare + Spamfilterung!</li>
+<li>XMLRPC support</li>
+</ul>
+<p>Cons:</p>
+<ul>
+<li>Seiten sind nicht im normalen Wiki-Namespace (Aber man kann wohl hin und her linken)</li>
+<li>Ich kann also nicht alle bestehenden Postings direkt übernehmen</li>
+<li>Der Code malt (da er keine normalen Wiki-Seiten verwendet) direkt in der Datenbank herum. Gnah.</li>
+</ul>
+<p>Mehr hab ich mir noch nicht angesehen. Aber eine vernünftige Blog-Integration für Trac wäre Gold wert. Will schließlich heute jeder haben, einen Blog.
+Ah well.</p>
+<p>Eye in the Sky Projektideen:</p>
+<ul>
+<li>Endlich mehr Blogging Features hier im Trac</li>
+<li>Mehr Release Management Unterstützung<ul>
+<li>Upload von neuen Releases</li>
+<li>App-Cast auto-generieren - mit Wiki-Seite für die Change-Notes</li>
+</ul>
+</li>
+<li>Buildserver wäre ein Traum - geht aber nicht solange ich auf Linux hoste und für den Mac Entwickle.</li>
+</ul>
+<p>Diesen Freitag 17:00 Uhr treff ich mich mit <a href="http://www.felix-schwarz.name/Hauptseite">Felix</a> und <a href="http://user.cs.tu-berlin.de/~felixf/">Felix</a> in der <a href="https://wiki.freitagsrunde.org/">Freitagsrunde</a> und wir werden mal weiter beraten was wir mit Trac weiter machen. Wer Trac Hacken mag oder schon tut und dazukommen mag ist natürlich herzlich eingeladen. :)</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/2/trac-als-homepage/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/2/bei-mac-donalds/">
         Bei Mac Donalds
         </a>
@@ -414,44 +484,6 @@ Just two days ago I watched the episode <a href="http://www.wdr.de/tv/quarks/sen
     
       <footer>
         <a href="../../2008/2/god-wrote-in-lisp-code/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/2/beautiful-code/">
-        Beautiful Code
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-02-08">Friday, February 8, 2008</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>"Lest mehr Code!" werde ich mir immer als Schlusswort des <a href="http://chaosradio.ccc.de/22c3_mp3-598.html">Literarischen Code-Quartetts</a> merken.</p>
-<p>Und weil man ja auch verdauen muss was man liest, empfiehlt sich natürlich guter Code - an dem man auch noch mehr lernen kann.</p>
-<p>Daher war ich begeistert, dass O'Reilly das Buch <a href="http://www.oreilly.com/catalog/9780596510046/">"Beautiful Code"</a> (<a href="http://beautifulcode.oreillynet.com/">blog</a>) herausbrachte. Das geniale daran: Es werden nicht nur gute Programme abgedruckt, sondern Erklärungen, was hervorragende Programmierer daran schön finden und warum!</p>
-<p>Und was für Perlen da drin sind.</p>
-<p>Besonders haben mir gefallen (ich bin noch nicht durch)</p>
-<ul>
-<li>Kapitel 1: Regex matcher in C - Brian Kernighan hat Stil! (und pointer :)</li>
-<li>Kapitel 14: Wie sich LAPACK über die Zeit und die verwendete Hardware veränderte</li>
-<li>Kapitel 17: Ein Rundgang durch die Layer des Virtuellen Dateisystems von BSD</li>
-<li>Kapitel 18: Wie Pythons Dictionaries implementiert sind</li>
-<li>Kapitel 22: Deadlock-Detection und subtile Bugs im Solaris Kernel (faszinierend)</li>
-</ul>
-<p>Und so geht es grade weiter.</p>
-<p>Gibts auf <a href="http://www.amazon.com/Beautiful-Code-Leading-Programmers-Practice/dp/0596510047">Amazon</a> oder einem Tracker in deiner Nähe.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/2/beautiful-code/">weiterlesen…</a>
       </footer>
     
   </article>

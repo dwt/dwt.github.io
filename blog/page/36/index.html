@@ -57,6 +57,86 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2007/12/bitte-kein-c/">
+        Bitte kein C...
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2007-12-13">Donnerstag, 13. Dezember 2007</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Also eines muss man Programmierern lassen, erfinderisch sind sie.</p>
+<p>Heute stellt sich mein Verständnis von C wirklich auf die Probe.</p>
+<p>Zuerst der Vorlauf, da gibt es einen parameter <strong>controller</strong> der immer als int übergeben wird - natürlich hartkodiert und ohne jeden kommentar was wofür steht. Ok, das ist jetzt ekelhaft, aaaber.</p>
+<p>Dieser int wird dann in einem struct element <strong>iType</strong> gespeichert. Um herauszufinden was dieser Parameter nun macht habe ich also mal durch den SourceCode gegreppt um herauszufinden was damit passiert und bin dabei auf die viel versprechende Zeile <strong>switch(self-&gt;iType)</strong> gestoßen. Groß war da meine Freude, wenn auch leider nur kurz.</p>
+<div class="hll"><pre><span></span><span class="k">switch</span><span class="p">(</span><span class="n">self</span><span class="o">-&gt;</span><span class="n">iType</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">            </span><span class="n">RefProg</span><span class="o">=</span><span class="n">USBprogressIndicator</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+</pre></div>
+<p>Da stellt sich natürlich die Frage... was macht der Compiler daraus eigentlich? Interpretiert er es als</p>
+<div class="hll"><pre><span></span><span class="k">switch</span><span class="p">(</span><span class="n">self</span><span class="o">-&gt;</span><span class="n">iType</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="no">default</span><span class="p">:</span>
+<span class="w">            </span><span class="n">RefProg</span><span class="o">=</span><span class="n">USBprogressIndicator</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+</pre></div>
+<p>oder doch als:</p>
+<div class="hll"><pre><span></span><span class="k">switch</span><span class="p">(</span><span class="n">self</span><span class="o">-&gt;</span><span class="n">iType</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">            </span><span class="n">RefProg</span><span class="o">=</span><span class="n">USBprogressIndicator</span><span class="p">;</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="no">default</span><span class="p">:</span>
+<span class="w">    </span><span class="p">}</span>
+</pre></div>
+<p>i.e. heißt das eigentlich das der Code darin nicht ausgeführt wird? Und verhält sich das auf anderen Compilern / Compilerversionen genauso?</p>
+<p>Ist doch immer wieder schön solche zoten in Sourcecode zu finden. :)</p>
+<h2>Update</h2>
+<p>Inzwischen habe ich nachgeprüft was da Sache ist. Meine Vermutung war, dass der Programmierer es ja nur im Code gelassen hätte, wenn es einen Sinn hat. Nun ja, man glaubt ja an das Gute im Menschen.</p>
+<p>Ich musste mich dann aber doch eines besseren Belehren:</p>
+<div class="hll"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="n">argv</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+<span class="w">        </span><span class="k">switch</span><span class="p">(</span><span class="n">foo</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;gotit</span><span class="se">\n</span><span class="s">e</span><span class="se">\n\n\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w"> </span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;didn&#39;t get it</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<p>Wie man am Beispiel sehen kann (mit etwas wie "<code>gcc -o foo test.c &amp;&amp; ./foo</code>" ist es einfach zu zeigen das <strong>switch(foo)</strong> tatsächlich den gleichen effekt hat wie</p>
+<div class="hll"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="n">argv</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+<span class="cp">#if 0</span>
+<span class="c">                printf(&quot;gotit\ne\n\n\n&quot;);</span>
+<span class="c">                return -1; </span>
+<span class="cp">#endif</span>
+
+<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;didn&#39;t get it</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<p>Was ich wirklich herzlich Sinnlos finde.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2007/12/bitte-kein-c/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2007/11/future-of-media/">
         Future of Media
         </a>
@@ -333,39 +413,6 @@ Ever wondered how useful it would be to always have a Flashlight with you?</p>
     
       <footer>
         <a href="../../2007/7/tanguera/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2007/4/bisher-unvero-ffentlichte-features-von-leopard/">
-        Bisher unveröffentlichte Features von Leopard
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2007-04-04">Mittwoch, 4. April 2007</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p><a href="http://developer.apple.com/wwdc/sessions/">Die detaillierte Beschreibung der WWDC Sessions</a> ist heute online gegangen und man findet darin interessante Details zu bisher unveröffentlichten neuen Features von Leopard.</p>
-<ul>
-<li>Neue Funktionen für den Package Installer: Offenbar plant Apple das installieren von Programmen nur für einzelne Benutzer einfacher zu machen und Signierte Pakete zu unterstützen. Dazu ist von "Internet Download Packages" und neuen Receipt Tools die Rede. (Von "Creating Custom Installers with Leopards New PackageMaker")</li>
-<li>Core Text: Apple will offenbar ein neuer Framework für Schriftbehandlung, Rendering und Layout einführen. (Von "Core Text Lab")</li>
-<li>Neue Leopard Kernel Debugging Tools: Apple verspricht einen "Live Kernel Debugger", neue Konsolenkommandos "trace", "latency", "spindump" und "stackshot". (Von "Fundamentals of Kernel Debugging")</li>
-<li>Dictionary Development Kit: Offenbar will Apple neue Werkzeuge zur Übersetzung von Programmen bereitstellen. (Von "Input Method &amp; Internationalization Lab")</li>
-<li>Versionierung in Core Data: Core Data Schemas können Versioniert werden und es gibt offenbar hilfsmittel bei der Migration von früheren Versionen. (Von "Managing Schema Versioning and Data Migration in Your Core Data Application")</li>
-</ul>
-<p>Das wars. Nicht viel, aber doch ein kleiner Blick auf die vielen von Steve versprochenen - bisher verschwiegenen - Features.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2007/4/bisher-unvero-ffentlichte-features-von-leopard/">weiterlesen…</a>
       </footer>
     
   </article>

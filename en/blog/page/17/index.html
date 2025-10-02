@@ -57,6 +57,38 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/11/das-life-bildarchiv-ist-online-gegangen/">
+        Das Life Bildarchiv ist online gegangen
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-11-22">Saturday, November 22, 2008</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Wohl eines der wichtigsten Bildarchive unserer Zeit. <a href="http://images.google.com/hosted/life">Hier</a>.</p>
+<p>Besonders beeindruckend finde ich die Übersichtsbilder über Hiroshima.</p>
+<ul>
+<li><a href="http://images.google.com/hosted/life/f?q=hiroshima+source:life&amp;imgurl=43974bc5beedd9a1">Pilzwolke der Explosion</a></li>
+<li><a href="http://images.google.com/hosted/life/f?q=hiroshima+source:life&amp;imgurl=8ff91a8d99a88783">Flüchtlingszug bei der Fahrt aus der zerstörten Stadt</a></li>
+<li><a href="http://images.google.com/hosted/life/f?q=hiroshima+source:life&amp;imgurl=2dc83a0fb071c4bb">Übersicht über die zerstörte Stadt</a>, <a href="http://images.google.com/hosted/life/f?q=hiroshima+source:life&amp;imgurl=6f3587a04bfcb780">nochmal</a>, <a href="http://images.google.com/hosted/life/f?q=hiroshima+source:life&amp;imgurl=9ea81b72f8524dd0">nochmal</a>, <a href="http://images.google.com/hosted/life/f?q=hiroshima+source:life&amp;imgurl=8aca0f3016b8a17f">nochmal</a>, <a href="http://images.google.com/hosted/life/f?q=hiroshima+source:life&amp;imgurl=0b513e15e9025ec1">nochmal</a></li>
+</ul>
+<p><a href="http://blog.fefe.de/?ts=b7dab39a">via</a></p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/11/das-life-bildarchiv-ist-online-gegangen/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/11/warum-ich-c-hasse/">
         Warum ich C++ hasse
         </a>
@@ -623,54 +655,6 @@
     
       <footer>
         <a href="../../2008/11/delegation-sucks/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/10/syntax-matters/">
-        Syntax matters
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-10-26">Sunday, October 26, 2008</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>[wiki:2008/10/25/01.21 Gerade habe ich doch ein Stück Code hochgeladen] mit dem man jeden beliebigen Methodenaufruf in eine Invocation umwandeln kann.</p>
-<p>Nun, das hat mir nicht gereicht. Jetzt hab ich mich noch mal hingesetzt und mich an einer anderen Syntax versucht:</p>
-<div class="hll"><pre><span></span><span class="c1">// anstatt</span>
-<span class="kt">id</span><span class="w"> </span><span class="n">invocation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NMCatchInvocation</span><span class="p">(</span><span class="s">@&quot;fnord&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">stringByAppendingString</span><span class="o">:</span><span class="s">@&quot;42&quot;</span><span class="p">);</span>
-
-<span class="c1">// jetzt</span>
-<span class="kt">id</span><span class="w"> </span><span class="n">invocation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">NMRecordingInvocation</span><span class="w"> </span><span class="n">invocation</span><span class="p">];</span>
-<span class="p">[</span><span class="n">invocation</span><span class="w"> </span><span class="n">recordWithTarget</span><span class="o">:</span><span class="s">@&quot;fnord&quot;</span><span class="p">]</span><span class="w"> </span><span class="n">stringByAppendingString</span><span class="o">:</span><span class="s">@&quot;42&quot;</span><span class="p">];</span>
-
-<span class="c1">// oder</span>
-<span class="kt">id</span><span class="w"> </span><span class="n">invocation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">NMRecordingInvocation</span><span class="w"> </span><span class="n">invocationWithTarget</span><span class="o">:</span><span class="s">@&quot;fnord&quot;</span><span class="p">];</span>
-<span class="p">[</span><span class="n">invocation</span><span class="w"> </span><span class="n">record</span><span class="p">]</span><span class="w"> </span><span class="n">stringByAppendingString</span><span class="o">:</span><span class="s">@&quot;42&quot;</span><span class="p">];</span>
-</pre></div>
-<p>Und ich  finde das ist von der Syntax her deutlich eleganter als das Makro.</p>
-<p>Allerdings:</p>
-<ul>
-<li>Es ist etwa der doppelte Aufwand dass zu implementieren</li>
-<li>Das Makro erzeugt viel schnelleren Code (viel weniger allokationen)</li>
-</ul>
-<p>Was soll ich davon jetzt halten? Small is beautifull? Keep it simple stupid? Oder ist doch wichtiger dass der zweite Versuch eher dem Objc-Spirit entspricht?</p>
-<p>Mir ist das auch nach einem Tag darüber nachdenken erheblich unklar.</p>
-<ul>
-<li>[source:open-source/NMInvocationBuilder/trunk Hier gehts zum Code]</li>
-</ul>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/10/syntax-matters/">weiterlesen…</a>
       </footer>
     
   </article>

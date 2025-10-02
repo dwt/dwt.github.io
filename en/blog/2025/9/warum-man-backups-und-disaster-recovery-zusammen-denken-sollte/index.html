@@ -1,0 +1,159 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../../static/pygments.css">
+    <title>Backup ohne verprobte Recovery ist wertlos – 5 Gründe</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../../../blog/feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item "><a href="../../../../work/" class="nav-link">Professional software development</a></li>
+    
+      <li class="nav-item "><a href="../../../../projects/" class="nav-link">Projects</a></li>
+    
+      <li class="nav-item "><a href="../../../../publications/" class="nav-link">Publications and talks</a></li>
+    
+      <li class="nav-item active"><a href="../../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../../categories/" class="nav-link">Categories</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="../../../../../blog/2025/9/warum-man-backups-und-disaster-recovery-zusammen-denken-sollte/">🇩🇪</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="./">🇬🇧</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../../">🏠</a>
+
+
+<a class="breadcrumb-item " href="../../../">Blog</a>
+
+
+<a class="breadcrumb-item active" href="./">Backup ohne verprobte Recovery ist wertlos – 5 Gründe</a>
+
+</nav>
+    </header>
+    <article class="page warum-man-backups-und-disaster-recovery-zusammen-denken-sollte  container-fluid">
+      
+  
+  <article class="blog-post">
+    <header>
+      <h2>
+        
+        Backup ohne verprobte Recovery ist wertlos – 5 Gründe
+        
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2025-09-29">Monday, September 29, 2025</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p><img src="backup-ohne-recovery.png" alt="Backup und Recovery"></p>
+<p>Auf der DevOpsCon 25 in Berlin habe ich viel aus dem Vortrag <a href="https://devopscon.io/devsecops/backup-disaster-recovery/">Backup and Disaster Recovery: Business as Usual or What Needs to Change Now? - DevOps Conference &amp; Camps</a> gezogen. Zum technischen Inhalt gehe ich noch mal Separat ein, aber zuerst wollte ich meine Schlüssel-Lernergebnisse auf einer sehr hohen Flughöhe mitbringen.</p>
+<h2>1. Backups ohne Restore sind nur Datenfriedhöfe</h2>
+<p>Ein Backup ist kein Wert an sich. Es ist nur die Basis für Geschäftskontinuität – erst der funktionierende Restore bringt das Unternehmen zurück ins Geschäft.</p>
+<h2>2. Zeit entscheidet über Resilienz</h2>
+<p>Recovery Time Objective (RTO) ist der kritische Faktor – nicht die schiere Menge oder Existenz von Kopien. Entscheidend ist: Wie lange darf welcher Teil des Geschäfts ausfallen, bis es ernsthafte Schäden nimmt?</p>
+<h2>3. Kontinuierlicher Minimal-Restore trennt Dauer von Ausfallzeit</h2>
+<p>Ein innovativer Ansatz ist, kontinuierlich eine schlanke, nicht skalierte Version der Systeme aus den Backups hochzufahren. Damit lässt sich jederzeit beweisen: Restore funktioniert. Und: Die Dauer des eigentlichen Restore-Vorgangs aus den Backups kann nahezu beliebig sein, ohne wesentlich das RTO zu gefährden.</p>
+<h2>4. Vorhersagbare Skalierung statt unberechenbarer Wiederanlauf</h2>
+<p>Im Notfall geht es nicht darum, <em>ob</em> das Backup läuft, sondern <em>wie schnell</em> man wieder auf ausreichende Kapazität kommt. Wer Skalierung auf Abruf plant, kennt die Antwort: „In X Minuten / Stunden ist die  Leistung verfügbar.“ Das macht den Unterschied zwischen Chaos und geplanter Resilienz.</p>
+<h2>5. Kosteneffizienz und Compliance in einem</h2>
+<p>Statt teurer Standby-Infrastruktur entsteht ein Modell, das laufend minimale Kosten verursacht, aber im Ernstfall sofort hochskaliert. Dazu kommt: Unternehmen erfüllen so auch regulatorische Anforderungen nach nachweisbarer Wiederanlauffähigkeit.</p>
+<p><strong>Fazit:</strong>
+Backups sind nur der Anfang. Erst wenn Restore und Disaster Recovery gemeinsam gedacht werden – mit kontinuierlichem Minimal-Restore und skalierbarer Infrastruktur – entsteht echte Business-Kontinuität.</p>
+
+    </section>
+    
+  </article>
+
+  <nav>
+    
+  <div class="category-list">
+    Kategorien:
+      
+      <a href="../../../../../categories/code/">Software Development</a>
+      
+    
+  </div>
+
+    
+    <div class="relative-navigation">
+      
+      
+        <div class="next">Nächstes Post: <a class="next" href="../textbearbeitung-mit-grep-tr-cut-awk-und-sed/">Textbearbeitung auf der Shell: grep, cut, awk, sed und tr</a></div>
+      
+    </div>
+    
+  </nav>
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2025 <a href="../../../../work/">Martin Häcker</a></span>
+  </li>
+  
+    
+    <li class="nav-item imprint">
+      <a class="nav-link" href="../../../../meta/#imprint">
+        Imprint
+      </a></li>
+  
+    
+    <li class="nav-item privacy-policy">
+      <a class="nav-link" href="../../../../meta/#privacy-policy">
+        Privacy Policy
+      </a></li>
+  
+    
+    <li class="nav-item colophon">
+      <a class="nav-link" href="../../../../meta/#colophon">
+        Colophon
+      </a></li>
+  
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../../../blog/feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    <a class="nav-link" 
+      rel="license" 
+      target="_blank" 
+      href="https://creativecommons.org/licenses/by-sa/4.0/deed"
+    >
+      <img 
+        src="/static/cc-by-sa-88x31.png"
+        alt="Creative Commons Attribution - Share Alike 4.0 International Lizense"
+      >
+    </a>
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

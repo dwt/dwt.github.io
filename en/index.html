@@ -47,13 +47,80 @@
     </header>
     <article class="page  homepage container-fluid">
       
-  <h1>Welcome!</h1>
+  <p><strong>Was meinst du dazu?</strong>
+Das ist mein aktueller Blick auf diese Herausforderungen. Gibt es Aspekte, die ich noch nicht bedacht habe oder Schwachstellen in diesem Ansatz? Ich freue mich über Feedback, um daraus später einen guten ADR für das Architekturforum zu entwickeln.</p>
+<p><strong>Ich bin überzeugt, dass wir mit diesem Ansatz den richtigen Weg eingeschlagen haben.</strong> Vereinheitlichung, Automatisierung und Trennung von Wissen sind für mich der <em>Stand der Technik</em>.</p>
+<p>Kurz gesagt: Lokale, im Repository oder CI-System verschlüsselte Secrets sind bequem, aber langfristig riskant. Eine einheitlich verwaltete Lösung mit 1Password löst diese Probleme. Sie ist auditierbar, kontrolliert zugänglich und vereinfacht die Rotation. Das reduziert Sicherheitsrisiken und macht es überflüssig, dass Entwickler produktive Secrets überhaupt kennen – Deployments ziehen sie automatisch und temporär bei Bedarf.</p>
+<h3>Fazit: Einheitliche Steuerung als Schlüssel zur Sicherheit – und bitte um Feedback</h3>
+<h1>Welcome!</h1>
 <p>I'm <a href="../work">Martin Häcker</a>, a software developer with more than 20 years of experience. I can assist with <a href="../work">all aspects of professional software development</a>.</p>
 <p>My blog is about <a href="../categories/code/">Software</a>, <a href="../categories/liquid/">Liquid Democracy</a>, <a href="../categories/go/">Go / Baduk / Weiqi</a>, <a href="../categories/cucina/">Kochen</a>, <a href="http://gropies.de/">choir singing</a>, <a href="https://en.wikipedia.org/wiki/Bouldering">bouldering</a>, <a href="https://en.wikipedia.org/wiki/Cue_sports">billiard</a>, <a href="https://en.wikipedia.org/wiki/Paragliding">paragliding</a>, <a href="https://en.wikipedia.org/wiki/Category:Kites">kiting</a>, <a href="https://en.wikipedia.org/wiki/Juggling">juggling</a> and <a href="../categories/">other things that interest me</a>. Look around, <a href="../projects/">use my code</a> and <a href="../blog/feed.xml">subscribe to my feed</a> to enjoy reading the blog in the comfort of your feed reader.</p>
 <p>While my website is available in English and German, most of my blog will be single language. Mostly in German, but occasionally in English.</p>
 <h1>Newest Entries:</h1>
 
   
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
+        <a href="../blog/2025/10/wie-wir-mit-1password-alle-unsere-secrets-aus-repos-und-deployments-entfernen-koennen/">
+        Wie wir mit 1Password alle unsere Secrets aus Repos und Deployments entfernen können
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2025-10-10">Friday, October 10, 2025</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p><img src="../blog/2025/10/wie-wir-mit-1password-alle-unsere-secrets-aus-repos-und-deployments-entfernen-koennen/1password-from-chaos-to-order.png" alt="Vom Chaos zur Ordnung mit 1Password"></p>
+<h2>Wie wir mit 1Password alle unsere Secrets aus Repos und Deployments entfernen können</h2>
+<p>In regulierten Umgebungen wie KRITIS gilt: Sicherheitsmaßnahmen müssen dem <em>Stand der Technik</em> entsprechen. Dazu gehört auch, dass Passwörter und andere Geheimnisse nicht unkontrolliert in Repositories oder Deployments liegen. Wenn ein Mitarbeiter das Team verlässt oder ein System kompromittiert wird, müssen alle betroffenen Secrets schnell und nachvollziehbar rotiert werden.</p>
+<p>Mit 1Password können wir diesen Schritt gehen. Wir verwalten unsere Secrets gemeinsam, versionieren sie und injizieren sie automatisiert in die Systeme, die sie wirklich brauchen.</p>
+<h3>Der Auslöser: Ein Gespräch auf der it-sa</h3>
+<p>Auf der it-sa-Messe sprach ich mit einem Solution-Architekten von 1Password. Ich wollte verstehen, warum unsere bisherigen Versuche, Secrets aus Entwicklungsumgebungen zu entfernen und im Deployment wieder zu injizieren, noch so holprig waren. Das Gespräch zeigte mir, wie viel mehr in diesem Thema steckt – organisatorisch und technisch.</p>
+<h3>Aha-Moment 1: Mit der 1Password CLI aus dem .env-Chaos zur gemeinsamen Quelle der Wahrheit</h3>
+<p>Mein erster Aha-Moment: Mit der 1Password CLI (<code>op read</code>, <code>op run</code>) lassen sich Secrets direkt abrufen. Früher musste sich jeder Entwickler für jedes Projekt eine <code>.env</code>-Datei besorgen – oft per Chat oder aus einem gemeinsam genutzten Vault. Das führte zu veralteten Dateien, fehlender Synchronisierung und unnötigem Aufwand für neue Teammitglieder.</p>
+<p>Mit der CLI ändert sich das grundlegend. <code>.env</code>-Dateien können jetzt eingecheckt werden, weil sie keine Secrets mehr enthalten, sondern nur <em><a href="https://developer.1password.com/docs/cli/secret-references/">Referenzen</a></em> darauf. Im Repository ist dokumentiert, welche Secrets benötigt werden und aus welchem Vault sie stammen – nicht aber deren Werte.</p>
+<ul>
+<li><code>op read op://vault/item/field</code> ruft gezielt einzelne Werte ab.</li>
+<li><code>op run --env-file=.env -- &lt;befehl&gt;</code> löst Secret-Referenzen automatisch als Environment-Variablen auf.</li>
+</ul>
+<p>Das Ergebnis: eine konsistente Basis für Secrets, die nicht mehr per Hand verteilt werden muss. Entwickler müssen nur die CLI einrichten und sich gelegentlich per Fingerabdruck authentisieren. Das ist ein kleiner Preis für saubere und sichere Umgebungen.</p>
+<h3>Aha-Moment 2: Rotation und Compliance als entscheidende Faktoren</h3>
+<p>In KRITIS-Umgebungen geht es nicht nur um technische Sicherheit, sondern auch um Nachvollziehbarkeit und Compliance. Verschlüsselte Secrets im Repository (bei uns meist <code>SealedSecrets</code>) wirken zunächst praktisch, weil alle Informationen lokal im Projekt liegen. Doch sie erfüllen zentrale Anforderungen an Kontrolle und Auditierbarkeit nur unzureichend.</p>
+<ul>
+<li>Alte Commits enthalten weiterhin alte Secrets. Selbst wenn sie nicht mehr genutzt werden, bleiben sie Teil der Historie.</li>
+<li>Dritte (z. B. GitLab oder externe Partner) haben Zugriff auf verschlüsselte Artefakte, die später durch Algorithmus‑Schwächen oder fehlerhafte Schlüsselverwaltung entschlüsselt werden könnten.</li>
+<li>Es gibt keine zentrale Rotation oder Rechteverwaltung. Jede Projektgruppe müsste selbst festlegen, wann und wie Secrets erneuert werden.</li>
+</ul>
+<p>Gerade bei KRITIS gilt: Der Nachweis, dass Secrets regelmäßig rotiert, überprüft und entzogen werden, ist Teil der Compliance. 1Password unterstützt das mit klaren Berechtigungen, nachvollziehbaren Aktionen und zentraler Ablage.</p>
+<h3>Aha-Moment 3: Projektbasierte Vaults machen Rechteverwaltung erst möglich</h3>
+<p>Ein weiteres wichtiges Konzept: projektbezogene Vaults mit eigenen Tokens und Rechten. Viele Personen – auch außerhalb der Teams – hatten bisher Zugriff auf mehrere oder alle Vaults. Dadurch war der effektive Zugriff auf Secrets zu breit gestreut und schwer nachvollziehbar.</p>
+<p>Projektbasierte Vaults und projektspezifische Zugänge reduzieren den Zugriff erheblich. Nur Teams oder Personen, die Secrets wirklich benötigen, haben Zugriff. Geheimnisse lassen sich gezielt rotieren, ohne dass andere Systeme betroffen sind. Zugriffsrechte können klar pro Projekt definiert werden.</p>
+<h3>Aha-Moment 4: Service-Accounts als sichere Brücke zwischen Projekten und Deployments</h3>
+<p>Für Deployments ergibt sich daraus ein weiterer Aha-Moment. Service-Accounts, die nur Zugriff auf den Vault des jeweiligen Projekts haben, sind völlig ausreichend, um ein Deployment durchzuführen. Diese Accounts können im Projekt referenziert werden, während ihre Zugangsdaten in einem separaten Vault liegen, der nur für Deployment-Prozesse zugänglich ist.</p>
+<p>So entfällt die Notwendigkeit, dass Entwickler direkte Zugänge zu produktiven Secrets haben. Der Schutz der Produktionsumgebung wird zu einem festen Bestandteil der Infrastruktur und ist keine Frage von Disziplin oder Vertrauen mehr.</p>
+<blockquote><p><strong>🔍 Exkurs: Warum nicht einfach SealedSecrets oder SOPS?</strong></p>
+<p>In unserer Umgebung nutzen wir derzeit noch <strong><a href="https://github.com/bitnami-labs/sealed-secrets">SealedSecrets</a></strong>, um Secrets verschlüsselt im Git-Repository zu speichern. Das funktioniert, löst aber die strukturellen Probleme nicht: Secrets bleiben an den Code gekoppelt, Rotation ist umständlich, und alte Commits behalten alte Secrets.</p>
+<p><strong><a href="https://github.com/getsops/sops">SOPS</a></strong> ist flexibler, weil es verschiedene Key-Provider (z. B. AWS KMS oder GCP KMS) unterstützt und sich gut in GitOps-Workflows integrieren lässt. Trotzdem bleibt das Grundproblem: Secrets liegen weiterhin im Repository. Wer Zugriff auf den Code hat, hat indirekt auch Zugriff auf verschlüsselte Geheimnisse.</p>
+<p><strong>1Password</strong> geht hier einen Schritt weiter: Secrets verlassen nie das System. Sie werden zentral koordiniert, revisionssicher auditiert und über CLI oder Service-Accounts nur temporär injiziert. Der Unterschied liegt nicht in der Verschlüsselung selbst, sondern in der <em>Verantwortungszuordnung</em> und der Möglichkeit, Zugriff und Rotation einheitlich zu steuern. Für uns ist das die praktikabelste Lösung.</p>
+</blockquote>
+<h3>Fazit: Einheitliche Steuerung als Schlüssel zur Sicherheit – und bitte um Feedback</h3>
+<p>Kurz gesagt: Lokale, im Repository oder CI-System verschlüsselte Secrets sind bequem, aber langfristig riskant. Eine einheitlich verwaltete Lösung mit 1Password löst diese Probleme. Sie ist auditierbar, kontrolliert zugänglich und vereinfacht die Rotation. Das reduziert Sicherheitsrisiken und macht es überflüssig, dass Entwickler produktive Secrets überhaupt kennen – Deployments ziehen sie automatisch und temporär bei Bedarf.</p>
+<p><strong>Ich bin überzeugt, dass wir mit diesem Ansatz den richtigen Weg eingeschlagen haben.</strong> Vereinheitlichung, Automatisierung und Trennung von Wissen sind für mich der <em>Stand der Technik</em>.</p>
+<p><strong>Was meinst du dazu?</strong>
+Das ist mein aktueller Blick auf diese Herausforderungen. Gibt es Aspekte, die ich noch nicht bedacht habe oder Schwachstellen in diesem Ansatz? Ich freue mich über Feedback, um daraus später einen guten ADR für das Architekturforum zu entwickeln.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../blog/2025/10/wie-wir-mit-1password-alle-unsere-secrets-aus-repos-und-deployments-entfernen-koennen/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
   
     
   <article class="blog-post">
@@ -279,119 +346,6 @@ Backups sind nur der Anfang. Erst wenn Restore und Disaster Recovery gemeinsam g
     
       <footer>
         <a href="../blog/2025/9/textbearbeitung-mit-grep-tr-cut-awk-und-sed/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../blog/2025/8/arbeiten-mit-json-and-yaml-auf-der-shell/">
-        Arbeiten mit JSON &amp; YAML auf der Shell
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2025-08-25">Monday, August 25, 2025</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p><img src="../blog/2025/8/arbeiten-mit-json-and-yaml-auf-der-shell/yless.png" alt="yaml ganz angenem auf der Shell"></p>
-<p>Arbeiten mit strukturierten Datenformaten auf der Shell kann anstrengend sein – <strong>wenn man noch nicht die richtigen Tools dafür hat</strong>.
-Ob JSON aus einer API, YAML aus Kubernetes-Manifests oder riesige Logfiles – ohne passende Helferlein endet man schnell bei unübersichtlichem <code>grep</code>, <code>less</code> und Copy&amp;Paste.</p>
-<p>Zum Glück gibt es eine Reihe von Werkzeugen, die genau dafür gemacht sind:</p>
-<ul>
-<li><strong>jq</strong> – JSON lesen, filtern und transformieren – <a href="https://jqlang.org">https://jqlang.org</a></li>
-<li><strong>jo</strong> – JSON in der Shell erzeugen – <a href="https://github.com/jpmens/jo">https://github.com/jpmens/jo</a></li>
-<li><strong>yq</strong> – YAML lesen, bearbeiten und konvertieren – <a href="https://mikefarah.gitbook.io/yq/">https://mikefarah.gitbook.io/yq/</a></li>
-<li><strong>jless / yless</strong> – interaktiv in JSON/YAML navigieren – <a href="https://jless.io">https://jless.io</a></li>
-</ul>
-<p>In diesem Beitrag stelle ich euch diese Tools vor – mit Beispielen, die ihr direkt in eurer eigenen Shell ausprobieren könnt.</p>
-<hr>
-<h2>jq – der Klassiker für JSON</h2>
-<p>Das vermutlich bekannteste und am weitesten verbreitete Tool für JSON ist <a href="https://jqlang.org"><strong><code>jq</code></strong></a>.
-Es ist so etwas wie der <em>Schweizer Taschenmesser</em> für JSON:</p>
-<ul>
-<li>formatiert unlesbare Minified-JSON-Dateien,</li>
-<li>extrahiert gezielt Werte,</li>
-<li>filtert und transformiert Daten,</li>
-<li>eignet sich für einmalige Ad-hoc-Analysen genauso wie für Skripte.</li>
-</ul>
-<p>Ein einfaches Beispiel: JSON schön formatieren:</p>
-<pre><code>$ cat data.json
-{"user":{"id":42,"name":"Alice"},"active":true}
-$ cat data.json | jq # oder `jq &lt; data.json`
-</code></pre>
-<div class="hll"><pre><span></span><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;user&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Alice&quot;</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nt">&quot;active&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
-<span class="p">}</span>
-</pre></div>
-<p>So schnell wird aus einem unübersichtlichen Einzeiler eine lesbare Struktur.</p>
-<p>Mann kann es aber auch super in scripten verwenden um Daten aus json zu extrahieren:</p>
-<div class="hll"><pre><span></span>get_current_gitlab_token<span class="o">()</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span>kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span><span class="nv">$SECRETNAME</span><span class="w"> </span>-n<span class="w"> </span><span class="nv">$INITIALNAMESPACE</span><span class="w"> </span>-o<span class="w"> </span>json<span class="w"> </span><span class="p">|</span>
-<span class="w">        </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">&#39;.data[&quot;.dockerconfigjson&quot;]&#39;</span><span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span>
-<span class="w">        </span>base64<span class="w"> </span>--decode<span class="w"> </span><span class="p">|</span>
-<span class="w">        </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">&#39;.auths[&quot;registry.gitlab.com&quot;].password&#39;</span><span class="w"> </span><span class="m">2</span>&gt;/dev/null
-<span class="o">}</span>
-</pre></div>
-<p>Oder um in einem JSON-File Daten einzutragen:</p>
-<div class="hll"><pre><span></span>kubectl<span class="w"> </span>get<span class="w"> </span>secrets<span class="w"> </span>shipa-certificates<span class="w"> </span>-o<span class="w"> </span>json<span class="w"> </span><span class="se">\</span>
-<span class="w">        </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s2">&quot;.data[\&quot;ca.pem\&quot;] |= \&quot;</span><span class="nv">$CA_CERT</span><span class="s2">\&quot;&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">        </span><span class="p">|</span><span class="w"> </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>-
-</pre></div>
-<p><code>jq</code> kann noch viel mehr. Wer das Werkzeug noch nicht kennt sollte unbedingt ein paar Minuten investieren um <a href="https://jqlang.org/tutorial/">das Tutorial</a> querzulesen, und dann bei der nächsten Einsatzmöglichkeit gezielt nach der Syntax schauen. Pro tip: KI's können diese Syntax prima, und <code>jless</code> (kommt gleich) kann diese auch generieren.</p>
-<hr>
-<h2>jo – JSON in der Shell erzeugen</h2>
-<p>Während <code>jq</code> ideal zum Lesen und Transformieren ist, eignet sich <strong><code>jo</code></strong> perfekt, um JSON direkt in der Shell zu erstellen. Damit lassen sich Testdaten oder API-Payloads schnell zusammenbauen.</p>
-<p>Ein einfaches Beispiel:</p>
-<div class="hll"><pre><span></span>jo<span class="w"> </span><span class="nv">name</span><span class="o">=</span>Alice<span class="w"> </span><span class="nv">age</span><span class="o">=</span><span class="m">30</span><span class="w"> </span><span class="nv">active</span><span class="o">=</span><span class="nb">true</span>
-</pre></div>
-<p>Ausgabe:</p>
-<div class="hll"><pre><span></span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;Alice&quot;</span><span class="p">,</span><span class="nt">&quot;age&quot;</span><span class="p">:</span><span class="mi">30</span><span class="p">,</span><span class="nt">&quot;active&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">}</span>
-</pre></div>
-<p>Auch Arrays sind möglich:</p>
-<div class="hll"><pre><span></span>jo<span class="w"> </span>-a<span class="w"> </span>red<span class="w"> </span>green<span class="w"> </span>blue
-</pre></div>
-<p>➜ <code>["red","green","blue"]</code></p>
-<p>Verschachtelte Objekte:</p>
-<div class="hll"><pre><span></span>jo<span class="w"> </span><span class="nv">user</span><span class="o">=</span><span class="k">$(</span>jo<span class="w"> </span><span class="nv">name</span><span class="o">=</span>Alice<span class="w"> </span><span class="nv">id</span><span class="o">=</span><span class="m">42</span><span class="k">)</span><span class="w"> </span><span class="nv">project</span><span class="o">=</span>Demo
-</pre></div>
-<p>➜ <code>{"user":{"name":"Alice","id":42},"project":"Demo"}</code></p>
-<p>Das eignet sich sehr gut für schnelle <code>curl</code>-Requests, aber insbesondere auch für shell scripte in denen inline json sonst sehr schnell sehr unübersichtlich wird:</p>
-<div class="hll"><pre><span></span>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">     </span>-d<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>jo<span class="w"> </span><span class="nv">username</span><span class="o">=</span>dev<span class="w"> </span><span class="nv">password</span><span class="o">=</span>secret<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">     </span>https://example.com/api/login
-</pre></div>
-<hr>
-<h2>yq – YAML lesen und bearbeiten</h2>
-<p>YAML verwenden wir überall, am meisten habe ich in Kubernetes damit zu tun. <a href="https://mikefarah.gitbook.io/yq/"><strong><code>yq</code></strong></a> ist das Werkzeug der Wahl, um YAML-Dateien zu lesen, zu durchsuchen und zu editieren. Die Syntax ist sehr nahe an <code>jq</code>, das Werkzeug kann neben YAML aber auch JSON, TOML und XML verarbeiten, und zwischen diesesn Konvertieren. Im wesentlichen kann es das gleiche wie <code>jq</code>, eben auch für YAML.</p>
-<hr>
-<h2>jless &amp; yless – interaktiv stöbern</h2>
-<p>Wenn Dateien zu groß oder zu komplex werden, helfen <a href="https://jless.io"><strong><code>jless</code></strong></a> und <strong><code>yless</code></strong> (ein <code>alias yless=jless --yaml</code>. Sie bieten eine interaktive Ansicht für JSON und YAML – mit:</p>
-<ul>
-<li>Syntax-Highlighting,</li>
-<li>Falten und Aufklappen von Strukturen,</li>
-<li>komfortabler Navigation und Suche.</li>
-</ul>
-<p>Beispiel:</p>
-<div class="hll"><pre><span></span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-oyaml<span class="w"> </span><span class="p">|</span><span class="w"> </span>yless
-</pre></div>
-<p>Das schöne: Man kann hier auf der Shell wunderbar uninteressante textblöcke einklappen um schnell die wichtigen Informationen zu fokussieren, und dann über Tastaturkommandos werte, oder jq/yq filter auf das aktuell ausgewählte Element kopieren, um das z.B. dann auf alle Pods in einem Namespace anzuwenden.</p>
-<hr>
-<h2>Fazit</h2>
-<p>Mit diesen Tools – <code>jq</code>, <code>jo</code>, <code>yq</code>, <code>jless</code> und <code>yless</code> – wird das Arbeiten mit JSON und YAML auf der Shell <em>deutlich</em> angenehmer. Sehr gut investierte Zeit diese Werkzeuge (eines nach dem Anderen) zu lernen.</p>
-
-    </section>
-    
-      <footer>
-        <a href="../blog/2025/8/arbeiten-mit-json-and-yaml-auf-der-shell/">weiterlesen…</a>
       </footer>
     
   </article>

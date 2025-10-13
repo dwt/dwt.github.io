@@ -1,0 +1,183 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../static/bootstrap-4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../static/style.css">
+    <link rel="stylesheet" href="../../../../static/pygments.css">
+    <title>Wie wir mit 1Password alle unsere Secrets aus Repos und Deployments entfernen können</title>
+    <link rel="alternate" type="application/atom+xml" title="RSS: Martin Häckers Blog Artikel" href="../../../feed.xml" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm">
+  <a href="../../../../" class="navbar-brand ">🏠</a>
+  <input type="checkbox" id="navbar-toggle-checkbox">
+  <label for="navbar-toggle-checkbox" class="navbar-brand navbar-toggle d-sm-none float-right" aria-label="Navigation Umschalten">
+    <span></span>
+  </label>
+  <ul class="navbar-nav collapse navbar-collapse">
+    
+      <li class="nav-item "><a href="../../../../work/" class="nav-link">Professionelle Softwareentwicklung</a></li>
+    
+      <li class="nav-item "><a href="../../../../projects/" class="nav-link">Projekte</a></li>
+    
+      <li class="nav-item "><a href="../../../../publications/" class="nav-link">Veröffentlichungen und Vorträge</a></li>
+    
+      <li class="nav-item active"><a href="../../../" class="nav-link">Blog<span class="sr-only">(ausgewählt)</span></a></li>
+    
+      <li class="nav-item "><a href="../../../../categories/" class="nav-link">Kategorien</a></li>
+    
+    <li class="nav-item ml-auto">
+      <a class=nav-link href="./">🇩🇪</a>
+    </li>
+    <li class="nav-item pull-right">
+      <a class=nav-link href="../../../../en/blog/2025/10/wie-wir-mit-1password-alle-unsere-secrets-aus-repos-und-deployments-entfernen-koennen/">🇬🇧</a>
+    </li>
+  </ul>
+</nav>
+<nav class="breadcrumb">
+  
+
+  
+
+  
+
+<a class="breadcrumb-item " href="../../../../">🏠</a>
+
+
+<a class="breadcrumb-item " href="../../../">Blog</a>
+
+
+<a class="breadcrumb-item active" href="./">Wie wir mit 1Password alle unsere Secrets aus Repos und Deployments entfernen können</a>
+
+</nav>
+    </header>
+    <article class="page wie-wir-mit-1password-alle-unsere-secrets-aus-repos-und-deployments-entfernen-koennen  container-fluid">
+      
+  
+  <article class="blog-post">
+    <header>
+      <h2>
+        
+        Wie wir mit 1Password alle unsere Secrets aus Repos und Deployments entfernen können
+        
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2025-10-10">Freitag, 10. Oktober 2025</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p><img src="1password-from-chaos-to-order.png" alt="Vom Chaos zur Ordnung mit 1Password"></p>
+<h2>Wie wir mit 1Password alle unsere Secrets aus Repos und Deployments entfernen können</h2>
+<p>In regulierten Umgebungen wie KRITIS gilt: Sicherheitsmaßnahmen müssen dem <em>Stand der Technik</em> entsprechen. Dazu gehört auch, dass Passwörter und andere Geheimnisse nicht unkontrolliert in Repositories oder Deployments liegen. Wenn ein Mitarbeiter das Team verlässt oder ein System kompromittiert wird, müssen alle betroffenen Secrets schnell und nachvollziehbar rotiert werden.</p>
+<p>Mit 1Password können wir diesen Schritt gehen. Wir verwalten unsere Secrets gemeinsam, versionieren sie und injizieren sie automatisiert in die Systeme, die sie wirklich brauchen.</p>
+<h3>Der Auslöser: Ein Gespräch auf der it-sa</h3>
+<p>Auf der it-sa-Messe sprach ich mit einem Solution-Architekten von 1Password. Ich wollte verstehen, warum unsere bisherigen Versuche, Secrets aus Entwicklungsumgebungen zu entfernen und im Deployment wieder zu injizieren, noch so holprig waren. Das Gespräch zeigte mir, wie viel mehr in diesem Thema steckt – organisatorisch und technisch.</p>
+<h3>Aha-Moment 1: Mit der 1Password CLI aus dem .env-Chaos zur gemeinsamen Quelle der Wahrheit</h3>
+<p>Mein erster Aha-Moment: Mit der 1Password CLI (<code>op read</code>, <code>op run</code>) lassen sich Secrets direkt abrufen. Früher musste sich jeder Entwickler für jedes Projekt eine <code>.env</code>-Datei besorgen – oft per Chat oder aus einem gemeinsam genutzten Vault. Das führte zu veralteten Dateien, fehlender Synchronisierung und unnötigem Aufwand für neue Teammitglieder.</p>
+<p>Mit der CLI ändert sich das grundlegend. <code>.env</code>-Dateien können jetzt eingecheckt werden, weil sie keine Secrets mehr enthalten, sondern nur <em><a href="https://developer.1password.com/docs/cli/secret-references/">Referenzen</a></em> darauf. Im Repository ist dokumentiert, welche Secrets benötigt werden und aus welchem Vault sie stammen – nicht aber deren Werte.</p>
+<ul>
+<li><code>op read op://vault/item/field</code> ruft gezielt einzelne Werte ab.</li>
+<li><code>op run --env-file=.env -- &lt;befehl&gt;</code> löst Secret-Referenzen automatisch als Environment-Variablen auf.</li>
+</ul>
+<p>Das Ergebnis: eine konsistente Basis für Secrets, die nicht mehr per Hand verteilt werden muss. Entwickler müssen nur die CLI einrichten und sich gelegentlich per Fingerabdruck authentisieren. Das ist ein kleiner Preis für saubere und sichere Umgebungen.</p>
+<h3>Aha-Moment 2: Rotation und Compliance als entscheidende Faktoren</h3>
+<p>In KRITIS-Umgebungen geht es nicht nur um technische Sicherheit, sondern auch um Nachvollziehbarkeit und Compliance. Verschlüsselte Secrets im Repository (bei uns meist <code>SealedSecrets</code>) wirken zunächst praktisch, weil alle Informationen lokal im Projekt liegen. Doch sie erfüllen zentrale Anforderungen an Kontrolle und Auditierbarkeit nur unzureichend.</p>
+<ul>
+<li>Alte Commits enthalten weiterhin alte Secrets. Selbst wenn sie nicht mehr genutzt werden, bleiben sie Teil der Historie.</li>
+<li>Dritte (z. B. GitLab oder externe Partner) haben Zugriff auf verschlüsselte Artefakte, die später durch Algorithmus‑Schwächen oder fehlerhafte Schlüsselverwaltung entschlüsselt werden könnten.</li>
+<li>Es gibt keine zentrale Rotation oder Rechteverwaltung. Jede Projektgruppe müsste selbst festlegen, wann und wie Secrets erneuert werden.</li>
+</ul>
+<p>Gerade bei KRITIS gilt: Der Nachweis, dass Secrets regelmäßig rotiert, überprüft und entzogen werden, ist Teil der Compliance. 1Password unterstützt das mit klaren Berechtigungen, nachvollziehbaren Aktionen und zentraler Ablage.</p>
+<h3>Aha-Moment 3: Projektbasierte Vaults machen Rechteverwaltung erst möglich</h3>
+<p>Ein weiteres wichtiges Konzept: projektbezogene Vaults mit eigenen Tokens und Rechten. Viele Personen – auch außerhalb der Teams – hatten bisher Zugriff auf mehrere oder alle Vaults. Dadurch war der effektive Zugriff auf Secrets zu breit gestreut und schwer nachvollziehbar.</p>
+<p>Projektbasierte Vaults und projektspezifische Zugänge reduzieren den Zugriff erheblich. Nur Teams oder Personen, die Secrets wirklich benötigen, haben Zugriff. Geheimnisse lassen sich gezielt rotieren, ohne dass andere Systeme betroffen sind. Zugriffsrechte können klar pro Projekt definiert werden.</p>
+<h3>Aha-Moment 4: Service-Accounts als sichere Brücke zwischen Projekten und Deployments</h3>
+<p>Für Deployments ergibt sich daraus ein weiterer Aha-Moment. Service-Accounts, die nur Zugriff auf den Vault des jeweiligen Projekts haben, sind völlig ausreichend, um ein Deployment durchzuführen. Diese Accounts können im Projekt referenziert werden, während ihre Zugangsdaten in einem separaten Vault liegen, der nur für Deployment-Prozesse zugänglich ist.</p>
+<p>So entfällt die Notwendigkeit, dass Entwickler direkte Zugänge zu produktiven Secrets haben. Der Schutz der Produktionsumgebung wird zu einem festen Bestandteil der Infrastruktur und ist keine Frage von Disziplin oder Vertrauen mehr.</p>
+<blockquote><p><strong>🔍 Exkurs: Warum nicht einfach SealedSecrets oder SOPS?</strong></p>
+<p>In unserer Umgebung nutzen wir derzeit noch <strong><a href="https://github.com/bitnami-labs/sealed-secrets">SealedSecrets</a></strong>, um Secrets verschlüsselt im Git-Repository zu speichern. Das funktioniert, löst aber die strukturellen Probleme nicht: Secrets bleiben an den Code gekoppelt, Rotation ist umständlich, und alte Commits behalten alte Secrets.</p>
+<p><strong><a href="https://github.com/getsops/sops">SOPS</a></strong> ist flexibler, weil es verschiedene Key-Provider (z. B. AWS KMS oder GCP KMS) unterstützt und sich gut in GitOps-Workflows integrieren lässt. Trotzdem bleibt das Grundproblem: Secrets liegen weiterhin im Repository. Wer Zugriff auf den Code hat, hat indirekt auch Zugriff auf verschlüsselte Geheimnisse.</p>
+<p><strong>1Password</strong> geht hier einen Schritt weiter: Secrets verlassen nie das System. Sie werden zentral koordiniert, revisionssicher auditiert und über CLI oder Service-Accounts nur temporär injiziert. Der Unterschied liegt nicht in der Verschlüsselung selbst, sondern in der <em>Verantwortungszuordnung</em> und der Möglichkeit, Zugriff und Rotation einheitlich zu steuern. Für uns ist das die praktikabelste Lösung.</p>
+</blockquote>
+<h3>Fazit: Einheitliche Steuerung als Schlüssel zur Sicherheit – und bitte um Feedback</h3>
+<p>Kurz gesagt: Lokale, im Repository oder CI-System verschlüsselte Secrets sind bequem, aber langfristig riskant. Eine einheitlich verwaltete Lösung mit 1Password löst diese Probleme. Sie ist auditierbar, kontrolliert zugänglich und vereinfacht die Rotation. Das reduziert Sicherheitsrisiken und macht es überflüssig, dass Entwickler produktive Secrets überhaupt kennen – Deployments ziehen sie automatisch und temporär bei Bedarf.</p>
+<p><strong>Ich bin überzeugt, dass wir mit diesem Ansatz den richtigen Weg eingeschlagen haben.</strong> Vereinheitlichung, Automatisierung und Trennung von Wissen sind für mich der <em>Stand der Technik</em>.</p>
+<p><strong>Was meinst du dazu?</strong>
+Das ist mein aktueller Blick auf diese Herausforderungen. Gibt es Aspekte, die ich noch nicht bedacht habe oder Schwachstellen in diesem Ansatz? Ich freue mich über Feedback, um daraus später einen guten ADR für das Architekturforum zu entwickeln.</p>
+
+    </section>
+    
+  </article>
+
+  <nav>
+    
+  <div class="category-list">
+    Kategorien:
+      
+      <a href="../../../../categories/code/">Software Development</a>
+      
+    
+  </div>
+
+    
+    <div class="relative-navigation">
+      
+      
+        <div class="next">Nächstes Post: <a class="next" href="../../9/warum-man-backups-und-disaster-recovery-zusammen-denken-sollte/">Backup ohne verprobte Recovery ist wertlos – 5 Gründe</a></div>
+      
+    </div>
+    
+  </nav>
+
+    </article>
+    <footer class="container-fluid ">
+      <ul class="nav">
+  <li class="nav-item copyright">
+    <span class="nav-link">&copy; 2025 <a href="../../../../work/">Martin Häcker</a></span>
+  </li>
+  
+    
+    <li class="nav-item imprint">
+      <a class="nav-link" href="../../../../meta/#imprint">
+        Impressum
+      </a></li>
+  
+    
+    <li class="nav-item privacy-policy">
+      <a class="nav-link" href="../../../../meta/#privacy-policy">
+        Datenschutzerklärung
+      </a></li>
+  
+    
+    <li class="nav-item colophon">
+      <a class="nav-link" href="../../../../meta/#colophon">
+        Kolophon
+      </a></li>
+  
+  <li class="ml-auto nav-item rss-feed">
+    <a class="nav-link" href="../../../feed.xml">
+      <img class="rss-icon" src=/static/rss.svg height=25 width=25>
+      <span class="sr-only">RSS-Feed</span>
+    </a>
+  </li>
+  <li class="nav-item license">
+    <a class="nav-link" 
+      rel="license" 
+      target="_blank" 
+      href="https://creativecommons.org/licenses/by-sa/4.0/deed.de"
+    >
+      <img 
+        src="/static/cc-by-sa-88x31.png"
+        alt="Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 Internationale Lizenz"
+      >
+    </a>
+  </li>
+</ul>
+    </footer>
+  </body>
+</html>

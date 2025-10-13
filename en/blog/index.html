@@ -57,6 +57,68 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="2025/10/wie-wir-mit-1password-alle-unsere-secrets-aus-repos-und-deployments-entfernen-koennen/">
+        Wie wir mit 1Password alle unsere Secrets aus Repos und Deployments entfernen können
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2025-10-10">Friday, October 10, 2025</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p><img src="2025/10/wie-wir-mit-1password-alle-unsere-secrets-aus-repos-und-deployments-entfernen-koennen/1password-from-chaos-to-order.png" alt="Vom Chaos zur Ordnung mit 1Password"></p>
+<h2>Wie wir mit 1Password alle unsere Secrets aus Repos und Deployments entfernen können</h2>
+<p>In regulierten Umgebungen wie KRITIS gilt: Sicherheitsmaßnahmen müssen dem <em>Stand der Technik</em> entsprechen. Dazu gehört auch, dass Passwörter und andere Geheimnisse nicht unkontrolliert in Repositories oder Deployments liegen. Wenn ein Mitarbeiter das Team verlässt oder ein System kompromittiert wird, müssen alle betroffenen Secrets schnell und nachvollziehbar rotiert werden.</p>
+<p>Mit 1Password können wir diesen Schritt gehen. Wir verwalten unsere Secrets gemeinsam, versionieren sie und injizieren sie automatisiert in die Systeme, die sie wirklich brauchen.</p>
+<h3>Der Auslöser: Ein Gespräch auf der it-sa</h3>
+<p>Auf der it-sa-Messe sprach ich mit einem Solution-Architekten von 1Password. Ich wollte verstehen, warum unsere bisherigen Versuche, Secrets aus Entwicklungsumgebungen zu entfernen und im Deployment wieder zu injizieren, noch so holprig waren. Das Gespräch zeigte mir, wie viel mehr in diesem Thema steckt – organisatorisch und technisch.</p>
+<h3>Aha-Moment 1: Mit der 1Password CLI aus dem .env-Chaos zur gemeinsamen Quelle der Wahrheit</h3>
+<p>Mein erster Aha-Moment: Mit der 1Password CLI (<code>op read</code>, <code>op run</code>) lassen sich Secrets direkt abrufen. Früher musste sich jeder Entwickler für jedes Projekt eine <code>.env</code>-Datei besorgen – oft per Chat oder aus einem gemeinsam genutzten Vault. Das führte zu veralteten Dateien, fehlender Synchronisierung und unnötigem Aufwand für neue Teammitglieder.</p>
+<p>Mit der CLI ändert sich das grundlegend. <code>.env</code>-Dateien können jetzt eingecheckt werden, weil sie keine Secrets mehr enthalten, sondern nur <em><a href="https://developer.1password.com/docs/cli/secret-references/">Referenzen</a></em> darauf. Im Repository ist dokumentiert, welche Secrets benötigt werden und aus welchem Vault sie stammen – nicht aber deren Werte.</p>
+<ul>
+<li><code>op read op://vault/item/field</code> ruft gezielt einzelne Werte ab.</li>
+<li><code>op run --env-file=.env -- &lt;befehl&gt;</code> löst Secret-Referenzen automatisch als Environment-Variablen auf.</li>
+</ul>
+<p>Das Ergebnis: eine konsistente Basis für Secrets, die nicht mehr per Hand verteilt werden muss. Entwickler müssen nur die CLI einrichten und sich gelegentlich per Fingerabdruck authentisieren. Das ist ein kleiner Preis für saubere und sichere Umgebungen.</p>
+<h3>Aha-Moment 2: Rotation und Compliance als entscheidende Faktoren</h3>
+<p>In KRITIS-Umgebungen geht es nicht nur um technische Sicherheit, sondern auch um Nachvollziehbarkeit und Compliance. Verschlüsselte Secrets im Repository (bei uns meist <code>SealedSecrets</code>) wirken zunächst praktisch, weil alle Informationen lokal im Projekt liegen. Doch sie erfüllen zentrale Anforderungen an Kontrolle und Auditierbarkeit nur unzureichend.</p>
+<ul>
+<li>Alte Commits enthalten weiterhin alte Secrets. Selbst wenn sie nicht mehr genutzt werden, bleiben sie Teil der Historie.</li>
+<li>Dritte (z. B. GitLab oder externe Partner) haben Zugriff auf verschlüsselte Artefakte, die später durch Algorithmus‑Schwächen oder fehlerhafte Schlüsselverwaltung entschlüsselt werden könnten.</li>
+<li>Es gibt keine zentrale Rotation oder Rechteverwaltung. Jede Projektgruppe müsste selbst festlegen, wann und wie Secrets erneuert werden.</li>
+</ul>
+<p>Gerade bei KRITIS gilt: Der Nachweis, dass Secrets regelmäßig rotiert, überprüft und entzogen werden, ist Teil der Compliance. 1Password unterstützt das mit klaren Berechtigungen, nachvollziehbaren Aktionen und zentraler Ablage.</p>
+<h3>Aha-Moment 3: Projektbasierte Vaults machen Rechteverwaltung erst möglich</h3>
+<p>Ein weiteres wichtiges Konzept: projektbezogene Vaults mit eigenen Tokens und Rechten. Viele Personen – auch außerhalb der Teams – hatten bisher Zugriff auf mehrere oder alle Vaults. Dadurch war der effektive Zugriff auf Secrets zu breit gestreut und schwer nachvollziehbar.</p>
+<p>Projektbasierte Vaults und projektspezifische Zugänge reduzieren den Zugriff erheblich. Nur Teams oder Personen, die Secrets wirklich benötigen, haben Zugriff. Geheimnisse lassen sich gezielt rotieren, ohne dass andere Systeme betroffen sind. Zugriffsrechte können klar pro Projekt definiert werden.</p>
+<h3>Aha-Moment 4: Service-Accounts als sichere Brücke zwischen Projekten und Deployments</h3>
+<p>Für Deployments ergibt sich daraus ein weiterer Aha-Moment. Service-Accounts, die nur Zugriff auf den Vault des jeweiligen Projekts haben, sind völlig ausreichend, um ein Deployment durchzuführen. Diese Accounts können im Projekt referenziert werden, während ihre Zugangsdaten in einem separaten Vault liegen, der nur für Deployment-Prozesse zugänglich ist.</p>
+<p>So entfällt die Notwendigkeit, dass Entwickler direkte Zugänge zu produktiven Secrets haben. Der Schutz der Produktionsumgebung wird zu einem festen Bestandteil der Infrastruktur und ist keine Frage von Disziplin oder Vertrauen mehr.</p>
+<blockquote><p><strong>🔍 Exkurs: Warum nicht einfach SealedSecrets oder SOPS?</strong></p>
+<p>In unserer Umgebung nutzen wir derzeit noch <strong><a href="https://github.com/bitnami-labs/sealed-secrets">SealedSecrets</a></strong>, um Secrets verschlüsselt im Git-Repository zu speichern. Das funktioniert, löst aber die strukturellen Probleme nicht: Secrets bleiben an den Code gekoppelt, Rotation ist umständlich, und alte Commits behalten alte Secrets.</p>
+<p><strong><a href="https://github.com/getsops/sops">SOPS</a></strong> ist flexibler, weil es verschiedene Key-Provider (z. B. AWS KMS oder GCP KMS) unterstützt und sich gut in GitOps-Workflows integrieren lässt. Trotzdem bleibt das Grundproblem: Secrets liegen weiterhin im Repository. Wer Zugriff auf den Code hat, hat indirekt auch Zugriff auf verschlüsselte Geheimnisse.</p>
+<p><strong>1Password</strong> geht hier einen Schritt weiter: Secrets verlassen nie das System. Sie werden zentral koordiniert, revisionssicher auditiert und über CLI oder Service-Accounts nur temporär injiziert. Der Unterschied liegt nicht in der Verschlüsselung selbst, sondern in der <em>Verantwortungszuordnung</em> und der Möglichkeit, Zugriff und Rotation einheitlich zu steuern. Für uns ist das die praktikabelste Lösung.</p>
+</blockquote>
+<h3>Fazit: Einheitliche Steuerung als Schlüssel zur Sicherheit – und bitte um Feedback</h3>
+<p>Kurz gesagt: Lokale, im Repository oder CI-System verschlüsselte Secrets sind bequem, aber langfristig riskant. Eine einheitlich verwaltete Lösung mit 1Password löst diese Probleme. Sie ist auditierbar, kontrolliert zugänglich und vereinfacht die Rotation. Das reduziert Sicherheitsrisiken und macht es überflüssig, dass Entwickler produktive Secrets überhaupt kennen – Deployments ziehen sie automatisch und temporär bei Bedarf.</p>
+<p><strong>Ich bin überzeugt, dass wir mit diesem Ansatz den richtigen Weg eingeschlagen haben.</strong> Vereinheitlichung, Automatisierung und Trennung von Wissen sind für mich der <em>Stand der Technik</em>.</p>
+<p><strong>Was meinst du dazu?</strong>
+Das ist mein aktueller Blick auf diese Herausforderungen. Gibt es Aspekte, die ich noch nicht bedacht habe oder Schwachstellen in diesem Ansatz? Ich freue mich über Feedback, um daraus später einen guten ADR für das Architekturforum zu entwickeln.</p>
+
+    </section>
+    
+      <footer>
+        <a href="2025/10/wie-wir-mit-1password-alle-unsere-secrets-aus-repos-und-deployments-entfernen-koennen/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="2025/9/warum-man-backups-und-disaster-recovery-zusammen-denken-sollte/">
         Backup ohne verprobte Recovery ist wertlos – 5 Gründe
         </a>
@@ -811,81 +873,6 @@ fzf_configure_bindings --git_log<span class="o">=</span><span class="se">\f</spa
     
       <footer>
         <a href="2025/5/die-freuden-einer-gut-eingerichteten-shell-fzf/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/">
-        Die Freuden einer gut eingerichteten Shell: Autocomplete
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2025-04-14">Monday, April 14, 2025</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <h2>Was ist schlechte Vervollständigung?</h2>
-<p>Um zu verstehen was ich mit guter Auto-Completion für Shells meine, brauchen wir erst einmal eine Baseline wie eine schlechte Completion aussieht. Das lässt sich sehr gut mit Docker demonstrieren: </p>
-<div class="hll"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--hostname<span class="w"> </span>shell-completion-demo<span class="w"> </span>debian
-</pre></div>
-<p>Erstes Experiment: <code>ls⇥⇥</code> (kein Leerzeichen vor den Tabs!)</p>
-<p><img src="2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/autocomplete-commands-unconfigured.png" alt="Automatische Vervollständigung von Kommandos - unkonfiguriert"></p>
-<p>Zeigt alle Kommandos die mit <code>ls</code> anfangen
-Zweites Experiment: <code>ls ⇥⇥</code>
-Das zeigt bei mir:</p>
-<p><img src="2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/autocomplete-files-unconfigured.png" alt="Automatische Vervollständigung von Dateien - unkonfiguriert"></p>
-<p>Schon mal gut, denn hier werden die Dateien im aktuellen Ordner vervollständigt.</p>
-<p>Nächste Schwierigkeitsstufe - kurze und lange Optionen: <code>ls -⇥⇥</code> (Minus vor dem Tab)
-Das zeigt hier nichts, genauso für lange Optionen <code>ls --⇥⇥</code> (zwei mal Minus vor dem Tab)</p>
-<p>Keine Ausgabe. <code>ls</code> ist eigentlich so ungefähr das einfachste Programm das jeder Shell beiliegt. Wenn automatische Vervollständigung also irgend etwas kann, dann sollte <code>ls</code> gut funktionieren.</p>
-<h2>Was ist gute Vervollständigung?</h2>
-<p>Dagegen mal ein Beispiel von meinem System:</p>
-<p><code>ls⇥</code> zeigt die Kommandos die mit ls anfangen, mit einer Kurzbeschreibung was diese Kommandos tun.</p>
-<p><img src="2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/autocomplete-commands-configured.png" alt="Vervollständigung von Kommandos mit der Fish-Shell"></p>
-<p>Schon mit einem Tab sehe ich die Dateien, und zusätzlich sehe ich als Vorschlag den letzten Befehl den ich mit <code>ls</code> abgesetzt habe und kann diesen mit <code>⌃→</code> im ganzen, oder mit  <code>→</code> wortweise akzeptieren kann.</p>
-<p><img src="2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/autocomplete-files-configured.png" alt="Automatische Vervollständigung von Dateien mit der Fish Shell"></p>
-<p>Ein ls -⇥<code>ergibt sofort eine Optionsliste - kurz und lang - mit einer Kurzbeschreibung was dieses Schalter tun. Ein zweites Minus und Tab</code>ls --⇥` zeigt nur noch die langen Optionen an:</p>
-<p><img src="2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/autocomplete-options-configured.png" alt="Vervollständigung von Optionen mit der Fish-Shell">
-<img src="2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/autocomplete-long-options-configured.png" alt="Vervollständigung von langen Optionen mit der Fish-Shell"></p>
-<p>Natürlich kann ich mit den Pfeiltasten oder mit Tab eine der Optionen auswählen - natürlich mit ordentlichem Highlighting.
-So macht arbeiten auf der Shell Spaß!</p>
-<p>Falls Ihr verwirrt seid das mein ls andere Optionen anbietet als eures, dann liegt das daran <a href="https://github.com/ogham/exa">das ich ls durch exa ersetzt habe</a>.</p>
-<h2>Wie könnt Ihr das bei euch nutzen?</h2>
-<p>Ich nutze die <a href="https://fishshell.com">Fish-Shell</a>, da diese von Haus aus eine sehr gute Autocompletion anbietet. Das ist aber nicht für jede, denn die Syntax der Fish Shell ist etwas anders als bei Bash/ZSH - eben nicht posix kompatibel. Ich mag das Weil es logischer und Kürzer ist, aber ich komme auch nicht durcheinander mit den verschiedenen Shell-Syntaxen da ich sie schon so lange verwende.</p>
-<p>Fast alle Shell Konfigrurations-Frameworks wie <a href="https://ohmyz.sh">oh-my-zsh</a> oder <a href="https://github.com/sorin-ionescu/prezto">Prezto</a> bieten zumindest etwas an das diesem Nahe kommen. Alle automatische Konfiguration stößt aber irgendwann an Ihre Grenzen wenn es um die Kommandos geht, die wir täglich benutzen. <code>docker</code> vervollständigt dann nicht compose und oder kennt die Unterkommandos davon nicht oder nur unvollständig, kubectl und helm sind notorische Kandidaten für die man sich selber kümmern muss.</p>
-<p>Jetzt könnte man natürlich versuchen automatisch aus der Hilfsausgabe dieser Kommandos etwas zu generieren (das macht z.B. die Fish shell von sich aus) oder man schreibt selber etwas (argh).</p>
-<p>Oder man wendet sich vertrauensvoll an das tool <a href="https://github.com/carapace-sh/carapace">carapace</a>, mit dem man die Completion für Programme komfortabel für alle Shells nachrüsten kann. Als Beispiel um die die Autocompletions für kubectl nachzurüsten, einfach <code>source &lt;(carapace kubectl zsh)</code> oder <code>carapace kubectl fish | source</code> (je nach shell) eingeben und ausprobieren ob es gefällt, und wenn ja, diese Zeile in die User-Konfiguration deiner shell eintragen und viel glücklicher sein.</p>
-<p>Obacht: Man kann mit so einem Snippet</p>
-<div class="hll"><pre><span></span><span class="c1"># ~/.zshrc </span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">CARAPACE_BRIDGES</span><span class="o">=</span><span class="s1">&#39;zsh,fish,bash,inshellisense&#39;</span><span class="w"> </span><span class="c1"># optional</span>
-zstyle<span class="w"> </span><span class="s1">&#39;:completion:*&#39;</span><span class="w"> </span>format<span class="w"> </span><span class="s1">$&#39;\e[2;37mCompleting %d\e[m&#39;</span>
-<span class="nb">source</span><span class="w"> </span>&lt;<span class="o">(</span>carapace<span class="w"> </span>_carapace<span class="o">)</span>
-</pre></div>
-<p>in seiner Shell-Konfiguration alle completer des Carapace Projekts aktivieren. Das hat mir allerdings nicht gefallen,, da ich manche der eingebauten Completer der Fish-Shell noch etwas besser finde als das was Carapace bereit stellt. Aber um Lücken zu ergänzen? Perfekt!</p>
-<p>Meine Shell-Completion Konfiguration (fish!) sieht daher so aus:</p>
-<div class="hll"><pre><span></span><span class="c"># enable shell completions</span>
-<span class="k">set</span> --global --export CARAPACE_BRIDGES <span class="s1">&#39;zsh,fish,bash,inshellisense&#39;</span>
-<span class="c"># I didn&#39;t have much luck enabling all carapace completions, but I do like some of them - especially if there is no built in fish completion for them</span>
-<span class="c"># carapace _carapace | source</span>
-carapace fd <span class="o">|</span> <span class="nb">source</span>
-carapace bat <span class="o">|</span> <span class="nb">source</span>
-carapace brew <span class="o">|</span> <span class="nb">source</span>
-carapace rg <span class="o">|</span> <span class="nb">source</span>
-carapace docker <span class="o">|</span> <span class="nb">source</span>
-uv generate-shell-completion <span class="nb">fish</span> <span class="o">|</span> <span class="nb">source</span>
-yq completion <span class="nb">fish</span> <span class="o">|</span> <span class="nb">source</span>
-</pre></div>
-
-    </section>
-    
-      <footer>
-        <a href="2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/">weiterlesen…</a>
       </footer>
     
   </article>

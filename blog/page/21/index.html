@@ -57,6 +57,47 @@
   <article class="blog-post">
     <header>
       <h2>
+        <a href="../../2008/9/kryptographie-saugt/">
+        Kryptographie saugt
+        </a>
+      </h2>
+      <p class="meta">
+        written by Martin Häcker on <time datetime="2008-09-01">Montag, 1. September 2008</time>
+      </p>
+    </header>
+
+    <section class="blog-post-body">
+      <p>Und zwar gewaltig.</p>
+<p>Heute hab ich eine Menge Zeit darauf verbrannt unserem Online-Update-System auf den Zahn zu fühlen. Das arbeitet nämlich ganz hervorragend mit <a href="http://sparkle.andymatuschak.org/">Sparkle</a> um für unsere Applikation via <a href="http://connectedflow.com/appcasting/">Appcast</a> herunter zu laden, wenn eine neue Version ansteht. Und damit das auch schön sicher ist, nutzen wir ein kleines öffentlich/privates Schlüsselpärchen um das abzusichern.</p>
+<p>Nun ja, bis heute mittag - da hat es nämlich auf einmal aufgehört und konnte die heruntergeladenen Dateien nicht mehr validieren.</p>
+<p>Jetzt hatte ich natürlich das Problem, das ich an sich recht wenig von Crypto verstehe und erst recht wie man das von der shell aus einsetzt. Das wiederum hatte zur Folge, dass ich das nicht sofort auf der Shell nachvollziehen konnte und wir schon anfingen zu fürchten das vielleicht unsere Schlüssel abgelaufen sind.</p>
+<p>Gott sei dank war es aber doch was anderes - denn unser Proxy hatte fieser weise einfach eine alte Version des Appcasts gespeichert und stattdessen immer die ausgeliefert - was natürlich nicht funktionierte... Grumpf.</p>
+<p>Note to self: Nächstes mal gleich den ganzen Vorgang von Hand reproduzieren um zu sehen wo es schief läuft - und zwar angefangen von da wo das Programm anfängt. (Auch wenn in diesem Fall die Fehlermeldung wirklich eher auf einen OpenSSL Fehler hindeutete).</p>
+<p>Debuggen ist eben schwieriger als den Code zu schreiben. Ich vermute, weil man ihn dafür <strong><em>wirklich</em></strong> verstehen muss - inklusive aller Fehler die man in seinem eigenen Verständnis hat.</p>
+<p>P.S.: So Signiert und Validiert man ein File mit OpenSSL von der Kommandozeile:</p>
+<div class="hll"><pre><span></span><span class="c1"># base 64 encoding to ease textual transmission</span>
+openssl<span class="w"> </span>dgst<span class="w"> </span>-dss1<span class="w"> </span>-sign<span class="w"> </span>dsa_private_key.pem<span class="w"> </span>Important.rtf<span class="w"> </span><span class="p">|</span><span class="w"> </span>openssl<span class="w"> </span>enc<span class="w"> </span>-base64<span class="w"> </span>&gt;<span class="w"> </span>signature.sig
+<span class="c1"># and decode again</span>
+openssl<span class="w"> </span>enc<span class="w"> </span>-base64<span class="w"> </span>-d<span class="w"> </span>&lt;<span class="w"> </span>signature.sig<span class="w"> </span>&gt;<span class="w"> </span>decoded.signature.sig
+<span class="c1"># and verify</span>
+openssl<span class="w"> </span>dgst<span class="w"> </span>-dss1<span class="w"> </span>-verify<span class="w"> </span>dsa_public_key.pem<span class="w"> </span>-signature<span class="w"> </span>decoded.signature.sig<span class="w"> </span>Important.rtf
+</pre></div>
+<p>Einige Fallstricke: -dss1 und -sha1 erzeugen offenbar die gleichen Checksummen (man könnte also meinen das es der gleiche Algorithmus ist) die beiden digest modi werden aber in openssl offenbar unterschiedlich behandelt. Beim Signieren löst das verwenden von -sha1 auch schön eine Fehlermeldung aus - wenn man beim Überprüfen aber -sha1 zu verwenden versucht, dann erhält man nur den Hinweis dass die Verifikation gescheitert ist - an einem falschen public key. Seeehr hilfreich liebe Entwickler.</p>
+<p>Wie man ein Schlüsselpaar erzeugt und vieles mehr <a href="http://www.madboa.com/geek/openssl/">gibts hier</a>.</p>
+
+    </section>
+    
+      <footer>
+        <a href="../../2008/9/kryptographie-saugt/">weiterlesen…</a>
+      </footer>
+    
+  </article>
+
+  
+    
+  <article class="blog-post">
+    <header>
+      <h2>
         <a href="../../2008/9/wo-ich-gerade-am-la-stern-bin/">
         Wo ich gerade am lästern bin
         </a>
@@ -406,36 +447,6 @@ The obvious first thing to do is to think about the GUI and what I want to achie
     
       <footer>
         <a href="../../2008/8/was-steht-eigentlich-in-der-eu-verfassung/">weiterlesen…</a>
-      </footer>
-    
-  </article>
-
-  
-    
-  <article class="blog-post">
-    <header>
-      <h2>
-        <a href="../../2008/8/unsere-neutrale-und-gute-presse/">
-        Unsere neutrale und gute Presse
-        </a>
-      </h2>
-      <p class="meta">
-        written by Martin Häcker on <time datetime="2008-08-16">Samstag, 16. August 2008</time>
-      </p>
-    </header>
-
-    <section class="blog-post-body">
-      <p>Seit ein paar Jahren muss ich mich mühsam mit dem Gedanken anfreunden, dass unsere Presse vielleicht doch nicht das gelbe vom Ei ist.</p>
-<p>Well, aus persönlicher Erfahrung wird man klüger. <a href="http://www.3sat.de/3sat.php?/kulturzeit/lesezeit/114141/index.html">Spannend finde ich, das inzwischen auch immer mehr Journalisten dieses Problem einsehen und durchaus auch selbstkritisch sein können.</a></p>
-<p>Besonders spannend finde ich die Beschreibung der Journalistentätigkeit in fremden Ländern. Man fliegt hin, und hat dort am Ziel zwei Menschen die einem Helfen. Ein Übersetzer und ein Fixer. Der letzte ist spannend - denn das ist der, der dem Journalisten die leute vermittelt, die in extrem kurzer Zeit das sagen können, was er hören will.</p>
-<p>Wunderschöne Objektivität.</p>
-<p>Mehr davon.</p>
-<p>(via <a href="http://blog.fefe.de/?ts=b9f33bfe">fefe</a>)</p>
-
-    </section>
-    
-      <footer>
-        <a href="../../2008/8/unsere-neutrale-und-gute-presse/">weiterlesen…</a>
       </footer>
     
   </article>

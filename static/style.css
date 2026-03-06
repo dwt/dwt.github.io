@@ -77,3 +77,100 @@ blockquote {
 .nav-item.license img {
     border-width: 0;
 }
+
+/* ==========================================================================
+   Work page customizations:
+   Narrow width, more spacing, hidden photo, accent blockquote
+   ========================================================================== */
+
+/* Narrow width */
+.work.page {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* More spacing */
+.work.page h2 {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e0e0e0;
+}
+
+.work.page h3 {
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+}
+
+.work.page p {
+    margin-bottom: 1.1rem;
+}
+
+.work.page section > blockquote {
+    margin-bottom: 2rem;
+}
+
+/* Hide photo */
+.work.page img[src*="martin"] {
+    display: none;
+}
+
+/* Accent blockquote */
+.work.page blockquote {
+    font-style: italic;
+    font-size: 1.15rem;
+    color: #555;
+    border-left: 4px solid #0d6efd;
+    padding: 0.75rem 1.25rem;
+    margin: 1.5rem 0 2rem 0;
+    background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%);
+    border-radius: 0 8px 8px 0;
+    text-align: left;
+}
+
+.work.page blockquote p {
+    margin: 0;
+}
+
+/* Skill badges */
+.work.page .skill-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+    align-items: baseline;
+}
+
+.work.page .skill-badges strong {
+    width: 100%;
+    margin-bottom: 0.2rem;
+}
+
+.work.page .skill-badge {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+}
+
+.work.page .skill-best {
+    background: #0d6efd;
+    color: #fff;
+}
+
+.work.page .skill-learning {
+    background: #198754;
+    color: #fff;
+}
+
+.work.page .skill-strong {
+    background: #6c757d;
+    color: #fff;
+}
+
+.work.page .skill-old {
+    background: #f0f1f3;
+    color: #555;
+    border: 1px solid #ced4da;
+}

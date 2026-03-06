@@ -160,17 +160,17 @@ blockquote {
 }
 
 .work.page .skill-learning {
-    background: #198754;
-    color: #fff;
+    background: #fff;
+    color: #0d6efd;
+    border: 1px solid #0d6efd;
 }
 
 .work.page .skill-strong {
-    background: #6c757d;
-    color: #fff;
+    background: #d0e2ff;
+    color: #0a3d91;
 }
 
 .work.page .skill-old {
     background: #f0f1f3;
     color: #555;
-    border: 1px solid #ced4da;
 }

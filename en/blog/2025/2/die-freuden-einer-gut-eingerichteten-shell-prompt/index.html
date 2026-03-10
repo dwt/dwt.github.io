@@ -83,7 +83,7 @@
     </header>
 
     <section class="blog-post-body">
-      <p><img src="terminal.jpg" alt="Terminal"></p>
+      <p><img src="../../../../../blog/2025/2/die-freuden-einer-gut-eingerichteten-shell-prompt/terminal.jpg" alt="Terminal"></p>
 <p>Es fängt natürlich mit der Frage an: welche Shell?</p>
 <p>Das ist sehr einfach zu beantworten. Auf MacOS ist die <a href="https://www.zsh.org">zsh</a> die Standard-Shell - und daher sollte man die auch benutzen. Artikel Fertig, vielen Dank fürs Lesen! 😅</p>
 <p>Windows hat die <a href="https://de.wikipedia.org/wiki/PowerShell">PowerShell</a> - wer damit Arbeiten (muss) sollte sie lernen!</p>
@@ -116,12 +116,12 @@ dwt@NB1321<span class="w"> </span>Favorites<span class="w"> </span>%
 <p>Natürlich könnte man hier noch viel mehr anzeigen, je nachdem an was man gerade arbeitet. Ich habe hier eben die Informationen aufgenommen die ich am meisten benötige.</p>
 <p>Jetzt kommt der Clou: Früher habe ich das alles von hand Konfiguriert. Das war ein ewiges und mühsammes gefummel um <code>$PS1</code> und konsorten so hinzufummeln das das alles funktioniert hat, und hat nie Spaß gemacht. Der Standard ist derzeit, das man einen Shell-Konfigurations-Framework wie <a href="https://ohmyz.sh">Oh-My-Zsh</a> oder <a href="https://github.com/sorin-ionescu/prezto">Prezto</a> verwendet. Und die sind auch gut. Aber auch langsam, und komplex und kompliziert. Wenn man da mal etwas anders haben will dann gott bewahre wenn das nicht schon vorbereitet ist oder man darf sich nicht nur mit den Komplexitäten von <code>$PS1</code> auseinandersetzen, sondern auch noch damit wie genau dieser Framework das handhabt.</p>
 <p>Inzwischen bin ich weiser geworden, und verwende <a href="https://starship.rs">Starship</a>. Damit kann ich meinen Prompt deklarativ in einer <code>.toml</code>-Datei konfigurieren und diesen auch mitnehmen wenn ich mal die Shell wechsle. (Was häufiger vorkommt als mir lieb ist). Und: Starship funktioniert auch mit der PowerShell.</p>
-<p><a href="starship.toml">So sieht meine Konfiguration aus</a></p>
+<p><a href="../../../../../blog/2025/2/die-freuden-einer-gut-eingerichteten-shell-prompt/starship.toml">So sieht meine Konfiguration aus</a></p>
 <p>Wie richtet man das ein?</p>
 <ol>
 <li><code>brew install starship</code> (oder mit <a href="https://lix.systems">nix</a>)</li>
 <li><code>nano ~/.zshrc</code> und am Ende <code>eval "$(starship init zsh)"</code> einfügen.</li>
-<li>Konfigurationsdatei erstellen: <code>nano ~/.config/starship.toml</code> und z.b. <a href="starship.toml">den Inhalt aus der Datei oben einfügen</a>.</li>
+<li>Konfigurationsdatei erstellen: <code>nano ~/.config/starship.toml</code> und z.b. <a href="../../../../../blog/2025/2/die-freuden-einer-gut-eingerichteten-shell-prompt/starship.toml">den Inhalt aus der Datei oben einfügen</a>.</li>
 <li>Shell neu starten oder neues Terminal öffnen.</li>
 </ol>
 <p>Danke sagen für die grandiose Verbesserung eures Shell-Lebens bei mir nicht vergessen. 😅</p>

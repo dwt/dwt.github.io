@@ -88,11 +88,11 @@
 <div class="hll"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--hostname<span class="w"> </span>shell-completion-demo<span class="w"> </span>debian
 </pre></div>
 <p>Erstes Experiment: <code>ls⇥⇥</code> (kein Leerzeichen vor den Tabs!)</p>
-<p><img src="autocomplete-commands-unconfigured.png" alt="Automatische Vervollständigung von Kommandos - unkonfiguriert"></p>
+<p><img src="../../../../../blog/2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/autocomplete-commands-unconfigured.png" alt="Automatische Vervollständigung von Kommandos - unkonfiguriert"></p>
 <p>Zeigt alle Kommandos die mit <code>ls</code> anfangen
 Zweites Experiment: <code>ls ⇥⇥</code>
 Das zeigt bei mir:</p>
-<p><img src="autocomplete-files-unconfigured.png" alt="Automatische Vervollständigung von Dateien - unkonfiguriert"></p>
+<p><img src="../../../../../blog/2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/autocomplete-files-unconfigured.png" alt="Automatische Vervollständigung von Dateien - unkonfiguriert"></p>
 <p>Schon mal gut, denn hier werden die Dateien im aktuellen Ordner vervollständigt.</p>
 <p>Nächste Schwierigkeitsstufe - kurze und lange Optionen: <code>ls -⇥⇥</code> (Minus vor dem Tab)
 Das zeigt hier nichts, genauso für lange Optionen <code>ls --⇥⇥</code> (zwei mal Minus vor dem Tab)</p>
@@ -100,12 +100,12 @@ Das zeigt hier nichts, genauso für lange Optionen <code>ls --⇥⇥</code> (zw
 <h2>Was ist gute Vervollständigung?</h2>
 <p>Dagegen mal ein Beispiel von meinem System:</p>
 <p><code>ls⇥</code> zeigt die Kommandos die mit ls anfangen, mit einer Kurzbeschreibung was diese Kommandos tun.</p>
-<p><img src="autocomplete-commands-configured.png" alt="Vervollständigung von Kommandos mit der Fish-Shell"></p>
+<p><img src="../../../../../blog/2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/autocomplete-commands-configured.png" alt="Vervollständigung von Kommandos mit der Fish-Shell"></p>
 <p>Schon mit einem Tab sehe ich die Dateien, und zusätzlich sehe ich als Vorschlag den letzten Befehl den ich mit <code>ls</code> abgesetzt habe und kann diesen mit <code>⌃→</code> im ganzen, oder mit  <code>→</code> wortweise akzeptieren kann.</p>
-<p><img src="autocomplete-files-configured.png" alt="Automatische Vervollständigung von Dateien mit der Fish Shell"></p>
+<p><img src="../../../../../blog/2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/autocomplete-files-configured.png" alt="Automatische Vervollständigung von Dateien mit der Fish Shell"></p>
 <p>Ein ls -⇥<code>ergibt sofort eine Optionsliste - kurz und lang - mit einer Kurzbeschreibung was dieses Schalter tun. Ein zweites Minus und Tab</code>ls --⇥` zeigt nur noch die langen Optionen an:</p>
-<p><img src="autocomplete-options-configured.png" alt="Vervollständigung von Optionen mit der Fish-Shell">
-<img src="autocomplete-long-options-configured.png" alt="Vervollständigung von langen Optionen mit der Fish-Shell"></p>
+<p><img src="../../../../../blog/2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/autocomplete-options-configured.png" alt="Vervollständigung von Optionen mit der Fish-Shell">
+<img src="../../../../../blog/2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/autocomplete-long-options-configured.png" alt="Vervollständigung von langen Optionen mit der Fish-Shell"></p>
 <p>Natürlich kann ich mit den Pfeiltasten oder mit Tab eine der Optionen auswählen - natürlich mit ordentlichem Highlighting.
 So macht arbeiten auf der Shell Spaß!</p>
 <p>Falls Ihr verwirrt seid das mein ls andere Optionen anbietet als eures, dann liegt das daran <a href="https://github.com/ogham/exa">das ich ls durch exa ersetzt habe</a>.</p>

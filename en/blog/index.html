@@ -79,7 +79,7 @@
     </header>
 
     <section class="blog-post-body">
-      <p><img src="2025/10/wie-wir-mit-1password-alle-unsere-secrets-aus-repos-und-deployments-entfernen-koennen/1password-from-chaos-to-order.png" alt="Vom Chaos zur Ordnung mit 1Password"></p>
+      <p><img src="../../blog/2025/10/wie-wir-mit-1password-alle-unsere-secrets-aus-repos-und-deployments-entfernen-koennen/1password-from-chaos-to-order.png" alt="Vom Chaos zur Ordnung mit 1Password"></p>
 <h2>Wie wir mit 1Password alle unsere Secrets aus Repos und Deployments entfernen können</h2>
 <p>In regulierten Umgebungen wie KRITIS gilt: Sicherheitsmaßnahmen müssen dem <em>Stand der Technik</em> entsprechen. Dazu gehört auch, dass Passwörter und andere Geheimnisse nicht unkontrolliert in Repositories oder Deployments liegen. Wenn ein Mitarbeiter das Team verlässt oder ein System kompromittiert wird, müssen alle betroffenen Secrets schnell und nachvollziehbar rotiert werden.</p>
 <p>Mit 1Password können wir diesen Schritt gehen. Wir verwalten unsere Secrets gemeinsam, versionieren sie und injizieren sie automatisiert in die Systeme, die sie wirklich brauchen.</p>
@@ -141,7 +141,7 @@ Das ist mein aktueller Blick auf diese Herausforderungen. Gibt es Aspekte, die i
     </header>
 
     <section class="blog-post-body">
-      <p><img src="2025/9/warum-man-backups-und-disaster-recovery-zusammen-denken-sollte/backup-ohne-recovery.png" alt="Backup und Recovery"></p>
+      <p><img src="../../blog/2025/9/warum-man-backups-und-disaster-recovery-zusammen-denken-sollte/backup-ohne-recovery.png" alt="Backup und Recovery"></p>
 <p>Auf der DevOpsCon 25 in Berlin habe ich viel aus dem Vortrag <a href="https://devopscon.io/devsecops/backup-disaster-recovery/">Backup and Disaster Recovery: Business as Usual or What Needs to Change Now? - DevOps Conference &amp; Camps</a> gezogen. Zum technischen Inhalt gehe ich noch mal Separat ein, aber zuerst wollte ich meine Schlüssel-Lernergebnisse auf einer sehr hohen Flughöhe mitbringen.</p>
 <h2>1. Backups ohne Restore sind nur Datenfriedhöfe</h2>
 <p>Ein Backup ist kein Wert an sich. Es ist nur die Basis für Geschäftskontinuität – erst der funktionierende Restore bringt das Unternehmen zurück ins Geschäft.</p>
@@ -179,7 +179,7 @@ Backups sind nur der Anfang. Erst wenn Restore und Disaster Recovery gemeinsam g
     </header>
 
     <section class="blog-post-body">
-      <p><img src="2025/9/textbearbeitung-mit-grep-tr-cut-awk-und-sed/tr-in-action.png" alt="`tr` in aktion"></p>
+      <p><img src="../../blog/2025/9/textbearbeitung-mit-grep-tr-cut-awk-und-sed/tr-in-action.png" alt="`tr` in aktion"></p>
 <p>Diese fünf kleinen Tools sind echte Arbeitspferde für jeden, der mit Text auf der Kommandozeile arbeitet. Sie haben viele Optionen – aber man braucht nicht alles zu kennen. Schon mit ein paar Grundbefehlen kann man 80 % der typischen Aufgaben lösen.</p>
 <h3>1. <code>grep</code> – Zeilen finden</h3>
 <p>grep filtert Textzeilen anhand von Mustern. Praktisch, wenn man in langen Outputs schnell das Relevante sehen will.</p>
@@ -370,7 +370,7 @@ Backups sind nur der Anfang. Erst wenn Restore und Disaster Recovery gemeinsam g
     </header>
 
     <section class="blog-post-body">
-      <p><img src="2025/8/arbeiten-mit-json-and-yaml-auf-der-shell/yless.png" alt="yaml ganz angenem auf der Shell"></p>
+      <p><img src="../../blog/2025/8/arbeiten-mit-json-and-yaml-auf-der-shell/yless.png" alt="yaml ganz angenem auf der Shell"></p>
 <p>Arbeiten mit strukturierten Datenformaten auf der Shell kann anstrengend sein – <strong>wenn man noch nicht die richtigen Tools dafür hat</strong>.
 Ob JSON aus einer API, YAML aus Kubernetes-Manifests oder riesige Logfiles – ohne passende Helferlein endet man schnell bei unübersichtlichem <code>grep</code>, <code>less</code> und Copy&amp;Paste.</p>
 <p>Zum Glück gibt es eine Reihe von Werkzeugen, die genau dafür gemacht sind:</p>
@@ -483,7 +483,7 @@ $ cat data.json | jq # oder `jq &lt; data.json`
     </header>
 
     <section class="blog-post-body">
-      <p><img src="2025/8/mit-llm-rag-einfach-mal-ausprobieren-direkt-von-der-shell/workflow.png" alt="Ablaufdiagramm">
+      <p><img src="../../blog/2025/8/mit-llm-rag-einfach-mal-ausprobieren-direkt-von-der-shell/workflow.png" alt="Ablaufdiagramm">
 Einer der coolsten Aha-Momente der letzten Tage bei mir war, wie einfach und niederschweflig das Arbeiten mit Retrieval-Augmented Generation (RAG) von der Shell inzwischen sein kann – ganz ohne spezielle Infrastruktur, Vektor-Datenbank oder Server-Backend. Das Python-Tool <a href="https://pypi.org/project/llm/"><code>llm</code></a> macht  das möglich: RAG direkt aus der Kommandozeile, mit SQLite als Backend und einfachen Kommandos, die sich hervorragend in Shell-Workflows integrieren lassen.</p>
 <h2>Ein Power Tool für Sprachmodelle in der Shell</h2>
 <p><a href="https://llm.datasette.io/en/stable/"><code>llm</code> kann natürlich noch viel mehr und ist ein Power Tool, das den Einsatz von KI direkt im Terminal erlaubt</a>. Es erlaubt mit beliebigen API-Providern oder lokalen Modellen zu sprechen und integriert diese damit nahtlos in eigene Skripte. Use Cases: Daten hinein pipen und mit dem LLM bearbeiten. Ob zusammenfassen, erklären, übersetzen, mit einem aufwendigen Prompt aus einer Datei beackern… Da geht so viel. Egal was Ihr aus diesem Artikel mitnehmt, zumindest sollte es sein das Ihr <code>llm</code> in euren Workflow aufnehmt und installiert.</p>
@@ -558,7 +558,7 @@ Einer der coolsten Aha-Momente der letzten Tage bei mir war, wie einfach und nie
     </header>
 
     <section class="blog-post-body">
-      <p><img src="2025/7/devopscon-keynote-security-ist-jetzt-teil-von-devops/secure-chips.png" alt="Metapher auf Teams die jeweils Sicherheits-Interessierte enthalten, die einfach von Spezialisten Unterstützung erhalten können"></p>
+      <p><img src="../../blog/2025/7/devopscon-keynote-security-ist-jetzt-teil-von-devops/secure-chips.png" alt="Metapher auf Teams die jeweils Sicherheits-Interessierte enthalten, die einfach von Spezialisten Unterstützung erhalten können"></p>
 <p>Ich konnte auf der DevOpsCon der Keynote "From Static to Strategic: Reimagining Application Security for a DevOps World" von John D. Wood nicht entgehen. Um ehrlich zu sein: Die Keynote hat mich nicht begeistert. Am ehesten noch fand ich interessant das er Zahlen hatte, das die meisten Sicherheitslücken (auch nach Bekanntwerden) noch über ein Dreiviertel-Jahr offen sind. Aua. Ein Satz am Ende ist bei mir hängengeblieben:</p>
 <blockquote><p>"DevOps bekommt jetzt auch Security."</p>
 </blockquote>
@@ -603,7 +603,7 @@ Einer der coolsten Aha-Momente der letzten Tage bei mir war, wie einfach und nie
     </header>
 
     <section class="blog-post-body">
-      <p><img src="2025/7/die-bittere-realitaet-container-sicherheit-ist-kaputt/chainguard-cve-history.png" alt="Container Security">
+      <p><img src="../../blog/2025/7/die-bittere-realitaet-container-sicherheit-ist-kaputt/chainguard-cve-history.png" alt="Container Security">
 Vor einigen Wochen war ich auf der DevOpsCon in Berlin. Einer der spannenderen  Vorträge war für mich: <strong>"Supply Chain Security and the real world: Lessons from Incidents"</strong>. Offiziell ging es um Sicherheit in Container-Umgebungen. Inoffiziell war es eine Abrechnung mit dem Chaos, das wir im Alltag mit Docker-Containern erleben.</p>
 <p>Wir alle lieben Docker Hub: Schnell ein Image ziehen, starten, fertig. Aber was dabei oft vergessen wird: Selbst die als "offiziell" markierten Container bieten keinerlei Garantien. Weder über die Aktualität noch über Sicherheit. Fast alle dieser Container werden monatelang nicht aktualisiert, obwohl es CVEs für enthaltene Komponenten gibt.</p>
 <p>Wenn man das ernst nimmt, müsste man:</p>
@@ -660,7 +660,7 @@ Vor einigen Wochen war ich auf der DevOpsCon in Berlin. Einer der spannenderen  
     </header>
 
     <section class="blog-post-body">
-      <p><img src="2025/6/nuetzliche-shell-kommandos-sort-uniq/set-operations.png" alt="Set Operations">
+      <p><img src="../../blog/2025/6/nuetzliche-shell-kommandos-sort-uniq/set-operations.png" alt="Set Operations">
 Weil ich es heute wiederholt nachschlagen musste, hier noch eine Erinnerung an mich selbst, wie einfach es ist auf der Shell set Operationen durchzuführen.</p>
 <p>In unserem Beispiel: ~10k Datenbank-IDs hier, ~15k Datenbank-IDs da, und die Frage welche davon nur in der einen Liste enthalten sind. Das ist dann einfach zu beantworten, wenn man die auf eine ID pro Zeile ausgibt, und dann einfach mit <code>set_difference</code> bearbeitet.</p>
 <div class="hll"><pre><span></span>set_union<span class="w"> </span><span class="o">()</span><span class="w"> </span><span class="o">{</span>
@@ -809,8 +809,8 @@ Je einfacher, desto besser – und Vertrauen ist kostbar.</p>
     </header>
 
     <section class="blog-post-body">
-      <p><img src="2025/5/die-freuden-einer-gut-eingerichteten-shell-fzf/fzf.png" alt="fzf"></p>
-<p>Nachdem es bisher in <a href="../../categories/code/">der Serie</a> um die <a href="../../blog/2024/11/grundlegende-funktionen-und-einstellungen-des-terminals/">grundlegende Einrichtung der Shell</a>, <a href="../../blog/2025/2/die-freuden-einer-gut-eingerichteten-shell-prompt/">einen guten Prompt</a> und <a href="../../blog/2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/">funktionierende autoomatische Vervollständigung</a> ging, geht es jetzt eine Weile um Werkzeuge um mit der Shell effizient zu navigieren und Dateien und Inhalte zu finden.</p>
+      <p><img src="../../blog/2025/5/die-freuden-einer-gut-eingerichteten-shell-fzf/fzf.png" alt="fzf"></p>
+<p>Nachdem es bisher in <a href="../categories/code/">der Serie</a> um die <a href="../../blog/2024/11/grundlegende-funktionen-und-einstellungen-des-terminals/">grundlegende Einrichtung der Shell</a>, <a href="../../blog/2025/2/die-freuden-einer-gut-eingerichteten-shell-prompt/">einen guten Prompt</a> und <a href="../../blog/2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/">funktionierende autoomatische Vervollständigung</a> ging, geht es jetzt eine Weile um Werkzeuge um mit der Shell effizient zu navigieren und Dateien und Inhalte zu finden.</p>
 <h2>Einleitung</h2>
 <p>Hier geht es mir darum das die Arbeit auf der Shell (auf dem eigenen Rechner vor allem) nur dann schnell und Effizient ist, wenn man schnel und einfach in die Ordner kommt in denen man arbeiten möchte, und die Dateien findet in denen etwas interessantes steht das man entweder lesen oder verändern möchte.</p>
 <p>Und natürlich ist das Skillset auch auf beliebige Server transferierbar, weil man alle diese Werkzeuge (oder deren etwas primitivere Variante, dazu später mehr) auch auf einem Server, oder in einem Docker-Container, gerne auch auf einem Kubernetes-Cluster in Produktion einsetzen kann, wo man sonst halt nicht so viele Werkzeuge hat, und schon gar nicht seine IDE anschließen kann um zu versuchen dort Herr der Lage zu werden.</p>

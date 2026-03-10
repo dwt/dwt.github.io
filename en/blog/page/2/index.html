@@ -84,11 +84,11 @@
 <div class="hll"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--hostname<span class="w"> </span>shell-completion-demo<span class="w"> </span>debian
 </pre></div>
 <p>Erstes Experiment: <code>ls⇥⇥</code> (kein Leerzeichen vor den Tabs!)</p>
-<p><img src="../../2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/autocomplete-commands-unconfigured.png" alt="Automatische Vervollständigung von Kommandos - unkonfiguriert"></p>
+<p><img src="../../../../blog/2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/autocomplete-commands-unconfigured.png" alt="Automatische Vervollständigung von Kommandos - unkonfiguriert"></p>
 <p>Zeigt alle Kommandos die mit <code>ls</code> anfangen
 Zweites Experiment: <code>ls ⇥⇥</code>
 Das zeigt bei mir:</p>
-<p><img src="../../2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/autocomplete-files-unconfigured.png" alt="Automatische Vervollständigung von Dateien - unkonfiguriert"></p>
+<p><img src="../../../../blog/2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/autocomplete-files-unconfigured.png" alt="Automatische Vervollständigung von Dateien - unkonfiguriert"></p>
 <p>Schon mal gut, denn hier werden die Dateien im aktuellen Ordner vervollständigt.</p>
 <p>Nächste Schwierigkeitsstufe - kurze und lange Optionen: <code>ls -⇥⇥</code> (Minus vor dem Tab)
 Das zeigt hier nichts, genauso für lange Optionen <code>ls --⇥⇥</code> (zwei mal Minus vor dem Tab)</p>
@@ -96,12 +96,12 @@ Das zeigt hier nichts, genauso für lange Optionen <code>ls --⇥⇥</code> (zw
 <h2>Was ist gute Vervollständigung?</h2>
 <p>Dagegen mal ein Beispiel von meinem System:</p>
 <p><code>ls⇥</code> zeigt die Kommandos die mit ls anfangen, mit einer Kurzbeschreibung was diese Kommandos tun.</p>
-<p><img src="../../2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/autocomplete-commands-configured.png" alt="Vervollständigung von Kommandos mit der Fish-Shell"></p>
+<p><img src="../../../../blog/2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/autocomplete-commands-configured.png" alt="Vervollständigung von Kommandos mit der Fish-Shell"></p>
 <p>Schon mit einem Tab sehe ich die Dateien, und zusätzlich sehe ich als Vorschlag den letzten Befehl den ich mit <code>ls</code> abgesetzt habe und kann diesen mit <code>⌃→</code> im ganzen, oder mit  <code>→</code> wortweise akzeptieren kann.</p>
-<p><img src="../../2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/autocomplete-files-configured.png" alt="Automatische Vervollständigung von Dateien mit der Fish Shell"></p>
+<p><img src="../../../../blog/2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/autocomplete-files-configured.png" alt="Automatische Vervollständigung von Dateien mit der Fish Shell"></p>
 <p>Ein ls -⇥<code>ergibt sofort eine Optionsliste - kurz und lang - mit einer Kurzbeschreibung was dieses Schalter tun. Ein zweites Minus und Tab</code>ls --⇥` zeigt nur noch die langen Optionen an:</p>
-<p><img src="../../2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/autocomplete-options-configured.png" alt="Vervollständigung von Optionen mit der Fish-Shell">
-<img src="../../2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/autocomplete-long-options-configured.png" alt="Vervollständigung von langen Optionen mit der Fish-Shell"></p>
+<p><img src="../../../../blog/2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/autocomplete-options-configured.png" alt="Vervollständigung von Optionen mit der Fish-Shell">
+<img src="../../../../blog/2025/4/die-freuden-einer-gut-eingerichteten-shell-autocomplete/autocomplete-long-options-configured.png" alt="Vervollständigung von langen Optionen mit der Fish-Shell"></p>
 <p>Natürlich kann ich mit den Pfeiltasten oder mit Tab eine der Optionen auswählen - natürlich mit ordentlichem Highlighting.
 So macht arbeiten auf der Shell Spaß!</p>
 <p>Falls Ihr verwirrt seid das mein ls andere Optionen anbietet als eures, dann liegt das daran <a href="https://github.com/ogham/exa">das ich ls durch exa ersetzt habe</a>.</p>
@@ -154,7 +154,7 @@ yq completion <span class="nb">fish</span> <span class="o">|</span> <span class=
     </header>
 
     <section class="blog-post-body">
-      <p><img src="../../2025/2/die-freuden-einer-gut-eingerichteten-shell-prompt/terminal.jpg" alt="Terminal"></p>
+      <p><img src="../../../../blog/2025/2/die-freuden-einer-gut-eingerichteten-shell-prompt/terminal.jpg" alt="Terminal"></p>
 <p>Es fängt natürlich mit der Frage an: welche Shell?</p>
 <p>Das ist sehr einfach zu beantworten. Auf MacOS ist die <a href="https://www.zsh.org">zsh</a> die Standard-Shell - und daher sollte man die auch benutzen. Artikel Fertig, vielen Dank fürs Lesen! 😅</p>
 <p>Windows hat die <a href="https://de.wikipedia.org/wiki/PowerShell">PowerShell</a> - wer damit Arbeiten (muss) sollte sie lernen!</p>
@@ -187,12 +187,12 @@ dwt@NB1321<span class="w"> </span>Favorites<span class="w"> </span>%
 <p>Natürlich könnte man hier noch viel mehr anzeigen, je nachdem an was man gerade arbeitet. Ich habe hier eben die Informationen aufgenommen die ich am meisten benötige.</p>
 <p>Jetzt kommt der Clou: Früher habe ich das alles von hand Konfiguriert. Das war ein ewiges und mühsammes gefummel um <code>$PS1</code> und konsorten so hinzufummeln das das alles funktioniert hat, und hat nie Spaß gemacht. Der Standard ist derzeit, das man einen Shell-Konfigurations-Framework wie <a href="https://ohmyz.sh">Oh-My-Zsh</a> oder <a href="https://github.com/sorin-ionescu/prezto">Prezto</a> verwendet. Und die sind auch gut. Aber auch langsam, und komplex und kompliziert. Wenn man da mal etwas anders haben will dann gott bewahre wenn das nicht schon vorbereitet ist oder man darf sich nicht nur mit den Komplexitäten von <code>$PS1</code> auseinandersetzen, sondern auch noch damit wie genau dieser Framework das handhabt.</p>
 <p>Inzwischen bin ich weiser geworden, und verwende <a href="https://starship.rs">Starship</a>. Damit kann ich meinen Prompt deklarativ in einer <code>.toml</code>-Datei konfigurieren und diesen auch mitnehmen wenn ich mal die Shell wechsle. (Was häufiger vorkommt als mir lieb ist). Und: Starship funktioniert auch mit der PowerShell.</p>
-<p><a href="../../2025/2/die-freuden-einer-gut-eingerichteten-shell-prompt/starship.toml">So sieht meine Konfiguration aus</a></p>
+<p><a href="../../../../blog/2025/2/die-freuden-einer-gut-eingerichteten-shell-prompt/starship.toml">So sieht meine Konfiguration aus</a></p>
 <p>Wie richtet man das ein?</p>
 <ol>
 <li><code>brew install starship</code> (oder mit <a href="https://lix.systems">nix</a>)</li>
 <li><code>nano ~/.zshrc</code> und am Ende <code>eval "$(starship init zsh)"</code> einfügen.</li>
-<li>Konfigurationsdatei erstellen: <code>nano ~/.config/starship.toml</code> und z.b. <a href="../../2025/2/die-freuden-einer-gut-eingerichteten-shell-prompt/starship.toml">den Inhalt aus der Datei oben einfügen</a>.</li>
+<li>Konfigurationsdatei erstellen: <code>nano ~/.config/starship.toml</code> und z.b. <a href="../../../../blog/2025/2/die-freuden-einer-gut-eingerichteten-shell-prompt/starship.toml">den Inhalt aus der Datei oben einfügen</a>.</li>
 <li>Shell neu starten oder neues Terminal öffnen.</li>
 </ol>
 <p>Danke sagen für die grandiose Verbesserung eures Shell-Lebens bei mir nicht vergessen. 😅</p>
@@ -220,7 +220,7 @@ dwt@NB1321<span class="w"> </span>Favorites<span class="w"> </span>%
     </header>
 
     <section class="blog-post-body">
-      <p><img src="../../2025/2/a-nixle-in-a-buechse-und-a-goldigs-warteweile/nix-rabbit-hole.png" alt="Das Nix Hasenloch">
+      <p><img src="../../../../blog/2025/2/a-nixle-in-a-buechse-und-a-goldigs-warteweile/nix-rabbit-hole.png" alt="Das Nix Hasenloch">
 … ist ein schwäbisches Sprichwort und passt gar nicht so schlecht für die vielen schlechten Wortwitze die sich automatisch ergeben, wenn man anfängt, sich in das <a href="https://nix.dev">Nix Projekt</a> einzuarbeiten.</p>
 <p>Zunächst mal die Karotte mit der ich mich ködern ließ:</p>
 <ul>
@@ -321,7 +321,7 @@ pkgs<span class="o">.</span>mkShell <span class="p">{</span>
 <p>Das Schöne am Terminal ist, dass du unglaublich wenig anpassen musst, da es von Haus aus sehr gut funktioniert.</p>
 <p>Ich nutze das eingebaute Terminal von macOS mit nur zwei (!) Konfigurationsanpassungen.</p>
 <h2>Wortweise Löschen</h2>
-<p><img src="../../2024/11/grundlegende-funktionen-und-einstellungen-des-terminals/delete-word.png" alt="Wortweise Löschen"></p>
+<p><img src="../../../../blog/2024/11/grundlegende-funktionen-und-einstellungen-des-terminals/delete-word.png" alt="Wortweise Löschen"></p>
 <p>Die erste wirklich wichtige Anpassung für mich ist, dass ⌥-⌫ (Alt-Delete) als Standard-Keybinding gesetzt wird, damit wortweise nach links gelöscht wird. Damit passt du das Terminal an den Mac-Standard an, der in fast allen anderen Programmen ebenfalls funktioniert.</p>
 <p>So geht's:</p>
 <ol>
@@ -341,7 +341,7 @@ pkgs<span class="o">.</span>mkShell <span class="p">{</span>
 <li><strong>⌘-K:</strong> Terminal löschen. Die nukleare Option – sie löscht alles im aktuellen Terminal. Großer Nachteil: Was weg ist, ist weg. Also nicht benutzen, wenn du den Output noch brauchst. Dennoch ist dies einer meiner am häufigsten benutzten Shortcuts.</li>
 </ul>
 <h2>Unbegrenzter Puffer</h2>
-<p><img src="../../2024/11/grundlegende-funktionen-und-einstellungen-des-terminals/unlimited-buffer.png" alt="Unbegrenzter Puffer"></p>
+<p><img src="../../../../blog/2024/11/grundlegende-funktionen-und-einstellungen-des-terminals/unlimited-buffer.png" alt="Unbegrenzter Puffer"></p>
 <p>Die zweite Anpassung, die ich vornehme, ist, den Scrollback-Puffer auf unbegrenzt zu stellen, damit ich die Ausgabe von langen Kommandos nicht verliere. Das geht so:</p>
 <ol>
 <li>Terminal → Einstellungen öffnen (<strong>⌘-,</strong>).</li>
@@ -389,7 +389,7 @@ pkgs<span class="o">.</span>mkShell <span class="p">{</span>
 <p>Jetzt ist natürlich nicht jeder mit der Fähigkeit geboren, sich selbst einfach so Fragen auf der 4. und 5. Ebene zu stellen. Aber das ist auch gar nicht nötig. Denn KI kann dabei prima helfen.</p>
 <p>Chat-GPT hat ein sehr gutes Verständnis von Blooms-Modell und kann endlos fragen auf Bloom Level 4 und 5 zu jedem Thema generieren. Die sind nicht immer perfekt, es reicht aber, um sich darauf einzustimmnen wie solche Fragen aussehen und effizient selbst zu solchen Fragen zu kommen.</p>
 <p>Und das ist für mich ein gamechanger, und super sinnvoller Einsatz von KI.</p>
-<p>Hier mal ein Auszug aus einem <a href="../../2024/10/waehrend-dem-lernen-lernen-lernen-ki-nutzen/Python-Lernen-mit-Fragen.pdf">Chat mit Chat-GPT</a>. Das ist sicher nicht perfekt, aber ein starker Anfang. Chapeau, Chat-GPT!</p>
+<p>Hier mal ein Auszug aus einem <a href="../../../../blog/2024/10/waehrend-dem-lernen-lernen-lernen-ki-nutzen/Python-Lernen-mit-Fragen.pdf">Chat mit Chat-GPT</a>. Das ist sicher nicht perfekt, aber ein starker Anfang. Chapeau, Chat-GPT!</p>
 
     </section>
     
@@ -414,7 +414,7 @@ pkgs<span class="o">.</span>mkShell <span class="p">{</span>
     </header>
 
     <section class="blog-post-body">
-      <p><img src="../../2024/9/waehrend-dem-lernen-lernen-lernen-blooms-taxonomie/bloom.jpeg" alt="Blooms Taxonomie"></p>
+      <p><img src="../../../../blog/2024/9/waehrend-dem-lernen-lernen-lernen-blooms-taxonomie/bloom.jpeg" alt="Blooms Taxonomie"></p>
 <p>In <a href="../../2024/9/waehrend-dem-lernen-lernen-lernen-blooms-taxonomie/">meinem ersten Blog-Post habe ich mich mit Blooms Taxonomie beschäftigt</a>. Im <a href="../../2024/9/waehrend-dem-lernen-lernen-lernen-blooms-taxonomie-ebene-1-3/">zweiten ging es um die ersten drei Ebenen seines Lernmodells</a>. Hier geht es jetzt um die mir am wichtigsten ebenen vier und fünf. Und der Vollständigkeit halber auch auch um die sechste.</p>
 <p>Und los gehts!</p>
 <h2>Die Ebenen von <a href="https://de.wikipedia.org/wiki/Blooms_Taxonomie">Blooms Taxonomie</a>:</h2>
@@ -466,7 +466,7 @@ pkgs<span class="o">.</span>mkShell <span class="p">{</span>
     </header>
 
     <section class="blog-post-body">
-      <p><img src="../../2024/9/waehrend-dem-lernen-lernen-lernen-blooms-taxonomie/bloom.jpeg" alt="Blooms Taxonomie"></p>
+      <p><img src="../../../../blog/2024/9/waehrend-dem-lernen-lernen-lernen-blooms-taxonomie/bloom.jpeg" alt="Blooms Taxonomie"></p>
 <p>In <a href="../../2024/9/waehrend-dem-lernen-lernen-lernen-blooms-taxonomie/">meinem letzten Blog-Post habe ich mich mit Blooms Taxonomie beschäftigt</a>. Mir hat dieses Modell viele Gedankenanstöße darüber gegeben, wie ich lerne. Ich habe die sechs Ebenen von Blooms Taxonomie vorgestellt und ihre Anwendung sehr knapp diskutiert. Heute möchte ich diese Ebenen vertiefen und anhand von Beispielen auf die Unterschiede zwischen den Ebenen eingehen sowie die jeweiligen Lernziele beleuchten. Mein Ziel ist es, mir und anderen, die Anwendung von Blooms Taxonomie in beim Lernen zu veranschaulichen. Los gehts!</p>
 <h2>Die Ebenen von <a href="https://de.wikipedia.org/wiki/Blooms_Taxonomie">Blooms Taxonomie</a>:</h2>
 <h3>1. Wissen</h3>
@@ -515,7 +515,7 @@ pkgs<span class="o">.</span>mkShell <span class="p">{</span>
     </header>
 
     <section class="blog-post-body">
-      <p><img src="../../2024/9/waehrend-dem-lernen-lernen-lernen-blooms-taxonomie/bloom.jpeg" alt="Die Lernpyramide nach Bloom"></p>
+      <p><img src="../../../../blog/2024/9/waehrend-dem-lernen-lernen-lernen-blooms-taxonomie/bloom.jpeg" alt="Die Lernpyramide nach Bloom"></p>
 <p>Vor einigen Wochen bin ich über <a href="https://www.youtube.com/watch?v=1xqerXscTsE">ein wundervolles Youtube Video gestolpert, dass mich über Blooms Taxonomie des Lernens informiert hat</a>. Bloom stellt darin eine faszinierende Methode vor, mit der man sich Wissen über ein Thema schnell und effektiv aneignen kann.</p>
 <p>Das hat mich ein bisschen umgehauen, da ich in alle den Jahren in denen ich gelernt habe noch nie davon gehört hatte. Endlich ein brauchbares Modell, wieso manche meiner Lerngewohnheiten gut oder eben schlecht funktionieren. </p>
 <p>In kurz, <a href="https://de.wikipedia.org/wiki/Blooms_Taxonomie">Blooms Taxonomie</a> ist ein Modell aus den 60' er Jahren, in dem er postuliert das es sechs Ebenen des Lernens gibt. Diese werden gerne als Pyramide visualisiert, was ich ungünstig finde → dazu gleich mehr.  </p>
@@ -580,7 +580,7 @@ pkgs<span class="o">.</span>mkShell <span class="p">{</span>
     </header>
 
     <section class="blog-post-body">
-      <p><img src="../../2024/5/wie-nutze-ich-die-shell-effektiv/hacker.jpeg" alt="Häcker bei der Arbeit…">
+      <p><img src="../../../../blog/2024/5/wie-nutze-ich-die-shell-effektiv/hacker.jpeg" alt="Häcker bei der Arbeit…">
 Bei meiner Arbeit ist mir aufgefallen, dass viele Entwickler bei uns die Shell viel effektiver nutzen könnten, um ihre Arbeit besser und schneller zu machen. Da ich die Shell sehr viel nutze, habe ich dazu ein paar Ideen. 😇 Auf der anderen Seite gibt es immer wieder ein Nugget, das ich selbst nicht kenne – und das möchte ich natürlich auch lernen.  </p>
 <p>In diesem Sinne: Ich freue mich über Tips, lasst uns gerne daraus einen Austausch machen, wie man seine Shell effektiv einsetzt.</p>
 <p>Damit verständlich wird wie ich meine Shell verwende ist es wichtig zu verstehen dass es verschiedene Arten gibt einen Mac effektiv zu nutzen. Ich kategorisiere das für mich grob so:</p>

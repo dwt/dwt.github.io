@@ -101,27 +101,27 @@ The obvious first thing to do is to think about the GUI and what I want to achie
 <p>So I discarded that idea.</p>
 <p>What I really like is Firefox in this regard. Their way of showing that they just suppressed a popup or a cookie is just a perfect example of the kind of interface I have in mind. Easy to see, enough space to put a button and a nice way to tell the user some status that doesn't disturb his workflow if he doesn't bother / can't do anything about it right now.</p>
 <p>So I have something like this in mind:</p>
-<p><img src="Encrypted-but-not-verified-1.png" alt="Image"></p>
+<p><img src="../../../../../blog/2008/8/adium-otr/Encrypted-but-not-verified-1.png" alt="Image"></p>
 <p>This fits my requirements pretty good (more Ideas I toyed with at the end of the article). It clearly states what is happening, and gives the user an immediate means to do something about it. No confusion possible.</p>
 <p>Well, to be frank, wording is still a problem. "Verify his identity" is very long, and will be much longer in german. Same for the first sentence. Some users may also react with a heartfelt: "Now you tell me, when I tried to turn encryption on?". Also what if the user just doesn't care?</p>
 <p>Well, I'l ponder that some more.</p>
 <p>Next stop: Actually doing the <strong><em>Socialist Millionaire Protocol</em></strong>.</p>
 <p>After the user clicks the darned button, there be dragons. As I said above, I briefly toyed with the idea of doing everything inline the message view, however decided against that. My current working thesis is this:</p>
-<p><img src="Dialog-based-implementation-of-the-Sociallist-Millionaire-Protocoll.png" alt="Image"></p>
+<p><img src="../../../../../blog/2008/8/adium-otr/Dialog-based-implementation-of-the-Sociallist-Millionaire-Protocoll.png" alt="Image"></p>
 <p>This dialog has some merits: It clearly states what the user is supposed to do. It gives hints on how to do it and what to avoid, and it is mostly text.</p>
 <p>Well.... I'm not very content with it yet. Also I haven't had a good look at how <a href="http://www.cypherpunks.ca/otr/help/authenticate.php?lang=en">Pidgin actually implements this feature</a> (I wanted to build my own ideas unobstructed first).</p>
 <p>Well, onto that later.</p>
 <p>Here's the rest of my WIPs:</p>
-<p><img src="Encrypted-but-not-verified-2.png" alt="Image"></p>
+<p><img src="../../../../../blog/2008/8/adium-otr/Encrypted-but-not-verified-2.png" alt="Image"></p>
 <p>Note the lock in the menu-bar that also tells me the status of the conversation is private (to make the easy to miss  lock in the toolbar more prominent.</p>
 <p>I toyed with placing more locks, here's some results:</p>
-<p><img src="Encrypted-status-display-inline-locks.png" alt="Image">
-<img src="Encrypted-status-display.png" alt="Image"></p>
+<p><img src="../../../../../blog/2008/8/adium-otr/Encrypted-status-display-inline-locks.png" alt="Image">
+<img src="../../../../../blog/2008/8/adium-otr/Encrypted-status-display.png" alt="Image"></p>
 <p>Just repeating something that doesn't work seems, to force it to work seems foolish though, so I thought about more radical approaches, of which I like this the most:</p>
-<p><img src="Encrypted-status-display-color-change.png" alt="Image"></p>
+<p><img src="../../../../../blog/2008/8/adium-otr/Encrypted-status-display-color-change.png" alt="Image"></p>
 <p>The problem is to communicate to the user that he is in a completely different status now, and make it accessible at a glance. Well, why dont just change the background color? Again Firefox is an example here, when surfing to a secure site, the status bar is rendered completely different to give the user good feedback. Why not apply that to Adium?</p>
 <p>Oh and the inline SMP implementation:</p>
-<p><img src="Inline-GUI-for-the-Sociallist-Millionaire-Protocol.png" alt="Image"></p>
+<p><img src="../../../../../blog/2008/8/adium-otr/Inline-GUI-for-the-Sociallist-Millionaire-Protocol.png" alt="Image"></p>
 <p>Well.... It could be made to work... from a technological standpoint. :) Maybe it sparks some new ideas.</p>
 <p>Want to read more?</p>
 <ul>
